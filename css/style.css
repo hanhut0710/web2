@@ -18,7 +18,7 @@
 2.  Helper Css
 3.  Header Section
 4.  Hero Section
-5.  Banner Section
+5.  Banner Sectionhe
 6.  Product Section
 7.  Intagram Section
 8.  Latest Section
@@ -403,9 +403,7 @@ ol {
 	cursor: pointer;
 }
 
-.header__logo {
-	padding: 30px 0;
-}
+
 
 .header__logo a {
 	display: inline-block;

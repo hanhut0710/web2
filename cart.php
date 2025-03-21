@@ -25,16 +25,10 @@
 </head>
 
 <body>
-    
     <?php include("./layout/header.php");?>
-    <?php include("./layout/banner.php");?>
-    <?php include("./layout/main.php");?>
-    <?php include("./layout/ins.php");?>
-    <?php include("./layout/blog.php");?>
-    <?php include("./layout/footer.php")?>
-
-
-
+    <?php include("./layout/main_cart.php");?>
+    <?php include("./layout/footer.php");?>
+    
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -45,7 +39,6 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-    
 </body>
 
 </html>
