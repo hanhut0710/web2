@@ -59,10 +59,12 @@
                                         <div class="card-body">
                                             <div class="shop__sidebar__brand">
                                                 <ul>
-                                                    <li><a href="#">Louis Vuitton</a></li>
-                                                    <li><a href="#">Chanel</a></li>
-                                                    <li><a href="#">Hermes</a></li>
-                                                    <li><a href="#">Gucci</a></li>
+                                                    <li><a href="#">Nike</a></li>
+                                                    <li><a href="#">Adidas</a></li>
+                                                    <li><a href="#">Puma</a></li>
+                                                    <li><a href="#">Vans</a></li>
+                                                    <li><a href="#">Converse</a></li>
+                                                    <li><a href="#">New Balance</a></li>
                                                 </ul>
                                             </div>
                                         </div>

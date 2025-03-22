@@ -59,15 +59,9 @@
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6>${product.name}</h6>
+                                    <h6 style="font-weight:800">${product.name}</h6>
                                     <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
+                                    
                                     <h5>${product.price}</h5>
                                     <div class="product__color__select">
                                         <label for="pc-4">
