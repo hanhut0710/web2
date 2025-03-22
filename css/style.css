@@ -985,9 +985,7 @@ ol {
 	display: inline-block;
 	padding: 4px 15px 2px;
 	background: #ffffff;
-	position: absolute;
-	left: 0;
-	top: 20px;
+	/* transform: translateY(-5px); */
 }
 
 .product__item__pic .product__hover {
