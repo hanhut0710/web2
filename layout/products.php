@@ -205,10 +205,10 @@
                     <div class="row products"></div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="product__pagination">
-                                <a style="display: none;" id="prePage" href="#">Prev</a>
-                                <a href="#" id="currentPage">2</a>
-                                <a style="display: none" href="#" id="nextPage">Next</a>
+                            <div style="display: flex;justify-content: center;" class="product__pagination">
+                                <a style="display: none;margin: 0 10px;" id="prePage" href="#">Prev</a>
+                                <a class="active" style="margin: 0 10px;" href="#" id="currentPage">2</a>
+                                <a style="display: none;margin: 0 10px;" href="#" id="nextPage">Next</a>
                             </div>
                         </div>
                     </div>
