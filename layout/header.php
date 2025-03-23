@@ -49,19 +49,21 @@
             </div>
             <div class="form_login login">
             <h3>Đăng nhập</h3>
+            <form id="loginForm">
                 <div class="input_box">
                     <label for="username">Tên đăng nhập</label><br>
-                    <input type="text" id="username" placeholder="Tên đăng nhập">
+                    <input type="text" id="username" name="username" placeholder="Tên đăng nhập">
                 </div>
                 <div class="input_box">
                     <label for="passwd">Mật khẩu</label><br>
-                    <input type="password" id="passwd" placeholder="Mật khẩu">
+                    <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu">
                 </div>
                 <div class="input_box checkbox">
                     <p>Bạn chưa có tài khoản?<a href="#" onclick="changeLogin()"> Đăng kí</a></p>
                 </div>
-                <button class="btn_login">Đăng nhập</button>
-            </div>
+                <button type="button" class="btn_login" onclick="submitForm('login')">Đăng nhập</button>
+            </form>
+        </div>
         </div>
     </div>
     <!-- Header Section End -->
