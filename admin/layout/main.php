@@ -1,8 +1,8 @@
 <div class="container">
         <aside class="sidebar open">
             <div class="top-sidebar">
-                <a href="#" class="channel-logo"><img src="../images/logo.png" alt="Lucy Coffe Logo"></a>
-                <div class="hidden-sidebar your-channel"><img src="../images/lucy.png"
+                <a href="#" class="channel-logo"><img src="../img/logo.png" alt="Lucy Coffe Logo"></a>
+                <div class="hidden-sidebar your-channel"><img src="../img/logo.png"
                         style="height: 30px;" alt="">
                 </div>
             </div>
@@ -71,7 +71,7 @@
         </aside>
         <main class="content">
             <div class="section active">
-                <h1 class="page-title">Trang quản lý cửa hàng Lucy Coffee</h1>
+                <h1 class="page-title">Trang quản lý cửa hàng</h1>
                 <div class="cards">
                     <div class="card-single">
                         <div class="box">
