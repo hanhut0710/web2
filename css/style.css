@@ -985,9 +985,7 @@ ol {
 	display: inline-block;
 	padding: 4px 15px 2px;
 	background: #ffffff;
-	position: absolute;
-	left: 0;
-	top: 20px;
+	/* ư */
 }
 
 .product__item__pic .product__hover {
@@ -1467,6 +1465,7 @@ ol {
 
 .product__pagination a {
 	display: inline-block;
+	margin: 0 20px;
 	font-size: 16px;
 	font-weight: 700;
 	color: #111111;
@@ -3847,3 +3846,93 @@ ol {
 		height: 250px;
 	}
 }
+
+.login_modal{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); 
+    display: flex;
+    justify-content: flex-end;
+	right: -100%;
+    z-index: 1000;
+	transition: 0.5s;
+}
+
+.login_modal.active{
+	transform: translateX(-100%);
+}
+
+.container__login {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.form_login {
+    width: 300px;
+    padding: 20px 30px;
+}
+
+.form_login h3 {
+    font-weight: 700;
+    margin: 20px 0;
+}
+
+.input_box input {
+    border: none;
+    border: 2px solid #C0C0C0;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 12px;
+    color: #C0C0C0;
+    flex: 1;
+}
+
+.input_box {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    border-radius: 15px;
+    position: relative;
+}
+
+.input_box label {
+    position: absolute;
+    top: 0px;
+    font-size: 12px;
+    color: #696969;
+}
+
+.input_box.checkbox {
+    border: none;
+}
+
+.btn_login {
+    width: 150px;
+    background: #1da1f2;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 50px;
+    font-weight: 600;
+    color: white;
+    transition: 0.5s;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.19);
+}
+
+.btn_login:hover {
+    background: #0173b2;
+}
+
+.close_modal i{
+	font-size: 20px;
+	transform: 0.3s;
+}
+
+.close_modal i:hover{
+	color: #0173b2;
+	transform: scale(1.1);
+}
+

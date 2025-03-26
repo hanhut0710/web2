@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='../images/logo.png' rel='icon' type='image/x-icon' />
+    <link rel="stylesheet" href="../css/admin-responsive.css">
+    <link rel="stylesheet" href="../css/toast-message.css">
+    <link href="../fonts/font-awesome-pro-v6-6.2.0/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css/admin.css">
+    <title>Quản lý cửa hàng</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Side bar -->
+        <aside class="sidebar open">
+            <div class="top-sidebar">
+                <a href="#" class="channel-logo"><img src="../images/logo.png" alt="Lucy Coffe Logo"></a>
+                <div class="hidden-sidebar your-channel"><img src="../images/lucy.png" style="height: 30px;" alt="">
+                </div>
+            </div>
+            <div class="middle-sidebar">
+                <ul class="sidebar-list">
+                    <li class="sidebar-list-item tab-content">
+                        <a href="./admin.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa fa-home" aria-hidden="true"></i></div>
+                            <div class="hidden-sidebar">Trang tổng quan</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content active">
+                        <a href="./adminProduct1.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa-light fa-pot-food"></i></div>
+                            <div class="hidden-sidebar">Sản phẩm</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="customer.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
+                            <div class="hidden-sidebar">Khách hàng</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="order.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
+                            <div class="hidden-sidebar">Đơn hàng</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="statistic.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
+                            <div class="hidden-sidebar">Thống kê sản phẩm</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="statisticCustomer.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa-solid fa-square-poll-vertical"></i></div>
+                            <div class="hidden-sidebar">Thống kê khách hàng</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="bottom-sidebar">
+                <ul class="sidebar-list">
+                    <li class="sidebar-list-item user-logout">
+                        <a href="../index.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa-solid fa-house"></i></div>
+                            <div class="hidden-sidebar">Trang chủ</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item user-logout">
+                        <a href="admin.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa-light fa-circle-user"></i></div>
+                            <div class="hidden-sidebar" id="name-acc">Admin</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item user-logout">
+                        <a href="login.html" class="sidebar-link" id="logout-acc">
+                            <div class="sidebar-icon"><i class="fa-light fa-arrow-right-from-bracket"></i></div>
+                            <div class="hidden-sidebar">Đăng xuất</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <!-- Admin control -->
+        <main class="content">
+        <div class="section product-all active">
+            <div class="admin-control">
+                <div class="admin-control-left">
+                    <select name="the-loai" id="the-loai">
+                        <option>Tất cả</option>
+                        <option>Cà phê</option>
+                        <option>Trà trái cây</option>
+                        <option>Trà sữa</option>
+                        <option>Đá xay</option>
+                        <option>Bánh ngọt</option>
+                        <option>Đã xóa</option>
+                    </select>
+                </div>
+                <div class="admin-control-center">
+                    <form action="" class="form-search">
+                        <span class="search-btn"><a href="adminProduct1.html"><i class="fa-light fa-magnifying-glass"></i></a></span>
+                        <input id="form-search-product" type="text" class="form-search-input" placeholder="Tìm kiếm tên món...">
+                    </form>
+                </div>
+                <div class="admin-control-right">
+                    <button class="btn-control-large" id="btn-cancel-product" onclick="location.href='adminProduct1.html'"><i class="fa-light fa-rotate-right"></i> Làm mới</button>
+                    <button class="btn-control-large" id="btn-add-product" onclick="location.href='addProduct.html'"><i class="fa-light fa-plus"></i> Thêm món mới</button>
+                </div>
+            </div>
+            <!-- End of admin control -->
+
+            <!-- List product -->
+            <div id="show-product">
+             <!-- Tra sua olong nuong -->
+             <div class="list">
+                <div class="list-left">
+                    <img src="../images/trasuaoolongnuongsuongsao.png" alt="">
+                    <div class="list-info">
+                        <h4>Trà sữa Oolong nướng</h4>
+                        <p class="list-note">Vị khói từ lửa khi nướng lá trà Oolong hảo hạn mang tới hương vị không nơi nào tạo được. Cùng với sương sáo giòn dai ngon khó ngưỡng.</p>
+                        <span class="list-category">Trà sữa</span>
+                    </div>
+                </div>
+                <div class="list-right">
+                    <div class="list-price">
+                        <span class="list-current-price">59.000 ₫</span>
+                    </div>
+                    <div class="list-control">
+                        <div class="list-tool">
+                            <button class="btn-edit" onclick="location.href='editProduct.html'"><i class="fa-light fa-pen-to-square"></i></button>
+                            <button class="btn-delete" onclick="deleteProduct(this)"><i class="fa-regular fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+             </div>  
+             <!-- Trà đen machiato -->
+             <div class="list">
+                <div class="list-left">
+                    <img src="../images/tradenmachiato.png" alt="">
+                    <div class="list-info">
+                        <h4>Trà đen machiato</h4>
+                        <p class="list-note">Dẫu là món khá ít phổ biến ở Việt Nam nhưng hương vị rất nịnh miệng từ vị đắng vị thơm của trà cùng với lớp kem béo tuyệt.</p>
+                        <span class="list-category">Trà sữa</span>
+                    </div>
+                </div>
+                <div class="list-right">
+                    <div class="list-price">
+                        <span class="list-current-price">49.000 ₫</span>
+                    </div>
+                    <div class="list-control">
+                        <div class="list-tool">
+                            <button class="btn-edit" onclick="location.href='editProduct.html'"><i class="fa-light fa-pen-to-square"></i></button>
+                            <button class="btn-delete" onclick="deleteProduct(this)"><i class="fa-regular fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+             </div>  
+             <!-- Frosty Caramel Arabica -->
+             <div class="list">
+                <div class="list-left">
+                    <img src="../images/frostycaramel.png" alt="">
+                    <div class="list-info">
+                        <h4>Frosty Caramel Arabica</h4>
+                        <p class="list-note">Caramel ngọt thơm quyện cùng cà phê Arabica Cầu Đất đượm hương gỗ thông, hạt dẻ và nốt sô cô la đặc trưng tạo nên Đá Xay Frosty Caramel Arabica độc đáo chỉ có tại Nhà. Cực cuốn với lớp whipping cream béo mịn, thêm thạch cà phê giòn ngon bắt miệng.</p>
+                        <span class="list-category">Đá xay</span>
+                    </div>
+                </div>
+                <div class="list-right">
+                    <div class="list-price">
+                        <span class="list-current-price">59.000 ₫</span>
+                    </div>
+                    <div class="list-control">
+                        <div class="list-tool">
+                            <button class="btn-edit" onclick="location.href='editProduct.html'"><i class="fa-light fa-pen-to-square"></i></button>
+                            <button class="btn-delete" onclick="deleteProduct(this)"><i class="fa-regular fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+             </div> 
+             <!-- Frosty Dâu -->
+             <div class="list">
+                <div class="list-left">
+                    <img src="../images/frostydau.png" alt="">
+                    <div class="list-info">
+                        <h4>Frosty Dâu</h4>
+                        <p class="list-note">Bồng bềnh như một đám mây, Đá Xay Frosty Dâu vừa ngon mắt vừa chiều vị giác bằng sự ngọt ngào. Bắt đầu bằng cái chạm môi với lớp kem whipping cream, cảm nhận ngay vị beo béo lẫn sốt dâu thơm lừng. Sau đó, hút một ngụm là cuốn khó cưỡng bởi đá xay mát lạnh quyện cùng sốt dâu ngọt dịu. Lưu ý: Khuấy đều phần đá xay trước khi dùng</p>
+                        <span class="list-category">Đá xay</span>
+                    </div>
+                </div>
+                <div class="list-right">
+                    <div class="list-price">
+                        <span class="list-current-price">59.000 ₫</span>
+                    </div>
+                    <div class="list-control">
+                        <div class="list-tool">
+                            <button class="btn-edit" onclick="location.href='editProduct.html'"><i class="fa-light fa-pen-to-square"></i></button>
+                            <button class="btn-delete" onclick="deleteProduct(this)"><i class="fa-regular fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+             </div> 
+             <!-- Frosty Matcha -->
+             <div class="list">
+                <div class="list-left">
+                    <img src="../images/frostymatcha.png" alt="">
+                    <div class="list-info">
+                        <h4>Frosty Matcha</h4>
+                        <p class="list-note">Thức uống rất được ưa chuộng! Trà xanh thượng hạng từ cao nguyên Việt Nam, kết hợp cùng đá xay, thạch trà dai dai, thơm ngon và một lớp kem dày phủ lên trên vô cùng hấp dẫn. Freeze Trà Xanh thơm ngon, mát lạnh, chinh phục bất cứ ai!</p>
+                        <span class="list-category">Đá xay</span>
+                    </div>
+                </div>
+                <div class="list-right">
+                    <div class="list-price">
+                        <span class="list-current-price">59.000 ₫</span>
+                    </div>
+                    <div class="list-control">
+                        <div class="list-tool">
+                            <button class="btn-edit" onclick="location.href='editProduct.html'"><i class="fa-light fa-pen-to-square"></i></button>
+                            <button class="btn-delete" onclick="deleteProduct(this)"><i class="fa-regular fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+             </div> 
+             <!-- Mochi Kem Dâu -->
+             <div class="list">
+                <div class="list-left">
+                    <img src="../images/mochidau.png" alt="">
+                    <div class="list-info">
+                        <h4>Mochi Kem Dâu</h4>
+                        <p class="list-note">Bao bọc bởi lớp vỏ Mochi dẻo thơm, bên trong là lớp kem lạnh cùng nhân dâu ngọt ngào. Gọi 1 chiếc Mochi cho ngày thật tươi mát. Sản phẩm phải bảo quán mát và dùng ngon nhất trong 2h sau khi nhận hàng.</p>
+                        <span class="list-category">Bánh ngọt</span>
+                    </div>
+                </div>
+                <div class="list-right">
+                    <div class="list-price">
+                        <span class="list-current-price">19.000 ₫</span>
+                    </div>
+                    <div class="list-control">
+                        <div class="list-tool">
+                            <button class="btn-edit" onclick="location.href='editProduct.html'"><i class="fa-light fa-pen-to-square"></i></button>
+                            <button class="btn-delete" onclick="deleteProduct(this)"><i class="fa-regular fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+             </div> 
+             <!-- Mochi Kem Chocolate -->
+             <div class="list">
+                <div class="list-left">
+                    <img src="../images/mochichocolate.png" alt="">
+                    <div class="list-info">
+                        <h4>Mochi Kem Chocolate</h4>
+                        <p class="list-note">Bao bọc bởi lớp vỏ Mochi dẻo thơm, bên trong là lớp kem lạnh cùng nhân chocolate độc đáo. Gọi 1 chiếc Mochi cho ngày thật tươi mát. Sản phẩm phải bảo quán mát và dùng ngon nhất trong 2h sau khi nhận hàng.</p>
+                        <span class="list-category">Bánh ngọt</span>
+                    </div>
+                </div>
+                <div class="list-right">
+                    <div class="list-price">
+                        <span class="list-current-price">19.000 ₫</span>
+                    </div>
+                    <div class="list-control">
+                        <div class="list-tool">
+                            <button class="btn-edit" onclick="location.href='editProduct.html'"><i class="fa-light fa-pen-to-square"></i></button>
+                            <button class="btn-delete" onclick="deleteProduct(this)"><i class="fa-regular fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+             </div> 
+             <!-- Mochi Kem Matcha -->
+             <div class="list">
+                <div class="list-left">
+                    <img src="../images/mochimatcha.png" alt="">
+                    <div class="list-info">
+                        <h4>Mochi Kem Matcha</h4>
+                        <p class="list-note">Bao bọc bởi lớp vỏ Mochi dẻo thơm, bên trong là lớp kem lạnh cùng nhân trà xanh đậm vị. Gọi 1 chiếc Mochi cho ngày thật tươi mát. Sản phẩm phải bảo quán mát và dùng ngon nhất trong 2h sau khi nhận hàng.</p>
+                        <span class="list-category">Bánh ngọt</span>
+                    </div>
+                </div>
+                <div class="list-right">
+                    <div class="list-price">
+                        <span class="list-current-price">19.000 ₫</span>
+                    </div>
+                    <div class="list-control">
+                        <div class="list-tool">
+                            <button class="btn-edit" onclick="location.href='editProduct.html'"><i class="fa-light fa-pen-to-square"></i></button>
+                            <button class="btn-delete" onclick="deleteProduct(this)"><i class="fa-regular fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+             </div> 
+        </div>
+
+            <!-- page nav  -->
+            <div class="page-nav">
+                <ul class="page-nav-list">
+                    <li class="page-nav-item">
+                        <a href="adminProduct1.html">1</a>
+                    </li>
+                    <li class="page-nav-item active">
+                        <a href="#">2</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    </div>
+
+
+    <!-- JavaScripts -->
+     <script>
+        function deleteProduct(button) {
+
+    let confirmDelete = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
+    
+    if (confirmDelete) {
+            location.href='adminProduct1.html';
+        }
+    }
+
+     </script>
+</body>
+
+</html>

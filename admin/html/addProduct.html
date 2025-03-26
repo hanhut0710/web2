@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='../images/logo.png' rel='icon' type='image/x-icon' />
+    <link rel="stylesheet" href="../css/admin-responsive.css">
+    <link rel="stylesheet" href="../css/toast-message.css">
+    <link href="../fonts/font-awesome-pro-v6-6.2.0/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css/admin.css">
+    <title>Quản lý cửa hàng</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Side bar -->
+        <aside class="sidebar open">
+            <div class="top-sidebar">
+                <a href="#" class="channel-logo"><img src="../images/logo.png" alt="Lucy Coffe Logo"></a>
+                <div class="hidden-sidebar your-channel"><img src="../images/lucy.png" style="height: 30px;" alt="">
+                </div>
+            </div>
+            <div class="middle-sidebar">
+                <ul class="sidebar-list">
+                    <li class="sidebar-list-item tab-content">
+                        <a href="./admin.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa fa-home" aria-hidden="true"></i></div>
+                            <div class="hidden-sidebar">Trang tổng quan</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content active">
+                        <a href="./adminProduct1.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa-light fa-pot-food"></i></div>
+                            <div class="hidden-sidebar">Sản phẩm</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="customer.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
+                            <div class="hidden-sidebar">Khách hàng</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="order.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
+                            <div class="hidden-sidebar">Đơn hàng</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="statistic.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
+                            <div class="hidden-sidebar">Thống kê sản phẩm</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="statisticCustomer.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa-solid fa-square-poll-vertical"></i></div>
+                            <div class="hidden-sidebar">Thống kê khách hàng</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="bottom-sidebar">
+                <ul class="sidebar-list">
+                    <li class="sidebar-list-item user-logout">
+                        <a href="../index.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa-solid fa-house"></i></div>
+                            <div class="hidden-sidebar">Trang chủ</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item user-logout">
+                        <a href="admin.html" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa-light fa-circle-user"></i></div>
+                            <div class="hidden-sidebar" id="name-acc">Admin</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item user-logout">
+                        <a href="login.html" class="sidebar-link" id="logout-acc">
+                            <div class="sidebar-icon"><i class="fa-light fa-arrow-right-from-bracket"></i></div>
+                            <div class="hidden-sidebar">Đăng xuất</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+
+
+        <!-- add Product  //////////////////////////////////////////////////////////////////////// main part -->
+        <main class="content">
+            <div class="form-all-content">              
+                    <h3 class="modal-container-title add-product-e">THÊM MỚI SẢN PHẨM</h3>
+                    <div class="modal-content">
+                        <form action="" class="add-product-form">
+                            <div class="modal-content-left">
+                                <img src="" alt="" class="upload-image-preview">
+                                <div class="form-group file">
+                                    <label for="up-hinh-anh" class="form-label-file"><i
+                                            class="fa-regular fa-cloud-arrow-up"></i>Chọn hình ảnh</label>
+                                    <input accept="image/jpeg, image/png, image/jpg" id="up-hinh-anh" name="up-hinh-anh"
+                                        type="file" class="form-control" onchange="uploadImage(this)">
+                                </div>
+                            </div>
+                            <div class="modal-content-right">
+                                <div class="form-group">
+                                    <label for="ten-mon" class="form-label">Tên món</label>
+                                    <input id="ten-mon" name="ten-mon" type="text" placeholder="Nhập tên món"
+                                        class="form-control">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category" class="form-label">Chọn món</label>
+                                    <select name="category" id="chon-mon">
+                                        <option>Cà phê</option>
+                                        <option>Trà trái cây</option>
+                                        <option>Trà sữa</option>
+                                        <option>Đá xay</option>
+                                        <option>Bánh ngọt</option>
+                                        <option>Đã xóa</option>
+                                    </select>
+                                    <span class="form-message"></span>                                   
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Chọn size</label>
+                                    <div class="size-options">
+                                        <div class="size-option">
+                                            <label class="size-checkbox-custom">
+                                                <input type="checkbox" id="size-small" name="size" value="small">
+                                                Nhỏ
+                                            </label>
+                                            <input type="text" id="price-small" name="price-small" class="size-price" placeholder="Nhập giá bổ sung" >
+                                        </div>
+                                        <div class="size-option">
+                                            <label class="size-checkbox-custom">
+                                                <input type="checkbox" id="size-medium" name="size" value="medium">
+                                                Vừa
+                                            </label>
+                                            <input type="text" id="price-medium" name="price-medium" class="size-price" placeholder="Nhập giá bổ sung">
+                                        </div>
+                                        <div class="size-option">
+                                            <label class="size-checkbox-custom">
+                                                <input type="checkbox" id="size-large" name="size" value="large">
+                                                Lớn
+                                            </label>
+                                            <input type="text" id="price-large" name="price-large" class="size-price"
+                                                placeholder="Nhập giá bổ sung" >
+                                        </div>
+                                    </div>
+                                    <span class="form-message"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gia-moi" class="form-label">Giá bán</label>
+                                    <input id="gia-moi" name="gia-moi" type="text" placeholder="Nhập giá bán"
+                                        class="form-control">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mo-ta" class="form-label">Mô tả</label>
+                                    <textarea class="product-desc" id="mo-ta"
+                                        placeholder="Nhập mô tả món ăn..."></textarea>
+                                    <span class="form-message"></span>
+                                </div>
+                                <button class="form-submit btn-add-product-form add-product-e" id="add-product-button" >
+                                    <i class="fa-regular fa-plus"></i>
+                                    <span>THÊM MÓN</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        </main>
+
+
+    </div>
+
+    <script>      
+        let btnAddProductIn = document.getElementById("add-product-button");
+        btnAddProductIn.addEventListener("click", (e) => {
+            e.preventDefault();         
+                    alert('Thêm sản phẩm thành công!');                
+                    window.location.href = './adminProduct1.html';
+                });
+    </script>
+
+
+</body>
+
+</html>
