@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     loadProducts();
 });
 let currentPage = 1;
-let pageSize = 6;
+let pageSize = 8;
 let prev = document.getElementById('prePage');
 let next = document.getElementById('nextPage');
 let current = document.getElementById('currentPage');
@@ -11,8 +11,7 @@ function loadProducts() {
     fetch(`./handle/get_product.php?page=${currentPage}&pageSize=${pageSize}`)
         .then(response => response.json())
         .then(data => {
-            dataProduct = data;
-            console.log(dataProduct);
+            console.log(data);
             const productContainer = document.querySelector(".row.products");
             productContainer.innerHTML = "";
             let productItem = '';

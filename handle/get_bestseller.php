@@ -3,7 +3,7 @@
 
     $sql = "SELECT id, name, price, img_src FROM products
             ORDER BY price DESC
-            LIMIT 5";
+            LIMIT 8";
 
     $result = $con->query($sql);
 
