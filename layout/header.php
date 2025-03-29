@@ -16,7 +16,7 @@
                 <div style="margin-top: 20px" class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li><a href="">Trang chủ</a></li>
+                            <li><a href="./index.php">Trang chủ</a></li>
                             <li><a href="./shop.php">Sản phẩm</a></li>
                             <li><a href="">Lịch sử</a></li>
                             <li><a href="">Đơn hàng</a></li>
@@ -33,7 +33,7 @@
                             <a class="dropdown-item" href="#">Đăng nhập</a>
                             <a class="dropdown-item" href="#">Đăng ký</a>
                         </div>
-                        <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                        <a href="./cart.php"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
                         <div class="price">$0.00</div>
                     </div>
                 </div>

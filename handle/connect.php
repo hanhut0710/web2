@@ -6,7 +6,7 @@
 
     $con = new mysqli($servername, $user, $passwd, $database);
 
-    if($con -> connect_error){
-        echo "lỗi";
-    }
+    if ($con->connect_error) {
+        die("Kết nối thất bại: " . $con->connect_error);
+    } 
 ?>

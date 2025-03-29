@@ -18,34 +18,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $repasswd = $_POST['repasswd'];
 
             if ($passwd === $repasswd) {
-                $sql = "INSERT INTO users (fullname, phone, username, passwd) VALUES ('$fullname', '$phone', '$username', '$passwd')";
-                if ($con->query($sql) === TRUE) {
+                // Mã hóa mật khẩu an toàn
+                $hashed_password = password_hash($passwd, PASSWORD_DEFAULT);
+                
+                $stmt = $con->prepare("INSERT INTO users (fullname, phone, username, passwd) VALUES (?, ?, ?, ?)");
+                $stmt->bind_param("ssss", $fullname, $phone, $username, $hashed_password);
+                
+                if ($stmt->execute()) {
                     $response['status'] = 'success';
                     $response['message'] = 'Đăng ký thành công';
                 } else {
                     $response['status'] = 'error';
-                    $response['message'] = 'Lỗi: ' . $sql . '<br>' . $con->error;
+                    $response['message'] = 'Lỗi: ' . $stmt->error;
                 }
+                
+                $stmt->close();
             } else {
                 $response['status'] = 'error';
                 $response['message'] = 'Mật khẩu không khớp';
             }
         } else {
             // Xử lý đăng nhập
-            $sql = "SELECT * FROM accounts WHERE username='$username' AND password='$passwd'";
-            $result = $con->query($sql);
-
-            if ($result->num_rows > 0) {
-                $response['status'] = 'success';
-                $response['message'] = 'Đăng nhập thành công';
+            $stmt = $con->prepare("SELECT passwd FROM accounts WHERE username = ?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $stmt->store_result();
+            
+            if ($stmt->num_rows > 0) {
+                $stmt->bind_result($hashed_password);
+                $stmt->fetch();
+                
+                if (password_verify($passwd, $hashed_password)) {
+                    $response['status'] = 'success';
+                    $response['message'] = 'Đăng nhập thành công';
+                } else {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Tên đăng nhập hoặc mật khẩu không đúng';
+                }
             } else {
                 $response['status'] = 'error';
                 $response['message'] = 'Tên đăng nhập hoặc mật khẩu không đúng';
             }
+            
+            $stmt->close();
         }
     }
 }
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    
-    $con->close();
+
+header('Content-Type: application/json');
+echo json_encode($response);
+
+$con->close();
