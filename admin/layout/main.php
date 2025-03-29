@@ -57,7 +57,7 @@
                     <li class="sidebar-list-item user-logout">
                         <a href="admin.html" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa-light fa-circle-user"></i></div>
-                            <div class="hidden-sidebar" id="name-acc">Admin</div>
+                            <div class="hidden-sidebar" id="name-acc"><?php echo $_SESSION['username']; ?></div>
                         </a>
                     </li>
                     <li class="sidebar-list-item user-logout">
