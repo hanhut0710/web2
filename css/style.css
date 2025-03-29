@@ -1215,7 +1215,7 @@ ol {
 .shop__sidebar__accordion .card-body {
 	padding: 0;
 	padding-top: 10px;
-	padding-bottom: 20px;
+	padding-bottom: 10px;
 	border-bottom: 1px solid #e5e5e5;
 }
 
@@ -3936,3 +3936,7 @@ ol {
 	transform: scale(1.1);
 }
 
+.active {
+    font-weight: bold;
+    color: black; /* Hoặc màu nào bạn muốn */
+}

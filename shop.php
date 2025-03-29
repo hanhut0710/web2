@@ -44,26 +44,51 @@
     <script src="js/main.js"></script>
     <script src="js/script.js"></script>
     <script>
-document.addEventListener('DOMContentLoaded', (event) => {
-    loadProducts();
+        document.addEventListener("DOMContentLoaded", function () {
+    loadProducts('all'); // Load tất cả sản phẩm ban đầu
+
+    document.querySelectorAll('#category-list a').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            let categoryId = this.getAttribute('data-category-id');
+
+            console.log("Đã chọn danh mục:", categoryId); // ✅ Kiểm tra categoryId đúng chưa
+
+            currentPage = 1;
+
+            // Xóa class active khỏi tất cả danh mục
+            document.querySelectorAll('#category-list a').forEach(a => a.classList.remove('active'));
+
+            // Thêm class active vào danh mục được chọn
+            this.classList.add('active');
+
+            loadProducts(categoryId);
+        });
+    });
 });
+
 let currentPage = 1;
-let pageSize = 8;
-let prev = document.getElementById('prePage');
-let next = document.getElementById('nextPage');
-let current = document.getElementById('currentPage');
-function loadProducts() {
-    fetch(`./handle/get_product.php?page=${currentPage}&pageSize=${pageSize}`)
+let pageSize = 6;
+let currentCategory = 'all';
+
+function loadProducts(categoryId = 'all') {
+    currentCategory = categoryId;
+    fetch(`./handle/get_product.php?page=${currentPage}&pageSize=${pageSize}&category_id=${categoryId}`)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-            const productContainer = document.querySelector(".row.products");
-            productContainer.innerHTML = "";
-            let productItem = '';
+            console.log("Dữ liệu nhận được từ API:", data); // ✅ Kiểm tra API trả về đúng chưa
+
+            let productList = document.querySelector('.row.products');
+            productList.innerHTML = ""; // Xóa sản phẩm cũ trước khi hiển thị sản phẩm mới
+
+            if (data.data.length === 0) {
+                productList.innerHTML = "<p>Không có sản phẩm nào.</p>";
+                return;
+            }
+
             data.data.forEach(product => {
-                console.log(product.img_src);
-                productItem += `
-                    <div class="col-lg-4 col-md-6 col-sm-6">
+                let productHTML = `
+                     <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="">
                                     <img class="image" src="${product.img_src}">
@@ -98,45 +123,35 @@ function loadProducts() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                `;
-            })
-            productContainer.innerHTML += productItem;
+                        </div>`;
+                productList.innerHTML += productHTML;
+            });
+
             phanTrang(data);
         })
+        .catch(error => console.error("Lỗi khi tải sản phẩm:", error));
 }
 
-function phanTrang(data){
-    let maxPage = Math.floor(data.totalProduct / pageSize) + 1;
-    console.log(maxPage);
-    
-    current.innerHTML = currentPage;
-    prev.innerHTML = currentPage - 1;
-    next.innerHTML = currentPage + 1;
+function phanTrang(data) {
+    let maxPage = Math.ceil(data.totalProduct / pageSize);
 
-    if (currentPage < maxPage) {
-        next.style.display = "block";
-    } else {
-        next.style.display = "none";
-    }
-
-    if (currentPage > 1) {
-        prev.style.display = "block";
-    } else {
-        prev.style.display = "none";
-    }
-
+    document.getElementById('currentPage').innerText = currentPage;
+    document.getElementById("prePage").innerHTML = currentPage -1;
+    document.getElementById("nextPage").innerHTML = currentPage +1;
+    document.getElementById('prePage').style.display = currentPage > 1 ? "block" : "none";
+    document.getElementById('nextPage').style.display = currentPage < maxPage ? "block" : "none";
 }
 
-next.addEventListener('click', e => {
+document.getElementById('nextPage').addEventListener('click', () => {
     currentPage++;
-    loadProducts();
-})
+    loadProducts(currentCategory);
+});
 
-prev.addEventListener('click', e => {
+document.getElementById('prePage').addEventListener('click', () => {
     currentPage--;
-    loadProducts();
-})
+    loadProducts(currentCategory);
+});
+
 
     </script>
 </body>

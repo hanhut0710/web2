@@ -37,17 +37,16 @@
                                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
-                                                <ul class="nice-scroll">
-                                                    <li><a href="#">Men (20)</a></li>
-                                                    <li><a href="#">Women (20)</a></li>
-                                                    <li><a href="#">Bags (20)</a></li>
-                                                    <li><a href="#">Clothing (20)</a></li>
-                                                    <li><a href="#">Shoes (20)</a></li>
-                                                    <li><a href="#">Accessories (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                    <li><a href="#">Kids (20)</a></li>
-                                                </ul>
+                                            <ul id="category-list">
+                                                <li><a href="#" data-category-id="all" class="active">All</a></li>
+                                                <li><a href="#" data-category-id="1">Casualwear</a></li>
+                                                <li><a href="#" data-category-id="5">Sportwear</a></li>
+                                                <li><a href="#" data-category-id="2">Running</a></li>
+                                                <li><a href="#" data-category-id="4">Basketball</a></li>
+                                                <li><a href="#" data-category-id="3">Football</a></li>
+                                            </ul>
+                                            <div id="product-list"></div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -120,8 +119,6 @@
                             <div style="display: flex;justify-content: center;" class="product__pagination">
                                 <a style="display: none;margin: 0 10px;" id="prePage" href="#">Prev</a>
                                 <a class="active" style="margin: 0 10px;" href="#" id="currentPage">1</a>
-                                <a style="display: none;margin: 0 10px;" href="#" id="nextPage">2</a>
-                                <a style="display: none;margin: 0 10px;" href="#" id="nextPage">3</a>
                                 <a style="display: none;margin: 0 10px;" href="#" id="nextPage">Next</a>
                             </div>
                         </div>
