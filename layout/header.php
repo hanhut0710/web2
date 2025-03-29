@@ -3,7 +3,6 @@
     </div>
     <!-- Offcanvas Menu Begin -->
     <!-- Offcanvas Menu End -->
-
     <!-- Header Section Begin -->
     <header class="header">
         <div class="container">
@@ -16,7 +15,7 @@
                 <div style="margin-top: 20px" class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li><a href="./index.php">Trang chủ</a></li>
+                            <li><a href="">Trang chủ</a></li>
                             <li><a href="./shop.php">Sản phẩm</a></li>
                             <li><a href="">Lịch sử</a></li>
                             <li><a href="">Đơn hàng</a></li>
@@ -25,16 +24,31 @@
                 </div>
                 <div style="margin-top: 10px" class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a class="nav-link dropdown-toggle user" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img style="height: 20px; width: 20px; object-fit: cover;" src="img/icon/user.png" alt="">
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown04">
+                    <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+                    <a href="cart.php"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                    <?php session_start();
+                    if (isset($_SESSION["user"])): ?>
+                        <span class="username"><?= htmlspecialchars($_SESSION["user"]); ?></span>
+                        <a class="nav-link dropdown-toggle user_isLogin" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img style="height: 20px; width: 20px; object-fit: cover;" src="img/icon/user.png" alt="">
+                    </a>
+                    <?php else: ?>
+                         <a class="nav-link dropdown-toggle user" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img style="height: 20px; width: 20px; object-fit: cover;" src="img/icon/user.png" alt="">
+                    </a>
+                    <?php endif; ?>
+                        <?php if (isset($_SESSION["user"])): ?>
+                            <div id="userDropdown">
+                                <a class="dropdown-item" href="profile.php">Xem hồ sơ</a>
+                                <a class="dropdown-item" href="logout.php">Logout</a>
+                            </div>
+                        <?php else: ?>
+                            <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" href="#">Đăng nhập</a>
                             <a class="dropdown-item" href="#">Đăng ký</a>
-                        </div>
-                        <a href="./cart.php"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                            </div>
+                        <?php endif; ?>
+                    <!-- <div class="price">$0.00</div> -->
                     </div>
                 </div>
             </div>

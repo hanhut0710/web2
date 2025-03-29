@@ -10,11 +10,13 @@ const userIcon = document.querySelector(".nav-link.user");
         loginModal.classList.remove("active");
         loginForm.classList.remove("active");
     }
+    if (userIcon){
     userIcon.addEventListener("click", function (e) {
         e.preventDefault();
         loginModal.style.display = "flex"; // Hiển thị trước khi thêm class để transition hoạt động
         setTimeout(openModal, 10);
     });
+}
     loginModal.addEventListener("click", function (e) {
         // Nếu click vào modal (bên ngoài form), thì đóng modal
         if (!loginForm.contains(e.target)) {
@@ -27,12 +29,25 @@ const userIcon = document.querySelector(".nav-link.user");
     loginForm.addEventListener("click", function (e) {
         e.stopPropagation(); // Ngăn click trong form lan ra ngoài
     });
+    loginForm.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Ngăn form gửi đi mặc định
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("passwd").value.trim();
+
+            if (username === "" || password === "") {
+                alert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
+            } else {
+                submitForm("login"); // Gọi hàm đăng nhập nếu đủ thông tin
+            }
+        }
+    });
 function changeLogin(event) {
     // Ngăn sự kiện click lan ra ngoài
     if(event) event.stopPropagation();
     let form = document.querySelector('.form_login');
     let formContainer = document.querySelector('.form_login form'); // Chỉ thay đổi nội dung form
-
     if (form.classList.contains('login')) {
         formContainer.innerHTML = `
             <div class="input_box">
@@ -83,24 +98,61 @@ function changeLogin(event) {
 }
 
 
-function submitForm(type){
-    let formData;
-    if(type == 'login'){
-        formData = new FormData(document.getElementById('loginForm'));
-    }
-    else if(type == "register"){
-        formData = new FormData(document.getElementById('registerForm'));
+function submitForm(type) {
+    let form;
+
+    if (type === "login") {
+        form = document.getElementById("loginForm");
+    } else if (type === "register") {
+        form = document.getElementById("registerForm");
     }
 
-    fetch('./handle/login.php', {   
+    if (!form) {
+        alert("Lỗi: Không tìm thấy form.");
+        return;
+    }
+    // Kiểm tra thông tin trước khi gửi
+    const username = form.querySelector("#username")?.value.trim();
+    const password = form.querySelector("#passwd")?.value.trim();
+
+    if (!username || !password) {
+        alert("Vui lòng nhập đầy đủ thông tin!");
+        return;
+    }
+    let formData;
+    if (type === 'login') {
+        formData = new FormData(document.getElementById('loginForm'));
+    } else if (type === "register") {
+        formData = new FormData(document.getElementById('registerForm'));
+    }
+    fetch('./handle/login.php', {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
     })
     .then(response => response.json())
     .then(data => {
-       if(data['status'] === 'error'){
-            alert(data['message']);
-       }
+        if (data.status === 'error') {
+            alert(data.message);
+        } else {
+            alert(data.message);
+            window.location.href = "index.php";
+        }
     })
+    .catch(error => console.error("Lỗi kết nối:", error));
 }
+    const user_isLogin = document.querySelector(".user_isLogin");
+    const userDropdown = document.getElementById("userDropdown");
+    
+    user_isLogin.addEventListener("click", function (event) {
+        event.preventDefault(); // Ngăn chặn chuyển trang nếu có
+        userDropdown.style.display = (userDropdown.style.display === "block") ? "none" : "block";
+    });
+    document.addEventListener("click", function (event) {
+        if (!user_isLogin.contains(event.target) && !userDropdown.contains(event.target)) {
+            userDropdown.style.display = "none";
+        }
+    });
 
