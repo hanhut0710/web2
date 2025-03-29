@@ -1,5 +1,25 @@
 <?php
+    require_once "backend/auth.php";
+    $authManager = new Auth();
+    if(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']) && 
+            isset($_SESSION['role']) && $_SESSION['role'] == 2)
+    {
+        header('location: index.php');
+        exit();
+    }
 
+    if(isset($_POST['btnLogin']) && $_POST['btnLogin'])
+    {   
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $checked = $authManager -> checkLogin($username, $password);
+        if($checked && isset($_SESSION['role']) && $_SESSION['role'] == 2)
+        {
+            header('location: index.php');
+            exit();
+        }
+            echo "Đăng nhập thất bại \n";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -135,7 +155,7 @@
                 <label for="password">Mật khẩu</label>
                 <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
             </div>
-            <input type="submit" class="btn-login">Đăng Nhập</button>
+            <input type="submit" class="btn-login" name="btnLogin" value="Đăng nhập"></button>
         </form>
         <div class="login-footer">
             <p><a href="../index.php">Quay về trang chủ</a></p>

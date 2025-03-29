@@ -16,7 +16,7 @@ class Database {
         }
     }
 
-    public disConnection()
+    public function disConnection()
     {
         if($this->conn)
             mysqli_close($this->conn);
