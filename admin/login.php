@@ -1,3 +1,7 @@
+<?php
+
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -116,14 +120,13 @@
 
     <!-- Logo -->
     <div class="logo">
-        <img src="../images/logo.png" alt="Admin Logo">
+        <img src="../img/logo.png" alt="Admin Logo">
     </div>
-
+    
     <div class="login-container">
         <h2>Quản lý cửa hàng</h2>
-
-        <!-- Login Form -->
-        <form action="../admin/admin.html">
+    <!-- Login Form -->
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <div class="form-group">
                 <label for="username">Tên đăng nhập</label>
                 <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
@@ -132,10 +135,10 @@
                 <label for="password">Mật khẩu</label>
                 <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
             </div>
-            <button type="submit" class="btn-login">Đăng Nhập</button>
+            <input type="submit" class="btn-login">Đăng Nhập</button>
         </form>
         <div class="login-footer">
-            <p><a href="../index.html">Quay về trang chủ</a></p>
+            <p><a href="../index.php">Quay về trang chủ</a></p>
         </div>
     </div>
 
