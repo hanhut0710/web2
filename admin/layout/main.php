@@ -8,38 +8,38 @@
             </div>
             <div class="middle-sidebar">
                 <ul class="sidebar-list">
-                    <li class="sidebar-list-item tab-content active">
-                        <a href="admin.html" class="sidebar-link">
+                    <li class="sidebar-list-item tab-content active" data-mode="home">
+                        <a href="#" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa fa-home" aria-hidden="true"></i></div>
                             <div class="hidden-sidebar">Trang tổng quan</div>
                         </a>
                     </li>
-                    <li class="sidebar-list-item tab-content">
-                        <a href="adminProduct1.html" class="sidebar-link">
+                    <li class="sidebar-list-item tab-content" data-mode="product">
+                        <a href="#" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa-light fa-pot-food"></i></div>
                             <div class="hidden-sidebar">Sản phẩm</div>
                         </a>
                     </li>
-                    <li class="sidebar-list-item tab-content">
-                        <a href="customer.html" class="sidebar-link">
+                    <li class="sidebar-list-item tab-content" data-mode="customer">
+                        <a href="#" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
                             <div class="hidden-sidebar">Khách hàng</div>
                         </a>
                     </li>
-                    <li class="sidebar-list-item tab-content">
-                        <a href="order.html" class="sidebar-link">
+                    <li class="sidebar-list-item tab-content" data-mode="order">
+                        <a href="#" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
                             <div class="hidden-sidebar">Đơn hàng</div>
                         </a>
                     </li>
-                    <li class="sidebar-list-item tab-content">
-                        <a href="statistic.html" class="sidebar-link">
+                    <li class="sidebar-list-item tab-content" data-mode="product_stactics">
+                        <a href="#" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
                             <div class="hidden-sidebar">Thống kê sản phẩm</div>
                         </a>
                     </li>
-                    <li class="sidebar-list-item tab-content">
-                        <a href="statisticCustomer.html" class="sidebar-link">
+                    <li class="sidebar-list-item tab-content" data-mode="customer_statics">
+                        <a href="#" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa-solid fa-square-poll-vertical"></i></div>
                             <div class="hidden-sidebar">Thống kê khách hàng</div>
                         </a>
@@ -71,44 +71,7 @@
         </aside>
         <main class="content">
             <div class="section active">
-                <h1 class="page-title">Trang quản lý cửa hàng</h1>
-                <div class="cards">
-                    <div class="card-single">
-                        <div class="box">
-                            <h2 id="amount-user">4</h2>
-                            <div class="on-box">
-                                <img src="../assets/img/admin/s1.png" alt="" style=" width: 200px;">
-                                <h3>Khách hàng</h3>
-                                <p>Khách hàng mục tiêu là một nhóm đối tượng khách hàng trong phân khúc thị trường mục
-                                    tiêu mà doanh nghiệp bạn đang hướng tới.</p>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="card-single">
-                        <div class="box">
-                            <div class="on-box">
-                                <img src="assets/img/admin/s2.png" alt="" style=" width: 200px;">
-                                <h2 id="amount-product">15</h2>
-                                <h3>Sản phẩm</h3>
-                                <p>Sản phẩm là bất cứ cái gì có thể đưa vào thị trường để tạo sự chú ý, mua sắm, sử dụng
-                                    hay tiêu dùng nhằm thỏa mãn một nhu cầu hay ước muốn. Nó có thể là những vật thể,
-                                    dịch vụ, con người, địa điểm, tổ chức hoặc một ý tưởng. </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-single">
-                        <div class="box">
-                            <h2 id="doanh-thu">500.000 ₫</h2>
-                            <div class="on-box">
-                                <img src="assets/img/admin/s3.png" alt="" style=" width: 200px;">
-                                <h3>Doanh thu</h3>
-                                <p>Doanh thu của doanh nghiệp là toàn bộ số tiền sẽ thu được do tiêu thụ sản phẩm, cung
-                                    cấp dịch vụ với sản lượng.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             <!-- Product  -->
             <div class="section product-all">

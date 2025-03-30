@@ -633,8 +633,7 @@ tbody tr td {
 }
 
 .list-left img {
-    max-width: 150px;
-    min-width: 130px;
+    min-width: 200px;
     height: 100px;
     object-fit: cover;
     margin-right: 14px;
