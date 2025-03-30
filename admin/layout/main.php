@@ -32,6 +32,12 @@
                             <div class="hidden-sidebar">Đơn hàng</div>
                         </a>
                     </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="#" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa fa-users" aria-hidden="true"></i></div>
+                            <div class="hidden-sidebar">Nhân viên</div>
+                        </a>
+                    </li>
                     <li class="sidebar-list-item tab-content" data-mode="product_stactics">
                         <a href="#" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
@@ -42,6 +48,12 @@
                         <a href="#" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa-solid fa-square-poll-vertical"></i></div>
                             <div class="hidden-sidebar">Thống kê khách hàng</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="#" class="sidebar-link">
+                            <div class="sidebar-icon"><i class="fa-solid fa-list-check"></i></div>
+                            <div class="hidden-sidebar">Quản lý quyền</div>
                         </a>
                     </li>
                 </ul>
