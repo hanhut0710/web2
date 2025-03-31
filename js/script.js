@@ -96,8 +96,6 @@ function changeLogin(event) {
         form.classList.add('login');
     }
 }
-
-
 function submitForm(type) {
     let form;
 
