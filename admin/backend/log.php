@@ -23,6 +23,9 @@
     case "order":
         $response['order'] = $static->getOrderList();
         break;
+    case "staff":
+        $response['staff'] = $static->getStaffList();
+        break;
 
   }
   header('Content-Type: application/json');

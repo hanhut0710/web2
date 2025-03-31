@@ -181,7 +181,7 @@
             orderHTML = `
                 <div class="admin-control">
                     <div class="admin-control-left">
-                        <select name="tinh-trang" id="tinh-trang" onchange="findOrder()">
+                        <select name="tinh-trang" id="tinh-trang" onchange="">
                             <option value="4">Tất cả</option>
                             <option value="1">Đã xử lý</option>
                             <option value="0">Chưa xử lý</option>
@@ -253,6 +253,62 @@
             document.getElementById('showOrder').innerHTML = ordersHTML;
 
         }
+        function loadStaff(data){
+            let staffHTML = "";
+            staffHTML = `
+                <div class="admin-control">
+                    <div class="admin-control-left">
+                        <select name="tim-kiem-nhan-vien" id="tim-kiem-nhan-vien" onchange="">
+                            <option value="3">Tất cả</option>
+                            <option value="2">Manager</option>
+                            <option value="1">Admin</option>
+                            <option value="0">Staff</option>
+                        </select>
+                    </div>
+                    <div class="admin-control-center">
+                        <form action="" class="form-search">
+                            <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
+                            <input id="form-search-order" type="text" class="form-search-input" placeholder="Tìm kiếm mã nhân viên..." oninput="">
+                        </form>
+                    </div>
+                     <button id="btn-add-user" class="btn-control-large" onclick="openCreateAccount()"><i class="fa-light fa-plus"></i> <span>Thêm nhân viên</span></button>
+                </div>
+                <div class="table">
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <td>Mã nhân viên</td>
+                                <td>Tên nhân viên</td>
+                                <td>Số điện thoại</td>
+                                <td>Chức vụ</td>
+
+                                <td>Thao tác</td>
+                            </tr>
+                        </thead>
+                        <tbody id="showStaff">
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            document.querySelector('.section.active').innerHTML = staffHTML;
+            let staffsHTML = "";
+            data.staff.forEach(item => {
+                let role = (item.role == 2) ? "Manager" : (item.role == 1) ? "Admin" : staff;
+                staffsHTML += `
+                     <tr>
+                                <td>${item.id}</td>
+                                <td>${item.full_name}</td>
+                                <td>${item.phone}</td>
+                                <td>${role}</td>
+                                <td class="control control-table">
+                                <button class="btn-edit" id="edit-account" onclick="editAccount()"><i class="fa-light fa-pen-to-square"></i></button>
+                                <button class="btn-delete" id="delete-account" onclick="confirmDelete()"><i class="fa-regular fa-trash"></i></button>
+                                </td>
+                            </tr>                
+                `;
+            })
+            document.getElementById('showStaff').innerHTML = staffsHTML;
+        }
 
         document.addEventListener("DOMContentLoaded", function(){
             fetch("./backend/log.php?mode=home")
@@ -287,6 +343,9 @@
                                     break;
                                 case "order":
                                     loadOrder(data);
+                                    break;
+                                case "staff":
+                                    loadStaff(data);
                                     break;
                                     
 

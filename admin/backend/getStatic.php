@@ -68,4 +68,17 @@
             }
             return null;
         }
+
+        public function getStaffList(){
+            $sql = "SELECT * FROM admin";
+            $result = mysqli_query($this->conn, $sql);
+            $data = array();
+            if($result->num_rows > 0){
+                while($row = mysqli_fetch_assoc($result)){
+                    $data[] = $row;
+                }
+                return $data;
+            }
+            return null; 
+        }
     }

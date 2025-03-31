@@ -32,7 +32,7 @@
                             <div class="hidden-sidebar">Đơn hàng</div>
                         </a>
                     </li>
-                    <li class="sidebar-list-item tab-content">
+                    <li class="sidebar-list-item tab-content" data-mode="staff">
                         <a href="#" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa fa-users" aria-hidden="true"></i></div>
                             <div class="hidden-sidebar">Nhân viên</div>
@@ -50,7 +50,7 @@
                             <div class="hidden-sidebar">Thống kê khách hàng</div>
                         </a>
                     </li>
-                    <li class="sidebar-list-item tab-content">
+                    <li class="sidebar-list-item tab-content" data-mode="right">
                         <a href="#" class="sidebar-link">
                             <div class="sidebar-icon"><i class="fa-solid fa-list-check"></i></div>
                             <div class="hidden-sidebar">Quản lý quyền</div>
@@ -82,9 +82,6 @@
             </div>
         </aside>
         <main class="content">
-            <!-- Product  -->
-           
-            <!-- Account  -->
-            <!-- Order  -->
+            <div class="section active"></div>
         </main>
     </div>
