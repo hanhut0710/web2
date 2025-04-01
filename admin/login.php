@@ -8,17 +8,20 @@
         exit();
     }
 
+    $error = "";
+
     if(isset($_POST['btnLogin']) && $_POST['btnLogin'])
     {   
         $username = $_POST['username'];
         $password = $_POST['password'];
         $checked = $authManager -> checkLogin($username, $password);
-        if($checked && isset($_SESSION['role']))
+        if($checked)
         {
             header('location: index.php');
             exit();
         }
-            echo "Đăng nhập thất bại \n";
+        else
+            $error = 'Tài khoản hoặc mật khẩu không đúng !';
     }
 ?>
 
@@ -133,6 +136,12 @@
         .login-footer a:hover {
             text-decoration: underline;
         }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -157,6 +166,11 @@
             </div>
             <input type="submit" class="btn-login" name="btnLogin" value="Đăng nhập"></button>
         </form>
+
+        <?php
+            if($error)
+                echo '<div class="error">'.$error.'</div>';
+        ?> 
         <div class="login-footer">
             <p><a href="../index.php">Quay về trang chủ</a></p>
         </div>

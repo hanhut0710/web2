@@ -17,18 +17,22 @@ class Auth {
         if($result)
         {   
             $account = mysqli_fetch_assoc($result);
-            $_SESSION['loggedin'] = true;
-            $_SESSION['username'] = $account['username'];
-            $_SESSION['id'] = $account['id'];
-
-            $sql2 = "SELECT * FROM admin WHERE acc_id = ". $account['id'];
-            $result2 = mysqli_query($this->conn, $sql2);
-            if($result2)
+            if($account)
             {
-                $admin = mysqli_fetch_assoc($result2);
-                $_SESSION['role'] = $admin['role'];
+                $_SESSION['loggedin'] = true;
+                $_SESSION['username'] = $account['username'];
+                $_SESSION['id'] = $account['id'];
+    
+                $sql2 = "SELECT * FROM admin WHERE acc_id = ". $account['id'];
+                $result2 = mysqli_query($this->conn, $sql2);
+                if($result2)
+                {
+                    $admin = mysqli_fetch_assoc($result2);
+                    if($admin)
+                        $_SESSION['role'] = $admin['role'];
+                }
+                return true;
             }
-            return true;
         }
         return false; //Đăng nhập thất bại;
     }
