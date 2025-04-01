@@ -2,7 +2,7 @@
     require_once "backend/auth.php";
     $authManager = new Auth();
     if(isset($_SESSION['loggedin']) && ($_SESSION['loggedin']) && 
-            isset($_SESSION['role']) && $_SESSION['role'] == 2)
+            isset($_SESSION['role']))
     {
         header('location: index.php');
         exit();
@@ -13,7 +13,7 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         $checked = $authManager -> checkLogin($username, $password);
-        if($checked && isset($_SESSION['role']) && $_SESSION['role'] == 2)
+        if($checked && isset($_SESSION['role']))
         {
             header('location: index.php');
             exit();
