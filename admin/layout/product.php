@@ -1,14 +1,24 @@
+<?php
+    include "./backend/category.php";
+    $category = new Category();
+    $categoryList = $category -> getAllCategory();
+?>
+
 <div class="section product-all active">
             <div class="admin-control">
                 <div class="admin-control-left">
                     <select name="the-loai" id="the-loai">
-                        <option>Tất cả</option>
-                        <option>Cà phê</option>
-                        <option>Trà trái cây</option>
-                        <option>Trà sữa</option>
-                        <option>Đá xay</option>
-                        <option>Bánh ngọt</option>
-                        <option>Đã xóa</option>
+                        <?php
+                        if(count($categoryList) > 0)
+                        {
+                            foreach ($categoryList as $value) {
+                                # code...
+                                echo '<option>'.$value['name'].'</option>';
+                            }
+                        }
+                        else
+                            echo '<option>Không có</option>';
+                        ?>
                     </select>
                 </div>
                 <div class="admin-control-center">

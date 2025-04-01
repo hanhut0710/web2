@@ -14,7 +14,7 @@ class Auth {
     {
         $sql = "SELECT * FROM accounts WHERE username = '$username' AND password = '$password'";
         $result = mysqli_query($this->conn, $sql);
-        if($result -> num_rows > 0)
+        if($result)
         {   
             $account = mysqli_fetch_assoc($result);
             $_SESSION['loggedin'] = true;
@@ -23,7 +23,7 @@ class Auth {
 
             $sql2 = "SELECT * FROM admin WHERE acc_id = ". $account['id'];
             $result2 = mysqli_query($this->conn, $sql2);
-            if($result2 -> num_rows > 0)
+            if($result2)
             {
                 $admin = mysqli_fetch_assoc($result2);
                 $_SESSION['role'] = $admin['role'];
