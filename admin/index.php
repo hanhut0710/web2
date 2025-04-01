@@ -3,7 +3,7 @@ require_once "backend/auth.php";
 $authManager = new Auth();
 
 if(!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']
-    || !isset($_SESSION['role']) || $_SESSION['role'] != 2)
+    || !isset($_SESSION['role']))
 {
     header('location: login.php');
     exit();
