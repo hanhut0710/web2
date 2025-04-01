@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='../images/logo.png' rel='icon' type='image/x-icon' />
-    <link rel="stylesheet" href="../css/admin-responsive.css">
-    <link rel="stylesheet" href="../css/toast-message.css">
-    <link href="../fonts/font-awesome-pro-v6-6.2.0/css/all.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="../../css/admin.css">
-    <title>Quản lý cửa hàng</title>
-</head>
-
-<body>
-    <div class="container">
-        <!-- Side bar -->
-        <!-- Admin control -->
-        <main class="content">
-        <div class="section product-all active">
+<div class="section product-all active">
             <div class="admin-control">
                 <div class="admin-control-left">
                     <select name="the-loai" id="the-loai">
@@ -214,22 +195,3 @@
                 </ul>
             </div>
         </div>
-    </main>
-    </div>
-
-
-    <!-- JavaScripts -->
-     <script>
-        function deleteProduct(button) {
-
-    let confirmDelete = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
-    
-    if (confirmDelete) {
-            location.href='adminProduct1.html';
-        }
-    }
-
-     </script>
-</body>
-
-</html>

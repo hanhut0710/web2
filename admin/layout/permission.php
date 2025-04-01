@@ -1,0 +1,1 @@
+TRANG QUẢN LÝ QUYỀN

@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='../images/logo.png' rel='icon' type='image/x-icon' />
-    <link rel="stylesheet" href="../css/admin-responsive.css">
-    <link rel="stylesheet" href="../css/toast-message.css">
-    <link href="../fonts/font-awesome-pro-v6-6.2.0/css/all.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="../../css/admin.css">
-    <title>Quản lý cửa hàng</title>
-
-    <style>
+<style>
        #top5 {
     justify-content: center;
     align-items: center;
@@ -36,107 +23,7 @@ h2#top5 + br + br {
 }
 
 
-    </style>
-</head>
-
-<body>
-    <header class="header">
-        <button class="menu-icon-btn">
-            <div class="menu-icon">
-                <i class="fa-regular fa-bars"></i>
-            </div>
-        </button>
-    </header>
-    <div class="container">
-        <aside class="sidebar open">
-            <div class="top-sidebar">
-                <a href="#" class="channel-logo"><img src="../images/logo.png" alt="Lucy Coffe Logo"></a>
-                <div class="hidden-sidebar your-channel"><img src="../images/lucy.png"
-                        style="height: 30px;" alt="">
-                </div>
-            </div>
-            <div class="middle-sidebar">
-                <ul class="sidebar-list">
-                    <li class="sidebar-list-item tab-content">
-                        <a href="admin.html" class="sidebar-link">
-                            <div class="sidebar-icon"><i class="fa fa-home" aria-hidden="true"></i></div>
-                            <div class="hidden-sidebar">Trang tổng quan</div>
-                        </a>
-                    </li>
-                    <li class="sidebar-list-item tab-content">
-                        <a href="adminProduct1.html" class="sidebar-link">
-                            <div class="sidebar-icon"><i class="fa-light fa-pot-food"></i></div>
-                            <div class="hidden-sidebar">Sản phẩm</div>
-                        </a>
-                    </li>
-                    <li class="sidebar-list-item tab-content">
-                        <a href="customer.html" class="sidebar-link">
-                            <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
-                            <div class="hidden-sidebar">Khách hàng</div>
-                        </a>
-                    </li>
-                    <li class="sidebar-list-item tab-content">
-                        <a href="order.html" class="sidebar-link">
-                            <div class="sidebar-icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
-                            <div class="hidden-sidebar">Đơn hàng</div>
-                        </a>
-                    </li>
-                    <li class="sidebar-list-item tab-content">
-                        <a href="statistic.html" class="sidebar-link">
-                            <div class="sidebar-icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
-                            <div class="hidden-sidebar">Thống kê sản phẩm</div>
-                        </a>
-                    </li>
-                    <li class="sidebar-list-item tab-content active">
-                        <a href="statisticCustomer.html" class="sidebar-link">
-                            <div class="sidebar-icon"><i class="fa-solid fa-square-poll-vertical"></i></div>
-                            <div class="hidden-sidebar">Thống kê khách hàng</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="bottom-sidebar">
-                <ul class="sidebar-list">
-                    <li class="sidebar-list-item user-logout">
-                        <a href="../index.html" class="sidebar-link">
-                            <div class="sidebar-icon"><i class="fa-solid fa-house"></i></div>
-                            <div class="hidden-sidebar">Trang chủ</div>
-                        </a>
-                    </li>
-                    <li class="sidebar-list-item user-logout">
-                        <a href="admin.html" class="sidebar-link">
-                            <div class="sidebar-icon"><i class="fa-light fa-circle-user"></i></div>
-                            <div class="hidden-sidebar" id="name-acc">Admin</div>
-                        </a>
-                    </li>
-                    <li class="sidebar-list-item user-logout">
-                        <a href="login.html" class="sidebar-link" id="logout-acc">
-                            <div class="sidebar-icon"><i class="fa-light fa-arrow-right-from-bracket"></i></div>
-                            <div class="hidden-sidebar">Đăng xuất</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </aside>
-        <main class="content">
-            <!-- Order  -->
-                <!-- <div class="table">
-                    <table width="100%">
-                        <thead>
-                            <tr>
-                                <td>Mã đơn</td>
-                                <td>Khách hàng</td>
-                                <td>Ngày đặt</td>
-                                <td>Tổng tiền</td>
-                                <td>Trạng thái</td>
-                                <td>Thao tác</td>
-                            </tr>
-                        </thead>
-                        <tbody id="showOrder">
-                        </tbody>
-                    </table>
-                </div>
-            </div> -->
+</style>
             <div class="section active">
                 <div class="admin-control">
                     <!-- <div class="admin-control-left">
@@ -340,20 +227,3 @@ h2#top5 + br + br {
                 </table>
             </div>
         </div>
-        
-        </main>
-    </div>
-    </div>
-    </div>
-    </div>
-    <div id="toast"></div>
-    <!-- <script src="js/admin.js"></script>
-    <script src="js/toast-message.js"></script> -->
-
-    <script>
-    function reloadPage() {
-        location.reload();
-    }
-    </script>
-</body>
-</html>
