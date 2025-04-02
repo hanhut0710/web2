@@ -289,10 +289,10 @@
         //                 </tbody>
         //             </table>
         //         </div>
-        //     `;
-        //     document.querySelector('.section.active').innerHTML = staffHTML;
-        //     let staffsHTML = "";
-        //     data.staff.forEach(item => {
+        // //     `;
+        // //     document.querySelector('.section.active').innerHTML = staffHTML;
+        // //     let staffsHTML = "";
+        // //     data.staff.forEach(item => {
         //         let role = (item.role == 2) ? "Manager" : (item.role == 1) ? "Admin" : staff;
         //         staffsHTML += `
         //              <tr>
@@ -355,7 +355,7 @@
         //         })
         //     })
         // })
-
+            
         let sidebar_tab = document.querySelectorAll(".sidebar-list-item.tab-content");
         sidebar_tab.forEach(item => {
             item.addEventListener('click', function() {
