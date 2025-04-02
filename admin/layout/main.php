@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <div class="container">
         <aside class="sidebar open">
             <div class="top-sidebar">
@@ -111,6 +112,12 @@
                     case "permission":
                         include "permission.php";
                         break;
+                    case "createStaff":
+                        include "addStaff.php";
+                        break;
+                    case "updateStaff":
+                        include "updateStaff.php";
+                        break;
                     default:
                         include "home.php";
                         break;
@@ -121,3 +128,4 @@
         ?>
         </main>
     </div>
+<?php ob_end_flush(); ?>

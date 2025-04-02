@@ -359,8 +359,9 @@
         let sidebar_tab = document.querySelectorAll(".sidebar-list-item.tab-content");
         sidebar_tab.forEach(item => {
             item.addEventListener('click', function() {
+                
                 sidebar_tab.forEach(tab => tab.classList.remove('active'))
-                this.classList.add('active');
+                item.classList.add('active');
             })
         })
     </script>
