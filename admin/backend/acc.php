@@ -43,4 +43,9 @@
             $sql = "UPDATE accounts SET username = '$username', password = '$passwd' WHERE id = '$id'";
             mysqli_query($this->conn, $sql);
         }
+
+        public function deleteAcc($id){
+            $sql = "DELETE FROM accounts WHERE id = '$id'";
+            mysqli_query($this->conn, $sql);
+        }
     }

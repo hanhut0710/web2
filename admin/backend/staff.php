@@ -42,5 +42,22 @@
             $sql = "UPDATE admin SET full_name = '$full_name', phone = '$phone', role = '$role' WHERE id = '$id'";
             mysqli_query($this->conn, $sql);
         }
+
+        public function getAccIdByStaffId($id) {
+            $id = mysqli_real_escape_string($this->conn, $id);
+            $sql = "SELECT acc_id FROM admin WHERE id = '$id'";
+            $result = mysqli_query($this->conn, $sql);
+
+            if ($result && mysqli_num_rows($result) > 0) {
+                return mysqli_fetch_assoc($result)['id'];
+            }
+
+            return null; 
+        }
+
+        public function deleteStaff($id){
+            $sql = "DELETE FROM admin WHERE id = '$id'";
+            mysqli_query($this->conn, $sql);
+        }
         
    }

@@ -118,6 +118,9 @@
                     case "updateStaff":
                         include "updateStaff.php";
                         break;
+                    case "deleteStaff":
+                        include "deleteStaff.php";
+                        break;
                     default:
                         include "home.php";
                         break;

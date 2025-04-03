@@ -49,7 +49,7 @@
                                                 <td>'.$staff['role'].'</td>
                                                 <td class="control control-table">
                                                     <a href="index.php?page=updateStaff&id='.$staff['id'].'" class="btn-edit" ><i class="fa-light fa-pen-to-square"></i></a>
-                                                    <button class="btn-delete" id="delete-account" onclick="confirmDelete()"><i class="fa-regular fa-trash"></i></button>
+                                                    <a href="index.php?page=deleteStaff&id='.$staff['id'].'" class="btn-delete" onclick="return confirm(\'Bạn có chắc chắn muốn xóa nhân viên này không?\')"><i class="fa-regular fa-trash"></i></a>
                                                 </td>
                                             </tr>
                                         ';
