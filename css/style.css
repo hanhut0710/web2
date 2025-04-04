@@ -3996,29 +3996,62 @@ ol {
 
 /* Nội dung popup */
 .product-detail-content {
+    display: flex; /* Sử dụng Flexbox để chia bố cục */
+    justify-content: space-between; /* Tạo khoảng cách giữa các phần*/
+    align-items: flex-start; /* Căn các phần tử theo chiều dọc */
+    gap: 20px; /* Khoảng cách giữa hình ảnh và thông tin */
+    padding: 30px;
     background: #fff;
-    width: 650px;  /* Chiều rộng ô popup */
-    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    position: relative;
-    text-align: center;
-	padding: 30px ;
 }
 
 /* Nút đóng popup */
+/* Định vị nút X bên trong sản phẩm */
 .product-detail-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
     cursor: pointer;
     font-size: 20px;
     color: #333;
+    font-weight: bold;
+    z-index: 1000;
+
+    width: 40px;
+    height: 40px;
+
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%; /* Giữ hình tròn */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+    border: none; /* Bỏ viền */
+    outline: none; /* Bỏ đường viền khi focus */
+    transition: transform 0.2s, background 0.2s;
 }
 
+/* Khi hover vào nút X */
 .product-detail-close:hover {
-    color: red;
+    background: red;
+    color: white;
+    transform: scale(1.1);
 }
+
+
+/* Đảm bảo .product-detail-content không che mất nút X */
+.product-detail-content {
+    position: relative; /* Giữ bố cục để .product-detail-close bám vào */
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
 
 /* Ảnh sản phẩm */
 .product__details__pic img {
@@ -4068,4 +4101,48 @@ ol {
 
 .btn-buynow:hover {
     background: #cc0000;
+}
+
+.size-options span{
+	border: 3px solid black;
+	margin: 10px;
+	padding: 8px 15px;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+.size-options{
+	padding: 10px;
+}
+.size-options span:hover, 
+.size-options span.active{
+	background-color: #000;
+	color: white;
+}
+#popup-sizes{
+	width: 100%;
+	padding: 10px;
+}
+
+.color-options {
+    gap: 10px; /* Khoảng cách giữa các màu */
+    margin-top: 5px;
+}
+
+.color-option {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* Biến thành hình tròn */
+    display: inline-block;
+    border: 2px solid #ddd; /* Viền màu xám nhẹ */
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.color-option:hover {
+    transform: scale(1.1); /* Phóng to khi hover */
+}
+
+.color-option.active {
+    border-color: black; /* Viền đậm khi được chọn */
 }

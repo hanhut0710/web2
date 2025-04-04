@@ -170,20 +170,57 @@ function openProductDetails(productId) {
             } else {
                 console.log("Dữ liệu sản phẩm:", data); // Kiểm tra dữ liệu
                 // Điền thông tin vào popup
-                document.getElementById("popup-image").src = data.img_src;
-                document.getElementById("popup-name").innerText = data.name;
-                document.getElementById("popup-price").innerText = data.price;
-                document.getElementById("popup-brand").innerText = data.brand;
-                document.getElementById("popup-color").innerText = data.color;
+                document.getElementById("popup-image").src = data.product.img_src;
+                document.getElementById("popup-name").innerText = data.product.name;
+                document.getElementById("popup-price").innerText = data.product.price;
+                document.getElementById("popup-brand").innerText = data.product.brand;
+                document.getElementById("popup-color").innerText = data.product.color;
             
                 const sizeContainer = document.getElementById("popup-sizes");
                 sizeContainer.innerHTML = ""; // Xóa danh sách cũ // Chuyển chuỗi size thành mảng
-                sizes.forEach(size => {
+                data.size.forEach(size => {
+                    console.log(size)
                     const sizeElement = document.createElement("span");
                     sizeElement.classList.add("size-option");
-                    sizeElement.innerText = size.trim();
+                    sizeElement.innerText = size.size;
                     sizeContainer.appendChild(sizeElement);
+
+                    sizeElement.addEventListener("click", function () {
+                        // Xóa active cũ
+                        document.querySelectorAll('.size-option').forEach(e => e.classList.remove("active"));
+                        sizeElement.classList.add("active");
+                        console.log("Size đã chọn:", size.size);
+                    });
                 });
+
+                // Xử lý màu sắc
+                const colorContainer = document.getElementById("popup-color");
+                const productImage = document.getElementById("popup-image"); // Ảnh sản phẩm
+
+                colorContainer.innerHTML = "";
+
+                data.color.forEach(color => {
+                    console.log(color);
+
+                const colorElement = document.createElement("span");
+                colorElement.classList.add("color-option");
+                colorElement.style.backgroundColor = color.color; // Gán màu nền
+
+                colorContainer.appendChild(colorElement);
+
+                colorElement.addEventListener("click", function () {
+                    // Xóa class active của các màu trước đó
+                    document.querySelectorAll('.color-option').forEach(e => e.classList.remove("active"));
+                    colorElement.classList.add("active");
+                    console.log("Màu đã chọn:", color.color);
+
+                    // Thay đổi hình ảnh tương ứng với màu được chọn
+                    console.log("Màu đã chọn:", color.color);
+                    console.log("URL hình ảnh:", color.img_src);
+                     productImage.src = color.img_src; // Cập nhật ảnh theo màu
+                    });
+                });
+
             }
         })
         
@@ -196,4 +233,17 @@ function openProductDetails(productId) {
 function closeProductDetails() {
     document.getElementById("productDetails").classList.remove("show");
 }
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     let options = document.querySelectorAll('.size-option');
+
+//     options.forEach(option => {
+//         option.addEventListener('click', function () {
+//             console.log("cc");
+//             options.forEach(e => e.classList.remove("active"));
+//             option.classList.add("active");
+//         });
+//     });
+// });
 

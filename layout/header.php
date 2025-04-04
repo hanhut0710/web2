@@ -101,12 +101,12 @@
             <p><strong>Giá:</strong> <span id="popup-price"></span></p>
             <p><strong>Thương hiệu:</strong> <span id="popup-brand"></span></p>
 
-            <p><strong>Màu sắc:</strong> <span id="popup-color"></span></p>
+            <p><strong>Màu sắc:</strong></p>   
+            <div id="popup-color" class="color-options"></div>
             
             <p><strong>Kích thước:</strong></p>
-            <div id="popup-sizes" class="size-options">
-            <!-- Các size sẽ được thêm vào đây -->
-            </div>
+            <div id="popup-sizes" class="size-options"></div>
+            
             <!-- Nút Thêm vào giỏ hàng & Mua ngay -->
             <button class="btn-addcart">Thêm vào giỏ hàng</button>
             <button class="btn-buynow">Mua ngay</button>
