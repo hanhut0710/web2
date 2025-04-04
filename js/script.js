@@ -98,13 +98,11 @@ function changeLogin(event) {
 }
 function submitForm(type) {
     let form;
-
     if (type === "login") {
         form = document.getElementById("loginForm");
     } else if (type === "register") {
         form = document.getElementById("registerForm");
     }
-
     if (!form) {
         alert("Lỗi: Không tìm thấy form.");
         return;
@@ -112,7 +110,6 @@ function submitForm(type) {
     // Kiểm tra thông tin trước khi gửi
     const username = form.querySelector("#username")?.value.trim();
     const password = form.querySelector("#passwd")?.value.trim();
-
     if (!username || !password) {
         alert("Vui lòng nhập đầy đủ thông tin!");
         return;
@@ -123,14 +120,19 @@ function submitForm(type) {
     } else if (type === "register") {
         formData = new FormData(document.getElementById('registerForm'));
     }
-    fetch('./handle/login.php', {
+    fetch("handle/login.php", {
         method: 'POST',
         body: formData,
         headers: {
             'Accept': 'application/json'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Lỗi server: ' + response.statusText);
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.status === 'error') {
             alert(data.message);
@@ -139,7 +141,28 @@ function submitForm(type) {
             window.location.href = "index.php";
         }
     })
-    .catch(error => console.error("Lỗi kết nối:", error));
+    .catch(error => {
+        console.error("Lỗi kết nối:", error);
+        alert("Có lỗi xảy ra khi kết nối với máy chủ. Vui lòng thử lại!");
+    });
+    
+    // fetch('./handle/login.php', {
+    //     method: 'POST',
+    //     body: formData,
+    //     headers: {
+    //         'Accept': 'application/json'
+    //     }
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //     if (data.status === 'error') {
+    //         alert(data.message);
+    //     } else {
+    //         alert(data.message);
+    //         window.location.href = "index.php";
+    //     }
+    // })
+    // .catch(error => console.error("Lỗi kết nối:", error));
 }
     const user_isLogin = document.querySelector(".user_isLogin");
     const userDropdown = document.getElementById("userDropdown");

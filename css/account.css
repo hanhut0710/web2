@@ -89,6 +89,9 @@ body {
     color: #555;
     display: block;
 }
+.profile-sidebar--submenu-item :hover{
+    color: #ee4d2d;
+}
 
 .profile-sidebar--submenu-item--active {
     color: #ee4d2d;
@@ -288,5 +291,98 @@ body {
 
     .profile-account__custom-form__label {
         width: 100%;
+    }
+}
+.profile-main {
+    padding: 30px;
+    background-color: white;
+}
+
+.account-forgot-password-form {
+    background-color: white;
+    padding: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.account-forgot-password-header-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.account-forgot-password-header-des {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.account-forgot-password-group {
+    margin-bottom: 20px;
+}
+
+.account-forgot-password-label-text {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+    color: #444;
+}
+
+.account-forgot-password-input-full {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: 0.2s ease;
+}
+
+.account-forgot-password-input-full:focus {
+    border-color: #ee4d2d;
+    outline: none;
+}
+
+.account-forgot-password-item-link {
+    margin-top: 6px;
+    background: none;
+    border: none;
+    color: #0b5ed7;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.account-forgot-password-item-link:hover {
+    text-decoration: underline;
+}
+
+.account-forgot-password-right-space {
+    text-align: right;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+    background-color: #ee4d2d;
+}
+
+.btn-solid-primary {
+    background-color: #ee4d2d !important;
+    color: white !important;
+}
+
+.btn-solid-primary:hover {
+    background-color: #e57e6c !important;
+}
+
+@media (max-width: 768px) {
+    .account-forgot-password-form {
+        padding: 20px;
     }
 }
