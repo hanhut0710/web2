@@ -15,9 +15,9 @@
                 <div style="margin-top: 20px" class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li><a href="">Trang chủ</a></li>
+                            <li><a href="./index.php">Trang chủ</a></li>
                             <li><a href="./shop.php">Sản phẩm</a></li>
-                            <li><a href="">Lịch sử</a></li>
+                            <li><a href="./history.php">Lịch sử</a></li>
                             <li><a href="">Đơn hàng</a></li>
                         </ul>
                     </nav>
@@ -39,8 +39,8 @@
                     <?php endif; ?>
                         <?php if (isset($_SESSION["user"])): ?>
                             <div id="userDropdown">
-                                <a class="dropdown-item" href="profile.php">Xem hồ sơ</a>
-                                <a class="dropdown-item" href="logout.php">Logout</a>
+                                <a class="dropdown-item" href="account.php">Xem hồ sơ</a>
+                                <a class="dropdown-item" href="./handle/logout.php">Logout</a>
                             </div>
                         <?php else: ?>
                             <div class="dropdown-menu" aria-labelledby="dropdown04">
@@ -66,11 +66,11 @@
             <form id="loginForm">
                 <div class="input_box">
                     <label for="username">Tên đăng nhập</label><br>
-                    <input type="text" id="username" name="username" placeholder="Tên đăng nhập">
+                    <input type="text" id="username" name="username" placeholder="Tên đăng nhập" value="hanhut"> 
                 </div>
                 <div class="input_box">
                     <label for="passwd">Mật khẩu</label><br>
-                    <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu">
+                    <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu" value="anhnhutdeptrai"> 
                 </div>
                 <div class="input_box checkbox">
                     <p>Bạn chưa có tài khoản?<a href="#" onclick="changeLogin()"> Đăng kí</a></p>

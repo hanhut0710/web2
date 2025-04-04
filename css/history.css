@@ -1,0 +1,106 @@
+/* Cấu trúc chung cho trang */
+.orders-page {
+    font-family: Arial, sans-serif;
+}
+
+/* Tab Navigation */
+.custom-tab-nav {
+    display: flex;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.custom-tab-nav-item {
+    text-align: center;
+    padding: 10px 20px;
+    flex-grow: 1;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333 !important;
+    font-size: 16px;
+    border: 1px solid transparent;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-tab-nav-item:hover {
+    color:#ee4d2d !important;
+    background-color: #f0f0f0;
+}
+
+.custom-tab-nav-item--active {
+    color: #ee4d2d;
+    border-bottom: 2px solid #ee4d2d ;
+}
+
+/* Tab Content */
+.custom-tab-contents {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-tab-content-item {
+    display: none;
+    height: 700px;
+}
+
+.custom-tab-content-item--active {
+    display: block;
+}
+
+/* No Orders */
+.no-orders {
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 0.125rem;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+    background: #fff;
+    height: 700px;
+    text-align: center;
+}
+
+.no-orders-thumb {
+        background-position: 50%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 100px;
+        height: 100px;
+        background-image: url("../img/icon/no-orders.png");
+}
+
+.no-orders-title {
+    font-size: 18px;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* Responsive: Tab Navigation */
+@media (max-width: 768px) {
+    .custom-tab-nav {
+        flex-direction: column;
+    }
+
+    .custom-tab-nav-item {
+        padding: 12px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .no-orders-title {
+        font-size: 16px;
+    }
+}

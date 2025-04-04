@@ -3958,6 +3958,7 @@ ol {
     padding: 10px;
 	text-align: left;
     min-width: 150px;
+	z-index: 1000;
 }
 
 #userDropdown a {

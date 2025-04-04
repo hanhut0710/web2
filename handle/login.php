@@ -1,93 +1,70 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+session_start();
 
 include("./connect.php");
+include("../class/account.php");
 
-$response = array();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_POST['username']) || !isset($_POST['passwd'])) {
-        $response['status'] = 'error';
-        $response['message'] = 'Thiếu thông tin!';
-    } else {
-        $username = trim($_POST['username']);
-        $passwd = trim($_POST['passwd']);
-
-        if (isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['repasswd'])) {
-            // Xử lý đăng ký
-            $fullname = trim($_POST['fullname']);
-            $phone = trim($_POST['phone']);
-            $repasswd = trim($_POST['repasswd']);
-
-            if ($passwd !== $repasswd) {
-                $response['status'] = 'error';
-                $response['message'] = 'Mật khẩu không khớp!';
-            } else {
-                // Kiểm tra username có tồn tại không
-                $stmt = $con->prepare("SELECT * FROM accounts WHERE username = ?");
-                $stmt->bind_param("s", $username);
-                $stmt->execute();
-                $result = $stmt->get_result();
-
-                if ($result->num_rows > 0) {
-                    $response['status'] = 'error';
-                    $response['message'] = 'Tên đăng nhập đã tồn tại!';
-                } else {
-                    // Mã hóa mật khẩu trước khi lưu
-                    $hashedPassword = password_hash($passwd, PASSWORD_BCRYPT);
-                    // Lưu vào database
-                    $stmt = $con->prepare("INSERT INTO accounts (username, password) VALUES (?, ?)");
-                    $stmt->bind_param("ss", $username, $hashedPassword);
-
-                    if ($stmt->execute()) {
-                        $response['status'] = 'success';
-                        $response['message'] = 'Đăng ký thành công!';
-                    } else {
-                        $response['status'] = 'error';
-                        $response['message'] = 'Lỗi khi đăng ký!';
-                    }
-                }
-                $stmt->close();
-            }
-        } else {
-            // Xử lý đăng nhập
-            $stmt = $con->prepare("SELECT * FROM accounts WHERE username = ?");
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0) {
-                $user = $result->fetch_assoc();
-                
-                // Kiểm tra mật khẩu
-                // if (password_verify($passwd, $user["password"])) {
-                //     session_start();
-                //     $_SESSION["user"] = $username;
-                    
-                //     $response['status'] = 'success';
-                //     $response['message'] = 'Đăng nhập thành công!';
-                // }
-                if ($passwd === $user["password"]) {
-                    session_start();
-                    $_SESSION["user"] = $username;
-                    $response['status'] = 'success';
-                    $response['message'] = 'Đăng nhập thành công!';
-                } else {
-                    $response['status'] = 'error';
-                    $response['message'] = 'Mật khẩu không đúng!';
-                }
-            } else {
-                $response['status'] = 'error';
-                $response['message'] = 'Tài khoản không tồn tại!';
-            }
-            $stmt->close();
-        }
+// Xử lý CSRF Token (đảm bảo tính bảo mật)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['fullname'], $_POST['phone'], $_POST['repasswd'])) {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $response = ['status' => 'error', 'message' => 'CSRF token không hợp lệ!'];
+        echo json_encode($response);
+        exit;
     }
 }
 
+$response = [];
+
+// Tạo CSRF token khi người dùng truy cập trang (nếu chưa có)
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Tạo một token ngẫu nhiên
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Khởi tạo đối tượng Account
+    $account = new Account();
+    
+    // Lấy thông tin từ form và kiểm tra
+    $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+    $passwd = isset($_POST['passwd']) ? trim($_POST['passwd']) : '';
+    $fullname = isset($_POST['fullname']) ? trim($_POST['fullname']) : '';
+    $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
+    $repasswd = isset($_POST['repasswd']) ? trim($_POST['repasswd']) : '';
+
+    // Kiểm tra xem thông tin đã đầy đủ chưa
+    if (empty($username) || empty($passwd)) {
+        $response = ['status' => 'error', 'message' => 'Thiếu thông tin!'];
+    } elseif (isset($_POST['fullname'], $_POST['phone'], $_POST['repasswd'])) {
+        // Đăng ký
+        if ($passwd !== $repasswd) {
+            $response = ['status' => 'error', 'message' => 'Mật khẩu không khớp!'];
+        } elseif (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            $response = ['status' => 'error', 'message' => 'Email không hợp lệ!'];
+        } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
+            $response = ['status' => 'error', 'message' => 'Số điện thoại không hợp lệ!'];
+        } else {
+            // Mã hóa mật khẩu trước khi lưu
+            $hashed_password = password_hash($passwd, PASSWORD_DEFAULT);
+
+            // Thực hiện đăng ký
+            $response = $account->register($username, $hashed_password, $fullname, $phone, $con);
+        }
+    } else {
+        // Đăng nhập
+         
+                if ($account->login($username, $passwd, $con)) {
+                    // Lưu thông tin vào session
+                    $_SESSION['user'] = $account->getUsername();
+                    $_SESSION['id'] = $account->getId();
+                    $response = ['status' => 'success', 'message' => 'Đăng nhập thành công!'];
+                } else {
+                    $response = ['status' => 'error', 'message' => 'Mật khẩu hoặc tài khoản không đúng!'];
+                }
+    }
+}
 header('Content-Type: application/json');
 echo json_encode($response);
-
 $con->close();
 ?>
