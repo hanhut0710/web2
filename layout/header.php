@@ -39,7 +39,7 @@
                     <?php endif; ?>
                         <?php if (isset($_SESSION["user"])): ?>
                             <div id="userDropdown">
-                                <a class="dropdown-item" href="profile.php">Xem hồ sơ</a>
+                                <a class="dropdown-item" href="account.php">Xem hồ sơ</a>
                                 <a class="dropdown-item" href="logout.php">Logout</a>
                             </div>
                         <?php else: ?>
