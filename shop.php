@@ -91,7 +91,7 @@ function loadProducts(categoryId = 'all') {
                      <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="">
-                                    <img class="image" src="${product.img_src}">
+                                    <img class="image" src="${product.img_src}" onclick="openProductDetails(${product.id})">
                                     <ul class="product__hover">
                                         <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                         <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>

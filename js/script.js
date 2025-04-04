@@ -156,3 +156,44 @@ function submitForm(type) {
         }
     });
 
+    
+// Hiển thị popup sản phẩm
+function openProductDetails(productId) {
+    console.log("Product ID:", productId); // Kiểm tra giá trị
+
+    // Gửi yêu cầu AJAX để lấy chi tiết sản phẩm từ database
+    fetch(`./handle/get_product_details.php?product_id=${productId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Lỗi:", data.error);
+            } else {
+                console.log("Dữ liệu sản phẩm:", data); // Kiểm tra dữ liệu
+                // Điền thông tin vào popup
+                document.getElementById("popup-image").src = data.img_src;
+                document.getElementById("popup-name").innerText = data.name;
+                document.getElementById("popup-price").innerText = data.price;
+                document.getElementById("popup-brand").innerText = data.brand;
+                document.getElementById("popup-color").innerText = data.color;
+            
+                const sizeContainer = document.getElementById("popup-sizes");
+                sizeContainer.innerHTML = ""; // Xóa danh sách cũ // Chuyển chuỗi size thành mảng
+                sizes.forEach(size => {
+                    const sizeElement = document.createElement("span");
+                    sizeElement.classList.add("size-option");
+                    sizeElement.innerText = size.trim();
+                    sizeContainer.appendChild(sizeElement);
+                });
+            }
+        })
+        
+
+    // Hiển thị popup
+    document.getElementById("productDetails").classList.add("show");
+}
+
+// Ẩn popup khi nhấn nút đóng
+function closeProductDetails() {
+    document.getElementById("productDetails").classList.remove("show");
+}
+

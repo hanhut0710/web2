@@ -82,5 +82,36 @@
     </div>
     <!-- Header Section End -->
 
+    <!-- Popup chi tiết sản phẩm -->
+    <div class="product-details" id="productDetails" >
+    <div class="product-detail-content">
+        <!-- Nút đóng popup -->
+        <div class="product-detail-close" onclick="closeProductDetails()">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
 
-    
+        <!-- Ảnh sản phẩm -->
+        <div class="product__details__pic">
+            <img id="popup-image" src="img/product-details.jpg" alt="Product Image">
+        </div>
+
+        <!-- Thông tin sản phẩm -->
+        <div class="product__details__text">
+            <h4 id="popup-name">Tên sản phẩm</h4>
+            <p><strong>Giá:</strong> <span id="popup-price"></span></p>
+            <p><strong>Thương hiệu:</strong> <span id="popup-brand"></span></p>
+
+            <p><strong>Màu sắc:</strong> <span id="popup-color"></span></p>
+            
+            <p><strong>Kích thước:</strong></p>
+            <div id="popup-sizes" class="size-options">
+            <!-- Các size sẽ được thêm vào đây -->
+            </div>
+            <!-- Nút Thêm vào giỏ hàng & Mua ngay -->
+            <button class="btn-addcart">Thêm vào giỏ hàng</button>
+            <button class="btn-buynow">Mua ngay</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>    
