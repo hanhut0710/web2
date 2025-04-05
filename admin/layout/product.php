@@ -41,8 +41,8 @@
                     </form>
                 </div>
                 <div class="admin-control-right">
-                    <button class="btn-control-large" id="btn-cancel-product" onclick="location.href='adminProduct1.html'"><i class="fa-light fa-rotate-right"></i> Làm mới</button>
-                    <button class="btn-control-large" id="btn-add-product" onclick="location.href='addProduct.html'"><i class="fa-light fa-plus"></i> Thêm món mới</button>
+                    <button class="btn-control-large" id="btn-cancel-product"><i class="fa-light fa-rotate-right"></i> Làm mới</button>
+                    <a href="index.php?page=addProduct"><button class="btn-control-large" id="btn-add-product" ><i class="fa-light fa-plus"></i> Thêm món mới</button></a>
                 </div>
             </div>
             <!-- End of admin control -->

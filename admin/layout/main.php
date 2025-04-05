@@ -94,6 +94,9 @@
                     case "product":
                         include "product.php";
                         break;
+                    case "addProduct":
+                        include "addProduct.php";
+                        break;   
                     case "order":
                         include "order.php";
                         break;

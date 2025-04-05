@@ -7,7 +7,7 @@
     <link href='../images/logo.png' rel='icon' type='image/x-icon' />
     <link rel="stylesheet" href="../css/admin-responsive.css">
     <link href="./fonts/font-awesome-pro-v6-6.2.0/css/all.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="./css/admin.css">
     <title>Quản lý cửa hàng</title>
 </head>
 
