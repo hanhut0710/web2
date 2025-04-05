@@ -72,5 +72,16 @@
             }
             return null;
         }
+
+        public function searchStaffById($id) {
+            $id = mysqli_real_escape_string($this->conn, $id); // Tránh SQL Injection
+            $sql = "SELECT * FROM admin WHERE id LIKE '%$id%'";
+            $result = mysqli_query($this->conn, $sql);
+            $staffList = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                $staffList[] = $row;
+            }
+            return $staffList;
+        }
         
    }

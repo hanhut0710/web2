@@ -3,8 +3,14 @@
 
     $staff = new Staff();
     $role = isset($_GET['role']) ? $_GET['role'] : 3;
-    $staffList = $staff->getStaffList($role);
-   
+    $search_id = isset($_GET['search_id']) ? $_GET['search_id'] : '';
+    if (!empty($search_id)) {
+        // Nếu có tìm kiếm, chỉ lấy nhân viên có mã khớp
+        $staffList = $staff->searchStaffById($search_id);
+    } else {
+        // Nếu không có tìm kiếm, lấy danh sách nhân viên theo role
+        $staffList = $staff->getStaffList($role);
+    }
 ?>  
 <div class="section active">
     <div class="admin-control">
@@ -17,9 +23,10 @@
                             </select>
                         </div>
                         <div class="admin-control-center">
-                            <form action="" class="form-search">
+                            <form action="index.php" method="GET" class="form-search">
+                                <input type="hidden" name="page" value="staff">
                                 <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
-                                <input id="form-search-order" type="text" name="id" class="form-search-input" placeholder="Tìm kiếm mã nhân viên..." oninput="">
+                                <input id="form-search-order" type="text" name="search_id" class="form-search-input" placeholder="Tìm kiếm mã nhân viên..." value="<?php echo isset($_GET['search_id']) ? $_GET['search_id'] : ''; ?>">
                             </form>
                         </div>
                         <a href="index.php?page=createStaff" id="btn-add-staff" class="btn-control-large" onclick="openCreateStaff()"><i class="fa-light fa-plus"></i>Thêm nhân viên</a>
