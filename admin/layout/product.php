@@ -1,11 +1,20 @@
 <?php
-    include "./backend/category.php";
-    include "./backend/product.php";
-
+    require_once "./backend/category.php";
+    require_once "./backend/product.php";
+    require_once "./backend/pagination.php";
     $category = new Category();
     $categoryList = $category -> getAllCategory();
+
+    $page_num= isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1;
+    $limit = 5;
+
     $product = new Product();
-    $productList = $product -> getAllProduct();
+    $totalProduct = $product -> getTotalProduct();
+
+    $pagination = new Pagination($totalProduct, $page_num, $limit);
+    $offset = $pagination -> getOffset();
+
+    $productList = $product -> getAllProduct($limit, $offset);
 ?>
 
 <div class="section product-all active">
@@ -73,14 +82,6 @@
             </div>
 
             <!-- page nav  -->
-            <div class="page-nav">
-                <ul class="page-nav-list">
-                    <li class="page-nav-item active">
-                        <a href="#">1</a>
-                    </li>
-                    <li class="page-nav-item">
-                        <a href="adminProduct2.html">2</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+            <?php
+                echo $pagination -> render();
+            ?>
