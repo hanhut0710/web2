@@ -22,7 +22,7 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
         <div class="profile-sidebar--info">
             <div class="profile-sidebar--info-name"></div>
             <div>
-                <a class="profile-sidebar--info-btn" href="/profile">
+                <a class="profile-sidebar--info-btn" href="#" id="edit-button">
                     <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;">
                         <path d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48" fill="#9B9B9B" fill-rule="evenodd"></path>
                     </svg>
@@ -96,7 +96,7 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
 <div class="profile-main" id="profile-acc">
                 <div class="profile-main__acount" role="main">
                     <div class="profile-main__account-inner">
-                        <form action="/profile" method="post" enctype="multipart/form-data" id="form_login">
+                        <form action="" method="post" enctype="multipart/form-data" id="form_login">
                             <div class="profile-main__account-header">
                                 <h1 class="profile-main__account-header__title">Hồ sơ của tôi</h1>
                                 <div class="profile-main__account-header__des">
@@ -439,162 +439,52 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
                                             </div>
                                         </div>
                                         <h4 style="margin-bottom: 10px;">Thông tin nhận hàng</h4>
-                                        <div class="profile-account__custom-form__group">
-                                            <div class="profile-account__custom-form__items">
-                                                <div class="profile-account__custom-form__label">
-                                                    <label>Tỉnh/Thành phố</label>
-                                                </div>
-                                                <div class="profile-account__custom-form__form">
-                                                    <div class="profile-account__custom-form__form-select-flex">
-                                                        <div class="input-outer" style="width:100% !important;">
-                                                            <select name="ProvinceId" class="input-item local-store-adress" id="provinceOptions" fdprocessedid="3guvpj">
-                                                                <option value="">-- Chọn tỉnh --</option>
-                                                                        <option value="">Chọn Tỉnh/Thành</option>
-                                                                        <option value="70">TP Hồ Chí Minh</option>
-                                                                        <option value="90">TP Cần Thơ</option>
-                                                                        <option value="81">Đồng Nai</option>
-                                                                        <option value="82">Bình Dương</option>
-                                                                        <option value="83">Bình Phước</option>
-                                                                        <option value="84">Tây Ninh</option>
-                                                                        <option value="85">Long An</option>
-                                                                        <option value="86">Tiền Giang</option>
-                                                                        <option value="87">Đồng Tháp</option>
-                                                                        <option value="79">Bà Rịa Vũng Tàu</option>
-                                                                        <option value="80">Bình Thuận</option>
-                                                                        <option value="88">An Giang</option>
-                                                                        <option value="89">Vĩnh Long</option>
-                                                                        <option value="91">Hậu Giang</option>
-                                                                        <option value="92">Kiên Giang</option>
-                                                                        <option value="93">Bến Tre</option>
-                                                                        <option value="94">Trà Vinh</option>
-                                                                        <option value="95">Sóc Trăng</option>
-                                                                        <option value="96">Bạc Liêu</option>
-                                                                        <option value="97">Cà Mau</option>
-                                                                        <option value="67">Lâm Đồng</option>
-                                                                        <option value="66">Ninh Thuận</option>
-                                                                        <option value="65">Khánh Hoà</option>
-                                                                        <option value="64">Đắk Nông</option>
-                                                                        <option value="63">Đắk Lăk</option>
-                                                                        <option value="62">Phú Yên</option>
-                                                                        <option value="60">Gia Lai</option>
-                                                                        <option value="59">Bình Định</option>
-                                                                        <option value="58">Kon Tum</option>
-                                                                        <option value="10"> TP Hà Nội</option>
-                                                                        <option value="16">Hưng Yên</option>
-                                                                        <option value="17">Hải Dương</option>
-                                                                        <option value="18"> TP Hải Phòng</option>
-                                                                        <option value="20">Quảng Ninh</option>
-                                                                        <option value="22">Bắc Ninh</option>
-                                                                        <option value="23">Bắc Giang</option>
-                                                                        <option value="24">Lạng Sơn</option>
-                                                                        <option value="25">Thái Nguyên</option>
-                                                                        <option value="26">Bắc Kạn</option>
-                                                                        <option value="27">Cao Bằng</option>
-                                                                        <option value="28">Vĩnh Phúc</option>
-                                                                        <option value="29">Phú Thọ</option>
-                                                                        <option value="30">Tuyên Quang</option>
-                                                                        <option value="31">Hà Giang</option>
-                                                                        <option value="32">Yên Bái</option>
-                                                                        <option value="33">Lào Cai</option>
-                                                                        <option value="35">Hoà Bình</option>
-                                                                        <option value="36">Sơn La</option>
-                                                                        <option value="38">Điện Biên</option>
-                                                                        <option value="39">Lai Châu</option>
-                                                                        <option value="40">Hà Nam</option>
-                                                                        <option value="41">Thái Bình</option>
-                                                                        <option value="42">Nam Định</option>
-                                                                        <option value="43">Ninh Bình</option>
-                                                                        <option value="44">Thanh Hoá</option>
-                                                                        <option value="46">Nghệ An</option>
-                                                                        <option value="48">Hà Tĩnh</option>
-                                                                        <option value="51">Quảng Bình</option>
-                                                                        <option value="52">Quảng Trị</option>
-                                                                        <option value="53">Thừa Thiên Huế</option>
-                                                                        <option value="55">TP Đà Nẵng</option>
-                                                                        <option value="56">Quảng Nam</option>
-                                                                        <option value="57">Quảng Ngãi</option>
-                                                            </select>
-                                                            <i class="mwc-icon-angle-down"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="box-select"> 
+                                      <div class="box-input box-input--hasvalue">
+                                          <input type="search" id="box-select-city" placeholder="Hồ Chí Minh" autocomplete="off" class="box-input__main" value="Hồ Chí Minh" readonly="">
+                                          <label for="box-select-city" class="email-label">Tỉnh / Thành phố</label> 
+                                          <div class="box-input__line"></div> 
+                                  </div>
+                                  <div class="box-input"> 
+                                        <input type="search" id="box-select-district" placeholder="" autocomplete="off" class="box-input__main">
+                                        <label for="box-select-district" class="email-label">Quận / huyện</label>
+                                        <div class="box-input__line"></div> 
+                                        <div class="box-input__arrow"> 
+                                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon">
+                                                  <path d="M8.00004 10.6668C7.84427 10.6671 7.69331 10.6128 7.57337 10.5135L3.57337 7.18012C3.28986 6.94448 3.25106 6.52362 3.4867 6.24012C3.72234 5.95661 4.1432 5.91781 4.4267 6.15345L8.00004 9.14012L11.5734 6.26012C11.7111 6.14827 11.8877 6.09594 12.0642 6.11471C12.2406 6.13348 12.4023 6.2218 12.5134 6.36012C12.6368 6.49869 12.6969 6.68244 12.6792 6.86716C12.6614 7.05188 12.5675 7.22086 12.42 7.33345L8.42004 10.5535C8.29665 10.6371 8.14877 10.677 8.00004 10.6668Z" fill="#717171">
+                                                  </path>
+                                              </svg>
                                         </div>
-                                        <div class="profile-account__custom-form__group">
-                                            <div class="profile-account__custom-form__items">
-                                                <div class="profile-account__custom-form__label">
-                                                    <label>Quận/Huyện</label>
-                                                </div>
-                                                <div class="profile-account__custom-form__form">
-                                                    <div class="profile-account__custom-form__form-select-flex">
-                                                        <div class="input-outer" style="width:100% !important;">
-                                                            <select name="DistrictId" class="input-item local-store-adress" id="districtSelect" fdprocessedid="69jf6g" data-gtm-form-interact-field-id="1">
-                                                                <option value="">--Chọn Quận/huyện</option>
-                                                                <option value="7100">Quận 1</option>
-                                                                <option value="7130">Quận 2</option>
-                                                                <option value="7220">Quận 3</option>
-                                                                <option value="7540">Quận 4</option>
-                                                                <option value="7480">Quận 5</option>
-                                                                <option value="7460">Quận 6</option>
-                                                                <option value="7560">Quận 7</option>
-                                                                <option value="7510">Quận 8</option>
-                                                                <option value="7150">Quận 9</option>
-                                                                <option value="7400">Quận 10</option>
-                                                                <option value="7430">Quận 11</option>
-                                                                <option value="7290">Quận 12</option>
-                                                                <option value="7170">Quận Bình Thạnh</option>
-                                                                <option value="7380">Huyện Bình Chánh</option>
-                                                                <option value="7330">Huyện Củ Chi</option>
-                                                                <option value="7590">Huyện Cần Giờ</option>
-                                                                <option value="7270">Quận Gò Vấp</option>
-                                                                <option value="7310">Huyện Hóc Môn</option>
-                                                                <option value="7580">Huyện Nhà Bè</option>
-                                                                <option value="7250">Quận Phú Nhuận</option>
-                                                                <option value="7600">Quận Tân Phú</option>
-                                                                <option value="7360">Quận Tân Bình</option>
-                                                                <option value="7200">Quận Thủ Đức</option>
-                                                                <option value="7620">Quận Bình Tân</option>
-                                                            </select>
-                                                            <i class="mwc-icon-angle-down"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="profile-account__custom-form__group">
-                                            <div class="profile-account__custom-form__items">
-                                                <div class="profile-account__custom-form__label">
-                                                    <label>Phường/Xã</label>
-                                                </div>
-                                                <div class="profile-account__custom-form__form">
-                                                    <div class="profile-account__custom-form__form-select-flex">
-                                                        <div class="input-outer" style="width:100% !important;">
-                                                            <select name="WardId" class="input-item local-store-adress" id="wardSelect" fdprocessedid="2f15m">
-                                                                <option selected="" value="">--Chọn Xã/Phường--</option>
-                                                            </select>
-                                                            <i class="mwc-icon-angle-down"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="profile-account__custom-form__group">
-                                            <div class="profile-account__custom-form__items">
-                                                <div class="profile-account__custom-form__label">
-                                                    <label>Địa chỉ</label>
-                                                </div>
-                                                <div class="profile-account__custom-form__form">
-                                                    <div class="input-with-validator-wrapper">
-                                                        <div class="input-with-validator">
-                                                            <input id="Address" name="Address" placeholder="Địa chỉ" type="text" value="" fdprocessedid="v73uz3">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <div id="districtDropdown" class="dropdown"><div class="dropdown__item"><span>Huyện Bình Chánh</span></div><div class="dropdown__item"><span>Huyện Cần Giờ</span></div><div class="dropdown__item"><span>Huyện Hóc Môn</span></div><div class="dropdown__item"><span>Huyện Nhà Bè</span></div><div class="dropdown__item"><span>Huyện Củ Chi</span></div><div class="dropdown__item"><span>Quận 1</span></div><div class="dropdown__item"><span>Quận 2</span></div><div class="dropdown__item"><span>Quận 3</span></div><div class="dropdown__item"><span>Quận 4</span></div><div class="dropdown__item"><span>Quận 5</span></div><div class="dropdown__item"><span>Quận 6</span></div><div class="dropdown__item"><span>Quận 7</span></div><div class="dropdown__item"><span>Quận 8</span></div><div class="dropdown__item"><span>Quận 9</span></div><div class="dropdown__item"><span>Quận 10</span></div><div class="dropdown__item"><span>Quận 11</span></div><div class="dropdown__item"><span>Quận 12</span></div><div class="dropdown__item"><span>Quận Bình Tân</span></div><div class="dropdown__item"><span>Quận Bình Thạnh</span></div><div class="dropdown__item"><span>Quận Tân Phú</span></div><div class="dropdown__item"><span>Quận Gò Vấp</span></div><div class="dropdown__item"><span>Quận Phú Nhuận</span></div><div class="dropdown__item"><span>Quận Tân Bình</span></div></div>
+                                  </div>
+                                </div>
+                                <div class="box-select">
+                                  <div class="box-input">
+                                    <input id="box-select-ward" type="search" placeholder="" autocomplete="off" class="box-input__main">
+                                    <label for="box-select-ward" class="email-label">Chọn phường / xã</label>
+                                    <div class="box-input__line"></div>
+                                    <div class="box-input__arrow"> 
+                                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon">
+                                          <path d="M8.00004 10.6668C7.84427 10.6671 7.69331 10.6128 7.57337 10.5135L3.57337 7.18012C3.28986 6.94448 3.25106 6.52362 3.4867 6.24012C3.72234 5.95661 4.1432 5.91781 4.4267 6.15345L8.00004 9.14012L11.5734 6.26012C11.7111 6.14827 11.8877 6.09594 12.0642 6.11471C12.2406 6.13348 12.4023 6.2218 12.5134 6.36012C12.6368 6.49869 12.6969 6.68244 12.6792 6.86716C12.6614 7.05188 12.5675 7.22086 12.42 7.33345L8.42004 10.5535C8.29665 10.6371 8.14877 10.677 8.00004 10.6668Z" fill="#717171">
+                                          </path>
+                                      </svg>
+                                    </div>
+                                      <div id="wardDropdown" class="dropdown"> 
+                                        <!--  -->
+                                        <!--  -->
+                                        <!--  -->
+                                      </div>
+                                  </div>
+                                  <div class="box-input">
+                                    <input id="box-select-address" type="text" placeholder="" maxlength="1000" autocomplete="off" class="box-input__main" fdprocessedid="p3ho0i">
+                                    <label for="box-select-address" class="email-label">Địa chỉ</label>
+                                    <div class="box-input__line"></div>
+                                  </div>
+                                </div>
+                                
                                         <div class="profile-account__custom-form__footer">
                                             <input data-val="true" data-val-required="The Id field is required." id="Id" name="Id" type="hidden" value="295115">
-                                            <button type="submit" class="btn btn-solid-primary btn--m btn--inline" aria-disabled="false" fdprocessedid="seh2b">
+                                            <button type="submit" class="btn btn-solid-primary btn--m btn--inline" aria-disabled="false" fdprocessedid="seh2b" id= "save-button">
                                                 Lưu
                                             </button>
                                         </div>

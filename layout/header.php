@@ -1,3 +1,6 @@
+<?php
+session_start(); // Dòng đầu tiên, không có gì trước nó
+?>
 <div id="preloder">
         <div class="loader"></div>
     </div>
@@ -26,7 +29,7 @@
                     <div class="header__nav__option">
                     <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                     <a href="cart.php"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                    <?php session_start();
+                    <?php ;
                     if (isset($_SESSION["user"])): ?>
                         <span class="username"><?= htmlspecialchars($_SESSION["user"]); ?></span>
                         <a class="nav-link dropdown-toggle user_isLogin" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
