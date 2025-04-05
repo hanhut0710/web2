@@ -10,8 +10,12 @@
             $this->conn = $db->getConnection();
         }
 
-        public function getStaffList(){
-            $sql = "SELECT * FROM admin";
+        public function getStaffList($role){
+            if($role == 3){
+                $sql = "SELECT * FROM admin";
+            }else{
+                $sql = "SELECT * FROM admin WHERE role = '$role'";
+            }
             $result = mysqli_query($this->conn, $sql);
             $data = [];
             while($row = mysqli_fetch_assoc($result)){
@@ -58,6 +62,15 @@
         public function deleteStaff($id){
             $sql = "DELETE FROM admin WHERE id = '$id'";
             mysqli_query($this->conn, $sql);
+        }
+
+        public function getStaffRole($id){
+            $sql = "SELECT role FROM admin WHERE id = '$id'";
+            $result = mysqli_query($this->conn, $sql);
+            if($result && mysqli_num_rows($result) > 0){
+                return mysqli_fetch_assoc($result)['role'];
+            }
+            return null;
         }
         
    }

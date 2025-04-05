@@ -2,26 +2,24 @@
     require_once "./backend/staff.php";
 
     $staff = new Staff();
-    $staffList = $staff->getStaffList();
-    
-    // foreach($staffList as &$staff){
-    //     $staff['role'] = ($staff['role'] === '2') ? "Manager" : (($staff['role'] === '1') ? "Admin" : "staff");
-    // }
-?>
+    $role = isset($_GET['role']) ? $_GET['role'] : 3;
+    $staffList = $staff->getStaffList($role);
+   
+?>  
 <div class="section active">
     <div class="admin-control">
                         <div class="admin-control-left">
-                            <select name="tim-kiem-nhan-vien" id="tim-kiem-nhan-vien" onchange="">
-                                <option value="3">Tất cả</option>
-                                <option value="2">Manager</option>
-                                <option value="1">Admin</option>
-                                <option value="0">Staff</option>
+                            <select name="tim-kiem-nhan-vien" id="tim-kiem-nhan-vien" onchange="filterByRole()">
+                                <option value="3" <?php echo ($role == 3) ? 'selected' : ''; ?>>Tất cả</option>
+                                <option value="2" <?php echo ($role == 2) ? 'selected' : ''; ?>>Manager</option>
+                                <option value="1" <?php echo ($role == 1) ? 'selected' : ''; ?>>Admin</option>
+                                <option value="0" <?php echo ($role == 0) ? 'selected' : ''; ?>>Staff</option>
                             </select>
                         </div>
                         <div class="admin-control-center">
                             <form action="" class="form-search">
                                 <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
-                                <input id="form-search-order" type="text" class="form-search-input" placeholder="Tìm kiếm mã nhân viên..." oninput="">
+                                <input id="form-search-order" type="text" name="id" class="form-search-input" placeholder="Tìm kiếm mã nhân viên..." oninput="">
                             </form>
                         </div>
                         <a href="index.php?page=createStaff" id="btn-add-staff" class="btn-control-large" onclick="openCreateStaff()"><i class="fa-light fa-plus"></i>Thêm nhân viên</a>
@@ -59,4 +57,11 @@
                         </table>
                     </div>
 </div>
+<script>
+    function filterByRole() {
+        const role = document.getElementById('tim-kiem-nhan-vien').value;
+        window.location.href = `index.php?page=staff&role=${role}`;
+    }
+
+</script>
 
