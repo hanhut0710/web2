@@ -1499,6 +1499,8 @@ ol {
 -----------------------*/
 
 .product__details__pic {
+	height: 300px;
+    width: 400px;
 	text-align: center;
 	background: #d8d7d7;
 	padding: 40px 0 60px;
