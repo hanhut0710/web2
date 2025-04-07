@@ -39,5 +39,48 @@ class Pagination {
         $html .= '</ul></div>';
         return $html;
     }
+
+    public function renderStaffPageByRole($role)
+    {
+        if($this->totalPage <= 1)
+            return '';
+
+        $pageParam = isset($_GET['page']) ? 'page=' . $_GET['page'] : '';
+
+        $html = '<div class="page-nav">
+                    <ul class="page-nav-list">';
+        for ($i = 1; $i <= $this->totalPage; $i++) {
+            $url = '?';
+            if($pageParam)
+                $url .= $pageParam . '&';
+            $url .= 'role='. $role . '&page_num='. $i;
+
+            $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
+            $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
+        }
+        $html .= '</ul></div>';
+        return $html;
+    }
+    public function renderStaffPageById($id)
+    {
+        if($this->totalPage <= 1)
+            return '';
+
+        $pageParam = isset($_GET['page']) ? 'page=' . $_GET['page'] : '';
+
+        $html = '<div class="page-nav">
+                    <ul class="page-nav-list">';
+        for ($i = 1; $i <= $this->totalPage; $i++) {
+            $url = '?';
+            if($pageParam)
+                $url .= $pageParam . '&';
+            $url .= 'search_id='. $id . '&page_num='. $i;
+
+            $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
+            $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
+        }
+        $html .= '</ul></div>';
+        return $html;
+    }
 }
 ?>

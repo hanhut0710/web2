@@ -10,11 +10,11 @@
             $this->conn = $db->getConnection();
         }
 
-        public function getStaffList($role){
+        public function getStaffList($role, $limit, $offset) {
             if($role == 3){
-                $sql = "SELECT * FROM admin";
+                $sql = "SELECT * FROM admin LIMIT $limit OFFSET $offset";
             }else{
-                $sql = "SELECT * FROM admin WHERE role = '$role'";
+                $sql = "SELECT * FROM admin WHERE role = '$role' LIMIT $limit OFFSET $offset";
             }
             $result = mysqli_query($this->conn, $sql);
             $data = [];
@@ -73,15 +73,34 @@
             return null;
         }
 
-        public function searchStaffById($id) {
+        public function searchStaffById($id, $limit, $offset) {
             $id = mysqli_real_escape_string($this->conn, $id); // Tránh SQL Injection
-            $sql = "SELECT * FROM admin WHERE id LIKE '%$id%'";
+            $sql = "SELECT * FROM admin WHERE id LIKE '%$id%' LIMIT $limit OFFSET $offset";
             $result = mysqli_query($this->conn, $sql);
             $staffList = [];
             while ($row = mysqli_fetch_assoc($result)) {
                 $staffList[] = $row;
             }
             return $staffList;
+        }
+
+        public function getTotalStaffByRole($role) {
+            if($role == 3){
+                $sql = "SELECT COUNT(*) as total FROM admin";
+            }
+            else{
+                $sql = "SELECT COUNT(*) as total FROM admin WHERE role = '$role'";
+            }
+            $result = mysqli_query($this->conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row['total'];
+        }
+
+        public function getTotalStaffById($search_id) {
+            $sql = "SELECT COUNT(*) as total FROM admin WHERE id = '$search_id'";
+            $result = mysqli_query($this->conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row['total'];
         }
         
    }

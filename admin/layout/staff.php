@@ -1,15 +1,26 @@
 <?php 
     require_once "./backend/staff.php";
-
+    require_once "./backend/pagination.php";
     $staff = new Staff();
+    $page_num= isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1;
     $role = isset($_GET['role']) ? $_GET['role'] : 3;
     $search_id = isset($_GET['search_id']) ? $_GET['search_id'] : '';
+
+    $limit = 5;
+    $totalStaff = $staff -> getTotalStaffByRole($role);
+    if(!empty($search_id))
+    {
+        $totalStaff = $staff -> getTotalStaffById($search_id);
+    }
+    $paganition = new Pagination($totalStaff, $page_num, $limit);
+    $offset = $paganition -> getOffset($page_num, $limit);
+    
     if (!empty($search_id)) {
-        // Nếu có tìm kiếm, chỉ lấy nhân viên có mã khớp
-        $staffList = $staff->searchStaffById($search_id);
+        $staffList = $staff->searchStaffById($search_id, $limit, $offset);
+        $totalStaff = $staff->getTotalStaffById($search_id);
     } else {
-        // Nếu không có tìm kiếm, lấy danh sách nhân viên theo role
-        $staffList = $staff->getStaffList($role);
+        $staffList = $staff->getStaffList($role, $limit, $offset);
+        $totalStaff = $staff->getTotalStaffByRole($role);
     }
 ?>  
 <div class="section active">
@@ -64,6 +75,18 @@
                         </table>
                     </div>
 </div>
+<?php 
+    if($totalStaff > 0)
+    {
+        if(!empty($search_id))
+        {
+            echo $paganition -> renderStaffPageById($search_id);
+        }
+        else
+        {
+            echo $paganition -> renderStaffPageByRole($role);
+        }
+    }?>
 <script>
     function filterByRole() {
         const role = document.getElementById('tim-kiem-nhan-vien').value;
