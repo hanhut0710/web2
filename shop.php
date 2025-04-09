@@ -85,7 +85,6 @@ function loadProducts(categoryId = 'all') {
                 productList.innerHTML = "<p>Không có sản phẩm nào.</p>";
                 return;
             }
-
             data.data.forEach(product => {
                 let productHTML = `
                      <div class="col-lg-4 col-md-6 col-sm-6">
@@ -126,7 +125,6 @@ function loadProducts(categoryId = 'all') {
                         </div>`;
                 productList.innerHTML += productHTML;
             });
-
             phanTrang(data);
         })
         .catch(error => console.error("Lỗi khi tải sản phẩm:", error));
