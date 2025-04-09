@@ -63,7 +63,22 @@ class Cart {
 
         return $cartItems;
     }
-
+    public function createCartIfNotExists($con) {
+        // Kiểm tra xem user_id đã có sản phẩm trong giỏ chưa
+        $stmt = $con->prepare("SELECT * FROM cart WHERE user_id = ?");
+        $stmt->bind_param("i", $this->user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows === 0) {
+            // Nếu chưa có sản phẩm nào, thêm mới dòng đầu tiên
+            $stmt = $con->prepare("INSERT INTO cart (user_id, product_id, quanlity) VALUES (?, ?, ?)");
+            $stmt->bind_param("iii", $this->user_id, $this->product_id, $this->quantity);
+            return $stmt->execute();
+        }
+        // Nếu đã có thì không làm gì cả
+        return false;
+    }
     // Phương thức để thêm sản phẩm vào giỏ hàng
     public function addProductToCart($con) {
         // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
@@ -84,7 +99,6 @@ class Cart {
             $stmt->execute();
         }
     }
-
     // Phương thức để cập nhật số lượng sản phẩm trong giỏ hàng
     public function updateProductQuantity($con) {
         $stmt = $con->prepare("UPDATE cart SET quanlity = ? WHERE user_id = ? AND product_id = ?");

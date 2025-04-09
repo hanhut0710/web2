@@ -214,7 +214,6 @@ function submitForm(type) {
 // Hiển thị popup sản phẩm
 function openProductDetails(productId) {
     console.log("Product ID:", productId); // Kiểm tra giá trị
-
     // Gửi yêu cầu AJAX để lấy chi tiết sản phẩm từ database
     fetch(`./handle/get_product_details.php?product_id=${productId}`)
         .then(response => response.json())
@@ -246,7 +245,6 @@ function openProductDetails(productId) {
                         console.log("Size đã chọn:", size.size);
                     });
                 });
-
                 // Xử lý màu sắc
                 const colorContainer = document.getElementById("popup-color");
                 const productImage = document.getElementById("popup-image"); // Ảnh sản phẩm
@@ -272,7 +270,32 @@ function openProductDetails(productId) {
                      productImage.src = color.img_src; // Cập nhật ảnh theo màu
                     });
                 });
+                // Gán lại sự kiện nút thêm vào giỏ mỗi khi mở popup
+                const btnaddCart = document.querySelector(".btn-addcart");
 
+                // Xóa sự kiện cũ nếu có
+                const newBtn = btnaddCart.cloneNode(true);
+                btnaddCart.parentNode.replaceChild(newBtn, btnaddCart);
+                newBtn.addEventListener("click", function () {
+                    fetch(`./handle/add_to_Cart.php`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                        body: "product_id=" + encodeURIComponent(productId) + "&quantity=1"
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                        } else {
+                            alert("Lỗi: " + data.message);
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Lỗi khi gọi API:", err);
+                    });
+                });
             }
         })
         
