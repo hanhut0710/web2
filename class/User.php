@@ -66,11 +66,37 @@ class User {
         return false;
     }
 
+    public static function addUser($full_name, $phone, $acc_id, $con) {
+        // Kiểm tra xem các tham số có hợp lệ không
+        if (empty($full_name) || empty($phone) || empty($acc_id)) {
+            return false;
+        }
+    
+        // Kiểm tra độ dài số điện thoại (giả sử bạn yêu cầu là 10 ký tự)
+        if (strlen($phone) != 10) {
+            return false;
+        }
+    
+        // Thêm thông tin người dùng vào bảng users
+        $stmt = $con->prepare("INSERT INTO users (full_name, phone, acc_id) VALUES (?, ?, ?)");
+        $stmt->bind_param("ssi", $full_name, $phone, $acc_id);  // s: string, i: integer
+    
+        if ($stmt->execute()) {
+            $user_id = $stmt->insert_id;  // Lấy id người dùng đã chèn
+            $user = new User();
+            $user->setId($user_id);
+            $user->setFullname($full_name);
+            $user->setPhone($phone);
+            $user->setAccId($acc_id);
+            return $user;
+        }
+        return false;
+    }
+    
     // Phương thức cập nhật thông tin người dùng
-    public function updateUserInfo($fullname, $phone, $acc_id, $con) {
-        $stmt = $con->prepare("UPDATE users SET fullname = ?, phone = ? WHERE acc_id = ?");
+    public static function updateUserInfo($fullname, $phone, $acc_id, $con) {
+        $stmt = $con->prepare("UPDATE users SET full_name = ?, phone = ? WHERE acc_id = ?");
         $stmt->bind_param("ssi", $fullname, $phone, $acc_id);
-
         if ($stmt->execute()) {
             $this->setFullname($fullname);
             $this->setPhone($phone);

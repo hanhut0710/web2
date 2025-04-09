@@ -1,3 +1,4 @@
+
 const userIcon = document.querySelector(".nav-link.user");
     const loginModal = document.querySelector(".login_modal");
     const loginForm = document.querySelector(".container__login");
@@ -43,66 +44,84 @@ const userIcon = document.querySelector(".nav-link.user");
             }
         }
     });
-function changeLogin(event) {
-    // Ngăn sự kiện click lan ra ngoài
-    if(event) event.stopPropagation();
-    let form = document.querySelector('.form_login');
-    let formContainer = document.querySelector('.form_login form'); // Chỉ thay đổi nội dung form
-    if (form.classList.contains('login')) {
-        formContainer.innerHTML = `
-            <div class="input_box">
-                <label for="fullname">Họ và tên</label><br>
-                <input type="text" id="fullname" name="fullname" placeholder="Họ và tên">
-            </div>
-            <div class="input_box">
-                <label for="phone">Số điện thoại</label><br>
-                <input type="text" id="phone" name="phone" placeholder="Số điện thoại">
-            </div>
-            <div class="input_box">
-                <label for="username">Tên đăng nhập</label><br>
-                <input type="text" id="username" name="username" placeholder="Tên đăng nhập">
-            </div>
-            <div class="input_box">
-                <label for="passwd">Mật khẩu</label><br>
-                <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu">
-            </div>
-            <div class="input_box">
-                <label for="repasswd">Nhập lại mật khẩu</label><br>
-                <input type="password" id="repasswd" name="repasswd" placeholder="Nhập lại mật khẩu">
-            </div>
-            <div class="input_box checkbox">
-                <p>Bạn đã có tài khoản? <a href="#" onclick="changeLogin(event)"> Đăng nhập</a></p>
-            </div>
-            <button type="button" class="btn_login" onclick="submitForm('register')">Đăng ký</button>
-        `;
-        form.classList.remove('login');
-        form.classList.add('register');
-    } else {
-        formContainer.innerHTML = `
-            <div class="input_box">
-                <label for="username">Tên đăng nhập</label><br>
-                <input type="text" id="username" name="username" placeholder="Tên đăng nhập">
-            </div>
-            <div class="input_box">
-                <label for="passwd">Mật khẩu</label><br>
-                <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu">
-            </div>
-            <div class="input_box checkbox">
-                <p>Bạn chưa có tài khoản? <a href="#" onclick="changeLogin(event)"> Đăng ký</a></p>
-            </div>
-            <button type="button" class="btn_login" onclick="submitForm('login')">Đăng nhập</button>
-        `;
-        form.classList.remove('register');
-        form.classList.add('login');
+    function changeLogin(event) {
+        // Ngăn sự kiện click lan ra ngoài
+        if (event) event.stopPropagation();
+        let form = document.querySelector('.form_login');
+        let formContainer = document.createElement('div');  // Tạo một container mới
+        
+        if (form.classList.contains('login')) {
+            formContainer.innerHTML = `
+                <h3>Đăng Ký</h3>
+                <form id="registerForm">
+                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                    <div class="input_box">
+                        <label for="fullname">Họ và tên</label><br>
+                        <input type="text" id="fullname" name="fullname" placeholder="Họ và tên" value="HaNhut">
+                    </div>
+                    <div class="input_box">
+                        <label for="phone">Số điện thoại</label><br>
+                        <input type="text" id="phone" name="phone" placeholder="Số điện thoại" value="0123456789">
+                    </div>
+                    <div class="input_box">
+                        <label for="username">Tên đăng nhập</label><br>
+                        <input type="text" id="username" name="username" placeholder="Tên đăng nhập" value="hanhut">
+                    </div>
+                    <div class="input_box">
+                        <label for="passwd">Mật khẩu</label><br>
+                        <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu" value="123456">
+                    </div>
+                    <div class="input_box">
+                        <label for="repasswd">Nhập lại mật khẩu</label><br>
+                        <input type="password" id="repasswd" name="repasswd" placeholder="Nhập lại mật khẩu" value="123456">
+                    </div>
+                    <div class="input_box checkbox">
+                        <p>Bạn đã có tài khoản? <a href="#" onclick="changeLogin(event)"> Đăng nhập</a></p>
+                    </div>
+                    <button type="button" class="btn_login" onclick="submitForm('register')">Đăng ký</button>
+                </form>
+            `;
+            form.innerHTML = '';  // Xóa nội dung cũ
+            form.appendChild(formContainer);  // Thêm form mới vào container
+    
+            form.classList.remove('login');
+            form.classList.add('register');
+        } else {
+            formContainer.innerHTML = `
+                <h3>Đăng nhập</h3>
+                <form id="loginForm">
+                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                    <div class="input_box">
+                        <label for="username">Tên đăng nhập</label><br>
+                        <input type="text" id="username" name="username" placeholder="Tên đăng nhập" value="hanhut">
+                    </div>
+                    <div class="input_box">
+                        <label for="passwd">Mật khẩu</label><br>
+                        <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu" value="anhnhutdeptrai">
+                    </div>
+                    <div class="input_box checkbox">
+                        <p>Bạn chưa có tài khoản?<a href="#" onclick="changeLogin(event)"> Đăng kí</a></p>
+                    </div>
+                    <button type="button" class="btn_login" onclick="submitForm('login')">Đăng nhập</button>
+                </form>
+            `;
+            form.innerHTML = '';  // Xóa nội dung cũ
+            form.appendChild(formContainer);  // Thêm form mới vào container
+    
+            form.classList.remove('register');
+            form.classList.add('login');
+        }
     }
-}
+    
 function submitForm(type) {
     let form;
+    let csrfToken = document.querySelector('input[name="csrf_token"]').value; // Lấy CSRF token từ form
     if (type === "login") {
         form = document.getElementById("loginForm");
-    } else if (type === "register") {
+    } else if (type === 'register') {
         form = document.getElementById("registerForm");
     }
+    console.log("Form:", form); // Kiểm tra form có tồn tại không
     if (!form) {
         alert("Lỗi: Không tìm thấy form.");
         return;
@@ -118,8 +137,21 @@ function submitForm(type) {
     if (type === 'login') {
         formData = new FormData(document.getElementById('loginForm'));
     } else if (type === "register") {
+        const fullname = form.querySelector("#fullname")?.value.trim();
+        const phone = form.querySelector("#phone")?.value.trim();
+        const repassword = form.querySelector("#repasswd")?.value.trim();
+
+        if (!fullname || !phone || !username || !password || !repassword) {
+            alert("Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+        if (password !== repassword) {
+            alert("Mật khẩu nhập lại không khớp!");
+            return;
+        }
         formData = new FormData(document.getElementById('registerForm'));
     }
+    formData.append('csrf_token', csrfToken);
     fetch("handle/login.php", {
         method: 'POST',
         body: formData,
@@ -166,16 +198,17 @@ function submitForm(type) {
 }
     const user_isLogin = document.querySelector(".user_isLogin");
     const userDropdown = document.getElementById("userDropdown");
-    
+    if (user_isLogin){
     user_isLogin.addEventListener("click", function (event) {
         event.preventDefault(); // Ngăn chặn chuyển trang nếu có
         userDropdown.style.display = (userDropdown.style.display === "block") ? "none" : "block";
     });
-    document.addEventListener("click", function (event) {
-        if (!user_isLogin.contains(event.target) && !userDropdown.contains(event.target)) {
-            userDropdown.style.display = "none";
-        }
-    });
+}
+    // document.addEventListener("click", function (event) {
+    //     if (!user_isLogin.contains(event.target) && !userDropdown.contains(event.target)) {
+    //         userDropdown.style.display = "none";
+    //     }
+    // });
 
     
 // Hiển thị popup sản phẩm
@@ -228,13 +261,11 @@ function openProductDetails(productId) {
                 colorElement.style.backgroundColor = color.color; // Gán màu nền
 
                 colorContainer.appendChild(colorElement);
-
                 colorElement.addEventListener("click", function () {
                     // Xóa class active của các màu trước đó
                     document.querySelectorAll('.color-option').forEach(e => e.classList.remove("active"));
                     colorElement.classList.add("active");
                     console.log("Màu đã chọn:", color.color);
-
                     // Thay đổi hình ảnh tương ứng với màu được chọn
                     console.log("Màu đã chọn:", color.color);
                     console.log("URL hình ảnh:", color.img_src);

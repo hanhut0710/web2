@@ -1,5 +1,8 @@
 <?php
 session_start(); // Dòng đầu tiên, không có gì trước nó
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Tạo một token ngẫu nhiên
+}
 ?>
 <div id="preloder">
         <div class="loader"></div>
@@ -65,22 +68,23 @@ session_start(); // Dòng đầu tiên, không có gì trước nó
                 <i onclick="closeModal()" class="fa-solid fa-arrow-right"></i>
             </div>
             <div class="form_login login">
-            <h3>Đăng nhập</h3>
-            <form id="loginForm">
+                <h3>Đăng nhập</h3>
+                <form id="loginForm">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <div class="input_box">
-                    <label for="username">Tên đăng nhập</label><br>
-                    <input type="text" id="username" name="username" placeholder="Tên đăng nhập" value="hanhut"> 
-                </div>
-                <div class="input_box">
-                    <label for="passwd">Mật khẩu</label><br>
-                    <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu" value="anhnhutdeptrai"> 
-                </div>
-                <div class="input_box checkbox">
-                    <p>Bạn chưa có tài khoản?<a href="#" onclick="changeLogin()"> Đăng kí</a></p>
-                </div>
-                <button type="button" class="btn_login" onclick="submitForm('login')">Đăng nhập</button>
-            </form>
-        </div>
+                        <label for="username">Tên đăng nhập</label><br>
+                        <input type="text" id="username" name="username" placeholder="Tên đăng nhập" value="hanhut"> 
+                    </div>
+                    <div class="input_box">
+                        <label for="passwd">Mật khẩu</label><br>
+                        <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu" value="anhnhutdeptrai"> 
+                    </div>
+                    <div class="input_box checkbox">
+                        <p>Bạn chưa có tài khoản?<a href="#" onclick="changeLogin()"> Đăng kí</a></p>
+                    </div>
+                    <button type="button" class="btn_login" onclick="submitForm('login')">Đăng nhập</button>
+                </form>
+            </div>
         </div>
     </div>
     <!-- Header Section End -->
@@ -117,4 +121,4 @@ session_start(); // Dòng đầu tiên, không có gì trước nó
     </div>
 </div>
 
-<script src="script.js"></script>    
+<script src="js/script.js"></script>    
