@@ -286,16 +286,79 @@ function closeProductDetails() {
     document.getElementById("productDetails").classList.remove("show");
 }
 
+function search() {
+    const input = document.getElementById("searchInput");
+    const keyword = input.value.trim();
+    const page = 1;
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     let options = document.querySelectorAll('.size-option');
+    if (!keyword) return;
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Ngăn chặn hành động mặc định của form
+        console.log("Từ khóa:", keyword);
 
-//     options.forEach(option => {
-//         option.addEventListener('click', function () {
-//             console.log("cc");
-//             options.forEach(e => e.classList.remove("active"));
-//             option.classList.add("active");
-//         });
-//     });
-// });
+        fetch("./handle/search.php?keyword=" + encodeURIComponent(keyword))
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Kiểm tra dữ liệu trả về từ server
+            let productHTML = document.querySelector(".row.products");
+            let productsHTML = "";
+            if (data.length === 0) {
+                productHTML.innerHTML = `<div class="col-12"><h4>Không tìm thấy sản phẩm nào!</h4></div>`;
+                return;    
+            }
+            data.forEach(product => {
+                productsHTML += `
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="">
+                                    <img class="image" src="${product.img_src}" onclick="openProductDetails(${product.id})">
+                                    <ul class="product__hover">
+                                        <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
+                                        <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
+                                        </li>
+                                        <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6>${product.name}</h6>
+                                    <a href="#" class="add-cart">+ Add To Cart</a>
+                                    <div class="rating">
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    </div>
+                                    <h5>${product.price}đ</h5>
+                                    <div class="product__color__select">
+                                        <label for="pc-4">
+                                            <input type="radio" id="pc-4">
+                                        </label>
+                                        <label class="active black" for="pc-5">
+                                            <input type="radio" id="pc-5">
+                                        </label>
+                                        <label class="grey" for="pc-6">
+                                            <input type="radio" id="pc-6">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+            })
+            productHTML.innerHTML = productsHTML;
+        })
+        
+       
+        
+    });
+    console.log("Từ khóa:", keyword);
+
+}
+
+
+
+
+
+
+
 
