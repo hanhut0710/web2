@@ -1,5 +1,6 @@
 <?php
 class Account {
+    private $User ; 
     private $id;
     private $username;
     private $password;
@@ -57,30 +58,44 @@ class Account {
         return false;
     }
     // Phương thức đăng ký
-    public function register($username, $password, $con) {
+    public function register($username, $password, $fullname, $phone, $con) {
+        // Kiểm tra xem các tham số có rỗng không
+        if (empty($username) || empty($password) || empty($fullname) || empty($phone)) {
+            return "Vui lòng điền đầy đủ thông tin!";
+        }
+    
         // Kiểm tra username đã tồn tại chưa
         $stmt = $con->prepare("SELECT * FROM accounts WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
-
         if ($result->num_rows > 0) {
             return "Tên đăng nhập đã tồn tại!";
         } else {
-            // Mã hóa mật khẩu
+            // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    
             // Lưu tài khoản vào cơ sở dữ liệu
             $stmt = $con->prepare("INSERT INTO accounts (username, password) VALUES (?, ?)");
             $stmt->bind_param("ss", $username, $hashedPassword);
-
+    
             if ($stmt->execute()) {
-                return "Đăng ký thành công!";
+                $account_id = $stmt->insert_id;
+    
+                // Thêm thông tin người dùng vào bảng users
+                if (User::addUser($fullname, $phone, $account_id, $con)) {
+                    return "Đăng ký thành công!";
+                } else {
+                    return "Lỗi khi lưu thông tin người dùng";
+                }
             } else {
-                return "Lỗi khi đăng ký!";
+                // Lỗi khi không thể thực hiện câu lệnh INSERT
+                return "Lỗi khi đăng ký! Câu lệnh SQL không thành công.";
             }
         }
     }
-
+    
+    
     // Đăng xuất: Xóa session
     public function logout() {
         session_start();
