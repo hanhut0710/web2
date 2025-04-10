@@ -12,7 +12,7 @@ header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
     $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
-
+    $product_detail_id = isset($_POST['product_detail_id']) ? (int)$_POST['product_detail_id'] : 0 ;
     // Giả sử bạn đã lưu user_id trong session sau khi đăng nhập
     $user_id = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cart->setProductId($product_id);
         $cart->setQuantity($quantity);
         $cart->createCartIfNotExists($con);
+        $cart->setProductDetailId($product_detail_id);
         // Thêm sản phẩm vào giỏ hàng
         $cart->addProductToCart($con);
 
