@@ -6,7 +6,7 @@ let searchKeyword = ''; // Nếu rỗng thì là không tìm kiếm
 
 
 
-const userIcon = document.querySelector(".nav-link.user");
+    const userIcon = document.querySelector(".nav-link.user");
     const loginModal = document.querySelector(".login_modal");
     const loginForm = document.querySelector(".container__login");
 
@@ -288,7 +288,7 @@ function openProductDetails(productId) {
                 btnaddCart.parentNode.replaceChild(newBtn, btnaddCart);
                 newBtn.addEventListener("click", function () {
                     if (!selectedProductDetailId || !productId) {
-                        alert("Vui lòng chọn size, màu sắc và đảm bảo có productId!");
+                        alert("Vui lòng chọn size và màu sắc!");
                         return;
                     }
                 

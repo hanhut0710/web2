@@ -44,7 +44,7 @@ if (empty($username) || empty($passwd)) {
         if ($account->login($username, $passwd, $con)) {
             // Lưu thông tin vào session
             $_SESSION['user'] = $account->getUsername();
-            $_SESSION['id'] = $account->getId();
+            $_SESSION['user_id'] = $account->getId();
             $response = ['status' => 'success', 'message' => 'Đăng nhập thành công!'];
         } else {
             $response = ['status' => 'error', 'message' => 'Mật khẩu hoặc tài khoản không đúng!'];
