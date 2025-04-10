@@ -48,109 +48,117 @@
     loadProducts('all'); // Load tất cả sản phẩm ban đầu
 
     document.querySelectorAll('#category-list a').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            let categoryId = this.getAttribute('data-category-id');
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        currentCategory = this.getAttribute('data-category-id');
+        searchKeyword = ''; // Reset tìm kiếm nếu chọn danh mục
+        currentPage = 1;
 
-            console.log("Đã chọn danh mục:", categoryId); // ✅ Kiểm tra categoryId đúng chưa
+        document.querySelectorAll('#category-list a').forEach(a => a.classList.remove('active'));
+        this.classList.add('active');
 
-            currentPage = 1;
-
-            // Xóa class active khỏi tất cả danh mục
-            document.querySelectorAll('#category-list a').forEach(a => a.classList.remove('active'));
-
-            // Thêm class active vào danh mục được chọn
-            this.classList.add('active');
-
-            loadProducts(categoryId);
-        });
+        loadProducts();
     });
 });
 
-let currentPage = 1;
-let pageSize = 6;
-let currentCategory = 'all';
+});
 
-function loadProducts(categoryId = 'all') {
-    currentCategory = categoryId;
-    fetch(`./handle/get_product.php?page=${currentPage}&pageSize=${pageSize}&category_id=${categoryId}`)
-        .then(response => response.json())
+// let currentPage = 1;
+// let pageSize = 6;
+// let currentCategory = 'all';
+
+function loadProducts() {
+    let url = '';
+
+    if (searchKeyword.trim() !== '') {
+        url = `./handle/search.php?keyword=${encodeURIComponent(searchKeyword)}&page=${currentPage}&limit=${pageSize}`;
+    } else {
+        url = `./handle/get_product.php?page=${currentPage}&pageSize=${pageSize}&category_id=${currentCategory}`;
+    }
+
+    fetch(url)
+        .then(res => res.json())
         .then(data => {
-            console.log("Dữ liệu nhận được từ API:", data); // ✅ Kiểm tra API trả về đúng chưa
-
             let productList = document.querySelector('.row.products');
-            productList.innerHTML = ""; // Xóa sản phẩm cũ trước khi hiển thị sản phẩm mới
+            productList.innerHTML = "";
 
-            if (data.data.length === 0) {
+            let products = data.products || data.data || [];
+            let total = data.total || data.totalProduct || 0;
+
+            if (products.length === 0) {
                 productList.innerHTML = "<p>Không có sản phẩm nào.</p>";
                 return;
             }
-            data.data.forEach(product => {
+
+            products.forEach(product => {
                 let productHTML = `
-                     <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="">
-                                    <img class="image" src="${product.img_src}" onclick="openProductDetails(${product.id})">
-                                    <ul class="product__hover">
-                                        <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                        <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                        </li>
-                                        <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6>${product.name}</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>${product.price}đ</h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>
-                                </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg">
+                                <img class="image" src="${product.img_src}" onclick="openProductDetails(${product.id})">
                             </div>
-                        </div>`;
+                            <div class="product__item__text">
+                                <h6>${product.name}</h6>
+                                <a href="#" class="add-cart">+ Add To Cart</a>
+                                <h5>${product.price}đ</h5>
+                            </div>
+                        </div>
+                    </div>`;
                 productList.innerHTML += productHTML;
             });
-            phanTrang(data);
+
+            updatePagination(total);
         })
-        .catch(error => console.error("Lỗi khi tải sản phẩm:", error));
+        .catch(err => console.error("Lỗi load sản phẩm:", err));
 }
 
-function phanTrang(data) {
-    let maxPage = Math.ceil(data.totalProduct / pageSize);
-
+function updatePagination(total) {
+    let maxPage = Math.ceil(total / pageSize);
     document.getElementById('currentPage').innerText = currentPage;
-    document.getElementById("prePage").innerHTML = currentPage -1;
-    document.getElementById("nextPage").innerHTML = currentPage +1;
+    document.getElementById("prePage").innerText = currentPage - 1;
+    document.getElementById("nextPage").innerText = currentPage + 1;
+
     document.getElementById('prePage').style.display = currentPage > 1 ? "block" : "none";
     document.getElementById('nextPage').style.display = currentPage < maxPage ? "block" : "none";
 }
 
 document.getElementById('nextPage').addEventListener('click', () => {
     currentPage++;
-    loadProducts(currentCategory);
+    loadProducts();
 });
 
 document.getElementById('prePage').addEventListener('click', () => {
     currentPage--;
-    loadProducts(currentCategory);
+    loadProducts();
 });
 
+document.querySelectorAll('#category-list a').forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        currentCategory = this.getAttribute('data-category-id');
+        searchKeyword = '';
+        currentPage = 1;
 
+        document.querySelectorAll('#category-list a').forEach(a => a.classList.remove('active'));
+        this.classList.add('active');
+
+        loadProducts();
+    });
+});
+
+function search(event) {
+    event.preventDefault();
+    const keyword = document.getElementById("searchInput").value.trim();
+    searchKeyword = keyword;
+    currentCategory = 'all';
+    currentPage = 1;
+    loadProducts();
+    searchInput.value = "";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    loadProducts();
+});
     </script>
 </body>
 
