@@ -1,3 +1,10 @@
+let currentPage = 1;
+let pageSize = 6;
+let isSearching = false;
+let currentCategory = 'all';
+let searchKeyword = ''; // Nếu rỗng thì là không tìm kiếm
+
+
 
 const userIcon = document.querySelector(".nav-link.user");
     const loginModal = document.querySelector(".login_modal");
@@ -178,23 +185,6 @@ function submitForm(type) {
         alert("Có lỗi xảy ra khi kết nối với máy chủ. Vui lòng thử lại!");
     });
     
-    // fetch('./handle/login.php', {
-    //     method: 'POST',
-    //     body: formData,
-    //     headers: {
-    //         'Accept': 'application/json'
-    //     }
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     if (data.status === 'error') {
-    //         alert(data.message);
-    //     } else {
-    //         alert(data.message);
-    //         window.location.href = "index.php";
-    //     }
-    // })
-    // .catch(error => console.error("Lỗi kết nối:", error));
 }
     const user_isLogin = document.querySelector(".user_isLogin");
     const userDropdown = document.getElementById("userDropdown");
@@ -204,13 +194,7 @@ function submitForm(type) {
         userDropdown.style.display = (userDropdown.style.display === "block") ? "none" : "block";
     });
 }
-    // document.addEventListener("click", function (event) {
-    //     if (!user_isLogin.contains(event.target) && !userDropdown.contains(event.target)) {
-    //         userDropdown.style.display = "none";
-    //     }
-    // });
 
-    
 // Hiển thị popup sản phẩm
 function openProductDetails(productId) {
     console.log("Product ID:", productId); // Kiểm tra giá trị
@@ -221,7 +205,7 @@ function openProductDetails(productId) {
             if (data.error) {
                 console.error("Lỗi:", data.error);
             } else {
-                console.log("Dữ liệu sản phẩm:", data); // Kiểm tra dữ liệu
+                // console.log("Dữ liệu sản phẩm:", data); // Kiểm tra dữ liệu
                 // Điền thông tin vào popup
                 document.getElementById("popup-image").src = data.product.img_src;
                 document.getElementById("popup-name").innerText = data.product.name;
@@ -232,7 +216,6 @@ function openProductDetails(productId) {
                 const sizeContainer = document.getElementById("popup-sizes");
                 sizeContainer.innerHTML = ""; // Xóa danh sách cũ // Chuyển chuỗi size thành mảng
                 data.size.forEach(size => {
-                    console.log(size)
                     const sizeElement = document.createElement("span");
                     sizeElement.classList.add("size-option");
                     sizeElement.innerText = size.size;
@@ -242,7 +225,7 @@ function openProductDetails(productId) {
                         // Xóa active cũ
                         document.querySelectorAll('.size-option').forEach(e => e.classList.remove("active"));
                         sizeElement.classList.add("active");
-                        console.log("Size đã chọn:", size.size);
+                        // console.log("Size đã chọn:", size.size);
                     });
                 });
                 // Xử lý màu sắc
@@ -252,23 +235,20 @@ function openProductDetails(productId) {
                 colorContainer.innerHTML = "";
 
                 data.color.forEach(color => {
-                    console.log(color);
-
-                const colorElement = document.createElement("span");
-                colorElement.classList.add("color-option");
-                colorElement.style.backgroundColor = color.color; // Gán màu nền
-
-                colorContainer.appendChild(colorElement);
-                colorElement.addEventListener("click", function () {
-                    // Xóa class active của các màu trước đó
-                    document.querySelectorAll('.color-option').forEach(e => e.classList.remove("active"));
-                    colorElement.classList.add("active");
-                    console.log("Màu đã chọn:", color.color);
-                    // Thay đổi hình ảnh tương ứng với màu được chọn
-                    console.log("Màu đã chọn:", color.color);
-                    console.log("URL hình ảnh:", color.img_src);
-                     productImage.src = color.img_src; // Cập nhật ảnh theo màu
-                    });
+                    const colorElement = document.createElement("span");
+                    colorElement.classList.add("color-option");
+                    colorElement.style.backgroundColor = color.color; // Gán màu nền
+                    
+                    colorContainer.appendChild(colorElement);
+                    colorElement.addEventListener("click", function () {
+                        // Xóa class active của các màu trước đó
+                        document.querySelectorAll('.color-option').forEach(e => e.classList.remove("active"));
+                        colorElement.classList.add("active");
+                        // console.log("Màu đã chọn:", color.color);
+                        // Thay đổi hình ảnh tương ứng với màu được chọn
+                        // console.log("URL hình ảnh:", color.img_src);
+                        productImage.src = color.img_src; // Cập nhật ảnh theo màu
+                        });
                 });
                 // Gán lại sự kiện nút thêm vào giỏ mỗi khi mở popup
                 const btnaddCart = document.querySelector(".btn-addcart");
@@ -308,80 +288,4 @@ function openProductDetails(productId) {
 function closeProductDetails() {
     document.getElementById("productDetails").classList.remove("show");
 }
-
-function search() {
-    const input = document.getElementById("searchInput");
-    const keyword = input.value.trim();
-    const page = 1;
-
-    if (!keyword) return;
-    document.getElementById("searchForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Ngăn chặn hành động mặc định của form
-        console.log("Từ khóa:", keyword);
-
-        fetch("./handle/search.php?keyword=" + encodeURIComponent(keyword))
-        .then(response => response.json())
-        .then(data => {
-            console.log(data); // Kiểm tra dữ liệu trả về từ server
-            let productHTML = document.querySelector(".row.products");
-            let productsHTML = "";
-            if (data.length === 0) {
-                productHTML.innerHTML = `<div class="col-12"><h4>Không tìm thấy sản phẩm nào!</h4></div>`;
-                return;    
-            }
-            data.forEach(product => {
-                productsHTML += `
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="">
-                                    <img class="image" src="${product.img_src}" onclick="openProductDetails(${product.id})">
-                                    <ul class="product__hover">
-                                        <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                        <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                        </li>
-                                        <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6>${product.name}</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>${product.price}đ</h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-            })
-            productHTML.innerHTML = productsHTML;
-        })
-        
-       
-        
-    });
-    console.log("Từ khóa:", keyword);
-
-}
-
-
-
-
-
-
-
 

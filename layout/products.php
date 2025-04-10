@@ -23,9 +23,9 @@
                 <div class="col-lg-3">
                     <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
-                        <form id="searchForm">
+                        <form id="searchForm" onsubmit="search(event)">
                             <input type="text" id="searchInput" placeholder="Search...">
-                            <button type="submit" onclick="search()"><span class="icon_search"></span></button>
+                            <button type="submit"><span class="icon_search"></span></button>
                         </form>
                     </div>
                         <div class="shop__sidebar__accordion">
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     <div class="row products"></div>
-                    <div class="row">
+                    <div class="row">   
                         <div class="col-lg-12">
                             <div style="display: flex;justify-content: center;" class="product__pagination">
                                 <a style="display: none;margin: 0 10px;" id="prePage" href="#">Prev</a>
