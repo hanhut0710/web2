@@ -114,7 +114,7 @@ let searchKeyword = ''; // Nếu rỗng thì là không tìm kiếm
             `;
             form.innerHTML = '';  // Xóa nội dung cũ
             form.appendChild(formContainer);  // Thêm form mới vào container
-    
+
             form.classList.remove('register');
             form.classList.add('login');
         }
@@ -228,6 +228,9 @@ function openProductDetails(productId) {
                         // Xóa active cũ
                         document.querySelectorAll('.size-option').forEach(e => e.classList.remove("active"));
                         sizeElement.classList.add("active");
+                        selectedSize = size.size;
+                        updateSelectedDetailId();
+
                         // console.log("Size đã chọn:", size.size);
                     });
                 });
@@ -247,10 +250,12 @@ function openProductDetails(productId) {
                         // Xóa class active của các màu trước đó
                         document.querySelectorAll('.color-option').forEach(e => e.classList.remove("active"));
                         colorElement.classList.add("active");
+                        selectedColor = color.color;
                         // console.log("Màu đã chọn:", color.color);
                         // Thay đổi hình ảnh tương ứng với màu được chọn
                         // console.log("URL hình ảnh:", color.img_src);
                         productImage.src = color.img_src; // Cập nhật ảnh theo màu
+                        updateSelectedDetailId();
                         });
                 });
                 let productDetails = [];
@@ -306,13 +311,14 @@ function openProductDetails(productId) {
                               "&product_detail_id=" + encodeURIComponent(selectedProductDetailId) +
                               "&quantity=1"
                     })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log("Phản hồi từ server:", data);
-                        if (data.success) {
-                            alert(data.message);
-                        } else {
-                            alert("Lỗi: " + data.message);
+                    .then(res => res.text())
+                    .then(text => {
+                        console.log("Phản hồi thô từ server:", text);
+                        try {
+                            const data = JSON.parse(text);
+                            console.log("Parsed JSON:", data);
+                        } catch (e) {
+                            console.error("Lỗi khi parse JSON:", e);
                         }
                     })
                     .catch(err => {
