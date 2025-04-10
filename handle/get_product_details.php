@@ -8,15 +8,14 @@ if (isset($_GET['product_id'])) {
 
     // Truy vấn chi tiết sản phẩm
     $query = "SELECT * FROM products p, product_details pd WHERE p.id = '$productId' AND pd.product_id = p.id GROUP BY pd.size"; 
-    
     $query2 = "SELECT DISTINCT pd.size 
     FROM product_details pd , products p
     WHERE pd.product_id = p.id";
 
-$query3 = "SELECT DISTINCT pd.color, pd.img_src
-FROM product_details pd
-JOIN products p ON pd.product_id = p.id
-WHERE p.id = '$productId'";
+    $query3 = "SELECT DISTINCT pd.color, pd.img_src
+    FROM product_details pd
+    JOIN products p ON pd.product_id = p.id
+    WHERE p.id = '$productId'";
 
     $result = $con->query($query);
     $result2 = $con->query($query2);
@@ -42,7 +41,6 @@ WHERE p.id = '$productId'";
         else {
         echo json_encode(['error' => 'Sản phẩm không tồn tại']);
     }
-
         $con->close();
     }
 ?>
