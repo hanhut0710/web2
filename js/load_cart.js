@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 });
                 
-                
+                updateCartTotal();
             } else {
                 alert(data.message || 'Có lỗi xảy ra khi lấy giỏ hàng.');
             }
