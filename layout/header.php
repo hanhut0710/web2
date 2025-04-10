@@ -1,4 +1,4 @@
-<?php
+<span?php
 session_start(); // Dòng đầu tiên, không có gì trước nó
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Tạo một token ngẫu nhiên
@@ -107,6 +107,9 @@ if (!isset($_SESSION['csrf_token'])) {
             <h4 id="popup-name">Tên sản phẩm</h4>
             <p><strong>Giá:</strong> <span id="popup-price"></span></p>
             <p><strong>Thương hiệu:</strong> <span id="popup-brand"></span></p>
+
+            <p><strong>Tồn hàng:</strong><span id="popup-quantity" class="quantities"></span></p>
+            
 
             <p><strong>Màu sắc:</strong></p>   
             <div id="popup-color" class="color-options"></div>
