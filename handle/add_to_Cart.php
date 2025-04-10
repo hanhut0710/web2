@@ -1,6 +1,7 @@
 <?php
 session_start();
-file_put_contents("session_debug.log", print_r($_SESSION, true));
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 require_once '../class/Cart.php'; // Đường dẫn đến class Cart
 
 include('./connect.php');
@@ -20,15 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(["success" => false, "message" => "Bạn cần đăng nhập để thêm sản phẩm"]);
         exit;
     }
-
     if ($product_id > 0 && $quantity > 0 && $product_detail_id > 0) {
         $cart = new Cart();
         $cart->setUserId($user_id);
         $cart->setProductId($product_id);
         $cart->setQuantity($quantity);
         $cart->setProductDetailId($product_detail_id);
-        $cart->createCartIfNotExists($con);
         $cart->addProductToCart($con);
+        echo json_encode(["success" => true, "message" => "Đã thêm vào giỏ hàng"]);
     } else {
         echo json_encode([
             "success" => false,

@@ -66,14 +66,16 @@ class Cart {
                 cart.*, 
                 products.name AS product_name, 
                 products.price, 
-                products.img_src,
+                product_details.img_src,
+                product_details.color
+
             FROM cart
             JOIN products ON cart.product_id = products.id
+            JOIN product_details ON cart.product_detail_id = product_details.id
             WHERE cart.user_id = ?
         ");
-    
         if (!$stmt) {
-            die("Lỗi prepare: " . $con->error); // debug dễ hơn nếu lỗi câu truy vấn
+            die(json_encode(["status" => "error", "message" => "Lỗi prepare: " . $con->error]));
         }
     
         $stmt->bind_param("i", $user_id);
@@ -89,12 +91,12 @@ class Cart {
     }
     
     
+    
     public function createCartIfNotExists($con) {
         $stmt = $con->prepare("SELECT * FROM cart WHERE user_id = ?");
         $stmt->bind_param("i", $this->user_id);
         $stmt->execute();
         $result = $stmt->get_result();
-
         if ($result->num_rows === 0) {
             $stmt = $con->prepare("INSERT INTO cart (user_id, product_id, product_detail_id, quanlity) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("iiii", $this->user_id, $this->product_id, $this->product_detail_id, $this->quantity);
@@ -122,16 +124,22 @@ class Cart {
         }
     }
     // Phương thức để cập nhật số lượng sản phẩm trong giỏ hàng
-    public function updateProductQuantity($con) {
-        $stmt = $con->prepare("UPDATE cart SET quanlity = ? WHERE user_id = ? AND product_id = ? AND product_detail_id = ?");
-        $stmt->bind_param("iiii", $this->quantity, $this->user_id, $this->product_id, $this->product_detail_id);
+    public function updateQuantityById($con) {
+        $stmt = $con->prepare("UPDATE cart SET quanlity = ? WHERE id = ?");
+        $stmt->bind_param("ii", $this->quantity, $this->id);
         return $stmt->execute();
     }
 
     // Phương thức để xóa sản phẩm khỏi giỏ hàng
     public function removeProductFromCart($con) {
-        $stmt = $con->prepare("UPDATE cart SET quanlity = ? WHERE user_id = ? AND product_id = ? AND product_detail_id = ?");
-        $stmt->bind_param("iiii", $this->quantity, $this->user_id, $this->product_id, $this->product_detail_id);
+        $stmt = $con->prepare("DELETE FROM cart WHERE user_id = ? AND product_id = ? AND product_detail_id = ?");
+        $stmt->bind_param("iii", $this->user_id, $this->product_id, $this->product_detail_id);
+        return $stmt->execute();
+    }
+    // Rút gọn: Xóa sản phẩm khỏi giỏ hàng chỉ dựa trên ID của dòng cart
+    public function removeById($con) {
+        $stmt = $con->prepare("DELETE FROM cart WHERE id = ?");
+        $stmt->bind_param("i", $this->id);
         return $stmt->execute();
     }
 

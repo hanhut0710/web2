@@ -301,7 +301,6 @@ function openProductDetails(productId) {
                         product_detail_id: selectedProductDetailId,
                         quantity: 1
                     });
-                
                     fetch(`./handle/add_to_Cart.php`, {
                         method: "POST",
                         headers: {
@@ -317,12 +316,19 @@ function openProductDetails(productId) {
                         try {
                             const data = JSON.parse(text);
                             console.log("Parsed JSON:", data);
+                            if (data.success) {
+                                alert("✅ Thêm sản phẩm vào giỏ hàng thành công!");
+                            } else {
+                                alert("❌ Không thể thêm sản phẩm: " + (data.message || "Lỗi không xác định."));
+                            }
                         } catch (e) {
                             console.error("Lỗi khi parse JSON:", e);
+                            alert("❌ Đã xảy ra lỗi khi xử lý phản hồi từ server.");
                         }
                     })
                     .catch(err => {
                         console.error("Lỗi khi gọi API:", err);
+                        alert("❌ Lỗi kết nối đến server.");
                     });
                 });                
                 

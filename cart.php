@@ -23,6 +23,30 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .arrow {
+        display: inline-block;
+        width: 2px;
+        height: 5px;
+        border: solid #333;
+        border-width: 0 3px 3px 0;
+        padding: 4px;
+        cursor: pointer;
+        transition: 0.2s;
+        }
+        .left-arrow {
+            transform: rotate(135deg);
+        }
+
+        .right-arrow {
+            transform: rotate(-45deg);
+        }
+
+        .arrow:hover {
+            border-color: #555;
+        }
+
+    </style>
 </head>
 
 <body>
