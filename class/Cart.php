@@ -61,18 +61,34 @@ class Cart {
 
     // Phương thức để lấy giỏ hàng của người dùng từ cơ sở dữ liệu
     public function getCartByUserId($user_id, $con) {
-        $stmt = $con->prepare("SELECT * FROM cart WHERE user_id = ?");
+        $stmt = $con->prepare("
+            SELECT 
+                cart.*, 
+                products.name AS product_name, 
+                products.price, 
+                products.img_src,
+            FROM cart
+            JOIN products ON cart.product_id = products.id
+            WHERE cart.user_id = ?
+        ");
+    
+        if (!$stmt) {
+            die("Lỗi prepare: " . $con->error); // debug dễ hơn nếu lỗi câu truy vấn
+        }
+    
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
-
+    
         $cartItems = [];
         while ($row = $result->fetch_assoc()) {
             $cartItems[] = $row;
         }
-
+    
         return $cartItems;
     }
+    
+    
     public function createCartIfNotExists($con) {
         $stmt = $con->prepare("SELECT * FROM cart WHERE user_id = ?");
         $stmt->bind_param("i", $this->user_id);
