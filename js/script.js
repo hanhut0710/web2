@@ -264,7 +264,7 @@ function openProductDetails(productId) {
                             } else {
                                 console.error(data.error || "Không thể lấy chi tiết sản phẩm");
                             }
-                        }
+                        })
                         .catch(err => console.error("Lỗi khi fetch:", err));
                 }
                 fetchProductDetails(productId);
