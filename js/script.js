@@ -215,6 +215,7 @@ function openProductDetails(productId) {
                 document.getElementById("popup-price").innerText = data.product.price;
                 document.getElementById("popup-brand").innerText = data.product.brand;
                 document.getElementById("popup-color").innerText = data.product.color;
+                document.getElementById("popup-quantity").innerText = data.product.stock;
             
                 const sizeContainer = document.getElementById("popup-sizes");
                 sizeContainer.innerHTML = ""; // Xóa danh sách cũ // Chuyển chuỗi size thành mảng
@@ -264,7 +265,7 @@ function openProductDetails(productId) {
                             } else {
                                 console.error(data.error || "Không thể lấy chi tiết sản phẩm");
                             }
-                        }
+                        })
                         .catch(err => console.error("Lỗi khi fetch:", err));
                 }
                 fetchProductDetails(productId);
