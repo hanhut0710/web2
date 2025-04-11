@@ -1583,3 +1583,132 @@ label a {
     }
 }
 
+
+/* Form Add Product */
+.form-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: var(--dark-gray);
+    font-weight: 600;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--medium-gray);
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border: 1px solid var(--lighter-gray);
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 5px rgba(253, 185, 39, 0.3);
+}
+
+.form-group.full-width {
+    grid-column: 1 / 3;
+}
+
+.submit-btn {
+    margin-top: 20px;
+    grid-column: 1 / 3;
+    text-align: center;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #e5a500;
+    box-shadow: 0 4px 10px rgba(253, 185, 39, 0.3);
+}
+
+/* Image Upload Section */
+.image-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--orange);
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    background-color: #e5a500;
+}
+
+#img-preview {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 10px;
+    display: none;
+    margin-top: 15px;
+    object-fit: contain;
+    border: 1px solid var(--lighter-gray);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-group.full-width,
+    .submit-btn {
+        grid-column: 1 / 2;
+    }
+    #img-preview {
+        max-width: 200px;
+        max-height: 200px;
+    }
+}
