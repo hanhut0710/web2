@@ -53,7 +53,7 @@
     <?php include("./layout/header.php");?>
     <?php include("./layout/main_cart.php");?>
     <?php include("./layout/footer.php");?>
-    
+    <script src="js/header.js"></script>
     <script src="js/load_cart.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

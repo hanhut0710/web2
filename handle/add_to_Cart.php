@@ -15,12 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
     $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
     $product_detail_id = isset($_POST['product_detail_id']) ? (int)$_POST['product_detail_id'] : 0;
-    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-
-    if (!$user_id) {
-        echo json_encode(["success" => false, "message" => "Bạn cần đăng nhập để thêm sản phẩm"]);
-        exit;
+    if (!isset($_SESSION['user_id'])) {
+        // Gán guest_id nếu chưa có
+        if (!isset($_SESSION['guest_id'])) {
+            $_SESSION['guest_id'] = mt_rand(100000000, 999999999);
+        }
     }
+    $user_id = $_SESSION['user_id'] ?? $_SESSION['guest_id'] ?? null;
     if ($product_id > 0 && $quantity > 0 && $product_detail_id > 0) {
         $cart = new Cart();
         $cart->setUserId($user_id);
@@ -28,8 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cart->setQuantity($quantity);
         $cart->setProductDetailId($product_detail_id);
         $cart->addProductToCart($con);
-        echo json_encode(["success" => true, "message" => "Đã thêm vào giỏ hàng"]);
-    } else {
+        echo json_encode([
+            "success" => true,
+            "message" => "Đã thêm vào giỏ hàng",
+            "data" => [
+                "user_id" => $user_id,
+                "product_id" => $product_id,
+                "quantity" => $quantity,
+                "product_detail_id" => $product_detail_id
+            ]
+        ]);    } else {
         echo json_encode([
             "success" => false,
             "message" => "Dữ liệu không hợp lệ. product_id = $product_id, quantity = $quantity, product_detail_id = $product_detail_id"

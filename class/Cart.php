@@ -98,7 +98,7 @@ class Cart {
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows === 0) {
-            $stmt = $con->prepare("INSERT INTO cart (user_id, product_id, product_detail_id, quanlity) VALUES (?, ?, ?, ?)");
+            $stmt = $con->prepare("INSERT INTO cart (user_id, product_id, product_detail_id, quantity) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("iiii", $this->user_id, $this->product_id, $this->product_detail_id, $this->quantity);
             return $stmt->execute();
         }
@@ -113,13 +113,16 @@ class Cart {
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
             // Nếu sản phẩm đã có trong giỏ, cập nhật số lượng
-            $stmt = $con->prepare("UPDATE cart SET quanlity = quanlity + ? WHERE user_id = ? AND product_id = ? AND product_detail_id = ?");
+            $stmt = $con->prepare("UPDATE cart SET quanlity = quantity + ? WHERE user_id = ? AND product_id = ? AND product_detail_id = ?");
             $stmt->bind_param("iiii", $this->quantity, $this->user_id, $this->product_id, $this->product_detail_id);
             $stmt->execute();
         } else {
             // Nếu sản phẩm chưa có trong giỏ, thêm mới
-            $stmt = $con->prepare("INSERT INTO cart (user_id, product_id, product_detail_id, quanlity) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("iiii", $this->user_id, $this->product_id, $this->product_detail_id, $this->quantity);
+            $stmt = $con->prepare("INSERT INTO cart (user_id, product_id, quantity, product_detail_id) VALUES (?, ?, ?, ?)");
+            if (!$stmt) {
+                die("Lỗi prepare: " . $con->error);
+            }
+            $stmt->bind_param("iiii", $this->user_id, $this->product_id, $this->quantity, $this->product_detail_id);
             $stmt->execute();
         }
     }

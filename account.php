@@ -99,6 +99,7 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/header.js"></script>
     <script>
       // Danh sách các quận/huyện có sẵn
 const districts = [
