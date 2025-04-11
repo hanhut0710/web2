@@ -63,5 +63,15 @@ class Product{
             $row = mysqli_fetch_assoc($result);
         return $row['total'];
     }
+
+    public function insert($name, $price, $stock, $img, $category_id)
+    {
+        $sql = "INSERT INTO products(name, price, stock, img_src, category_id)
+                VALUES ('$name', '$price', '$stock', '$img', '$price')";
+        $result = mysqli_query($this->conn, $sql);
+        if($result)
+            return true;
+        return false;
+    }
 }
 ?>
