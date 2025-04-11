@@ -5,9 +5,9 @@ let currentCategory = 'all';
 let searchKeyword = '';
 let selectedBrand = '';
 let selectedPrice = '';
-const keyword = document.getElementById("searchInput2").value;
-const brand = document.getElementById("brandSelect").value;
-const priceRange = document.getElementById("priceSelect").value; // ví dụ: "1000000-3000000"
+// const keyword = document.getElementById("searchInput2").value;
+// const brand = document.getElementById("brandSelect").value;
+// const priceRange = document.getElementById("priceSelect").value; // ví dụ: "1000000-3000000"
 const [minPrice, maxPrice] = priceRange.split('-');
 
 
