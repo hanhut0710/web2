@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='../images/logo.png' rel='icon' type='image/x-icon' />
-    <link rel="stylesheet" href="../css/admin-responsive.css">
+    <link rel="stylesheet" href="./css/admin-responsive.css">
     <link href="./fonts/font-awesome-pro-v6-6.2.0/css/all.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="./css/admin.css">
     <title>Quản lý cửa hàng</title>
