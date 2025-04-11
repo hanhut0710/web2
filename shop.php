@@ -63,19 +63,40 @@
 
 });
 
-// let currentPage = 1;
-// let pageSize = 6;
-// let currentCategory = 'all';
 
 function loadProducts() {
     let url = '';
+    const keyword = document.getElementById('searchInput').value.trim();
+    const keyword2 = document.getElementById('searchInput2').value.trim();
+    const brand = document.getElementById('brandSelect').value;
+    const category = document.getElementById('categorySelect').value;
+    const priceRange = document.getElementById('priceSelect').value;
 
-    if (searchKeyword.trim() !== '') {
-        url = `./handle/search.php?keyword=${encodeURIComponent(searchKeyword)}&page=${currentPage}&limit=${pageSize}`;
-    } else {
-        url = `./handle/get_product.php?page=${currentPage}&pageSize=${pageSize}&category_id=${currentCategory}`;
+    // Tách min-max từ priceSelect
+    let minPrice = 0;
+    let maxPrice = 999999999;
+    if (priceRange !== '') {
+        const prices = priceRange.split('-');
+        minPrice = parseInt(prices[0]) * 1000000;
+        maxPrice = parseInt(prices[1]) * 1000000;
     }
 
+    // Kiểm tra nếu có input nâng cao thì dùng search2
+    if (keyword2 || brand || priceRange || (category && category !== 'all')) {
+        url = `./handle/search2.php?keyword=${encodeURIComponent(keyword2)}&brand=${brand}&minPrice=${minPrice}&maxPrice=${maxPrice}&page=${currentPage}&limit=${pageSize}`;
+
+        // Nếu bạn muốn lọc theo category nữa thì thêm:
+        if (category && category !== 'all') {
+            url += `&category=${category}`;
+        }
+
+    } else if (keyword !== '') {
+        // Tìm kiếm đơn giản
+        url = `./handle/search.php?keyword=${encodeURIComponent(keyword)}&page=${currentPage}&limit=${pageSize}`;
+    } else {
+        // Load theo danh mục đang chọn từ sidebar
+        url = `./handle/get_product.php?page=${currentPage}&pageSize=${pageSize}&category_id=${currentCategory}`;
+    }
     fetch(url)
         .then(res => res.json())
         .then(data => {
@@ -148,13 +169,15 @@ document.querySelectorAll('#category-list a').forEach(link => {
 
 function search(event) {
     event.preventDefault();
-    const keyword = document.getElementById("searchInput").value.trim();
-    searchKeyword = keyword;
-    currentCategory = 'all';
+    searchKeyword = document.getElementById("searchInput").value.trim();
+    currentCategory = document.getElementById("categorySelect").value;
+    selectedBrand = document.getElementById("brandSelect").value;
+    selectedPrice = document.getElementById("priceSelect").value;
     currentPage = 1;
     loadProducts();
-    searchInput.value = "";
+    // searchInput.value = "";
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     loadProducts();

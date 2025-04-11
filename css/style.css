@@ -1438,6 +1438,7 @@ ol {
 	height: auto;
 	border: none;
 	padding-right: 28px;
+	border: 20px;
 }
 
 .shop__product__option__right .nice-select:after {

@@ -85,12 +85,38 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
-                                    <p>Sort by Price:</p>
-                                    <select>
-                                        <option value="">Low To High</option>
-                                        <option value="">$0 - $55</option>
-                                        <option value="">$55 - $100</option>
+                                <form id="advancedSearchForm" onsubmit="search(event)">
+                                    <input type="text" id="searchInput2" placeholder="Từ khóa...">
+                                    
+                                    <select id="categorySelect">
+                                        <option value="all">Danh mục</option>
+                                        <option value="1">Casualwear</option>
+                                        <option value="5">Sportwear</option>
+                                        <option value="2">Running</option>
+                                        <option value="4">Basketball</option>
+                                        <option value="3">Football</option>
                                     </select>
+
+                                    <select id="brandSelect">
+                                        <option value="">Hãng</option>
+                                        <option value="Nike">Nike</option>
+                                        <option value="Adidas">Adidas</option>
+                                        <option value="Puma">Puma</option>
+                                        <option value="Vans">Vans</option>
+                                        <option value="Converse">Converse</option>
+                                        <option value="New Balance">New Balance</option>
+                                    </select>
+
+                                    <select id="priceSelect">
+                                        <option value="">Giá</option>
+                                        <option value="1-2">1tr - 2tr</option>
+                                        <option value="2-3">2tr - 3tr</option>
+                                        <option value="3-4">3tr - 4tr</option>
+                                        <option value="4-999">Trên 4tr</option>
+                                    </select>
+
+                                    <button type="submit"><span class="icon_search"></span></button>
+                                </form>
                                 </div>
                             </div>
                         </div>
