@@ -35,11 +35,22 @@ class Product{
         return $products;
     }
 
-    public function getAllProductByCategory()
+    public function getAllProductByCategory($limit, $offset)
     {
-        $sql = "SELECT 
-                FROM
-                WHERE ";
+        $sql = "SELECT products.id, products.name, products.price, products.stock, products.img_src,
+                        category.name as cat_name 
+                FROM products, category
+                WHERE products.status=1 AND products.category_id = category.id
+                LIMIT $limit OFFSET $offset";
+                
+        $result = mysqli_query($this->conn, $sql);
+        $products = [];
+        if($result)
+        {
+            while($rows = mysqli_fetch_array($result))
+                $products[] = $rows;
+        }
+        return $products;
     }
 
     public function getProductByCategory($idCategory)
@@ -58,6 +69,15 @@ class Product{
     public function getTotalProduct() //Đếm sản phẩm hiển thị status=1
     {
         $sql = "SELECT COUNT(*) as total FROM products WHERE status=1";
+        $result = mysqli_query($this->conn, $sql);
+        if($result)
+            $row = mysqli_fetch_assoc($result);
+        return $row['total'];
+    }
+
+    public function getTotalProductByCategory($idCategory) //Đếm sản phẩm hiển thị status=1
+    {
+        $sql = "SELECT COUNT(*) as total FROM products WHERE status=1 AND category_id=".$idCategory;
         $result = mysqli_query($this->conn, $sql);
         if($result)
             $row = mysqli_fetch_assoc($result);
