@@ -20,7 +20,7 @@
       <div class="form-group">
         <label for="category_id">Thể loại</label>
         <select name="category_id" id="category_id" required>
-          <option value="">--Chọn--</option>
+          <option value="">Chọn thể loại</option>
           <option value="1">Giày thể thao</option>
         </select>
       </div>

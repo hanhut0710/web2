@@ -10,17 +10,18 @@
 
     $product = new Product();
     $totalProduct = $product -> getTotalProduct();
-
+    
     $pagination = new Pagination($totalProduct, $page_num, $limit);
     $offset = $pagination -> getOffset();
 
-    $productList = $product -> getAllProduct($limit, $offset);
+    $productList = $product -> getAllProductByCategory($limit, $offset);
 ?>
 
 <div class="section product-all active">
             <div class="admin-control">
                 <div class="admin-control-left">
-                    <select name="the-loai" id="the-loai">
+                    <select name="the-loai" id="the-loai" onchange="filterByCategory(this.value)">
+                    <option value="" selected>Tất cả</option>
                         <?php
                         if(count($categoryList) > 0)
                         {
@@ -29,8 +30,8 @@
                                 echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
                             }
                         }
-                        else
-                            echo '<option>Không có</option>';
+                        // else
+                        //     echo '<option>Không có</option>';
                         ?>
                     </select>
                 </div>
@@ -57,11 +58,10 @@
                             # code...
                             echo '  <div class="list">
                     <div class="list-left">
-                        <img src="../images/bacxiu.png" alt="">
+                        <img src="'.$value['img_src'].'" alt="">
                         <div class="list-info">
                             <h4>'.$value['name'].'</h4>
-                            <p class="list-note">Tạm...</p>
-                            <span class="list-category">Cà phê</span>
+                            <span class="list-category">'.$value['cat_name'].'</span>
                         </div>
                     </div>
                     <div class="list-right">
@@ -70,8 +70,8 @@
                         </div>
                         <div class="list-control">
                             <div class="list-tool">
-                                <button class="btn-edit" ><i class="fa-light fa-pen-to-square"></i></button>
-                                <button class="btn-delete"><i class="fa-regular fa-trash"></i></button>
+                                <a href="xulySP.php&id='.$value['id'].'&act=edit"><button class="btn-edit" name="btnEditProduct"><i class="fa-light fa-pen-to-square"></i></button></a>
+                                <a href="xulySP.php&id='.$value['id'].'&act=delete"><button class="btn-delete" name="btnDeleteProduct"><i class="fa-regular fa-trash"></i></button></a>
                             </div>
                         </div>
                     </div>
@@ -85,3 +85,14 @@
             <?php
                 echo $pagination -> render();
             ?>
+<script>
+function filterByCategory(categoryId)
+{
+    let url = window.location.pathname + "?";
+    if(categoryId)
+        url += 'category_id=' +categoryId;
+    window.location.href = url;
+}
+
+<script>
+
