@@ -1,3 +1,4 @@
+
 <div class="form-container">
   <h2>Thêm Sản Phẩm</h2>
   <form action="xulySP.php" method="POST" enctype="multipart/form-data">
@@ -9,12 +10,12 @@
 
       <div class="form-group">
         <label for="price">Giá</label>
-        <input type="number" name="price" id="price" required>
+        <input type="text" name="price" id="price" required>
       </div>
 
       <div class="form-group">
         <label for="stock">Tồn kho</label>
-        <input type="number" name="stock" id="stock" required>
+        <input type="text" name="stock" id="stock" required>
       </div>
 
       <div class="form-group">
