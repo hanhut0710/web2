@@ -42,27 +42,6 @@
         <img id="img-preview" style="display:none;" />
       </div>
 
-      <div class="form-group">
-        <label for="color">Màu sắc</label>
-        <input type="text" name="color" required>
-      </div>
-
-      <div class="form-group">
-        <label for="size">Size</label>
-        <input type="text" name="size" required>
-      </div>
-
-      <div class="form-group">
-        <label for="brand">Thương hiệu</label>
-        <input type="text" name="brand" required>
-      </div>
-
-      <div class="form-group">
-        <label for="detail_stock">Tồn kho biến thể</label>
-        <input type="number" name="detail_stock" required>
-      </div>
-    </div>
-
     <div class="submit-btn">
       <button type="submit"><i class="fa fa-plus-circle"></i> Thêm sản phẩm</button>
     </div>

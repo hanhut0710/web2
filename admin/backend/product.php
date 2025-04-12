@@ -89,5 +89,15 @@ class Product {
             return true;
         return false;
     }
+
+    public function getProductDetails($product_id) {
+        $sql = "SELECT * FROM product_details WHERE product_id = $product_id";
+        $result = mysqli_query($this->conn, $sql);
+        $details = [];
+        while ($row = mysqli_fetch_array($result)) {
+            $details[] = $row;
+        }
+        return $details;
+    }
 }
 ?>

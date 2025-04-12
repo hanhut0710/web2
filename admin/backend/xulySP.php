@@ -6,9 +6,6 @@ if(isset($_POST['btnAddProduct']) && ($_POST['btnAddProduct']))
 {
     $name = $_POST['name'];
     $price = $_POST['price'];
-    $stock = $_POST['stock'];
-    $color = $_POST['color'];
-    $stock = $_POST['stock'];
     $brand = $_POST['brand'];
     $category_id = $POST['category'];
 

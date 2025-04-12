@@ -22,6 +22,18 @@
                             </a>
                         </li>
                         <li class="sidebar-list-item tab-content">
+                            <a href="index.php?page=productdetails" class="sidebar-link">
+                                <div class="sidebar-icon"><i class="fa-light fa-pot-food"></i></div>
+                                <div class="hidden-sidebar">Chi tiết sản phẩm</div>
+                            </a>
+                        </li>
+                        <li class="sidebar-list-item tab-content">
+                            <a href="index.php?page=import" class="sidebar-link">
+                                <div class="sidebar-icon"><i class="fa fa-ticket" aria-hidden="true"></i></div>
+                                <div class="hidden-sidebar">Phiếu nhập hàng</div>
+                            </a>
+                        </li>
+                        <li class="sidebar-list-item tab-content">
                             <a href="index.php?page=customer" class="sidebar-link">
                                 <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
                                 <div class="hidden-sidebar">Khách hàng</div>
@@ -91,12 +103,24 @@
                         case "home":
                             include "home.php";
                             break;
+                        case "import":
+                            include "import.php";
+                            break;
+                        case "addImport":
+                            include "addImport.php";
+                            break;
                         case "product":
                             include "product.php";
                             break;
                         case "addProduct":
                             include "addProduct.php";
                             break;   
+                        case "productdetails":
+                            include "productdetails.php";
+                            break;
+                        case "addProductDetail":
+                            include "addProductDetail.php";
+                            break;
                         case "order":
                             include "order.php";
                             break;
