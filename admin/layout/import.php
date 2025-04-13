@@ -39,7 +39,7 @@
                     <td>13/04/2025</td>
                     <td>25</td>
                     <td class="control">
-                        <button class="btn-detail" onclick="location.href='index.php?page=importDetail&id=1'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
+                        <button class="btn-detail" onclick="location.href='index.php?page=importdetail'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
                     </td>
                 </tr>
                 <tr>

@@ -109,12 +109,17 @@
                         case "home":
                             include "home.php";
                             break;
+                        /*** PHIẾU NHẬP HÀNG ***/ 
                         case "import":
                             include "import.php";
+                            break;
+                        case "importdetail":
+                            include "importdetail.php";
                             break;
                         case "addImport":
                             include "addImport.php";
                             break;
+                        /*** SẢN PHẨM ***/ 
                         case "product":
                             include "product.php";
                             break;
@@ -127,26 +132,31 @@
                         case "addProductDetail":
                             include "addProductDetail.php";
                             break;
+                        /*** NHÀ CUNG CẤP ***/ 
                         case "supplier":
                             include "supplier.php";
                             break;
+                        /*** ĐƠN HÀNG ***/ 
                         case "order":
                             include "order.php";
                             break;
                         case "customer":
                             include "customer.php";
                             break;
+                        /*** THỐNG KÊ ***/ 
                         case "statisticProduct":
                             include "statisticProduct.php";
                             break;
                         case "statisticCustomer":
                             include "statisticCustomer.php";
                             break;
-                        case "staff":
-                            include "staff.php";
-                            break;
+                       
                         case "permission":
                             include "permission.php";
+                            break;
+                        /*** NHÂN VIÊN ***/
+                        case "staff":
+                            include "staff.php";
                             break;
                         case "createStaff":
                             include "addStaff.php";
@@ -157,6 +167,7 @@
                         case "deleteStaff":
                             include "deleteStaff.php";
                             break;
+                            
                         default:
                             include "home.php";
                             break;
