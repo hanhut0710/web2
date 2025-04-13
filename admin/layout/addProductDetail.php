@@ -1,64 +1,45 @@
-<div class="form-container">
-    <h2>Thêm chi tiết sản phẩm</h2>
-    <form>
-        <div class="form-grid">
-            <!-- Sản phẩm -->
-            <div class="form-group">
-                <label for="product_id">Sản phẩm</label>
-                <select id="product_id" name="product_id">
-                    <option value="">Chọn sản phẩm</option>
-                    <option value="1">Adidas Superstar</option>
-                    <option value="2">Adidas Samba</option>
-                </select>
-            </div>
-            <!-- Kích cỡ -->
-            <div class="form-group">
-                <label for="size">Kích cỡ</label>
-                <input type="text" id="size" name="size" placeholder="Ví dụ: 36">
-            </div>
-            <!-- Thương hiệu -->
-            <div class="form-group">
-                <label for="brand">Thương hiệu</label>
-                <input type="text" id="brand" name="brand" placeholder="Ví dụ: Adidas">
-            </div>
-            <!-- Màu sắc -->
-            <div class="form-group">
-                <label for="color">Màu sắc</label>
-                <input type="text" id="color" name="color" placeholder="Ví dụ: Black">
-            </div>
-            <!-- Số lượng tồn -->
-            <div class="form-group">
-                <label for="stock">Số lượng tồn</label>
-                <input type="number" id="stock" name="stock" placeholder="Ví dụ: 10">
-            </div>
-            <!-- Hình ảnh -->
-            <div class="form-group full-width">
-                <label for="img_src">Hình ảnh sản phẩm</label>
-                <div class="image-upload-container">
-                    <label for="img_src" class="custom-file-upload">
-                        <i class="fas fa-upload"></i> Chọn hình ảnh
-                    </label>
-                    <input type="file" id="img_src" name="img_src" accept="image/*">
-                    <img id="img-preview" src="#" alt="Xem trước hình ảnh">
+<div class="section add-product-detail active">
+    <div class="form-container">
+        <h2>Thêm chi tiết sản phẩm</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="product">Sản phẩm</label>
+                    <select name="product" id="product" required>
+                        <option value="1">Sản phẩm A</option>
+                        <option value="2">Sản phẩm B</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="color">Màu sắc</label>
+                    <input type="text" name="color" id="color" required>
+                </div>
+                <div class="form-group">
+                    <label for="size">Kích cỡ</label>
+                    <input type="text" name="size" id="size" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Số lượng</label>
+                    <input type="number" name="quantity" id="quantity" min="1" required>
+                </div>
+                <div class="form-group full-width image-upload-container">
+                    <label for="image">Hình ảnh</label>
+                    <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(event)">
+                    <label for="image" class="custom-file-upload"><i class="fa-light fa-upload"></i> Chọn ảnh</label>
+                    <img id="img-preview" src="#" alt="Preview">
+                </div>
+                <div class="submit-btn">
+                    <button type="submit" class="btn-control-large">Lưu</button>
                 </div>
             </div>
-            <!-- Nút submit -->
-            <div class="submit-btn">
-                <button type="submit">Thêm chi tiết sản phẩm</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 <script>
-    document.getElementById('img_src').addEventListener('change', function(event) {
-        const imgPreview = document.getElementById('img-preview');
-        const file = event.target.files[0];
-        if (file) {
-            imgPreview.src = URL.createObjectURL(file);
-            imgPreview.style.display = 'block';
-        } else {
-            imgPreview.style.display = 'none';
-        }
-    });
+function previewImage(event) {
+    const preview = document.getElementById('img-preview');
+    preview.src = URL.createObjectURL(event.target.files[0]);
+    preview.style.display = 'block';
+}
 </script>

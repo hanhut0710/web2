@@ -33,6 +33,12 @@
                                 <div class="hidden-sidebar">Phiếu nhập hàng</div>
                             </a>
                         </li>
+                        <!-- <li class="sidebar-list-item tab-content">
+                            <a href="index.php?page=supplier" class="sidebar-link">
+                                <div class="sidebar-icon"><i class="fa fa-ticket" aria-hidden="true"></i></div>
+                                <div class="hidden-sidebar">Nhà cung cấp</div>
+                            </a>
+                        </li> -->
                         <li class="sidebar-list-item tab-content">
                             <a href="index.php?page=customer" class="sidebar-link">
                                 <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
@@ -120,6 +126,9 @@
                             break;
                         case "addProductDetail":
                             include "addProductDetail.php";
+                            break;
+                        case "supplier":
+                            include "supplier.php";
                             break;
                         case "order":
                             include "order.php";

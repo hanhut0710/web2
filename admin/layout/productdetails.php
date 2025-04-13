@@ -1,89 +1,74 @@
-
-
-<h1>Quản lý chi tiết sản phẩm</h1>
-    <div class="container">
-        <!-- Form thêm/sửa chi tiết sản phẩm -->
-        <div class="form-section">
-            <h2>Thêm/Sửa chi tiết sản phẩm</h2>
-            <form>
-                <div class="form-group">
-                    <label for="product_id">Sản phẩm</label>
-                    <select id="product_id" name="product_id">
-                        <option value="">Chọn sản phẩm</option>
-                        <option value="1">Adidas Superstar</option>
-                        <option value="2">Adidas Samba</option>
-                        <!-- Thêm các sản phẩm khác từ bảng products -->
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="size">Kích cỡ</label>
-                    <input type="text" id="size" name="size" placeholder="Ví dụ: 36">
-                </div>
-                <div class="form-group">
-                    <label for="brand">Thương hiệu</label>
-                    <input type="text" id="brand" name="brand" placeholder="Ví dụ: Adidas">
-                </div>
-                <div class="form-group">
-                    <label for="color">Màu sắc</label>
-                    <input type="text" id="color" name="color" placeholder="Ví dụ: Black">
-                </div>
-                <div class="form-group">
-                    <label for="stock">Số lượng tồn</label>
-                    <input type="number" id="stock" name="stock" placeholder="Ví dụ: 10">
-                </div>
-                <div class="form-group">
-                    <label for="img_src">Hình ảnh</label>
-                    <input type="file" id="img_src" name="img_src" accept="image/*">
-                </div>
-                <div class="form-group">
-                    <button type="submit">Lưu</button>
-                </div>
+<div class="section product-details active">
+    <div class="admin-control">
+        <div class="admin-control-left">
+            <select name="product" id="product" onchange="filterByProduct(this.value)">
+                <option value="">Tất cả sản phẩm</option>
+                <option value="1">Sản phẩm A</option>
+                <option value="2">Sản phẩm B</option>
+            </select>
+        </div>
+        <div class="admin-control-center">
+            <form action="" class="form-search">
+                <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
+                <input id="form-search-product-details" type="text" class="form-search-input" placeholder="Tìm kiếm màu sắc, kích cỡ...">
             </form>
         </div>
-
-        <!-- Bảng danh sách chi tiết sản phẩm -->
-        <div class="table-section">
-            <h2>Danh sách chi tiết sản phẩm</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Sản phẩm</th>
-                        <th>Kích cỡ</th>
-                        <th>Thương hiệu</th>
-                        <th>Màu sắc</th>
-                        <th>Số lượng tồn</th>
-                        <th>Hình ảnh</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dữ liệu mẫu -->
-                    <tr>
-                        <td>Adidas Superstar</td>
-                        <td>36</td>
-                        <td>Adidas</td>
-                        <td>Black</td>
-                        <td>10</td>
-                        <td><img src="./img/shoes/adidassuperstar_black.png" alt="Adidas Superstar Black" class="product-img"></td>
-                        <td class="actions">
-                            <a href="#">Sửa</a>
-                            <a href="#" class="delete">Xóa</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Adidas Samba</td>
-                        <td>38</td>
-                        <td>Adidas</td>
-                        <td>Blue</td>
-                        <td>8</td>
-                        <td><img src="./img/shoes/adidassamba_blue.png" alt="Adidas Samba Blue" class="product-img"></td>
-                        <td class="actions">
-                            <a href="#">Sửa</a>
-                            <a href="#" class="delete">Xóa</a>
-                        </td>
-                    </tr>
-                    <!-- Thêm các dòng khác từ cơ sở dữ liệu -->
-                </tbody>
-            </table>
+        <div class="admin-control-right">
+            <button class="btn-reset-product-details"><i class="fa-light fa-arrow-rotate-right"></i></button>
+            <a href="index.php?page=addProductDetail"><button class="btn-control-large" id="btn-add-detail"><i class="fa-light fa-plus"></i> Thêm chi tiết mới</button></a>
         </div>
     </div>
+
+    <div class="table">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Sản phẩm</td>
+                    <td>Màu sắc</td>
+                    <td>Kích cỡ</td>
+                    <td>Số lượng</td>
+                    <td>Hình ảnh</td>
+                    <td>Thao tác</td>
+                </tr>
+            </thead>
+            <tbody id="showProductDetails">
+                <tr>
+                    <td>Sản phẩm A</td>
+                    <td>Đen</td>
+                    <td>M</td>
+                    <td>50</td>
+                    <td><img src="../images/default_product.png" class="prd-img-tbl" alt=""></td>
+                    <td class="control">
+                        <button class="btn-edit"><i 오래된 정보입니다. 계속 진행하시겠습니까? class="fa-light fa-pen-to-square"></i> Sửa</button>
+                        <button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sản phẩm B</td>
+                    <td>Trắng</td>
+                    <td>L</td>
+                    <td>30</td>
+                    <td><img src="../images/default_product.png" class="prd-img-tbl" alt=""></td>
+                    <td class="control">
+                        <button class="btn-edit"><i class="fa-light fa-pen-to-square"></i> Sửa</button>
+                        <button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="page-nav">
+        <ul class="page-nav-list">
+            <li class="page-nav-item active"><a href="#">1</a></li>
+            <li class="page-nav-item"><a href="#">2</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+function filterByProduct(productId) {
+    let url = "index.php?page=productdetails" + (productId ? "&product_id=" + productId : "");
+    window.location.href = url;
+}
+</script>
