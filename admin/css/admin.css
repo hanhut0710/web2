@@ -1287,7 +1287,7 @@ label a {
 
 .btn-daxuly::before {
     content: "\f00c";
-    font-familyසුරුක්ති: auto;
+    font-family: auto;
     font-size: 16px;
     line-height: 1.5;
 }
@@ -1704,5 +1704,69 @@ button[type="submit"]:hover {
     #img-preview {
         max-width: 200px;
         max-height: 200px;
+    }
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4caf50; 
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 300px;
+    animation: slide_show 3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.notification.hidden {
+    display: none;
+}
+
+.notification.error {
+    background-color: #f44336; 
+}
+
+#notification-message{
+    margin: 0 10px;
+}
+
+.notification i {
+    font-size: 25px;
+}
+
+.notification button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.notification button:hover {
+    color: #ddd;
+}
+
+@keyframes slide_show {
+    0%{
+        transform: translateX(100%);
+    }
+    25%{
+        transform: translateX(-10%);
+    }
+    50%{
+        transform: translateX(10%);
+    }
+    75%{
+        transform: translateX(-10%);
+    }
+    100%{
+        transform: translateX(100%);
     }
 }

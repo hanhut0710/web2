@@ -25,8 +25,8 @@
             return $data;
         }
 
-        public function addStaff($full_name, $phone, $role, $acc_id){
-            $sql = "INSERT INTO admin (full_name, phone, role, acc_id) VALUES ('$full_name', '$phone', '$role', '$acc_id')";
+        public function addStaff($full_name, $phone, $email, $role, $acc_id){
+            $sql = "INSERT INTO admin (full_name, phone, email, role, acc_id) VALUES ('$full_name', '$phone', '$email', '$role', '$acc_id')";
             mysqli_query($this->conn, $sql);
         }
 
@@ -42,8 +42,8 @@
             return null; 
         }
 
-        public function updateStaff($id, $full_name, $phone, $role){
-            $sql = "UPDATE admin SET full_name = '$full_name', phone = '$phone', role = '$role' WHERE id = '$id'";
+        public function updateStaff($id, $full_name, $phone, $email, $role){
+            $sql = "UPDATE admin SET full_name = '$full_name', phone = '$phone', email = '$email', role = '$role' WHERE id = '$id'";
             mysqli_query($this->conn, $sql);
         }
 
@@ -53,7 +53,7 @@
             $result = mysqli_query($this->conn, $sql);
 
             if ($result && mysqli_num_rows($result) > 0) {
-                return mysqli_fetch_assoc($result)['id'];
+                return mysqli_fetch_assoc($result)['acc_id'];
             }
 
             return null; 
@@ -97,10 +97,36 @@
         }
 
         public function getTotalStaffById($search_id) {
-            $sql = "SELECT COUNT(*) as total FROM admin WHERE id = '$search_id'";
+            $sql = "SELECT COUNT(*) as total FROM admin WHERE id LIKE '%$search_id%'";
             $result = mysqli_query($this->conn, $sql);
             $row = mysqli_fetch_assoc($result);
             return $row['total'];
         }
+
+        public function checkDulicatePhone($phone){
+            $sql = "SELECT * FROM admin WHERE phone = '$phone'";
+            $result = mysqli_query($this->conn, $sql);
+            if($result && mysqli_num_rows($result) > 0){
+                return true;
+            }
+            return false;
+        }
         
+        public function checkDulicateUsername($username){
+            $sql = "SELECT * FROM admin, accounts WHERE accounts.username = '$username' AND admin.acc_id = accounts.id";
+            $result = mysqli_query($this->conn, $sql);
+            if($result && mysqli_num_rows($result) > 0){
+                return true;
+            }
+            return false;
+        }
+
+        function checkDulicateEmail($email){
+            $sql = "SELECT * FROM admin WHERE email = '$email'";
+            $result = mysqli_query($this->conn, $sql);
+            if($result && mysqli_num_rows($result) > 0){
+                return true;
+            }
+            return false;
+        }
    }

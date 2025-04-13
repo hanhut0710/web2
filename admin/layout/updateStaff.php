@@ -6,7 +6,10 @@
     $staff_id = "";
     $current_username = "";
     $staff_id = "";
+    $staff_email = "";
     $acc_id = "";
+    $message = "";
+    $status = "error";
     if(isset($_GET['id']) && $_GET['id']){
         $staff_id = $_GET['id'];
 
@@ -17,12 +20,15 @@
         $staff_role = $staff_info['role'];
         $staff_acc_id = $staff_info['acc_id'];
         $staff_id = $staff_info['id'];
+        $staff_email = $staff_info['email'];
         $acc_id = $staff_acc_id;
 
         $acc_info = $acc->getAccById($staff_acc_id);
         $staff_username = $acc_info['username'];
         $staff_passwd = $acc_info['password'];
+        $current_phone = $staff_phone;
         $current_username = $staff_username;
+        $current_email = $staff_email;
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn-submit'])) {
@@ -31,22 +37,22 @@
         $staff_role = isset($_POST['staff_role']) ? intval($_POST['staff_role']) : 0;
         $staff_username = isset($_POST['staff_username']) ? trim($_POST['staff_username']) : '';
         $staff_passwd = isset($_POST['staff_password']) ? trim($_POST['staff_password']) : '';
+        $staff_email = isset($_POST['staff_email']) ? trim($_POST['staff_email']) : '';
     
-        $phone_regex = "/^(84|0)(3|5|7|8|9)[0-9]{8}$/";
-        $name_regex = "/^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?: [A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/";
     
-        if (empty($staff_name) || empty($staff_phone) || empty($staff_passwd) || empty($staff_username)) {
-            $message = "Vui lòng nhập đầy đủ thông tin.";   
-        } elseif (!preg_match($name_regex, $staff_name)) {
-            $message = "Tên nhân viên không hợp lệ. Vui lòng nhập đúng định dạng.";
-        } elseif (!preg_match($phone_regex, $staff_phone)) {
-            $message = "Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại Việt Nam hợp lệ.";
-        } elseif ($acc->checkUsername($staff_username) && $staff_username !== $current_username) {
+        if ($staff->checkDulicatePhone($staff_phone) && $staff_phone !== $current_phone) {
+            $message = "Số điện thoại đã có người sử dụng.";
+        } elseif (!filter_var($staff_email, FILTER_VALIDATE_EMAIL)) {
+            $message = "Email không hợp lệ. Vui lòng nhập đúng định dạng.";
+        } elseif($staff->checkDulicateEmail($staff_email) && $staff_email !== $current_email) {
+            $message = "Email đã có người sử dụng.";
+        } elseif ($staff->checkDulicateUsername($staff_username) && $staff_username !== $current_username) {
             $message = "Tên đăng nhập đã tồn tại";
         } else {
             $message = "Sửa nhân viên thành công!";
+            $status = "success";
             $acc->updateAccount($acc_id, $staff_username, $staff_passwd);
-            $staff->updateStaff($staff_id, $staff_name, $staff_phone, $staff_role);
+            $staff->updateStaff($staff_id, $staff_name, $staff_phone, $staff_email, $staff_role);
         }
     }
 
@@ -54,7 +60,7 @@
 
 <div class="container-addStaff">
     <h2 class="page-title">Sửa nhân viên</h2>
-    <form id="add-staff-form" method="POST" action="">
+    <form id="add-staff-form" method="POST" action="" onsubmit="return validateUpdateStaffForm()">
         <div class="form-group">
             <label for="staff-name">Tên nhân viên</label>
             <input type="text" id="staff-name" name="staff_name" placeholder="Nhập tên nhân viên" value="<?php echo $staff_name?>">
@@ -64,13 +70,17 @@
             <input type="text" id="staff-phone" name="staff_phone" placeholder="Nhập số điện thoại"value="<?php echo $staff_phone?>">
         </div>
         <div class="form-group">
+            <label for="staff-phone">Email</label>
+            <input type="text" id="staff-email" name="staff_email" placeholder="Email" value="<?php echo $staff_email ?>">
+        </div>
+        <div class="form-group">
             <label for="staff-username">Tên tài khoản</label>
             <input type="text" id="staff-username" name="staff_username" placeholder="Nhập tên tài khoản" value="<?php echo $staff_username?>">
         </div>
         <div class="form-group">
             <label for="staff-password">Mật khẩu</label>
             <div class="passwd_input">
-                <input type="password" id="staff-password" name="staff_password" placeholder="Nhập mật khẩu" value="<?php echo $staff_username?>">
+                <input type="password" id="staff-password" name="staff_password" placeholder="Nhập mật khẩu" value="<?php echo $staff_passwd?>">
                 <i class="fa-solid fa-eye-slash eye" id="toggle-password"></i>
             </div>
         </div>
@@ -99,20 +109,68 @@
         this.classList.toggle('fa-eye');
         this.classList.toggle('fa-eye-slash');
     });
-</script>
-<?php 
-    if(!empty($message)){
-        echo '
-            <script> 
-                alert("'.$message.'");
-            </script>
-        ';
+
+    function validateUpdateStaffForm() {
+        const name = document.getElementById('staff-name').value.trim();
+        const phone = document.getElementById('staff-phone').value.trim();
+        const email = document.getElementById('staff-email').value.trim();
+        const password = document.getElementById('staff-password').value.trim();
+        const username = document.getElementById('staff-username').value.trim();
+
+        const phoneRegex = /^(84|0)(3|5|7|8|9)[0-9]{8}$/;
+        const nameRegex = /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?: [A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/;
+
+        if(!name || !phone || !email || !password || !username) {
+            showNotification("Vui lòng nhập đầy đủ thông tin.", "error");
+            return false;
+        }
+        if (!name) {
+            showNotification("Vui lòng nhập tên nhân viên.", "error");
+            return false;
+        }
+        if (!nameRegex.test(name)) {
+            showNotification("Tên nhân viên không hợp lệ.", "error");
+            return false;
+        }
+        if (!phone) {
+            showNotification("Vui lòng nhập số điện thoại.", "error");
+            return false;
+        }
+        if (!phoneRegex.test(phone)) {
+            showNotification("Số điện thoại không hợp lệ.", "error");
+            return false;
+        }
+        if (!email) {
+            showNotification("Vui lòng nhập email.", "error");
+            return false;
+        }
+        if (!email.includes('@')) {
+            showNotification("Email không hợp lệ.", "error");
+            return false;
+        }
+        if(!username) {
+            showNotification("Vui lòng nhập tên tài khoản.", "error");
+            return false;
+        }
+        if(!password) {
+            showNotification("Vui lòng nhập mật khẩu.", "error");
+            return false;
+        }
+
+        return true; 
     }
-    if($message === 'Sửa nhân viên thành công!'){
-        echo '
-            <script> 
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let message = "<?php echo $message; ?>";
+        let status = "<?php echo $status; ?>";
+        if (message === 'Sửa nhân viên thành công!') {
+            setTimeout(function () {
                 window.location.href = "index.php?page=staff";
-            </script>
-        ';
-    }
-?>
+            }, 3000);
+        }
+        if (message) {
+            showNotification(message, status);
+        }
+    });
+
+</script>
