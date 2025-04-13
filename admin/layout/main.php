@@ -23,7 +23,7 @@
                         </li>
                         <li class="sidebar-list-item tab-content">
                             <a href="index.php?page=productdetails" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa-light fa-pot-food"></i></div>
+                                <div class="sidebar-icon"><i class="fa-solid fa-boot"></i></div>
                                 <div class="hidden-sidebar">Chi tiết sản phẩm</div>
                             </a>
                         </li>
@@ -33,12 +33,12 @@
                                 <div class="hidden-sidebar">Phiếu nhập hàng</div>
                             </a>
                         </li>
-                        <!-- <li class="sidebar-list-item tab-content">
+                        <li class="sidebar-list-item tab-content">
                             <a href="index.php?page=supplier" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa fa-ticket" aria-hidden="true"></i></div>
+                                <div class="sidebar-icon"><i class="fa-solid fa-user-tie"></i></div>
                                 <div class="hidden-sidebar">Nhà cung cấp</div>
                             </a>
-                        </li> -->
+                        </li>
                         <li class="sidebar-list-item tab-content">
                             <a href="index.php?page=customer" class="sidebar-link">
                                 <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>

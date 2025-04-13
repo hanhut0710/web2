@@ -3,14 +3,14 @@
         <div class="admin-control-left">
             <select name="product" id="product" onchange="filterByProduct(this.value)">
                 <option value="">Tất cả sản phẩm</option>
-                <option value="1">Sản phẩm A</option>
-                <option value="2">Sản phẩm B</option>
+                <option value="1">Adidas Superstar</option>
+                <option value="2">Nike Air Max</option>
             </select>
         </div>
         <div class="admin-control-center">
             <form action="" class="form-search">
                 <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
-                <input id="form-search-product-details" type="text" class="form-search-input" placeholder="Tìm kiếm màu sắc, kích cỡ...">
+                <input id="form-search-product-details" type="text" class="form-search-input" placeholder="Tìm kiếm tên, màu sắc, kích cỡ, thương hiệu...">
             </form>
         </div>
         <div class="admin-control-right">
@@ -26,6 +26,7 @@
                     <td>Sản phẩm</td>
                     <td>Màu sắc</td>
                     <td>Kích cỡ</td>
+                    <td>Thương hiệu</td>
                     <td>Số lượng</td>
                     <td>Hình ảnh</td>
                     <td>Thao tác</td>
@@ -33,25 +34,39 @@
             </thead>
             <tbody id="showProductDetails">
                 <tr>
-                    <td>Sản phẩm A</td>
-                    <td>Đen</td>
-                    <td>M</td>
+                    <td>Adidas Superstar</td>
+                    <td>Black</td>
+                    <td>36</td>
+                    <td>Adidas</td>
                     <td>50</td>
-                    <td><img src="../images/default_product.png" class="prd-img-tbl" alt=""></td>
+                    <td><img src="../images/adidas_superstar_black.png" class="prd-img-tbl" alt=""></td>
                     <td class="control">
-                        <button class="btn-edit"><i 오래된 정보입니다. 계속 진행하시겠습니까? class="fa-light fa-pen-to-square"></i> Sửa</button>
-                        <button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button>
+                        <button class="btn-edit" onclick="location.href='index.php?page=editProductDetail&id=1'"><i class="fa-light fa-pen-to-square"></i> Sửa</button>
+                        <button class="btn-delete" onclick="alert('Xóa chi tiết này?')"><i class="fa-regular fa-trash"></i> Xóa</button>
                     </td>
                 </tr>
                 <tr>
-                    <td>Sản phẩm B</td>
-                    <td>Trắng</td>
-                    <td>L</td>
+                    <td>Adidas Superstar</td>
+                    <td>White</td>
+                    <td>38</td>
+                    <td>Adidas</td>
                     <td>30</td>
-                    <td><img src="../images/default_product.png" class="prd-img-tbl" alt=""></td>
+                    <td><img src="../images/adidas_superstar_white.png" class="prd-img-tbl" alt=""></td>
                     <td class="control">
-                        <button class="btn-edit"><i class="fa-light fa-pen-to-square"></i> Sửa</button>
-                        <button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button>
+                        <button class="btn-edit" onclick="location.href='index.php?page=editProductDetail&id=2'"><i class="fa-light fa-pen-to-square"></i> Sửa</button>
+                        <button class="btn-delete" onclick="alert('Xóa chi tiết này?')"><i class="fa-regular fa-trash"></i> Xóa</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nike Air Max</td>
+                    <td>Red</td>
+                    <td>40</td>
+                    <td>Nike</td>
+                    <td>20</td>
+                    <td><img src="../images/nike_airmax_red.png" class="prd-img-tbl" alt=""></td>
+                    <td class="control">
+                        <button class="btn-edit" onclick="location.href='index.php?page=editProductDetail&id=3'"><i class="fa-light fa-pen-to-square"></i> Sửa</button>
+                        <button class="btn-delete" onclick="alert('Xóa chi tiết này?')"><i class="fa-regular fa-trash"></i> Xóa</button>
                     </td>
                 </tr>
             </tbody>

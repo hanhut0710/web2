@@ -3,8 +3,8 @@
         <div class="admin-control-left">
             <select name="supplier" id="supplier" onchange="filterBySupplier(this.value)">
                 <option value="">Tất cả nhà cung cấp</option>
-                <option value="1">Nhà cung cấp A</option>
-                <option value="2">Nhà cung cấp B</option>
+                <option value="1">Adidas Vietnam</option>
+                <option value="2">Nike Vietnam</option>
             </select>
         </div>
         <div class="admin-control-center">
@@ -33,23 +33,23 @@
             </thead>
             <tbody id="showImport">
                 <tr>
-                    <td>IM123456</td>
-                    <td>Nhà cung cấp A</td>
-                    <td>Sản phẩm A</td>
-                    <td>01/01/2025</td>
-                    <td>100</td>
+                    <td>IM20250413001</td>
+                    <td>Adidas Vietnam</td>
+                    <td>Adidas Superstar</td>
+                    <td>13/04/2025</td>
+                    <td>25</td>
                     <td class="control">
-                        <button class="btn-detail" onclick="location.href='#'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
+                        <button class="btn-detail" onclick="location.href='index.php?page=importDetail&id=1'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
                     </td>
                 </tr>
                 <tr>
-                    <td>IM123457</td>
-                    <td>Nhà cung cấp B</td>
-                    <td>Sản phẩm B</td>
-                    <td>02/01/2025</td>
-                    <td>50</td>
+                    <td>IM20250413002</td>
+                    <td>Nike Vietnam</td>
+                    <td>Nike Air Max</td>
+                    <td>14/04/2025</td>
+                    <td>10</td>
                     <td class="control">
-                        <button class="btn-detail" onclick="location.href='#'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
+                        <button class="btn-detail" onclick="location.href='index.php?page=importDetail&id=2'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
                     </td>
                 </tr>
             </tbody>
