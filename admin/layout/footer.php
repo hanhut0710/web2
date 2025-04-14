@@ -360,6 +360,7 @@
         //         })
         //     })
         // })
+
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             const notificationMessage = document.getElementById('notification-message');

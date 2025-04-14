@@ -196,12 +196,12 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
                                   </div>
                                 </div>
                                 
-                                        <div class="profile-account__custom-form__footer">
-                                            <input data-val="true" data-val-required="The Id field is required." id="Id" name="Id" type="hidden" value="295115">
-                                            <button type="submit" class="btn btn-solid-primary btn--m btn--inline" aria-disabled="false" fdprocessedid="seh2b" id= "save-button">
-                                                Lưu
-                                            </button>
-                                        </div>
+                                <div class="profile-account__custom-form__footer">
+                                    <input type="hidden" id="Id" name="Id" value="295115">
+                                    <div id="save-button" class="custom-button">
+                                        Lưu
+                                    </div>
+                                </div>
 
                                     </div>
                                     <div class="profile-main__account-body__right">

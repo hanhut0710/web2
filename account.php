@@ -23,6 +23,22 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        .custom-button {
+          opacity: 0.6;
+          pointer-events: none;
+          display: inline-block;
+          padding: 10px 20px;
+          background-color:rgb(255, 0, 0);
+          color: white;
+          border-radius: 4px;
+          cursor: pointer;
+          user-select: none;
+          text-align: center;
+      }
+
+          .custom-button:hover {
+              background-color:rgb(244, 85, 85);
+          }
         .nice-select {
             -webkit-tap-highlight-color: transparent;
             background-color: #fff;
@@ -534,11 +550,12 @@ let wardsByDistrict = {
   ],
   // Thêm các quận/huyện và danh sách phường/xã tương ứng
 };
-const FullName = document.getElemnetById('FullName').value;
+const FullName = document.getElementById('FullName').value;
 const Phone = document.getElementById('Phone').value;
 const districtInput = document.getElementById("box-select-district").value;
-const input = document.getElementById("box-select-ward");
+const input = document.getElementById("box-select-ward").value; // lấy giá trị
 const wardDropdown = document.getElementById("wardDropdown");
+const address = document.getElementById('box-select-address');
 document
   .getElementById("box-select-ward")
   .addEventListener("focus", function () {
@@ -582,7 +599,6 @@ document
   });
   wardDropdown.appendChild(item);
 });
-
       } else {
         wardDropdown.innerHTML =
           "<div class='dropdown__item'>Không tìm thấy Phường/Xã</div>";
@@ -591,7 +607,6 @@ document
       wardDropdown.classList.add("Dropdownvisible");
     }
   });
-
 // Đóng dropdown khi click ra ngoài
 document.addEventListener("click", function (event) {
   const wardDropdown = document.getElementById("wardDropdown");
@@ -604,13 +619,6 @@ document.addEventListener("click", function (event) {
     wardDropdown.classList.remove("Dropdownvisible");
     wardInput.setAttribute("placeholder", "");
   }
-});
-//=============Save button ===========
-const btnSave = document.getElementById('save-button');
-btnSave.addEvenListener('click' , function() {
-      if(districtInput && !input){
-        
-      }
 });
     </script>
 </body>
