@@ -85,7 +85,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
-                                <form id="advancedSearchForm" onsubmit="search(event)">
+                                <form id="advancedSearchForm" onclick="loadProducts()">
                                     <input type="text" id="searchInput2" placeholder="Từ khóa...">
                                     
                                     <select id="categorySelect">
@@ -115,7 +115,7 @@
                                         <option value="4-999">Trên 4tr</option>
                                     </select>
 
-                                    <button type="submit"><span class="icon_search"></span></button>
+                                    <button type="submit" onclick="advance_search()"><span class="icon_search"></span></button>
                                 </form>
                                 </div>
                             </div>

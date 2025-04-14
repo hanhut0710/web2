@@ -49,6 +49,7 @@
                                     <td>Mã nhân viên</td>
                                     <td>Tên nhân viên</td>
                                     <td>Số điện thoại</td>
+                                    <td>email</td>
                                     <td>Chức vụ</td>
                                     <td>Thao tác</td>
                                 </tr>
@@ -62,6 +63,7 @@
                                                 <td>'.$staff['id'].'</td>
                                                 <td>'.$staff['full_name'].'</td>
                                                 <td>'.$staff['phone'].'</td>
+                                                <td>'.$staff['email'].'</td>
                                                 <td>'.$staff['role'].'</td>
                                                 <td class="control control-table">
                                                     <a href="index.php?page=updateStaff&id='.$staff['id'].'" class="btn-edit" ><i class="fa-light fa-pen-to-square"></i></a>

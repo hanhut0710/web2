@@ -22,6 +22,24 @@
                             </a>
                         </li>
                         <li class="sidebar-list-item tab-content">
+                            <a href="index.php?page=productdetails" class="sidebar-link">
+                                <div class="sidebar-icon"><i class="fa-solid fa-boot"></i></div>
+                                <div class="hidden-sidebar">Chi tiết sản phẩm</div>
+                            </a>
+                        </li>
+                        <li class="sidebar-list-item tab-content">
+                            <a href="index.php?page=import" class="sidebar-link">
+                                <div class="sidebar-icon"><i class="fa fa-ticket" aria-hidden="true"></i></div>
+                                <div class="hidden-sidebar">Phiếu nhập hàng</div>
+                            </a>
+                        </li>
+                        <li class="sidebar-list-item tab-content">
+                            <a href="index.php?page=supplier" class="sidebar-link">
+                                <div class="sidebar-icon"><i class="fa-solid fa-user-tie"></i></div>
+                                <div class="hidden-sidebar">Nhà cung cấp</div>
+                            </a>
+                        </li>
+                        <li class="sidebar-list-item tab-content">
                             <a href="index.php?page=customer" class="sidebar-link">
                                 <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
                                 <div class="hidden-sidebar">Khách hàng</div>
@@ -91,29 +109,54 @@
                         case "home":
                             include "home.php";
                             break;
+                        /*** PHIẾU NHẬP HÀNG ***/ 
+                        case "import":
+                            include "import.php";
+                            break;
+                        case "importdetail":
+                            include "importdetail.php";
+                            break;
+                        case "addImport":
+                            include "addImport.php";
+                            break;
+                        /*** SẢN PHẨM ***/ 
                         case "product":
                             include "product.php";
                             break;
                         case "addProduct":
                             include "addProduct.php";
                             break;   
+                        case "productdetails":
+                            include "productdetails.php";
+                            break;
+                        case "addProductDetail":
+                            include "addProductDetail.php";
+                            break;
+                        /*** NHÀ CUNG CẤP ***/ 
+                        case "supplier":
+                            include "supplier.php";
+                            break;
+                        /*** ĐƠN HÀNG ***/ 
                         case "order":
                             include "order.php";
                             break;
                         case "customer":
                             include "customer.php";
                             break;
+                        /*** THỐNG KÊ ***/ 
                         case "statisticProduct":
                             include "statisticProduct.php";
                             break;
                         case "statisticCustomer":
                             include "statisticCustomer.php";
                             break;
-                        case "staff":
-                            include "staff.php";
-                            break;
+                       
                         case "permission":
                             include "permission.php";
+                            break;
+                        /*** NHÂN VIÊN ***/
+                        case "staff":
+                            include "staff.php";
                             break;
                         case "createStaff":
                             include "addStaff.php";
@@ -124,6 +167,7 @@
                         case "deleteStaff":
                             include "deleteStaff.php";
                             break;
+                            
                         default:
                             include "home.php";
                             break;

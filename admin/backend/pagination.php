@@ -18,20 +18,20 @@ class Pagination {
        return ($this->currentPage - 1) * $this->itemPerPage;
     }
 
-    public function render()
+    public function renderProduct()
     {
-        if($this->totalPage <= 1)
+        if ($this->totalPage <= 1)
             return '';
 
-        $pageParam = isset($_GET['page']) ? 'page=' . $_GET['page'] : '';
+        $categoryParam = isset($_GET['category_id']) && $_GET['category_id'] !== '' ? 'category_id=' . intval($_GET['category_id']) : '';
 
         $html = '<div class="page-nav">
                     <ul class="page-nav-list">';
         for ($i = 1; $i <= $this->totalPage; $i++) {
-            $url = '?';
-            if($pageParam)
-                $url .= $pageParam . '&';
-            $url .= 'page_num='. $i;
+            $url = '?page=product';
+            if ($categoryParam)
+                $url .= '&' . $categoryParam;
+            $url .= '&page_num=' . $i;
 
             $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
             $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
