@@ -14,7 +14,7 @@ if(isset($_POST['btnAddSupplier']))
     if($newSupplier)
     {
         echo '<script>alert("Thêm thành công !")</script>';
-        header('Location: index.php?page=supplier');
+        // header('Location: index.php?page=supplier');
     }
     else
     echo '<script>alert("Thêm thất bại !")</script>';   

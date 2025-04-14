@@ -1,7 +1,7 @@
 <div class="section add-supplier active">
     <div class="form-container">
         <h2>Thêm nhà cung cấp</h2>
-        <form action="./backend/xulyNCC.php" method="POST">
+        <form action="backend/xulyNCC.php" method="POST">
             <div class="form-grid">
                 <div class="form-group">
                     <label for="sup_name">Tên nhà cung cấp</label>
