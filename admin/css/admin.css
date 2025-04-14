@@ -690,6 +690,7 @@ tbody tr td {
 
 .btn-detail,
 .btn-edit,
+.btn-cancel,
 .btn-delete {
     background-color: #eee;
     padding: 5px 15px;
@@ -1640,6 +1641,7 @@ label a {
     text-align: center;
 }
 
+
 button[type="submit"] {
     width: 100%;
     padding: 12px;
@@ -1657,6 +1659,22 @@ button[type="submit"]:hover {
     box-shadow: 0 4px 10px rgba(253, 185, 39, 0.3);
 }
 
+button[type="button"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="button"]:hover {
+    background-color: #e5a500;
+    box-shadow: 0 4px 10px rgba(253, 185, 39, 0.3);
+}
 /* Image Upload Section */
 .image-upload-container {
     display: flex;

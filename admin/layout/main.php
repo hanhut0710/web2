@@ -136,6 +136,12 @@
                         case "supplier":
                             include "supplier.php";
                             break;
+                        case "addSupplier":
+                            include "addSupplier.php";
+                            break;
+                        case "editSupplier":
+                            include "editSupplier.php";
+                            break;
                         /*** ĐƠN HÀNG ***/ 
                         case "order":
                             include "order.php";
