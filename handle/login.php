@@ -5,6 +5,7 @@ session_start();
 
 include("./connect.php");
 include("../class/account.php");
+include("../class/User.php");
 
 
 $response = [];
@@ -45,7 +46,13 @@ if (empty($username) || empty($passwd)) {
             // Lưu thông tin vào session
             $_SESSION['user'] = $account->getUsername();
             $_SESSION['user_id'] = $account->getId();
-            $response = ['status' => 'success', 'message' => 'Đăng nhập thành công!'];
+            $user = new User();
+            $user->getUserInfo($account->getId(),$con);
+            if($user){
+                $_SESSION['user_name'] = $user->getFullname();
+                $_SESSION['user_phone'] = $user->getPhone();
+            }
+            $response = ['status' => 'success', 'message' => 'Đăng nhập thành công!' ];
         } else {
             $response = ['status' => 'error', 'message' => 'Mật khẩu hoặc tài khoản không đúng!'];
         }

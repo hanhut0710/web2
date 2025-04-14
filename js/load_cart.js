@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (data.status === 'success') {
                 if (data.data.length === 0) {
                     // Nếu giỏ hàng trống
+                    updateCartTotal();
                     cartBody.innerHTML = `
                         <tr>
                             <td colspan="4" style="text-align: center; padding: 40px 0;">
@@ -39,12 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             </td>
                         </tr>`;
                     return;
+                    
                 }
-
+                
                 // Nếu có sản phẩm
                 data.data.forEach(item => {
-                    
-                    const total = item.price * item.quanlity;
+                    console.log(item );
+                    const total = item.price * item.quantity;
                     cartBody.innerHTML += `
                     <tr>
                         <td class="product__cart__item">
@@ -60,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="quantity">
                                 <div class="pro-qty-2">
                                     <span class="arrow left-arrow"></span>
-                                    <input type="text" value="${item.quanlity}">
+                                    <input type="text" value="${item.quantity}">
                                     <span class="arrow right-arrow"></span>
                                 </div>
                             </div>
@@ -109,7 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                         const findProduct = product.find(item => item.id == cartItemId);
                                         console.log( " findProduct: " + findProduct);
                                         const price = findProduct.price;
-                                        
                                         const row = btn.closest('tr');
                                         upadateCartPrice(row , newQuantity, price);
                                         updateCartTotal();
@@ -139,6 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 if (response.status === 'success') {
                                     row.remove();
                                     updateCartTotal();
+                                    location.reload();
                                     console.log("Đã xoá sản phẩm khỏi giỏ hàng");
                                 } else {
                                     alert(response.message || "Xoá sản phẩm thất bại");
@@ -150,7 +152,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     });
                 });
-                
                 updateCartTotal();
             } else {
                 alert(data.message || 'Có lỗi xảy ra khi lấy giỏ hàng.');

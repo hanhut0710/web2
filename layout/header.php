@@ -33,7 +33,13 @@ session_start(); // Dòng đầu tiên, không có gì trước nó
                     <span>0</span>
                 </a>                    <?php ;
                     if (isset($_SESSION["user"])): ?>
-                        <span class="username"><?= htmlspecialchars($_SESSION["user"]); ?></span>
+                        <span style=" display: inline-block;
+                                    max-width: 70px;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    vertical-align: middle;"
+                                    class="username"><?= htmlspecialchars($_SESSION["user"]); ?></span>
                         <a class="nav-link dropdown-toggle user_isLogin" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img style="height: 20px; width: 20px; object-fit: cover;" src="img/icon/user.png" alt="">
                     </a>
@@ -69,7 +75,7 @@ session_start(); // Dòng đầu tiên, không có gì trước nó
             <div class="form_login login">
                 <h3>Đăng nhập</h3>
                 <form id="loginForm">
-                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                <input type="hidden" name="csrf_token" value="">
                 <div class="input_box">
                         <label for="username">Tên đăng nhập</label><br>
                         <input type="text" id="username" name="username" placeholder="Tên đăng nhập" value="hanhut"> 

@@ -128,7 +128,7 @@ class Cart {
     }
     // Phương thức để cập nhật số lượng sản phẩm trong giỏ hàng
     public function updateQuantityById($con) {
-        $stmt = $con->prepare("UPDATE cart SET quanlity = ? WHERE id = ?");
+        $stmt = $con->prepare("UPDATE cart SET quantity = ? WHERE id = ?");
         $stmt->bind_param("ii", $this->quantity, $this->id);
         return $stmt->execute();
     }

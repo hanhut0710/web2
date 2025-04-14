@@ -3,10 +3,10 @@ require_once '../class/Cart.php';
 require_once './connect.php';
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(["status" => "error", "message" => "Chưa đăng nhập"]);
-    exit;
-}
+// if (!isset($_SESSION['user_id'])) {
+//     echo json_encode(["status" => "error", "message" => "Chưa đăng nhập"]);
+//     exit;
+// }
 
 if (!isset($_GET['id'])) {
     echo json_encode(["status" => "error", "message" => "Thiếu ID sản phẩm cần xoá"]);

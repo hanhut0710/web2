@@ -54,11 +54,10 @@ class User {
         $stmt->bind_param("i", $acc_id);
         $stmt->execute();
         $result = $stmt->get_result();
-
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
             $this->setId($user['id']);
-            $this->setFullname($user['fullname']);
+            $this->setFullname($user['full_name']);
             $this->setPhone($user['phone']);
             $this->setAccId($user['acc_id']);
             return true;

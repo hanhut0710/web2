@@ -236,9 +236,7 @@ document.addEventListener("click", function (event) {
     }
   }
 });
-
 // ===================================Ward Select============================
-// Giả sử bạn có danh sách phường/xã cho các quận/huyện
 let wardsByDistrict = {
   "Quận 1": [
     "Phường Bến Nghé",
@@ -536,13 +534,14 @@ let wardsByDistrict = {
   ],
   // Thêm các quận/huyện và danh sách phường/xã tương ứng
 };
-
+const FullName = document.getElemnetById('FullName').value;
+const Phone = document.getElementById('Phone').value;
+const districtInput = document.getElementById("box-select-district").value;
+const input = document.getElementById("box-select-ward");
+const wardDropdown = document.getElementById("wardDropdown");
 document
   .getElementById("box-select-ward")
   .addEventListener("focus", function () {
-    const districtInput = document.getElementById("box-select-district").value;
-    const input = document.getElementById("box-select-ward");
-    const wardDropdown = document.getElementById("wardDropdown");
 
     // Kiểm tra nếu ô `box-select-district` không có dữ liệu
     if (!districtInput) {
@@ -606,33 +605,13 @@ document.addEventListener("click", function (event) {
     wardInput.setAttribute("placeholder", "");
   }
 });
-// Lấy tất cả các phần tử .stardust-radio-button
-const radioButtons = document.querySelectorAll('.stardust-radio-button');
-// Lặp qua tất cả các radio button để thêm sự kiện click
-radioButtons.forEach((button) => {
-    button.addEventListener('click', function () {
-        // Lấy tất cả các inner circle của các radio button
-        const allInnerCircles = document.querySelectorAll('.stardust-radio-button__inner-circle');
+//=============Save button ===========
+const btnSave = document.getElementById('save-button');
+btnSave.addEvenListener('click' , function() {
+      if(districtInput && !input){
         
-        // Ẩn tất cả các inner circle
-        allInnerCircles.forEach((circle) => {
-            circle.style.display = 'none';
-        });
-
-        // Lấy inner circle của button hiện tại và hiển thị nó
-        const innerCircle = button.querySelector('.stardust-radio-button__inner-circle');
-        innerCircle.style.display = 'block';
-
-        // Xóa lớp 'selected' khỏi tất cả các button
-        radioButtons.forEach((btn) => {
-            btn.classList.remove('selected');
-        });
-
-        // Thêm lớp 'selected' vào button được chọn
-        button.classList.add('selected');
-    });
+      }
 });
-
     </script>
 </body>
 
