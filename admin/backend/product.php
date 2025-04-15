@@ -64,7 +64,9 @@ class Product {
 
     public function getTotalProduct()
     {
-        $sql = "SELECT COUNT(*) as total FROM products WHERE status=1";
+        $sql = "SELECT COUNT(*) as total 
+                FROM products 
+                WHERE status=1";
         $result = mysqli_query($this->conn, $sql);
         if ($result)
             $row = mysqli_fetch_assoc($result);
@@ -73,7 +75,9 @@ class Product {
 
     public function getTotalProductByCategory($idCategory)
     {
-        $sql = "SELECT COUNT(*) as total FROM products WHERE status=1 AND category_id=$idCategory";
+        $sql = "SELECT COUNT(*) as total 
+                FROM products
+                WHERE status=1 AND category_id=$idCategory";
         $result = mysqli_query($this->conn, $sql);
         if ($result)
             $row = mysqli_fetch_assoc($result);
