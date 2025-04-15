@@ -1,7 +1,7 @@
 <?php
-require_once "./backend/category.php";
-require_once "./backend/product.php";
-require_once "./backend/pagination.php";
+require_once "backend/category.php";
+require_once "backend/product.php";
+require_once "backend/pagination.php";
 
 $category = new Category();
 $categoryList = $category->getAllCategory();
