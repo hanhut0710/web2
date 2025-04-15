@@ -1,10 +1,19 @@
+<?php
+require_once "./backend/supplier.php";
+$supplier = new Supplier();
+?>
 <div class="section import active">
     <div class="admin-control">
         <div class="admin-control-left">
             <select name="supplier" id="supplier" onchange="filterBySupplier(this.value)">
-                <option value="">Tất cả nhà cung cấp</option>
-                <option value="1">Adidas Vietnam</option>
-                <option value="2">Nike Vietnam</option>
+                <option value="">Tất cả</option>
+                <?php
+                $supplierList = $supplier -> getAllSupplier();
+                foreach ($supplierList as $value) {
+                    # code...
+                    echo '<option value="'.$value['id'].'">'.$value['sup_name'].'</option>';
+                }
+                ?>
             </select>
         </div>
         <div class="admin-control-center">
