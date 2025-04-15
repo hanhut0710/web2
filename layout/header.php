@@ -1,6 +1,4 @@
-<?php
-session_start(); // Dòng đầu tiên, không có gì trước nó
-?>
+
 <div id="preloder">
         <div class="loader"></div>
     </div>

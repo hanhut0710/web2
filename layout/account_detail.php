@@ -201,6 +201,9 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
                                     <div id="save-button" class="custom-button">
                                         Lưu
                                     </div>
+                                    <div id="add_address" class="add_address">
+                                        Thêm Địa Chỉ
+                                    </div>
                                 </div>
 
                                     </div>

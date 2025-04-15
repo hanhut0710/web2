@@ -1,3 +1,6 @@
+<?php
+session_start(); // Dòng đầu tiên, không có gì trước nó
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -23,6 +26,76 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+      .address-form-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    z-index: 9999;
+    flex-direction: column;
+    gap: 10px;
+    width: 400px;
+    max-width: 90%;
+    border-radius: 8px;
+}
+
+.address-form-overlay label {
+    font-weight: bold;
+}
+.address-form-overlay input[type="search"],
+.address-form-overlay input[type="text"] {
+    pointer-events: auto;
+}
+
+.address-form-overlay button {
+    border : 1px solid #777;
+    background-color:while;
+    color: #ccc;
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.address-form-overlay button:hover {
+    background-color:rgb(193, 195, 198);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+      .add_address {
+            color: #777;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color:rgb(255, 255, 255); /* Màu xanh dương */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .add_address:hover {
+            background-color:rgb(138, 153, 172); /* Màu xanh dương đậm hơn khi hover */
+        }
+
         .custom-button {
           opacity: 0.6;
           pointer-events: none;
@@ -82,13 +155,11 @@
             margin: 0;
             padding: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            
         }   
-        input, select, textarea, button, .stardust-radio-button , .nice-select {
+        input, select, textarea, .stardust-radio-button , .nice-select , #add_address{
             pointer-events: none; /* Không cho phép tương tác */
             opacity: 0.5; /* Làm mờ các trường nhập liệu để người dùng thấy rõ là chúng đang bị vô hiệu hóa */
         }
-
         /* Thẻ a để kích hoạt chỉnh sửa */
         .editable:focus {
             pointer-events: auto;
@@ -96,13 +167,10 @@
         }
     </style>
 </head>
-
 <body>
-    
     <?php include("./layout/header.php");?>
     <?php include("./layout/account_detail.php");?>
     <?php include("./layout/footer.php")?>
-
     <script src="js/account.js"></script>
     <script src="js/script.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
@@ -149,7 +217,6 @@ document
   .addEventListener("click", function () {
     const input = document.getElementById("box-select-district");
     const dropdown = document.getElementById("districtDropdown");
-
     // Kiểm tra nếu input đã có giá trị trước đó
     if (input.value) {
       input.setAttribute("placeholder", input.value); // Đặt placeholder là giá trị hiện tại
@@ -559,7 +626,6 @@ const address = document.getElementById('box-select-address');
 document
   .getElementById("box-select-ward")
   .addEventListener("focus", function () {
-
     // Kiểm tra nếu ô `box-select-district` không có dữ liệu
     if (!districtInput) {
       wardDropdown.innerHTML =
@@ -620,6 +686,7 @@ document.addEventListener("click", function (event) {
     wardInput.setAttribute("placeholder", "");
   }
 });
+
     </script>
 </body>
 
