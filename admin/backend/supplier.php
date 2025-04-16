@@ -60,7 +60,10 @@ class Supplier{
         $result = mysqli_query($this->conn, $sql);
         if($result)
             return true;
-        return false;
+        else {
+            echo "Lỗi khi thêm nhà cung cấp: " . mysqli_error($this->conn);
+            return false;
+        }
     }
 
     public function update($id, $name, $email, $phone)

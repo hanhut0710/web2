@@ -42,7 +42,7 @@ $offset = $pagination->getOffset();
                         <td>' .$value['phone'].'</td>
                         <td class="control">
                             <a href="index.php?page=editSupplier&id=' . $value['id'] . '"><button class="btn-edit"><i class="fa-light fa-pen-to-square"></i> Sửa</button></a>
-                            <a href="index.php?page=deleteSupplier&id=' . $value['id'] . '"><button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button></a>
+                            <a href="./backend/xulyNCC.php?act=xoa&id=' . $value['id'] . '"><button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button></a>
                         </td>
                     </tr>';
                 }
