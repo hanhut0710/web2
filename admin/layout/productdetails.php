@@ -1,10 +1,37 @@
+<?php
+require_once "./backend/product.php";
+require_once "./backend/productdetails.php";
+require_once "./backend/pagination.php";
+
+$product = new Product();
+$details = new ProductDetails();
+
+$product_id = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
+$limit = 15;
+$page_num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+
+if ($product_id) {
+    $totalDetails = $details->getTotalDetailsByProduct($product_id);
+    $detailsList = $details->getAllDetailsByPagination($limit, ($page_num - 1) * $limit, $product_id);
+} else {
+    $totalDetails = $details->getTotalDetails();
+    $detailsList = $details->getAllDetailsByPagination($limit, ($page_num - 1) * $limit, 0);
+}
+
+$pagination = new Pagination($totalDetails, $page_num, $limit);
+?>
 <div class="section product-details active">
     <div class="admin-control">
         <div class="admin-control-left">
             <select name="product" id="product" onchange="filterByProduct(this.value)">
                 <option value="">Tất cả sản phẩm</option>
-                <option value="1">Adidas Superstar</option>
-                <option value="2">Nike Air Max</option>
+                <?php
+                $productList = $product->getAllProduct();
+                foreach ($productList as $value) {
+                    $selected = ($product_id == $value['id']) ? 'selected' : '';
+                    echo '<option value="' . $value['id'] . '" ' . $selected . '>' . $value['name'] . '</option>';
+                }
+                ?>
             </select>
         </div>
         <div class="admin-control-center">
@@ -33,52 +60,31 @@
                 </tr>
             </thead>
             <tbody id="showProductDetails">
-                <tr>
-                    <td>Adidas Superstar</td>
-                    <td>Black</td>
-                    <td>36</td>
-                    <td>Adidas</td>
-                    <td>50</td>
-                    <td><img src="../images/adidas_superstar_black.png" class="prd-img-tbl" alt=""></td>
+                <?php
+                foreach ($detailsList as $value) {
+                    # code...
+                    echo '<tr>
+                    <td>'.$value['p_name'].'</td>
+                    <td>'.$value['color'].'</td>
+                    <td>'.$value['size'].'</td>
+                    <td>'.$value['brand'].'</td>
+                    <td>'.$value['stock'].'</td>
+                    <td>'.$value['img_src'].'</td>
                     <td class="control">
-                        <button class="btn-edit" onclick="location.href='index.php?page=editProductDetail&id=1'"><i class="fa-light fa-pen-to-square"></i> Sửa</button>
-                        <button class="btn-delete" onclick="alert('Xóa chi tiết này?')"><i class="fa-regular fa-trash"></i> Xóa</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Adidas Superstar</td>
-                    <td>White</td>
-                    <td>38</td>
-                    <td>Adidas</td>
-                    <td>30</td>
-                    <td><img src="../images/adidas_superstar_white.png" class="prd-img-tbl" alt=""></td>
-                    <td class="control">
-                        <button class="btn-edit" onclick="location.href='index.php?page=editProductDetail&id=2'"><i class="fa-light fa-pen-to-square"></i> Sửa</button>
-                        <button class="btn-delete" onclick="alert('Xóa chi tiết này?')"><i class="fa-regular fa-trash"></i> Xóa</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Nike Air Max</td>
-                    <td>Red</td>
-                    <td>40</td>
-                    <td>Nike</td>
-                    <td>20</td>
-                    <td><img src="../images/nike_airmax_red.png" class="prd-img-tbl" alt=""></td>
-                    <td class="control">
-                        <button class="btn-edit" onclick="location.href='index.php?page=editProductDetail&id=3'"><i class="fa-light fa-pen-to-square"></i> Sửa</button>
-                        <button class="btn-delete" onclick="alert('Xóa chi tiết này?')"><i class="fa-regular fa-trash"></i> Xóa</button>
-                    </td>
-                </tr>
+                            <a href="index.php?page=editProductDetails&id=' . $value['id'] . '"><button class="btn-edit"><i class="fa-light fa-pen-to-square"></i> Sửa</button></a>
+                            <a href="./backend/xulyCTSP.php?act=xoa&id=' . $value['id'] . '"><button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button></a>
+                        </td>
+                </tr>';
+                }
+                ?>
             </tbody>
         </table>
     </div>
 
-    <div class="page-nav">
-        <ul class="page-nav-list">
-            <li class="page-nav-item active"><a href="#">1</a></li>
-            <li class="page-nav-item"><a href="#">2</a></li>
-        </ul>
-    </div>
+    <?php
+  
+    echo $pagination->renderProductDetails();
+    ?>
 </div>
 
 <script>

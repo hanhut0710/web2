@@ -688,6 +688,11 @@ tbody tr td {
     justify-content: flex-end;
 }
 
+.control a {
+    color: var(--text-color);
+    text-decoration: none;
+    outline: none;
+}
 .btn-detail,
 .btn-edit,
 .btn-cancel,
