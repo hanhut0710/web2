@@ -3,7 +3,7 @@ require_once "backend/supplier.php";
 require_once "backend/pagination.php";
 $supplier = new Supplier();
 
-$limit = 5;
+$limit = 7;
 $page_num = isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1; 
 $totalSupplier = $supplier->getTotalSupplier(); 
 

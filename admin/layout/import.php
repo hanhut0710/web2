@@ -1,6 +1,10 @@
 <?php
 require_once "./backend/supplier.php";
+require_once "./backend/import.php";
+require_once "./backend/pagination.php";
+
 $supplier = new Supplier();
+$import = new Import();
 ?>
 <div class="section import active">
     <div class="admin-control">
@@ -41,6 +45,22 @@ $supplier = new Supplier();
                 </tr>
             </thead>
             <tbody id="showImport">
+                <?php
+                $importList = $import -> getAllImport();
+                foreach ($importList as $value) {
+                    # code...
+                    echo '<tr>
+                    <td>'.$value['id'].'</td>
+                    <td>'.$value['sp_name'].'</td>
+                    <td>'.$value['p_name'].'</td>
+                    <td>'.$value['created_at'].'</td>
+                    <td>'.$value['quantity'].'</td>
+                    <td class="control">
+                        <button class="btn-detail"><i class="fa-regular fa-eye"></i> Chi tiết</button>
+                    </td>
+                </tr>';
+                }
+                ?>
                 <tr>
                     <td>IM20250413001</td>
                     <td>Adidas Vietnam</td>
@@ -49,16 +69,6 @@ $supplier = new Supplier();
                     <td>25</td>
                     <td class="control">
                         <button class="btn-detail" onclick="location.href='index.php?page=importdetail'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>IM20250413002</td>
-                    <td>Nike Vietnam</td>
-                    <td>Nike Air Max</td>
-                    <td>14/04/2025</td>
-                    <td>10</td>
-                    <td class="control">
-                        <button class="btn-detail" onclick="location.href='index.php?page=importDetail&id=2'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
                     </td>
                 </tr>
             </tbody>

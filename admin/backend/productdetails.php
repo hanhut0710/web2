@@ -63,6 +63,17 @@ class ProductDetails {
         return $row['total'] ;
     }
 
+    public function getDetailByAttributes($product_id, $color, $size, $brand) 
+    {
+        $sql = "SELECT * FROM product_details 
+                WHERE product_id = '$product_id' AND color = '$color' 
+                AND size = '$size' AND brand = '$brand'";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result)
+            $row = mysqli_fetch_assoc($result);
+        return $row;
+        
+    }
 
 }
 ?>
