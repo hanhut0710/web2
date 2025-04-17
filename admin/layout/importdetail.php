@@ -1,3 +1,15 @@
+<?php
+require_once "./backend/supplier.php";
+require_once "./backend/import.php";
+require_once "./backend/productdetails.php";
+require_once "./backend/product.php";
+
+$supplier = new Supplier();
+$productdetails = new ProductDetails();
+$product = new Product();
+$import = new Import();
+
+?>
 <div class="section import-detail active">
     <div class="form-container">
         <h2>Chi tiết phiếu nhập hàng</h2>
@@ -82,4 +94,5 @@
     margin-top: 20px;
     text-align: right;
 }
+
 </style>

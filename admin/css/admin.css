@@ -688,6 +688,11 @@ tbody tr td {
     justify-content: flex-end;
 }
 
+.control a {
+    color: var(--text-color);
+    text-decoration: none;
+    outline: none;
+}
 .btn-detail,
 .btn-edit,
 .btn-cancel,
@@ -740,6 +745,80 @@ tbody tr td {
 
 .list-tool a:hover .btn-delete {
     background-color: #e5a500; /* Màu cam đậm hơn khi hover */
+}
+
+/*FORM CHI TIẾT SP*/
+/* Định dạng cho detail-item */
+.detail-item {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu không đủ không gian */
+    gap: 10px; /* Khoảng cách giữa các trường */
+    align-items: center; /* Căn giữa các trường theo chiều dọc */
+    margin-bottom: 10px; /* Khoảng cách giữa các detail-item */
+}
+
+/* Định dạng cho nhãn */
+.detail-item label {
+    flex: 0 0 80px; /* Chiều rộng cố định cho nhãn */
+    font-weight: 600;
+    color: var(--medium-gray);
+    font-size: 14px;
+}
+
+/* Định dạng cho các trường nhập liệu */
+.detail-item input,
+.detail-item select {
+    flex: 1; /* Chiếm phần còn lại của không gian */
+    min-width: 120px; /* Chiều rộng tối thiểu */
+    padding: 10px;
+    border: 1px solid var(--lighter-gray);
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Hiệu ứng khi focus */
+.detail-item input:focus,
+.detail-item select:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 5px rgba(253, 185, 39, 0.3);
+}
+
+/* Định dạng cho nút Xóa */
+.detail-item button {
+    padding: 8px 15px;
+    background-color: #f44336; /* Màu đỏ cho nút Xóa */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hiệu ứng hover cho nút Xóa */
+.detail-item button:hover {
+    background-color: #d32f2f;
+}
+
+/* Định dạng cho nút Thêm biến thể */
+#detail-list + button[type="button"] {
+    width: auto;
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+/* Hiệu ứng hover cho nút Thêm biến thể */
+#detail-list + button[type="button"]:hover {
+    background-color: #e5a500;
+    box-shadow: 0 4px 10px rgba(253, 185, 39, 0.3);
 }
 
 /* Modal */

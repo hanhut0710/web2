@@ -56,7 +56,7 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
             foreach ($productList as $value) {
                 echo '<div class="list">
                     <div class="list-left">
-                        <img src="' . (!empty($value['img_src']) ? $value['img_src'] : '../images/default_product.png') . '" alt="">
+                        <img src="' .$value['img_src'] . '" alt="">
                         <div class="list-info">
                             <h4>' . $value['name'] . '</h4>
                             <span class="list-category">' . $value['cat_name'] . '</span>
@@ -68,8 +68,8 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
                         </div>
                         <div class="list-control">
                             <div class="list-tool">
-                                <a href="xulySP.php&id=' . $value['id'] . '&act=edit"><button class="btn-edit" name="btnEditProduct"><i class="fa-light fa-pen-to-square"></i></button></a>
-                                <a href="xulySP.php&id=' . $value['id'] . '&act=delete"><button class="btn-delete" name="btnDeleteProduct"><i class="fa-regular fa-trash"></i></button></a>
+                                <a href="./backend/xulySP.php&id=' . $value['id'] . '&act=edit"><button class="btn-edit" name="btnEditProduct"><i class="fa-light fa-pen-to-square"></i></button></a>
+                                <a href="./backend/xulySP.php&id=' . $value['id'] . '&act=delete"><button class="btn-delete" name="btnDeleteProduct"><i class="fa-regular fa-trash"></i></button></a>
                             </div>
                         </div>
                     </div>

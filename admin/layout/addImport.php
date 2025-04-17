@@ -1,3 +1,9 @@
+<?php
+require_once "./backend/supplier.php";
+
+$supplier = new Supplier();
+$supplierList = $supplier -> getAllSupplier();
+?>
 <div class="section add-import active">
     <div class="form-container">
         <h2>Thêm phiếu nhập hàng</h2>
@@ -5,15 +11,19 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label for="sup_id">Nhà cung cấp</label>
-                    <select id="sup_id" name="sup_id" required>
+                    <select id="sup_id" name="sup_id">
                         <option value="">Chọn nhà cung cấp</option>
-                        <option value="1">Adidas Vietnam</option>
-                        <option value="2">Nike Vietnam</option>
+                        <?php
+                            foreach ($supplierList as $value) {
+                                echo '<option value="'.$value['id'].'">'.$value['sup_name'].'</option>';
+                            }
+                           
+                        ?>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="created_at">Ngày nhập</label>
-                    <input type="date" id="created_at" name="created_at" value="2025-04-13">
+                    <input type="date" id="created_at" name="created_at">
                 </div>
                 <div class="form-group full-width">
                     <label>Chi tiết nhập hàng</label>
@@ -33,6 +43,7 @@
                 </div>
                 <div class="submit-btn">
                     <button type="submit" class="btn-control-large">Lưu</button>
+                    <a href="index.php?page=import"><button type="button" class="btn-control-large">Hủy</button></a>
                 </div>
             </div>
         </form>

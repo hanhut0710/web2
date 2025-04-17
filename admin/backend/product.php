@@ -9,7 +9,19 @@ class Product {
         $this->conn = $mysql->getConnection();
     }
 
-    public function getAllProduct($limit, $offset)
+    public function getAllProduct()
+    {
+        $sql = "SELECT * FROM products WHERE status=1";
+        $result = mysqli_query($this->conn, $sql);
+        $products = [];
+        if ($result) {
+            while ($rows = mysqli_fetch_array($result))
+                $products[] = $rows;
+        }
+        return $products;
+    }
+
+    public function getAllProductByPagination($limit, $offset)
     {
         $sql = "SELECT * FROM products WHERE status=1 LIMIT $limit OFFSET $offset";
         $result = mysqli_query($this->conn, $sql);
@@ -64,7 +76,9 @@ class Product {
 
     public function getTotalProduct()
     {
-        $sql = "SELECT COUNT(*) as total FROM products WHERE status=1";
+        $sql = "SELECT COUNT(*) as total 
+                FROM products 
+                WHERE status=1";
         $result = mysqli_query($this->conn, $sql);
         if ($result)
             $row = mysqli_fetch_assoc($result);
@@ -73,7 +87,9 @@ class Product {
 
     public function getTotalProductByCategory($idCategory)
     {
-        $sql = "SELECT COUNT(*) as total FROM products WHERE status=1 AND category_id=$idCategory";
+        $sql = "SELECT COUNT(*) as total 
+                FROM products
+                WHERE status=1 AND category_id=$idCategory";
         $result = mysqli_query($this->conn, $sql);
         if ($result)
             $row = mysqli_fetch_assoc($result);
@@ -90,14 +106,5 @@ class Product {
         return false;
     }
 
-    public function getProductDetails($product_id) {
-        $sql = "SELECT * FROM product_details WHERE product_id = $product_id";
-        $result = mysqli_query($this->conn, $sql);
-        $details = [];
-        while ($row = mysqli_fetch_array($result)) {
-            $details[] = $row;
-        }
-        return $details;
-    }
 }
 ?>
