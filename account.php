@@ -1,5 +1,4 @@
-<?php
-session_start(); // Dòng đầu tiên, không có gì trước nó
+<?php session_start();
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -26,6 +25,21 @@ session_start(); // Dòng đầu tiên, không có gì trước nó
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+      .delete-btn {
+        background-color:rgb(255, 255, 255);       /* Màu đỏ cảnh báo */
+        color: #777;                     /* Chữ trắng */
+        border: 1px solid #ccc;                    /* Không viền */
+        border-radius: 8px;              /* Bo góc mềm mại */
+        padding: 10px 16px;              /* Khoảng cách nội dung */
+        font-size: 16px;
+        font-weight: 500;                 /* Kích thước chữ */
+        cursor: pointer;                /* Con trỏ dạng tay */
+        transition: background-color 0.3s ease;
+        margin-top: 10px;               /* Khoảng cách với phần trên */
+      }
+      .delete-btn:hover{
+        background-color:rgb(166, 165, 165);
+      }
       .address-form-overlay {
     position: fixed;
     top: 50%;
@@ -42,7 +56,16 @@ session_start(); // Dòng đầu tiên, không có gì trước nó
     max-width: 90%;
     border-radius: 8px;
 }
-
+.address-form .add_address,
+.address-form .set-default-btn,
+.address-form .delete-btn {
+  display: inline-block;
+  width: 32%;      /* Ba nút chia đều gần như 100% */
+  margin-right: 1%; /* Khoảng cách giữa các nút */
+}
+.address-form .delete-btn {
+  margin-right: 0; /* Nút cuối cùng không cần margin phải */
+}
 .address-form-overlay label {
     font-weight: bold;
 }
@@ -78,6 +101,120 @@ session_start(); // Dòng đầu tiên, không có gì trước nó
 .close-btn:hover {
     color: #000;
 }
+.add {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color:rgb(251, 251, 251); /* Màu xanh dương */
+    color: #777;
+    border :1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
+.add:hover {
+    background-color:rgb(226, 226, 226); /* Màu xanh đậm hơn khi hover */
+}
+#address-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Hộp form nổi */
+.address-form {
+    min-width: 80vh;
+    min-height: 70vh;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    max-height: 70vh;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+}
+.address-form h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Danh sách địa chỉ */
+.address-list {
+    height: 50vh;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    overflow-y: auto;         /* Tạo thanh cuộn dọc khi nội dung vượt quá */
+    scrollbar-width: thin;    /* Firefox: làm thanh cuộn nhỏ */
+    scrollbar-color: #ccc transparent; /* Firefox: màu thanh cuộn */
+}
+
+.address-item {
+  padding: 12px 15px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.address-item:hover {
+  background-color: #e9f5ff;
+  border-color: #007bff;
+}
+
+
+/* Hiệu ứng fade */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.set-default-btn {
+  display: inline-block;
+  background-color:#ff3030;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+.address-item {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 6px 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.address-item.selected {
+  background-color: #d0eaff;
+  border-color: #007bff;
+  font-weight: 500;
+}
+.set-default-btn:hover {
+  background-color:rgb(255, 0, 0);
+}
       .add_address {
             color: #777;
             display: inline-block;
@@ -93,7 +230,7 @@ session_start(); // Dòng đầu tiên, không có gì trước nó
         }
 
         .add_address:hover {
-            background-color:rgb(138, 153, 172); /* Màu xanh dương đậm hơn khi hover */
+            background-color:rgb(166, 165, 165); /* Màu xanh dương đậm hơn khi hover */
         }
 
         .custom-button {
@@ -156,7 +293,7 @@ session_start(); // Dòng đầu tiên, không có gì trước nó
             padding: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }   
-        input, select, textarea, .stardust-radio-button , .nice-select , #add_address{
+        input, select, textarea, .stardust-radio-button , .nice-select {
             pointer-events: none; /* Không cho phép tương tác */
             opacity: 0.5; /* Làm mờ các trường nhập liệu để người dùng thấy rõ là chúng đang bị vô hiệu hóa */
         }
@@ -183,7 +320,6 @@ session_start(); // Dòng đầu tiên, không có gì trước nó
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/header.js"></script>
     <script>
       // Danh sách các quận/huyện có sẵn
 const districts = [
@@ -619,22 +755,23 @@ let wardsByDistrict = {
 };
 const FullName = document.getElementById('FullName').value;
 const Phone = document.getElementById('Phone').value;
-const districtInput = document.getElementById("box-select-district").value;
+const districtInput = document.getElementById("box-select-district");
 const input = document.getElementById("box-select-ward").value; // lấy giá trị
 const wardDropdown = document.getElementById("wardDropdown");
 const address = document.getElementById('box-select-address');
 document
   .getElementById("box-select-ward")
   .addEventListener("focus", function () {
-    // Kiểm tra nếu ô `box-select-district` không có dữ liệu
-    if (!districtInput) {
+    console.log(document.getElementById("box-select-ward"))
+    console.log(districtInput);
+    if (!districtInput.value) {
       wardDropdown.innerHTML =
         "<div class='dropdown__item'>Vui lòng chọn Quận/huyện trước</div>";
       wardDropdown.classList.add("Dropdownvisible");
     } else {
       // Nếu đã có dữ liệu trong `box-select-district`, hiển thị danh sách phường/xã tương ứng
       wardDropdown.innerHTML = ""; // Xóa nội dung cũ
-      const wards = wardsByDistrict[districtInput] || [];
+      const wards = wardsByDistrict[districtInput.value] || [];
       if (input.value) {
         input.setAttribute("placeholder", input.value); // Đặt placeholder là giá trị hiện tại
         input.value = "";
@@ -677,7 +814,6 @@ document
 document.addEventListener("click", function (event) {
   const wardDropdown = document.getElementById("wardDropdown");
   const wardInput = document.getElementById("box-select-ward");
-
   if (
     !wardInput.contains(event.target) &&
     !wardDropdown.contains(event.target)
@@ -686,7 +822,31 @@ document.addEventListener("click", function (event) {
     wardInput.setAttribute("placeholder", "");
   }
 });
-
+document.addEventListener('input', function (e) {
+      // Kiểm tra xem input có class .box-input__main không
+      if (e.target.classList.contains('box-input__main')) {
+        const parentBox = e.target.closest('.box-input');
+        if (e.target.value.trim() !== '') {
+          parentBox.classList.add('box-input--hasvalue');
+        } else {
+          parentBox.classList.remove('box-input--hasvalue');
+        }
+      }
+    });
+    const addressInputBox =  address.closest(".box-input");
+    address.addEventListener("click", function() {
+    toggleHasValue(address, addressInputBox);  // Gọi hàm để thêm hoặc xóa class khi click
+  });
+  function toggleHasValue(address, addressInputBox) {
+    // Kiểm tra nếu giá trị input không rỗng
+    if (address.value.trim() !== '') {
+        // Nếu có giá trị, thêm class 'box-input--hasvalue'
+        addressInputBox.classList.add('box-input--hasvalue');
+    } else {
+        // Nếu không có giá trị, xóa class 'box-input--hasvalue'
+        addressInputBox.classList.remove('box-input--hasvalue');
+    }
+}
     </script>
 </body>
 

@@ -29,15 +29,9 @@ if (empty($username) || empty($passwd)) {
         if ($passwd !== $repasswd) {
             $response = ['status' => 'error', 'message' => 'Mật khẩu không khớp!'];
         } 
-        // elseif (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
-        //     $response = ['status' => 'error', 'message' => 'Email không hợp lệ!'];
-        // } 
         elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
             $response = ['status' => 'error', 'message' => 'Số điện thoại không hợp lệ!'];
         } else {
-            // Mã hóa mật khẩu trước khi lưu
-            // $hashed_password = password_hash($passwd, PASSWORD_DEFAULT);
-            // Thực hiện đăng ký
             $response = $account->register($username, $passwd, $fullname, $phone, $con);
         }
     } else {
@@ -45,12 +39,13 @@ if (empty($username) || empty($passwd)) {
         if ($account->login($username, $passwd, $con)) {
             // Lưu thông tin vào session
             $_SESSION['user'] = $account->getUsername();
-            $_SESSION['user_id'] = $account->getId();
+            $_SESSION['acc_id'] = $account->getId();
             $user = new User();
             $user->getUserInfo($account->getId(),$con);
             if($user){
                 $_SESSION['user_name'] = $user->getFullname();
                 $_SESSION['user_phone'] = $user->getPhone();
+                $_SESSION['user_id'] = $user->getId();
             }
             $response = ['status' => 'success', 'message' => 'Đăng nhập thành công!' ];
         } else {

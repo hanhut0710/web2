@@ -95,54 +95,56 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
 </div>
 <div class="profile-main">
                 <div class="profile-main__acount" role="main">
-                    <form action="/password" method="post">
-                        <div class="account-forgot-password-form">
-                            <div class="account-forgot-password-header">
-                                <h1 class="account-forgot-password-header-title">Đổi mật khẩu</h1>
-                                <div class="account-forgot-password-header-des">Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác</div>
-                            </div>
+<form id="changePasswordForm">
+    <div class="account-forgot-password-form">
+        <div class="account-forgot-password-header">
+            <h1 class="account-forgot-password-header-title">Đổi mật khẩu</h1>
+            <div class="account-forgot-password-header-des">Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác</div>
+        </div>
 
-                            <div class="account-forgot-password-body">
-                                <div class="account-forgot-password-group">
-                                    <div class="account-forgot-password-item">
-                                        <div class="account-forgot-password-item-flex">
-                                            <div class="account-forgot-password-label"><label class="account-forgot-password-label-text" for="password">Mật khẩu hiện tại</label></div>
-                                            <div class="account-forgot-password-input-full-area">
-                                                <input autocomplete="off" class="account-forgot-password-input account-forgot-password-input-full" id="PasswordOld" name="PasswordOld" required="true" type="password" value="" fdprocessedid="9ok6w">
-                                            </div>
-                                            <button class="account-forgot-password-item-link" fdprocessedid="6i2or">Quên mật khẩu?</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="account-forgot-password-group">
-                                    <div class="account-forgot-password-item">
-                                        <div class="account-forgot-password-item-flex">
-                                            <div class="account-forgot-password-label"><label class="account-forgot-password-label-text" for="newPassword">Mật khẩu mới</label></div>
-                                            <div class="account-forgot-password-input-full-area">
-                                                <input autocomplete="off" class="account-forgot-password-input account-forgot-password-input-full" id="PasswordNew" name="PasswordNew" required="true" type="password" value="" fdprocessedid="irzna">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="account-forgot-password-group">
-                                    <div class="account-forgot-password-item">
-                                        <div class="account-forgot-password-item-flex">
-                                            <div class="account-forgot-password-label"><label class="account-forgot-password-label-text" for="newPasswordRepeat">Xác nhận mật khẩu</label></div>
-                                            <div class="account-forgot-password-input-full-area">
-                                                <input autocomplete="off" class="account-forgot-password-input account-forgot-password-input-full" id="PasswordNewConfirm" name="PasswordNewConfirm" required="true" type="password" value="" fdprocessedid="f8tg1s">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="account-forgot-password-group">
-                                    <div class="account-forgot-password-left-space"></div>
-                                    <div class="account-forgot-password-right-space">
-                                        <button type="submit" class="btn btn-solid-primary btn--m btn--inline" aria-disabled="true" fdprocessedid="2v7kl2r">Xác nhận</button>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="account-forgot-password-body">
+            <div class="account-forgot-password-group">
+                <div class="account-forgot-password-item">
+                    <div class="account-forgot-password-item-flex">
+                        <div class="account-forgot-password-label"><label class="account-forgot-password-label-text" for="PasswordOld">Mật khẩu hiện tại</label></div>
+                        <div class="account-forgot-password-input-full-area">
+                            <input autocomplete="off" class="account-forgot-password-input account-forgot-password-input-full" id="PasswordOld" name="PasswordOld" required="true" type="password" value="">
                         </div>
-                    </form>
+                        <!-- <button class="account-forgot-password-item-link">Quên mật khẩu?</button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="account-forgot-password-group">
+                <div class="account-forgot-password-item">
+                    <div class="account-forgot-password-item-flex">
+                        <div class="account-forgot-password-label"><label class="account-forgot-password-label-text" for="PasswordNew">Mật khẩu mới</label></div>
+                        <div class="account-forgot-password-input-full-area">
+                            <input autocomplete="off" class="account-forgot-password-input account-forgot-password-input-full" id="PasswordNew" name="PasswordNew" required="true" type="password" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="account-forgot-password-group">
+                <div class="account-forgot-password-item">
+                    <div class="account-forgot-password-item-flex">
+                        <div class="account-forgot-password-label"><label class="account-forgot-password-label-text" for="PasswordNewConfirm">Xác nhận mật khẩu</label></div>
+                        <div class="account-forgot-password-input-full-area">
+                            <input autocomplete="off" class="account-forgot-password-input account-forgot-password-input-full" id="PasswordNewConfirm" name="PasswordNewConfirm" required="true" type="password" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="account-forgot-password-group">
+                <div class="account-forgot-password-left-space"></div>
+                <div class="account-forgot-password-right-space">
+                    <button type="submit" class="btn-custom">
+                        Xác nhận
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
                 </div>
 
             </div>

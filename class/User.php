@@ -93,7 +93,7 @@ class User {
     }
     
     // Phương thức cập nhật thông tin người dùng
-    public static function updateUserInfo($fullname, $phone, $acc_id, $con) {
+    public function updateUserInfo($fullname, $phone, $acc_id, $con) {
         $stmt = $con->prepare("UPDATE users SET full_name = ?, phone = ? WHERE acc_id = ?");
         $stmt->bind_param("ssi", $fullname, $phone, $acc_id);
         if ($stmt->execute()) {

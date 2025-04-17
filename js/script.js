@@ -78,7 +78,7 @@ function changeLogin(event) {
                 </div>
                 <div class="input_box">
                     <label for="username">Tên đăng nhập</label><br>
-                    <input type="text" id="username" name="username" placeholder="Tên đăng nhập" value="hanhut">
+                    <input type="text" id="username" name="username" placeholder="Tên đăng nhập" >
                 </div>
                 <div class="input_box">
                     <label for="passwd">Mật khẩu</label><br>
@@ -96,7 +96,6 @@ function changeLogin(event) {
         `;
         form.innerHTML = '';  // Xóa nội dung cũ
         form.appendChild(formContainer);  // Thêm form mới vào container
-
         form.classList.remove('login');
         form.classList.add('register');
     } else {
@@ -153,7 +152,6 @@ if (type === 'login') {
     const fullname = form.querySelector("#fullname")?.value.trim();
     const phone = form.querySelector("#phone")?.value.trim();
     const repassword = form.querySelector("#repasswd")?.value.trim();
-
     if (!fullname || !phone || !username || !password || !repassword) {
         alert("Vui lòng nhập đầy đủ thông tin!");
         return;
@@ -325,6 +323,7 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                         console.log("Parsed JSON:", data);
                         if (data.success) {
                             alert("✅ Thêm sản phẩm vào giỏ hàng thành công!");
+                            location.reload();
                         } else {
                             alert("❌ Không thể thêm sản phẩm: " + (data.message || "Lỗi không xác định."));
                         }

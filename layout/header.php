@@ -1,4 +1,12 @@
-
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+    if(isset($_SESSION["user"])){
+    include('./handle/cart_getItemCount.php'); // đổi đường dẫn cho đúng
+    $cartCount = getCartItemCount();
+    }
+?>
 <div id="preloder">
         <div class="loader"></div>
     </div>
@@ -28,8 +36,13 @@
                     <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                     <a href="cart.php">
                     <img src="img/icon/cart.png" alt="">
-                    <span>0</span>
-                </a>                    <?php ;
+                    <span> <?php 
+                            if (isset($cartCount) && $cartCount > 0) {
+                                echo $cartCount; // Hiển thị số lượng sản phẩm trong giỏ hàng nếu có
+                            } else {
+                            }
+                        ?> </span>
+                </a>                    <?php 
                     if (isset($_SESSION["user"])): ?>
                         <span style=" display: inline-block;
                                     max-width: 70px;
@@ -76,11 +89,11 @@
                 <input type="hidden" name="csrf_token" value="">
                 <div class="input_box">
                         <label for="username">Tên đăng nhập</label><br>
-                        <input type="text" id="username" name="username" placeholder="Tên đăng nhập" value="hanhut"> 
+                        <input type="text" id="username" name="username" placeholder="Tên đăng nhập" value="nguyenan"> 
                     </div>
                     <div class="input_box">
                         <label for="passwd">Mật khẩu</label><br>
-                        <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu" value="anhnhutdeptrai"> 
+                        <input type="password" id="passwd" name="passwd" placeholder="Mật khẩu" value="pass123"> 
                     </div>
                     <div class="input_box checkbox">
                         <p>Bạn chưa có tài khoản?<a href="#" onclick="changeLogin()"> Đăng kí</a></p>

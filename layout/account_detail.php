@@ -190,7 +190,7 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
                                       </div>
                                   </div>
                                   <div class="box-input">
-                                    <input id="box-select-address" type="text" placeholder="" maxlength="1000" autocomplete="off" class="box-input__main" fdprocessedid="p3ho0i">
+                                    <input id="box-select-address" type="text" placeholder="Địa chỉ" maxlength="1000" autocomplete="off" class="box-input__main" fdprocessedid="p3ho0i">
                                     <label for="box-select-address" class="email-label">Địa chỉ</label>
                                     <div class="box-input__line"></div>
                                   </div>
@@ -201,8 +201,11 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
                                     <div id="save-button" class="custom-button">
                                         Lưu
                                     </div>
-                                    <div id="add_address" class="add_address">
+                                    <!-- <div id="add_address" class="add_address">
                                         Thêm Địa Chỉ
+                                    </div> -->
+                                    <div id="add" class="add">
+                                        Thêm 
                                     </div>
                                 </div>
 

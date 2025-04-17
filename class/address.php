@@ -107,10 +107,13 @@ class Address {
     public function saveAddress($con) {
         $stmt = $con->prepare("INSERT INTO address (user_id, address_line, ward, district, city, `default`) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("issssi", $this->user_id, $this->address_line, $this->ward, $this->district, $this->city, $this->default);
-
         if ($stmt->execute()) {
             $this->id = $stmt->insert_id;  // Lưu id của địa chỉ mới
             return true;
+        }
+        else {
+            // Lấy thông tin lỗi khi query thất bại
+            echo "Error: " . $stmt->error;
         }
         return false;
     }

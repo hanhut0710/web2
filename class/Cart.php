@@ -86,12 +86,8 @@ class Cart {
         while ($row = $result->fetch_assoc()) {
             $cartItems[] = $row;
         }
-    
         return $cartItems;
     }
-    
-    
-    
     public function createCartIfNotExists($con) {
         $stmt = $con->prepare("SELECT * FROM cart WHERE user_id = ?");
         $stmt->bind_param("i", $this->user_id);

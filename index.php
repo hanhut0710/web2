@@ -23,9 +23,7 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-
 <body>
-    
     <?php include("./layout/header.php");?>
     <?php include("./layout/banner.php");?>
     <?php include("./layout/main.php");?>
@@ -37,7 +35,6 @@
 <script src="js/bootstrap.min.js"></script>
 
 <!-- Các thư viện khác -->
-<script src="js/header.js"></script>
 <script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.nicescroll.min.js"></script>
 <script src="js/jquery.magnific-popup.min.js"></script>

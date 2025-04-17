@@ -1,73 +1,102 @@
-// Lấy thẻ a với class 'edit-button'
-const editButton = document.getElementById('edit-button');
 
-// Lấy tất cả các phần tử cần vô hiệu hóa
-// Thêm sự kiện cho edit-button
-editButton.addEventListener('click', function(event) {
-    // Chặn hành động mặc định của thẻ a
-    event.preventDefault();
-    const disableElements = document.querySelectorAll('input, select, textarea, button, .stardust-radio-button, .nice-select, .custom-button, #add_address');
-    // Lặp qua tất cả các phần tử và bật lại khả năng tương tác
-    disableElements.forEach(function(element) {
-        element.style.pointerEvents = 'auto'; // Cho phép tương tác
-        element.style.opacity = '1'; // Đặt độ mờ trở lại bình thường
-    });
-});
-//--------------Save--------------------
-
-document.getElementById('save-button').addEventListener('click', function(event) {
-    const FullName = document.getElementById('FullName').value;
-    const Phone = document.getElementById('Phone').value;
-    const districtInput = document.getElementById("box-select-district").value;
-    const input = document.getElementById("box-select-ward").value; // lấy giá trị
-    const address = document.getElementById('box-select-address');
-    // Ngăn chặn hành động gửi form (nếu cần)
-    event.preventDefault();
-
-    // Vô hiệu hóa tất cả các input, select, textarea và button
-    var formElements = document.querySelectorAll('input, select, textarea, .custom-button');
-    formElements.forEach(function(element) {
-        element.disabled = true; // Vô hiệu hóa
-        element.style.pointerEvents = 'none'; // Không cho phép tương tác
-        element.style.opacity = '0.5'; // Làm mờ phần tử
-    });
-    if (districtInput && !input) {
-        alert('Vui lòng chọn phường/xã!');
-    } else if(!address) {
-        alert('Vui lòng nhập địa chỉ!');
+  window.addEventListener('DOMContentLoaded', () => {
+    fetch('./handle/get_address_default.php')
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      console.log(data)
+      document.getElementById('box-select-district').value = data.district;
+      document.getElementById('box-select-ward').value = data.ward;
+      document.getElementById('box-select-address').value = data.address_line;
+      console.log(document.getElementById('box-select-address')); 
+      ['box-select-district', 'box-select-ward','box-select-address'].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+          input.closest('.box-input')?.classList.add('box-input--hasvalue');
+        }
+      });
+    } else {
+      console.warn('Không có địa chỉ:', data.error);
     }
-    fetch('./handle/account_saveInfphp', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded' // hoặc 'application/json' nếu bạn dùng JSON
-        },
-        body: new URLSearchParams({
-            FullName: FullName,
-            Phone: Phone,
-            District: districtInput,
-            Ward: input,
-            Address: address
-        })
-    })
-    .then(response => response.text()) // hoặc .json() nếu bạn trả về JSON
-    .then(data => {
-        alert('Dữ liệu đã được lưu!');
-        console.log('Kết quả từ server:', data);
-
-        // Vô hiệu hóa form sau khi lưu
-        const formElements = document.querySelectorAll('input, select, textarea, .custom-button');
-        formElements.forEach(function(element) {
-            element.disabled = true;
-            element.style.pointerEvents = 'none';
-            element.style.opacity = '0.5';
-        });
-    })
-    .catch(error => {
-        console.error('Lỗi khi gửi dữ liệu:', error);
-        alert('Có lỗi xảy ra khi lưu thông tin!');
+  })
+  .catch(err => {
+    console.error('Lỗi khi lấy địa chỉ:', err);
+  });
+  });
+let addressList
+fetch('./handle/get_address.php')
+  .then(response => response.json())
+  .then(data => {
+    addressList = data;
+    console.log(addressList);
+    addressList.forEach(addr => {
+      const isDefault = addr.default == 1 ? ' (Mặc định)' : '';
+      console.log(`${addr.address_line}, ${addr.ward}, ${addr.district}, ${addr.city}${isDefault}`);
     });
-});
-document.getElementById('add_address').addEventListener('click', function () {
+  })
+  .catch(error => console.error('Lỗi lấy địa chỉ:', error));
+document.getElementById('add').addEventListener('click', () => {
+  // Tạo container nếu chưa có
+  let container = document.getElementById('address-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'address-container';
+    document.body.appendChild(container);
+  }
+
+  // Xoá form cũ nếu đã tồn tại để tránh trùng
+  const oldForm = container.querySelector('.address-form');
+  if (oldForm) oldForm.remove();
+
+  // Tạo form
+  const form1 = document.createElement('div');
+  form1.classList.add('address-form');
+
+  // Tạo tiêu đề
+  const title = document.createElement('h3');
+  title.innerText = "Danh sách địa chỉ";
+  form1.appendChild(title);
+
+  // Tạo danh sách địa chỉ
+  const list = document.createElement('ul');
+  list.classList.add('address-list');
+
+  let selectedItem = null; // Lưu địa chỉ đang được chọn
+
+  addressList.forEach((addr, index) => {
+    const item = document.createElement('li');
+    item.classList.add('address-item');
+    item.innerText = `${addr.address_line}, ${addr.ward}, ${addr.district}, ${addr.city}`;
+
+    // Khi click vào item, đánh dấu là được chọn
+    item.addEventListener('click', () => {
+      // Bỏ chọn cũ
+      const allItems = document.querySelectorAll('.address-item');
+      allItems.forEach(i => i.classList.remove('selected'));
+
+      // Đánh dấu item hiện tại là được chọn
+      item.classList.add('selected');
+      selectedItem = addr; // Gán địa chỉ đang chọn
+    });
+
+    list.appendChild(item);
+  });
+
+  form1.appendChild(list);
+
+  // Nút Thêm Địa Chỉ
+  const addButton = document.createElement('div');
+  addButton.id = 'add_address';
+  addButton.className = 'add_address';
+  addButton.innerText = 'Thêm Địa Chỉ';
+  form1.appendChild(addButton);
+  addButton.addEventListener('click', function (e) {
+    const form1 = document.querySelector('.address-form');
+    const fomrCon = document.getElementById('address-container');
+    if (form1 && !form1.contains(e.target) && !e.target.matches('#add')) {
+      form1.remove(); // Xoá form ra khỏi DOM
+      fomrCon.remove();
+    }
     // Xóa form cũ nếu đã có
     const oldForm = document.getElementById('address_form');
     if (oldForm) oldForm.remove();
@@ -118,7 +147,7 @@ document.getElementById('add_address').addEventListener('click', function () {
     const districtDropdown = document.createElement('div');
     districtDropdown.id = 'districtDropdown';
     districtDropdown.className = 'dropdown';
-    const districts = ['Huyện Bình Chánh', 'Huyện Cần Giờ', 'Huyện Hóc Môn', 'Huyện Nhà Bè', 'Huyện Củ Chi', 'Quận 1', 'Quận 2', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6', 'Quận 7', 'Quận 8', 'Quận 9', 'Quận 10', 'Quận 11', 'Quận 12', 'Quận Bình Tân', 'Quận Bình Thạnh', 'Quận Tân Phú', 'Quận Gò Vấp', 'Quận Phú Nhuận', 'Quận Tân Bình'];
+    const districts = ['Huyện Bình Chánh', 'Huyện Cần Giờ', 'Huyện Hóc Môn', 'Huyện Nhà Bè', 'Huyện Củ Chi', 'Quận 1', 'Quận 2', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6', 'Quận 7', 'Quận 8', 'Quận 9', 'Quận 10', 'Quận 11', 'Quận 12', 'Quận Bình Tân', 'Quận Bình Thạnh', 'Quận Tân Phú', 'Quận Gò Vấp', 'Quận Phú Nhuận', 'Quận Tân Bình'];
     districts.forEach(district => {
         const districtItem = document.createElement('div');
         districtItem.className = 'dropdown__item';
@@ -250,7 +279,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Phường Phú Thuận",
           "Phường Xuân Thủy",
         ],
-        "Quận 8": [
+        "Quận 8": [
           "Phường 1",
           "Phường 2",
           "Phường 3",
@@ -267,7 +296,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Phường 14",
           "Phường 15",
         ],
-        "Quận 9": [
+        "Quận 9": [
           "Phường Hiệp Phú",
           "Phường Long Bình",
           "Phường Long Thạnh Mỹ",
@@ -280,7 +309,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Phường An Phú",
           "Phường Bình An",
         ],
-        "Quận 10": [
+        "Quận 10": [
           "Phường 1",
           "Phường 2",
           "Phường 3",
@@ -292,7 +321,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Phường 9",
           "Phường 10",
         ],
-        "Quận 11": [
+        "Quận 11": [
           "Phường 1",
           "Phường 2",
           "Phường 3",
@@ -304,7 +333,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Phường 9",
           "Phường 10",
         ],
-        "Quận 12": [
+        "Quận 12": [
           "Phường An Phú Đông",
           "Phường Đông Hưng Thuận",
           "Phường Hiệp Thành",
@@ -329,7 +358,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Xã Vĩnh Lộc B",
           "Thị trấn Tân Túc",
         ],
-        "Quận Bình Tân": [
+        "Quận Bình Tân": [
           "Phường Bình Hưng Hòa",
           "Phường Bình Hưng Hòa A",
           "Phường Bình Hưng Hòa B",
@@ -379,7 +408,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Xã Xuân Thới Sơn",
           "Xã Xuân Thới Thượng",
         ],
-        "Huyện Nhà Bè": [
+        "Huyện Nhà Bè": [
           "Thị trấn Nhà Bè",
           "Xã Hiệp Phước",
           "Xã Long Thới",
@@ -389,7 +418,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Xã An Phú",
           "Xã Phước An",
         ],
-        "Quận Gò Vấp": [
+        "Quận Gò Vấp": [
           "Phường 1",
           "Phường 2",
           "Phường 3",
@@ -403,7 +432,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Phường 11",
           "Phường 12",
         ],
-        "Quận Tân Phú": [
+        "Quận Tân Phú": [
           "Phường Tân Quý",
           "Phường Tân Thới Nhất",
           "Phường Phú Thọ Hòa",
@@ -415,7 +444,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Phường Phú Trung",
           "Phường Nguyễn Sơn",
         ],
-        "Quận Phú Nhuận": [
+        "Quận Phú Nhuận": [
           "Phường 1",
           "Phường 2",
           "Phường 3",
@@ -427,7 +456,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Phường 11",
           "Phường 12",
         ],
-        "Quận Tân Bình": [
+        "Quận Tân Bình": [
           "Phường 1",
           "Phường 2",
           "Phường 3",
@@ -441,7 +470,7 @@ document.getElementById('add_address').addEventListener('click', function () {
           "Phường 11",
           "Phường 12",
         ],
-        "Quận Bình Thạnh": [
+        "Quận Bình Thạnh": [
           "Phường 1",
           "Phường 2",
           "Phường 3",
@@ -477,7 +506,7 @@ document.getElementById('add_address').addEventListener('click', function () {
       wardDropdown.innerHTML = ""; // Xóa nội dung cũ
       const wards = wardsByDistrict[districtInput.value] || [];
       if (wardInput.value) {
-        wardInput.setAttribute("placeholder", input.value); // Đặt placeholder là giá trị hiện tại
+        wardInput.setAttribute("placeholder", wardInput.value); // Đặt placeholder là giá trị hiện tại
         wardInput.value = "";
       }
       // Kiểm tra có phường/xã nào cho quận/huyện đã chọn
@@ -565,28 +594,38 @@ document.getElementById('add_address').addEventListener('click', function () {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'form-button-group';
 
-    // Nút "Đặt làm mặc định"
-    const defaultBtn = document.createElement('button');
-    defaultBtn.type = 'button';
-    defaultBtn.textContent = 'Đặt làm mặc định';
-    defaultBtn.className = 'btn btn-default';
-    defaultBtn.addEventListener('click', () => {
-        alert('Đã đặt làm mặc định!');
-        // Thực hiện logic đặt địa chỉ làm mặc định tại đây
-    });
-
     // Nút "Lưu"
     const saveBtn = document.createElement('button');
     saveBtn.type = 'button';
     saveBtn.textContent = 'Lưu';
-    saveBtn.className = 'custom-button';
+    saveBtn.className = 'btn custom-button';
+    saveBtn.style = 'pointer-events: auto !important; opacity: 1;';
     saveBtn.addEventListener('click', () => {
 
-        alert('Đã lưu địa chỉ!');
+        fetch('./handle/account_saveInf.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded' // hoặc 'application/json' nếu bạn dùng JSON
+        },
+        body: new URLSearchParams({
+            District: districtInput.value,
+            Ward: wardInput.value,
+            Address: addressInput.value
+        })
+    })
+    .then(response => response.text()) // hoặc .json() nếu bạn trả về JSON
+    .then(data => {
+        console.log('Kết quả từ server:', data);
+        alert("Đã lưu địa chỉ!");
+        location.reload();
+    })
+    .catch(error => {
+        console.error('Lỗi khi gửi dữ liệu:', error);
+        alert('Có lỗi xảy ra khi lưu thông tin!');
+    });
     });
 
     // Gắn 2 nút vào buttonContainer
-    buttonContainer.appendChild(defaultBtn);
     buttonContainer.appendChild(saveBtn);
 
     // Thêm khung nút vào form
@@ -637,3 +676,180 @@ document.getElementById('add_address').addEventListener('click', function () {
       }
 });
 
+  // Nút Đặt làm mặc định
+  const setDefaultBtn = document.createElement('button');
+  setDefaultBtn.innerText = 'Đặt làm mặc định';
+  setDefaultBtn.classList.add('set-default-btn');
+
+  setDefaultBtn.addEventListener('click', () => {
+    if (!selectedItem) {
+      alert("Vui lòng chọn một địa chỉ trước!");
+      return;
+    }
+
+    // Gửi request đặt làm mặc định (ví dụ fetch)
+    console.log("Đặt địa chỉ làm mặc định:", selectedItem);
+
+    // Gợi ý: gửi lên server:
+    fetch('./handle/set_default_address.php', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify({ address_id: selectedItem.id }) // Gửi address_id
+    })
+    .then(res => {
+      if (!res.ok) {  // Kiểm tra lỗi nếu server trả về mã không thành công
+        throw new Error('Lỗi khi gửi yêu cầu');
+      }
+      return res.json(); // Giả sử server trả về JSON
+    })
+    .then(data => {
+      if (data.success) {
+        alert('Địa chỉ đã được đặt làm mặc định');
+        location.reload();
+      } else {
+        alert('Có lỗi xảy ra: ' + data.error);
+      }
+    })
+    .catch(error => {
+      console.error('Lỗi:', error);
+      alert('Có lỗi xảy ra khi gửi yêu cầu.');
+    });
+  });
+  const deleteBtn = document.createElement('button');
+  deleteBtn.innerText = 'Xóa địa chỉ';
+  deleteBtn.classList.add('delete-btn');
+
+  deleteBtn.addEventListener('click', () => {
+    if (!selectedItem) {
+      alert("Vui lòng chọn một địa chỉ trước!");
+      return;
+    }
+
+    // Gửi request xóa địa chỉ (ví dụ fetch)
+    console.log("Xóa địa chỉ:", selectedItem);
+
+    // Gửi yêu cầu xóa địa chỉ lên server
+    fetch('./handle/del_address.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ address_id: selectedItem.id }) // Gửi address_id
+    })
+    .then(res => {
+      if (!res.ok) {  // Kiểm tra lỗi nếu server trả về mã không thành công
+        throw new Error('Lỗi khi gửi yêu cầu');
+      }
+      return res.json(); // Giả sử server trả về JSON
+    })
+    .then(data => {
+      if (data.success) {
+        alert('Địa chỉ đã được xóa');
+        location.reload();
+        fetch('./handle/get_address.php')
+        .then(response => response.json())
+        .then(data => {
+          addressList = data;
+          console.log(addressList);
+          addressList.forEach(addr => {
+            const isDefault = addr.default == 1 ? ' (Mặc định)' : '';
+            console.log(`${addr.address_line}, ${addr.ward}, ${addr.district}, ${addr.city}${isDefault}`);
+          });
+        })
+        .catch(error => console.error('Lỗi lấy địa chỉ:', error));
+        const selectItem = document.querySelector('.address-item.selected');
+        if (selectItem) {
+          selectItem.remove();
+        } else {
+          alert("Chưa chọn địa chỉ nào để xóa.");
+        }
+      } else {
+        alert('Có lỗi xảy ra: ' + data.error);
+      }
+    })
+    .catch(error => {
+      console.error('Lỗi:', error);
+      alert('Có lỗi xảy ra khi gửi yêu cầu.');
+    });
+  });
+
+
+
+  form1.appendChild(setDefaultBtn);
+  form1.appendChild(deleteBtn);
+  container.appendChild(form1);
+  document.addEventListener('click', (e) => {
+    const form = document.querySelector('.address-form');
+    const fomrCon = document.getElementById('address-container');
+    if (form && !form.contains(e.target) && !e.target.matches('#add')) {
+      form.remove(); // Xoá form ra khỏi DOM
+      fomrCon.remove();
+    }
+  });
+});
+
+
+// Lấy thẻ a với class 'edit-button'
+const editButton = document.getElementById('edit-button');
+
+// Lấy tất cả các phần tử cần vô hiệu hóa
+// Thêm sự kiện cho edit-button
+editButton.addEventListener('click', function(event) {
+    // Chặn hành động mặc định của thẻ a
+    event.preventDefault();
+    const disableElements = document.querySelectorAll('input, select, textarea, button, .stardust-radio-button, .nice-select, .custom-button');
+    // Lặp qua tất cả các phần tử và bật lại khả năng tương tác
+    disableElements.forEach(function(element) {
+        element.style.pointerEvents = 'auto'; // Cho phép tương tác
+        element.style.opacity = '1'; // Đặt độ mờ trở lại bình thường
+    });
+});
+//--------------Save--------------------
+
+document.getElementById('save-button').addEventListener('click', function(event) {
+    const FullName = document.getElementById('FullName').value;
+    const Phone = document.getElementById('Phone').value;
+    const districtInput = document.getElementById("box-select-district");
+    const input = document.getElementById("box-select-ward"); // lấy giá trị
+    const address = document.getElementById('box-select-address');
+    // Ngăn chặn hành động gửi form (nếu cần)
+    event.preventDefault();
+    // Vô hiệu hóa tất cả các input, select, textarea và button
+    var formElements = document.querySelectorAll('input, select, textarea, .custom-button');
+    formElements.forEach(function(element) {
+        element.style.pointerEvents = 'none'; // Không cho phép tương tác
+        element.style.opacity = '0.5'; // Làm mờ phần tử
+    });
+    if (districtInput.value && !input.value) {
+        alert('Vui lòng chọn phường/xã!');
+    } else if( districtInput.value && input.value &&!address.value) {
+        alert('Vui lòng nhập địa chỉ!');
+    }
+    console.log(FullName,Phone, districtInput.value,input.value,address.value);
+    fetch('./handle/account_saveInf.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded' // hoặc 'application/json' nếu bạn dùng JSON
+        },
+        body: new URLSearchParams({
+            FullName: FullName,
+            Phone: Phone,
+            District: districtInput.value,
+            Ward: input.value,
+            Address: address.value
+        })
+    })
+    .then(response => response.text()) // hoặc .json() nếu bạn trả về JSON
+    .then(data => {
+        console.log('Kết quả từ server:', data);
+        const formElements = document.querySelectorAll('input, select, textarea, button, .stardust-radio-button, .nice-select, .custom-button');
+        formElements.forEach(function(element) {
+            element.style.pointerEvents = 'none';
+            element.style.opacity = '0.5';
+        });
+    })
+    .catch(error => {
+        console.error('Lỗi khi gửi dữ liệu:', error);
+        alert('Có lỗi xảy ra khi lưu thông tin!');
+    });
+});

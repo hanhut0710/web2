@@ -573,3 +573,23 @@ body {
     color: #717171; /* Màu xám cho placeholder */
 }
 
+.btn-custom {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ee4d2d;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: #d8432a;
+}
+
+.btn-custom:active {
+    background-color: #c23a24;
+}
