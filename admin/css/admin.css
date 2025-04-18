@@ -625,7 +625,8 @@ tbody tr td {
     border-radius: 5px;
 }
 
-.list-category {
+.list-category,
+.list-stock {
     display: inline-block;
     margin-top: 10px;
     padding: 5px 12px;

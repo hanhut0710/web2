@@ -1,14 +1,22 @@
+<?php
+require_once "./backend/product.php";
+$product = new Product();
+?>
 <div class="section add-product-detail active">
     <div class="form-container">
         <h2>Thêm chi tiết sản phẩm</h2>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="./backend/xulyCTSP.php" method="post" enctype="multipart/form-data">
             <div class="form-grid">
                 <div class="form-group">
                     <label for="product">Sản phẩm</label>
                     <select name="product" id="product" required>
                         <option value="">Chọn sản phẩm</option>
-                        <option value="1">Adidas Superstar</option>
-                        <option value="2">Nike Air Max</option>
+                        <?php
+                        $productList = $product -> getAllProduct();
+                        foreach ($productList as $value) {
+                            echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="form-group">
@@ -34,7 +42,7 @@
                     <img id="img-preview" src="#" alt="Preview" style="display: none;">
                 </div>
                 <div class="submit-btn">
-                    <button type="submit" class="btn-control-large">Lưu</button>
+                    <button type="submit" name="btnAddDetails"class="btn-control-large">Lưu</button>
                 </div>
             </div>
         </form>

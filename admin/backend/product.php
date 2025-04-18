@@ -2,7 +2,7 @@
 require_once "database.php";
 class Product {
     private $conn;
-
+    
     public function __construct()
     {
         $mysql = new Database();
@@ -16,7 +16,10 @@ class Product {
         $products = [];
         if ($result) {
             while ($rows = mysqli_fetch_array($result))
+            {
+                $rows['stock'] = $this->calculateTotalStock($rows['id']);
                 $products[] = $rows;
+            }
         }
         return $products;
     }
@@ -28,7 +31,11 @@ class Product {
         $products = [];
         if ($result) {
             while ($rows = mysqli_fetch_array($result))
+            {
+                $rows['stock'] = $this->calculateTotalStock($rows['id']);
                 $products[] = $rows;
+            }
+                
         }
         return $products;
     }
@@ -46,6 +53,7 @@ class Product {
         $products = [];
         if ($result) {
             while ($rows = mysqli_fetch_array($result)) {
+                $rows['stock'] = $this->calculateTotalStock($rows['id']);
                 $rows['cat_name'] = $rows['cat_name'] ?? 'Không xác định';
                 $products[] = $rows;
             }
@@ -66,7 +74,8 @@ class Product {
         if ($result) 
         {
             while ($rows = mysqli_fetch_array($result)) 
-            {
+            {   
+                $rows['stock'] = $this->calculateTotalStock($rows['id']);
                 $rows['cat_name'] = $rows['cat_name'] ?? 'Không xác định';
                 $products[] = $rows;
             }
@@ -96,15 +105,46 @@ class Product {
         return $row['total'];
     }
 
-    public function insert($name, $price, $stock, $img, $category_id)
+    public function insert($name, $price, $img, $category_id, $status)
     {
-        $sql = "INSERT INTO products(name, price, stock, img_src, category_id)
-                VALUES ('$name', '$price', '$stock', '$img', '$category_id')"; 
+        $sql = "INSERT INTO products(name, price, stock, img_src, category_id, status)
+                VALUES ('$name', '$price', 0, '$img', '$category_id', '$status')"; 
         $result = mysqli_query($this->conn, $sql);
         if ($result)
             return true;
         return false;
     }
 
+    public function update($id, $name, $price, $img_src, $category_id, $status) 
+    {
+        $sql = "UPDATE products 
+                SET name = '$name', price = '$price', img_src = '$img_src', 
+                    category_id = '$category_id', status = '$status' 
+                WHERE id = $id";
+        if ($result)
+            return true;
+        return false;
+    }
+
+    public function updateStock($product_id) 
+    {
+        $totalStock = $this->calculateTotalStock($product_id);
+        $sql = "UPDATE products SET stock = $totalStock WHERE id = $product_id";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result)
+            return true;
+        return false;
+    }
+
+    public function calculateTotalStock($product_id) 
+    {
+        $sql = "SELECT SUM(stock) as total 
+                FROM product_details 
+                WHERE product_id = $product_id";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result)
+            $row = mysqli_fetch_assoc($result);
+        return $row['total'];
+    }
 }
 ?>

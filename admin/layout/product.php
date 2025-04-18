@@ -56,10 +56,11 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
             foreach ($productList as $value) {
                 echo '<div class="list">
                     <div class="list-left">
-                        <img src="' .$value['img_src'] . '" alt="">
+                        <img src="../' .$value['img_src'] . '" alt="">
                         <div class="list-info">
                             <h4>' . $value['name'] . '</h4>
                             <span class="list-category">' . $value['cat_name'] . '</span>
+                            <span class="list-stock">' . $value['stock'] . '</span>
                         </div>
                     </div>
                     <div class="list-right">

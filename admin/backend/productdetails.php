@@ -1,12 +1,15 @@
 <?php
 require_once "database.php";
+require_once "product.php";
 class ProductDetails {
     private $conn;
+    private $product;
 
     public function __construct()
     {
         $mysql = new Database();
         $this->conn = $mysql->getConnection();
+        $this->product = new Product();
     }
 
     public function getAllDetailsByPagination($limit, $offset, $product_id)
@@ -75,5 +78,49 @@ class ProductDetails {
         
     }
 
+    public function insertProductDetail($product_id, $color, $size, $brand, $stock, $img_src) 
+    {
+        $sql = "INSERT INTO product_details (product_id, color, size, brand, stock, img_src) 
+                VALUES ('$product_id', '$color', '$size', '$brand', '$stock', '$img_src')";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result) 
+        {
+            $this->product->updateStock($product_id); // Cập nhật tổng stock
+            return mysqli_insert_id($this->conn);
+        }
+        return false;
+    }
+
+    public function updateProductDetailStock($product_detail_id, $quantity) 
+    {
+        $sql = "UPDATE product_details 
+                SET stock = stock + $quantity 
+                WHERE id = $product_detail_id";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result) 
+        {
+            // Cập nhật stock của sản phẩm liên quan
+            $sql = "SELECT product_id FROM product_details WHERE id = $product_detail_id";
+            $result = mysqli_query($this->conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $this->product->updateStock($row['product_id']);
+            return true;
+        }
+        return false;
+    }
+
+    public function updateProductDetail($id, $product_id, $color, $size, $brand, $stock, $img_src) 
+    {
+        $sql = "UPDATE product_details 
+                SET product_id = '$product_id', color = '$color', size = '$size', 
+                    brand = '$brand', stock = '$stock', img_src = '$img_src' 
+                WHERE id = $id";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result) {
+            $this->product->updateStock($product_id); // Cập nhật tổng stock
+            return true;
+        }
+        return false;
+    }
 }
 ?>
