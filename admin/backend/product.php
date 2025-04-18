@@ -146,5 +146,14 @@ class Product {
             $row = mysqli_fetch_assoc($result);
         return $row['total'];
     }
+
+    public function getFirstImage($product_id)
+    {
+        $sql = "SELECT img_src FROM product_details WHERE product_id = $product_id LIMIT 1";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result)
+            $row = mysqli_fetch_assoc($result);
+        return $row['img_src'];
+    }
 }
 ?>

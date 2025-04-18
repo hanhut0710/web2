@@ -20,9 +20,11 @@ $categoryList = $category->getAllCategory();
         <label for="category_id">Thể loại</label>
         <select name="category_id" id="category_id" required>
           <option value="">Chọn thể loại</option>
-          <?php foreach ($categoryList as $cat) { ?>
-            <option value="<?php echo $cat['id']; ?>"><?php echo $cat['name']; ?></option>
-          <?php } ?>
+          <?php 
+              foreach ($categoryList as $value) {
+                echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
+              }
+          ?>
         </select>
       </div>
       <div class="form-group">
@@ -34,7 +36,7 @@ $categoryList = $category->getAllCategory();
       </div>
       <div class="form-group full-width image-upload-container">
         <label class="custom-file-upload">
-          <input type="file" name="img_src" accept="image/*" onchange="previewImage(event)" required>
+          <input type="file" name="img_src" accept="image/*" onchange="previewImage(event)">
           <i class="fa fa-upload"></i> Tải ảnh đại diện
         </label>
         <img id="img-preview" style="display:none; max-width: 200px;" />
