@@ -1,0 +1,306 @@
+
+.box-select {
+    margin-top:30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.box-input {
+    position: relative;
+    width: 48%;
+    min-width: 200px;
+    flex: 1 1 48%;
+}
+
+.box-input__main {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    outline: none;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+
+.box-input__line {
+    /* position: absolute; */
+    bottom: 0;
+    height: 1px;
+    width: 0%;
+    background-color: #ee4d2d;
+    transition: width 0.3s ease;
+}
+
+.box-input__main:focus ~ .box-input__line {
+    width: 100%;
+}
+
+.email-label {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    color: #777;
+    font-size: 14px;
+    pointer-events: none;
+    transition: 0.3s;
+    background: white;
+    padding: 0 4px;
+}
+
+.box-input--hasvalue .email-label,
+.box-input__main:focus + .email-label {
+    top: -10px;
+    left: 12px;
+    font-size: 12px;
+    color: #ee4d2d;
+}
+
+.box-input__arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 220px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    display: none; /* mặc định ẩn */
+}
+
+.dropdown__item {
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.dropdown__item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown__item span {
+    display: block;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Hiển thị dropdown khi active */
+.dropdown.show {
+    display: block;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .box-select {
+        gap: 16px;
+    }
+
+    .box-input__main {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+
+    .email-label {
+        font-size: 13px;
+    }
+}
+
+/* Ẩn dropdown mặc định */
+.dropdown {
+    display: none;
+    position: absolute !important;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hiển thị khi dropdown có class 'visible' */
+.dropdown.Dropdownvisible {
+    
+    display: block;
+    z-index: 9999;  /* Đảm bảo phần tử này nằm trên tất cả các phần tử khác */
+}
+
+/* Kiểu cho các mục trong dropdown */
+.dropdown__item {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Mũi tên */
+.box-input__arrow {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.box-input .dropdown__item {
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    width: 100%;
+}
+.box-input .dropdown__item span {
+    border-bottom: 1px solid hsla(0, 0%, 91%, .46);
+    display: block;
+    padding: 7px 0;
+}
+
+.box-input .dropdown__item span:hover {
+    background-color: #f79595;
+}
+.box-input__main::placeholder {
+    color: #717171; /* Màu xám cho placeholder */
+}
+
+
+/* form select address */
+/* Lớp phủ toàn màn hình */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Nội dung popup */
+.modal-content {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Danh sách địa chỉ */
+.modal-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.modal-content li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.modal-content li:hover {
+    background: #f2f2f2;
+}
+
+/* Nút đóng */
+.modal-close-btn {
+    display: inline-block;
+    margin-top: 10px;
+    background: #d33;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.modal-close-btn, .modal-add-btn {
+    margin-top: 15px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.modal-close-btn:hover, .modal-add-btn:hover {
+    background-color: #0056b3;
+}
+.address-form-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    z-index: 19999;
+    flex-direction: column;
+    gap: 10px;
+    width: 800px;
+    max-width: 90%;
+    border-radius: 8px;
+    }
+    .form-button-group .custom-button:hover {
+        background-color: #ffffff;
+        color: black;
+      }
+      
+      /* Nút đóng góc trên phải */
+      .close-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        font-size: 20px;
+        color: #333;
+        cursor: pointer;
+        line-height: 1;
+        transition: color .2s;
+      }
+      
+      .close-btn:hover {
+        color: #000;
+      }
+      
+      /* Responsive */
+      @media (max-width: 480px) {
+        .box-select {
+          flex-direction: column;
+        }
+      }

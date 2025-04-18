@@ -1,3 +1,8 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <section class="breadcrumb-option">
     <div class="container">
         <div class="row">
@@ -52,10 +57,57 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="checkout__input">
-                            <p>Địa chỉ<span>*</span></p>
-                            <input type="text" placeholder="Địa chỉ giao hàng">
-                        </div>
+                        <h4 style="margin-bottom: 10px;">Thông tin nhận hàng</h4>
+                                <div class="box-select"> 
+                                      <div class="box-input box-input--hasvalue">
+                                          <input type="search" id="box-select-city" placeholder="Hồ Chí Minh" autocomplete="off" class="box-input__main" value="Hồ Chí Minh" readonly="">
+                                          <label for="box-select-city" class="email-label">Tỉnh / Thành phố</label> 
+                                          <div class="box-input__line"></div> 
+                                  </div>
+                                  <div class="box-input"> 
+                                        <input type="search" id="box-select-district" placeholder="" autocomplete="off" class="box-input__main">
+                                        <label for="box-select-district" class="email-label">Quận / huyện</label>
+                                        <div class="box-input__line"></div> 
+                                        <div class="box-input__arrow"> 
+                                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon">
+                                                  <path d="M8.00004 10.6668C7.84427 10.6671 7.69331 10.6128 7.57337 10.5135L3.57337 7.18012C3.28986 6.94448 3.25106 6.52362 3.4867 6.24012C3.72234 5.95661 4.1432 5.91781 4.4267 6.15345L8.00004 9.14012L11.5734 6.26012C11.7111 6.14827 11.8877 6.09594 12.0642 6.11471C12.2406 6.13348 12.4023 6.2218 12.5134 6.36012C12.6368 6.49869 12.6969 6.68244 12.6792 6.86716C12.6614 7.05188 12.5675 7.22086 12.42 7.33345L8.42004 10.5535C8.29665 10.6371 8.14877 10.677 8.00004 10.6668Z" fill="#717171">
+                                                  </path>
+                                              </svg>
+                                        </div>
+                                        <div id="districtDropdown" class="dropdown"><div class="dropdown__item"><span>Huyện Bình Chánh</span></div><div class="dropdown__item"><span>Huyện Cần Giờ</span></div><div class="dropdown__item"><span>Huyện Hóc Môn</span></div><div class="dropdown__item"><span>Huyện Nhà Bè</span></div><div class="dropdown__item"><span>Huyện Củ Chi</span></div><div class="dropdown__item"><span>Quận 1</span></div><div class="dropdown__item"><span>Quận 2</span></div><div class="dropdown__item"><span>Quận 3</span></div><div class="dropdown__item"><span>Quận 4</span></div><div class="dropdown__item"><span>Quận 5</span></div><div class="dropdown__item"><span>Quận 6</span></div><div class="dropdown__item"><span>Quận 7</span></div><div class="dropdown__item"><span>Quận 8</span></div><div class="dropdown__item"><span>Quận 9</span></div><div class="dropdown__item"><span>Quận 10</span></div><div class="dropdown__item"><span>Quận 11</span></div><div class="dropdown__item"><span>Quận 12</span></div><div class="dropdown__item"><span>Quận Bình Tân</span></div><div class="dropdown__item"><span>Quận Bình Thạnh</span></div><div class="dropdown__item"><span>Quận Tân Phú</span></div><div class="dropdown__item"><span>Quận Gò Vấp</span></div><div class="dropdown__item"><span>Quận Phú Nhuận</span></div><div class="dropdown__item"><span>Quận Tân Bình</span></div></div>
+                                  </div>
+                                </div>
+                                <div class="box-select">
+                                  <div class="box-input">
+                                    <input id="box-select-ward" type="search" placeholder="" autocomplete="off" class="box-input__main">
+                                    <label for="box-select-ward" class="email-label">Chọn phường / xã</label>
+                                    <div class="box-input__line"></div>
+                                    <div class="box-input__arrow"> 
+                                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon">
+                                          <path d="M8.00004 10.6668C7.84427 10.6671 7.69331 10.6128 7.57337 10.5135L3.57337 7.18012C3.28986 6.94448 3.25106 6.52362 3.4867 6.24012C3.72234 5.95661 4.1432 5.91781 4.4267 6.15345L8.00004 9.14012L11.5734 6.26012C11.7111 6.14827 11.8877 6.09594 12.0642 6.11471C12.2406 6.13348 12.4023 6.2218 12.5134 6.36012C12.6368 6.49869 12.6969 6.68244 12.6792 6.86716C12.6614 7.05188 12.5675 7.22086 12.42 7.33345L8.42004 10.5535C8.29665 10.6371 8.14877 10.677 8.00004 10.6668Z" fill="#717171">
+                                          </path>
+                                      </svg>
+                                    </div>
+                                      <div id="wardDropdown" class="dropdown"> 
+                                        <!--  -->
+                                        <!--  -->
+                                        <!--  -->
+                                      </div>
+                                  </div>
+                                  <div class="box-input">
+                                    <input id="box-select-address" type="text" placeholder="Địa chỉ" maxlength="1000" autocomplete="off" class="box-input__main" fdprocessedid="p3ho0i">
+                                    <label for="box-select-address" class="email-label">Địa chỉ</label>
+                                    <div class="box-input__line"></div>
+                                  </div>
+                                </div>
+                                <?php if(isset($_SESSION['user_id'])) {
+                                    echo <<<HTML
+                                <div style=" margin-bottom: 10px;">
+                                    <button type="button" class="site-btn" id="selectAddress" style="padding: 10px 20px; font-size: 14px;">Chọn địa chỉ</button>
+                                </div>
+                                HTML;
+                                }
+                                ?>
                         <div class="checkout__input__checkbox">
                             <label for="diff-acc">
                                 Ghi chú về đơn hàng, ví dụ như ghi chú đặc biệt cho việc giao hàng
@@ -63,8 +115,9 @@
                                 <span class="checkmark"></span>
                             </label>
                         </div>
+                        
                         <div class="checkout__input">
-                            <p>Ghi chú đơn hàng<span>*</span></p>
+                            <p>Ghi chú đơn hàng<span>*<span><p>
                             <input type="text" placeholder="Ghi chú về đơn hàng, ví dụ như ghi chú đặc biệt cho việc giao hàng.">
                         </div>
                     </div>

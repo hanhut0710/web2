@@ -152,7 +152,7 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
                                                 </div>
                                             </div>
                                         </div>
-                                        <h4 style="margin-bottom: 10px;">Thông tin nhận hàng</h4>
+                                <h4 style="margin-bottom: 10px;">Thông tin nhận hàng</h4>
                                 <div class="box-select"> 
                                       <div class="box-input box-input--hasvalue">
                                           <input type="search" id="box-select-city" placeholder="Hồ Chí Minh" autocomplete="off" class="box-input__main" value="Hồ Chí Minh" readonly="">

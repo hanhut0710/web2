@@ -40,6 +40,7 @@ if (session_status() == PHP_SESSION_NONE) {
                             if (isset($cartCount) && $cartCount > 0) {
                                 echo $cartCount; // Hiển thị số lượng sản phẩm trong giỏ hàng nếu có
                             } else {
+                                echo 0;
                             }
                         ?> </span>
                 </a>                    <?php 

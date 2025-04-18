@@ -14,6 +14,8 @@
     rel="stylesheet">
 
     <!-- Css Styles -->
+    <!-- <link rel="stylesheet" href="css/account.css" type="text/css"> -->
+    <link rel="stylesheet" href="css/checkout.css" type="text/css">
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
@@ -42,7 +44,7 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/script.js"></script>
-    
+    <script src="js/checkout.js"></script>
 </body>
 
 </html>

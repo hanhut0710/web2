@@ -118,7 +118,7 @@
                             <li>Subtotal <span>$ 169.50</span></li>
                             <li>Total <span>$ 169.50</span></li>
                         </ul>
-                        <a href="cart.php?action=checkout" class="primary-btn">Proceed to checkout</a>
+                        <a href="checkout.php" class="primary-btn">Proceed to checkout</a>
                     </div>
                 </div>
             </div>
