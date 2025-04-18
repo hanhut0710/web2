@@ -69,7 +69,7 @@ $pagination = new Pagination($totalDetails, $page_num, $limit);
                     <td>'.$value['size'].'</td>
                     <td>'.$value['brand'].'</td>
                     <td>'.$value['stock'].'</td>
-                    <td>'.$value['img_src'].'</td>
+                    <td><img src="../'.$value['img_src'].'" alt="" style="max-width: 100px;"></td>
                     <td class="control">
                             <a href="index.php?page=editProductDetails&id=' . $value['id'] . '"><button class="btn-edit"><i class="fa-light fa-pen-to-square"></i> Sửa</button></a>
                             <a href="./backend/xulyCTSP.php?act=xoa&id=' . $value['id'] . '"><button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button></a>

@@ -12,10 +12,9 @@ $import = new Import();
             <select name="supplier" id="supplier" onchange="filterBySupplier(this.value)">
                 <option value="">Tất cả</option>
                 <?php
-                $supplierList = $supplier -> getAllSupplier();
+                $supplierList = $supplier->getAllSupplier();
                 foreach ($supplierList as $value) {
-                    # code...
-                    echo '<option value="'.$value['id'].'">'.$value['sup_name'].'</option>';
+                    echo '<option value="' . $value['id'] . '">' . $value['sup_name'] . '</option>';
                 }
                 ?>
             </select>
@@ -23,7 +22,7 @@ $import = new Import();
         <div class="admin-control-center">
             <form action="" class="form-search">
                 <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
-                <input id="form-search-import" type="text" class="form-search-input" placeholder="Tìm kiếm mã phiếu, sản phẩm...">
+                <input id="form-search-import" type="text" class="form-search-input" placeholder="Tìm kiếm mã phiếu...">
             </form>
         </div>
         <div class="admin-control-right">
@@ -38,7 +37,6 @@ $import = new Import();
                 <tr>
                     <td>Mã phiếu</td>
                     <td>Nhà cung cấp</td>
-                    <td>Sản phẩm</td>
                     <td>Ngày nhập</td>
                     <td>Tổng số lượng</td>
                     <td>Thao tác</td>
@@ -46,31 +44,19 @@ $import = new Import();
             </thead>
             <tbody id="showImport">
                 <?php
-                $importList = $import -> getAllImport();
+                $importList = $import->getAllImport();
                 foreach ($importList as $value) {
-                    # code...
                     echo '<tr>
-                    <td>'.$value['id'].'</td>
-                    <td>'.$value['sp_name'].'</td>
-                    <td>'.$value['p_name'].'</td>
-                    <td>'.$value['created_at'].'</td>
-                    <td>'.$value['quantity'].'</td>
-                    <td class="control">
-                        <button class="btn-detail"><i class="fa-regular fa-eye"></i> Chi tiết</button>
-                    </td>
-                </tr>';
+                        <td>' . $value['id'] . '</td>
+                        <td>' . $value['sp_name'] . '</td>
+                        <td>' . $value['created_at'] . '</td>
+                        <td>' . $value['quantity'] . '</td>
+                        <td class="control">
+                            <button class="btn-detail" onclick="location.href=\'index.php?page=importdetail&import_id=' . $value['id'] . '\'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
+                        </td>
+                    </tr>';
                 }
                 ?>
-                <tr>
-                    <td>IM20250413001</td>
-                    <td>Adidas Vietnam</td>
-                    <td>Adidas Superstar</td>
-                    <td>13/04/2025</td>
-                    <td>25</td>
-                    <td class="control">
-                        <button class="btn-detail" onclick="location.href='index.php?page=importdetail'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
