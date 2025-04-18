@@ -25,7 +25,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <section class="checkout spad">
     <div class="container">
         <div class="checkout__form">
-            <form action="#">
+            <form action="OrderConfirmation.php" method="POST" id ="checkout-form">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <h6 class="checkout__title">Thông Tin Thanh Toán</h6>
@@ -33,13 +33,13 @@ if (session_status() == PHP_SESSION_NONE) {
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Họ<span>*</span></p>
-                                    <input type="text">
+                                    <input type="text" name="Họ">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Tên<span>*</span></p>
-                                    <input type="text">
+                                    <input type="text" name = "Tên">
                                 </div>
                             </div>
                         </div>
@@ -47,13 +47,13 @@ if (session_status() == PHP_SESSION_NONE) {
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Số Điện Thoại<span>*</span></p>
-                                    <input type="text">
+                                    <input type="text" name ="phone">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Email<span>*</span></p>
-                                    <input type="text">
+                                    <input type="text" name ="email">
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                           <div class="box-input__line"></div> 
                                   </div>
                                   <div class="box-input"> 
-                                        <input type="search" id="box-select-district" placeholder="" autocomplete="off" class="box-input__main">
+                                        <input type="search" id="box-select-district" placeholder="" autocomplete="off" class="box-input__main" name ="district">
                                         <label for="box-select-district" class="email-label">Quận / huyện</label>
                                         <div class="box-input__line"></div> 
                                         <div class="box-input__arrow"> 
@@ -79,7 +79,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                 </div>
                                 <div class="box-select">
                                   <div class="box-input">
-                                    <input id="box-select-ward" type="search" placeholder="" autocomplete="off" class="box-input__main">
+                                    <input id="box-select-ward" type="search" placeholder="" autocomplete="off" class="box-input__main" name ="ward">
                                     <label for="box-select-ward" class="email-label">Chọn phường / xã</label>
                                     <div class="box-input__line"></div>
                                     <div class="box-input__arrow"> 
@@ -95,7 +95,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                       </div>
                                   </div>
                                   <div class="box-input">
-                                    <input id="box-select-address" type="text" placeholder="Địa chỉ" maxlength="1000" autocomplete="off" class="box-input__main" fdprocessedid="p3ho0i">
+                                    <input id="box-select-address" type="text" placeholder="Địa chỉ" maxlength="1000" autocomplete="off" class="box-input__main" fdprocessedid="p3ho0i" name = "address">
                                     <label for="box-select-address" class="email-label">Địa chỉ</label>
                                     <div class="box-input__line"></div>
                                   </div>
@@ -118,7 +118,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         
                         <div class="checkout__input">
                             <p>Ghi chú đơn hàng<span>*<span><p>
-                            <input type="text" placeholder="Ghi chú về đơn hàng, ví dụ như ghi chú đặc biệt cho việc giao hàng.">
+                            <input type="text" placeholder="Ghi chú về đơn hàng, ví dụ như ghi chú đặc biệt cho việc giao hàng." name="note"> 
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
@@ -135,25 +135,24 @@ if (session_status() == PHP_SESSION_NONE) {
                                 <li>Tổng Tạm Tính <span>$750.99</span></li>
                                 <li>Tổng Cộng <span>$750.99</span></li>
                             </ul>
-                            <div class="checkout__input__checkbox">
+                            <div class="checkout__input__checkbox" id = "create-account-checkbox">
                                 <label for="acc-or">
                                     Tạo tài khoản?
                                     <input type="checkbox" id="acc-or">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                             <div class="checkout__input__checkbox">
                                 <label for="payment">
                                     Thanh Toán Khi Nhận Hàng
-                                    <input type="checkbox" id="payment">
+                                    <input type="checkbox" id="payment" name="payment_method_cod" value="COD">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                             <div class="checkout__input__checkbox">
                                 <label for="paypal">
-                                    Thanh Toán PayPal
-                                    <input type="checkbox" id="paypal">
+                                    Thanh Toán Bằng Thẻ Ngân Hàng
+                                    <input type="checkbox" id="paypal" name="payment_method_paypal" value="PayPal">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
@@ -165,3 +164,11 @@ if (session_status() == PHP_SESSION_NONE) {
         </div>
     </div>
 </section>
+<script>
+     const isLoggedIn = <?= isset($_SESSION['user']) ? 'true' : 'false' ?>;
+     const checkboxContainer = document.getElementById('create-account-checkbox');
+    if (isLoggedIn) {
+        // Nếu đã đăng nhập thì xóa phần tạo tài khoản
+        checkboxContainer.remove();
+    }
+</script>

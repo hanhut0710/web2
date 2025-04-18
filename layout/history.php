@@ -69,18 +69,6 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
         </div>
         <div class="stardust-dropdown">
             <div class="stardust-dropdown__item-header">
-                <a class="profile-sidebar--menu-item  <?= ($currentFile == 'account_fav.php') ? 'profile-sidebar--submenu-item--active' : '' ?>"  href="./account_fav.php" id="purchase">
-                    <div class="profile-sidebar--menu-item--icon">
-                        <img src="img\icon\icons8-favourite-50.png" alt="">
-                    </div>
-                    <div class="profile-sidebar--menu-item--title">
-                        <span class="profile-sidebar--menu-item--text">Sản phẩm yêu thích</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="stardust-dropdown">
-            <div class="stardust-dropdown__item-header">
             <a class="profile-sidebar--menu-item" href="./handle/logout.php">
             <div class="profile-sidebar--menu-item--icon">
                         <img src="img\icon\icons8-logout-50.png" alt="">
