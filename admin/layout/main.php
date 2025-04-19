@@ -130,7 +130,7 @@
                             include "productdetails.php";
                             break;
                         case "addProductDetail":
-                            include "addProductDetail.php";
+                            include "addProductDetails.php";
                             break;
                         /*** NHÀ CUNG CẤP ***/ 
                         case "supplier":

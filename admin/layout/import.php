@@ -6,6 +6,7 @@ require_once "./backend/pagination.php";
 $supplier = new Supplier();
 $import = new Import();
 ?>
+
 <div class="section import active">
     <div class="admin-control">
         <div class="admin-control-left">
@@ -26,8 +27,8 @@ $import = new Import();
             </form>
         </div>
         <div class="admin-control-right">
-            <button class="btn-reset-import"><i class="fa-light fa-arrow-rotate-right"></i></button>
-            <a href="index.php?page=addImport"><button class="btn-control-large" id="btn-add-import"><i class="fa-light fa-plus"></i> Tạo phiếu nhập mới</button></a>
+            <a href="index.php?page=import"><button class="btn-control-large" id="btn-cancel-product"><i class="fa-light fa-rotate-right"></i> Làm mới</button></a>
+            <a href="index.php?page=addImport"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Tạo phiếu nhập</button></a>
         </div>
     </div>
 
@@ -39,6 +40,7 @@ $import = new Import();
                     <td>Nhà cung cấp</td>
                     <td>Ngày nhập</td>
                     <td>Tổng số lượng</td>
+                    <td>Thành tiền</td>
                     <td>Thao tác</td>
                 </tr>
             </thead>
@@ -47,10 +49,11 @@ $import = new Import();
                 $importList = $import->getAllImport();
                 foreach ($importList as $value) {
                     echo '<tr>
-                        <td>' . $value['id'] . '</td>
+                        <td>IM' . date('Ymd', strtotime($value['created_at'])) . sprintf('%03d', $value['id']) . '</td>
                         <td>' . $value['sp_name'] . '</td>
-                        <td>' . $value['created_at'] . '</td>
+                        <td>' . date('d/m/Y', strtotime($value['created_at'])) . '</td>
                         <td>' . $value['quantity'] . '</td>
+                        <td>' . number_format($value['total_price'], 2) . ' VNĐ</td>
                         <td class="control">
                             <button class="btn-detail" onclick="location.href=\'index.php?page=importdetail&import_id=' . $value['id'] . '\'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
                         </td>

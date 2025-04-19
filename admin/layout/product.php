@@ -39,12 +39,12 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
         <div class="admin-control-center">
             <form action="" class="form-search">
                 <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
-                <input id="form-search-product" type="text" class="form-search-input" placeholder="Tìm kiếm tên món..." disabled title="Chức năng tìm kiếm đang phát triển">
+                <input id="form-search-product" type="text" class="form-search-input" placeholder="Tìm kiếm tên sản phẩm" disabled title="Chức năng tìm kiếm đang phát triển">
             </form>
         </div>
         <div class="admin-control-right">
-            <button class="btn-control-large" id="btn-cancel-product"><i class="fa-light fa-rotate-right"></i> Làm mới</button>
-            <a href="index.php?page=addProduct"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Thêm món mới</button></a>
+            <a href="index.php?page=product"><button class="btn-control-large" id="btn-cancel-product"><i class="fa-light fa-rotate-right"></i> Làm mới</button></a>
+            <a href="index.php?page=addProduct"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Thêm sản phẩm</button></a>
         </div>
     </div>
     <!-- End of admin control -->
@@ -61,7 +61,8 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
                         <div class="list-info">
                             <h4>' . $value['name'] . '</h4>
                             <span class="list-category">' . $value['cat_name'] . '</span>
-                            <span class="list-stock">' . $value['stock'] . '</span>
+                            <span class="list-category">' . $value['brand_name'] . '</span>
+                            <span class="list-stock">Số lượng: ' . $value['stock'] . '</span>
                         </div>
                     </div>
                     <div class="list-right">

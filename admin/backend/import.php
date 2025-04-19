@@ -12,7 +12,7 @@ class Import {
 
     public function getAllImport()
     {
-        $sql = "SELECT ip.id, ip.created_at, ip.quantity, 
+        $sql = "SELECT ip.id, ip.created_at, ip.quantity, ip.total_price, 
                        sp.sup_name AS sp_name
                 FROM import ip
                 LEFT JOIN supplier sp ON ip.sup_id = sp.id";
@@ -28,7 +28,7 @@ class Import {
 
     public function getAllImportByPagination($limit, $offset)
     {
-        $sql = "SELECT ip.id, ip.created_at, ip.quantity, 
+        $sql = "SELECT ip.id, ip.created_at, ip.quantity, ip.total_price, 
                        sp.sup_name AS sp_name
                 FROM import ip
                 LEFT JOIN supplier sp ON ip.sup_id = sp.id
@@ -65,10 +65,10 @@ class Import {
         return 0;
     }
 
-    public function insertImport($supID, $quantity, $date)
+    public function insertImport($supID, $quantity, $date, $totalPrice)
     {
-        $sql = "INSERT INTO import (sup_id, quantity, created_at) 
-                VALUES ('$supID', '$quantity', '$date')";
+        $sql = "INSERT INTO import (sup_id, quantity, created_at, total_price) 
+                VALUES ('$supID', '$quantity', '$date', '$totalPrice')";
         $result = mysqli_query($this->conn, $sql);
         if ($result) {
             return mysqli_insert_id($this->conn); // Trả về ID của phiếu nhập
@@ -76,10 +76,10 @@ class Import {
         return false;
     }
 
-    public function insertImportDetail($importID, $productDetailID, $quantity)
+    public function insertImportDetail($importID, $productDetailID, $quantity, $price, $totalPrice)
     {
-        $sql = "INSERT INTO import_details (import_id, product_detail_id, quantity) 
-                VALUES ('$importID', '$productDetailID', '$quantity')";
+        $sql = "INSERT INTO import_details (import_id, product_detail_id, quantity, price, total_price) 
+                VALUES ('$importID', '$productDetailID', '$quantity', '$price', '$totalPrice')";
         $result = mysqli_query($this->conn, $sql);
         if ($result) {
             return true;
@@ -101,10 +101,11 @@ class Import {
 
     public function getImportDetailsByImport($importID)
     {
-        $sql = "SELECT p.name, pd.size, pd.color, pd.brand, id.quantity
+        $sql = "SELECT p.name, pd.size, pd.color, id.quantity, id.price, id.total_price, b.name as brand_name
                 FROM import_details id
                 JOIN product_details pd ON id.product_detail_id = pd.id
                 JOIN products p ON pd.product_id = p.id
+                LEFT JOIN brand b ON p.brand_id = b.id
                 WHERE id.import_id = $importID";
         $result = mysqli_query($this->conn, $sql);
         $details = [];
@@ -118,7 +119,7 @@ class Import {
 
     public function getImportById($import_id)
     {
-        $sql = "SELECT ip.id, ip.created_at, ip.quantity, sp.sup_name
+        $sql = "SELECT ip.id, ip.created_at, ip.quantity, ip.total_price, sp.sup_name
                 FROM import ip
                 JOIN supplier sp ON ip.sup_id = sp.id
                 WHERE ip.id = '$import_id'";

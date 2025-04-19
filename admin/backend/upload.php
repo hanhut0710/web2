@@ -25,10 +25,14 @@ class Upload {
         
         // Di chuyển file vào thư mục đích
         if (move_uploaded_file($file["tmp_name"], $targetPath)) 
+        {
+            $normalPath = "./img/shoes/" . $fileName;
             return [
                 "status" => true,
-                "path" => $targetPath
+                "path" => $normalPath
             ];
+        }
+           
         else 
             return [
                 "status" => false,
