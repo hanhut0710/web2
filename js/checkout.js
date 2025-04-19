@@ -1218,7 +1218,6 @@ if(selectBtn){
                     li.textContent = "Giỏ hàng trống";
                     cartList.appendChild(li);
                         const emptyTotal = `
-                        <li>Tổng Tạm Tính <span>$0.00</span></li>
                         <li>Tổng Cộng <span>$0.00</span></li>
                     `;
                     totalAll.innerHTML = emptyTotal;
@@ -1226,19 +1225,140 @@ if(selectBtn){
                 }
                 let total = 0;
                 data.forEach((item, index) => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `${String(index + 1).padStart(2, "0")}. ${item.name} <span>$ ${item.total.toFixed(2)}</span>`;
-                    cartList.appendChild(li);
-                    total += item.total;
-                });
+                  const li = document.createElement("li");
+                  li.innerHTML = `
+                      ${String(item.quantity).padStart(2, "0")}. 
+                      ${item.name} 
+                      <span>${item.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
+                  `;
+                  cartList.appendChild(li);
+                  total += item.total;
+              });
+                const totalFormatted = total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
                 const totalHTML = `
-                <li>Tổng Tạm Tính <span>$${total.toFixed(2)}</span></li>
-                <li>Tổng Cộng <span>$${total.toFixed(2)}</span></li>
+                <li>Tổng Cộng <span>${totalFormatted}</span></li>
                 `;
                 totalAll.innerHTML = totalHTML;
-                
             })
             .catch(err => {
                 console.error("Lỗi khi lấy giỏ hàng:", err);
             });
     });
+
+    const paymentCheckoutBox = document.getElementById('payment');
+    const paypalCheckoutBox = document.getElementById('paypal');
+
+    paymentCheckoutBox.addEventListener('change', function(){
+      if (this.checked){
+        paypalCheckoutBox.checked= false;
+      }
+    });
+    paypalCheckoutBox.addEventListener('change', function(){
+      if (this.checked){
+        paymentCheckoutBox.checked = false;
+      }
+    });
+    window.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("checkout-form").onsubmit = function(event) {
+      // Lấy giá trị của các trường input
+      let ho = document.getElementsByName("Họ")[0].value;
+      let ten = document.getElementsByName("Tên")[0].value;
+      let phone = document.getElementsByName("phone")[0].value;
+      let email = document.getElementsByName("email")[0].value;
+      let address = document.getElementById("box-select-address").value;
+      let district = document.getElementById("box-select-district").value;
+      let ward = document.getElementById("box-select-ward").value;
+      let ghiChu = document.getElementsByName("note")[0].value;
+      
+      // Kiểm tra các trường bắt buộc: Họ, Tên, Địa chỉ, Quận, Huyện
+      if (ho === "") {
+        alert("Vui lòng nhập Họ.");
+        event.preventDefault();  // Ngừng gửi form nếu thiếu họ
+        return false;
+    }
+    
+    if (ten === "") {
+        alert("Vui lòng nhập Tên.");
+        event.preventDefault();  // Ngừng gửi form nếu thiếu tên
+        return false;
+    }
+    
+    if (address === "") {
+        alert("Vui lòng nhập Địa chỉ.");
+        event.preventDefault();  // Ngừng gửi form nếu thiếu địa chỉ
+        return false;
+    }
+    
+    if (district === "") {
+        alert("Vui lòng chọn Quận / Huyện.");
+        event.preventDefault();  // Ngừng gửi form nếu thiếu quận/huyện
+        return false;
+    }
+    
+    if (ward === "") {
+        alert("Vui lòng chọn Phường / Xã.");
+        event.preventDefault();  // Ngừng gửi form nếu thiếu phường/xã
+        return false;
+    }
+      
+      // Kiểm tra định dạng email (nếu có nhập email)
+      if (email !== "" && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
+          alert("Email không hợp lệ.");
+          event.preventDefault();  // Ngừng gửi form nếu email không hợp lệ
+          return false;
+      }
+  
+      // Kiểm tra số điện thoại (nếu có nhập số điện thoại)
+      if (phone !== "" && !/^[0-9]{10,11}$/.test(phone)) {
+          alert("Số điện thoại không hợp lệ.");
+          event.preventDefault();  // Ngừng gửi form nếu số điện thoại không hợp lệ
+          return false;
+      }
+  
+      // Kiểm tra nếu người dùng đã chọn ghi chú, thì ghi chú không được bỏ trống
+      let ghiChuCheckbox = document.getElementById("diff-acc");
+      if (ghiChuCheckbox.checked && ghiChu === "") {
+          alert("Vui lòng nhập ghi chú nếu bạn chọn ghi chú cho đơn hàng.");
+          event.preventDefault();  // Ngừng gửi form nếu ghi chú trống khi đã chọn ghi chú
+          return false;
+      }
+      let paymentCheckbox = document.getElementById("payment");  // COD
+      let paypalCheckbox = document.getElementById("paypal");    // PayPal
+
+      // Kiểm tra nếu cả hai đều không được chọn
+      if (!paymentCheckbox.checked && !paypalCheckbox.checked) {
+          alert("Vui lòng chọn phương thức thanh toán.");
+          event.preventDefault();
+          return false;
+      }
+    if (paymentCheckbox.checked) {
+        // Nếu là COD, gửi form sang trang xác nhận thanh toán (xuly_thanhtoan.php)
+        event.preventDefault();  // Ngừng gửi form
+        this.action = "OrderConfirmation.php";  // Đặt URL gửi form đến trang xác nhận thanh toán
+        this.submit();  // Gửi form sau khi đã thay đổi action
+    }
+    // Kiểm tra nếu phương thức thanh toán là PayPal
+    else if (paypalCheckbox.checked) {
+        // Nếu là PayPal, chuyển sang trang PayPal (giả sử là trang thanh toán PayPal)
+        event.preventDefault();  // Ngừng gửi form
+        this.action = "MethodPayByCart.php";  // Đặt URL gửi form đến trang thanh toán PayPal
+        this.submit();  // Gửi form sau khi đã thay đổi action
+    }
+      // Nếu tất cả các điều kiện đã được kiểm tra thành công, form sẽ được gửi
+  };
+});
+  function removeAsteriskOnInput(event) {
+    // Kiểm tra nếu giá trị của trường input đã có dữ liệu
+    const span = event.target.previousElementSibling.querySelector('span');
+    if (event.target.value !== "") {
+        // Xóa dấu sao trong <span> nếu trường nhập liệu không rỗng
+        span.style.display = 'none';
+    } else {
+        // Hiển thị lại dấu sao nếu trường nhập liệu trống
+        span.style.display = 'inline';
+    }
+}
+
+// Lắng nghe sự kiện input trên các trường "Họ" và "Tên"
+document.getElementsByName("Họ")[0].addEventListener("input", removeAsteriskOnInput);
+document.getElementsByName("Tên")[0].addEventListener("input", removeAsteriskOnInput);

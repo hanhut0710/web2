@@ -1,0 +1,172 @@
+/* Tổng thể form */
+  .payment-form h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 36px;
+    color: #333;
+  }
+  
+  .payment-form .subtext {
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+  }
+  
+  .card-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .card-icons img {
+    width: 48px;
+    height: auto;
+  }
+  
+  /* Label và Input chung */
+  .payment-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #444;
+  }
+  
+  .payment-form input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    margin-bottom: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .payment-form input:focus {
+    border-color: black;
+    box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.15);
+    outline: none;
+  }
+  
+  /* Hết hạn và CVV dạng 2 cột */
+  .form-group.inline {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .form-group.inline > div {
+    flex: 1;
+    position: relative;
+  }
+  
+  /* CVV icon */
+  .cvv-icon {
+    position: absolute;
+    top: 41px;
+    right: 12px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  small.helper-text {
+    font-size: 12px;
+    color: #888;
+    margin-top: -10px;
+    display: block;
+  }
+  
+  /* Nút xác nhận */
+  .payment-form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.25s ease;
+  }
+  
+  .payment-form button:hover {
+    background-color: #444;
+  }
+  .payment-form button:active {
+    background-color: #000;
+  }
+  /* Select box styling */
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+  }
+  
+  select:focus {
+    border-color: #666;
+    outline: none;
+  }
+  
+  /* Optional: Add some spacing */
+  .form-group.inline select {
+    margin-bottom: 8px;
+  }
+  
+  /* Fix alignment for select + CVV */
+  .form-group.inline {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .form-group.inline > div {
+    flex: 1;
+    min-width: 130px;
+  }
+  .form-group.inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  .form-group.inline > div {
+    flex: 1;
+    min-width: 120px;
+  }
+  
+  .form-group.inline > div > div {
+    margin-bottom: 10px;
+  }
+  
+  .nice-select {
+    border-radius:0%;
+    width: 100%;
+  }
+  .nice-select .option {
+    border-radius: 0%;
+  }
+  .nice-select .list{
+    border-radius: 0%;
+    width: 100%;
+    max-height: 60vh;
+    overflow-y: scroll;
+  }
+  .form-group.inline .expiry-container {
+    display: flex;
+    gap: 16px; /* khoảng cách giữa 2 phần */
+  }
+  
+  .expiry-container > div {
+    flex: 1; /* chia đều không gian */
+  }

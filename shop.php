@@ -52,15 +52,31 @@
     link.addEventListener('click', function (e) {
         e.preventDefault();
         currentCategory = this.getAttribute('data-category-id');
-        searchKeyword = ''; // Reset tìm kiếm nếu chọn danh mục
+        searchInput.value = ''; // Reset tìm kiếm nếu chọn danh mục
+        searchInput2.value = '';
         currentPage = 1;
         mode = "category"; // Đặt chế độ là danh mục
+        resetAdvancedSearchFields();
         document.querySelectorAll('#category-list a').forEach(a => a.classList.remove('active'));
         this.classList.add('active');
        
         loadProducts();
     });
 });
+    document.querySelectorAll('#brand-list a').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            currentBrand = this.getAttribute('data-brand');
+            currentPage = 1;
+            mode = "brand"; // Đặt chế độ là theo brand
+            searchInput.value = '';
+            resetAdvancedSearchFields();
+            document.querySelectorAll('#brand-list a').forEach(a => a.classList.remove('active'));
+            this.classList.add('active');
+
+            loadProducts();
+        });
+    });
 
 });
 
@@ -91,9 +107,12 @@ function loadProducts() {
     else if(mode === "category"){
         url = `./handle/get_product.php?page=${currentPage}&pageSize=${pageSize}&category_id=${currentCategory}`;
     }
+    else if (mode === "brand") {
+        url = `./handle/get_product.php?page=${currentPage}&pageSize=${pageSize}&brand_id=${currentBrand}`;
+    }
     else if(mode === "advance_search"){
-        url = `./handle/search2.php?keyword=${encodeURIComponent(keyword2)}&category=${category}&brand=${brand}&minPrice=${minPrice}&maxPrice=${maxPrice}&page=${currentPage}&limit=${pageSize}`;
-    } 
+            url = `./handle/search2.php?keyword=${encodeURIComponent(keyword2)}&category=${category}&brand=${brand}&minPrice=${minPrice}&maxPrice=${maxPrice}&page=${currentPage}&limit=${pageSize}`;
+        }
     console.log("URL:", url);
     fetch(url)
         .then(res => res.json())
@@ -106,6 +125,7 @@ function loadProducts() {
 
             if (products.length === 0) {
                 productList.innerHTML = "<p>Không có sản phẩm nào.</p>";
+                updatePagination(0);
                 return;
             }
 
@@ -125,12 +145,21 @@ function loadProducts() {
                     </div>`;
                 productList.innerHTML += productHTML;
             });
-
+            
+           
             updatePagination(total);
            
         })
         
         .catch(err => console.error("Lỗi load sản phẩm:", err));
+}
+
+function resetAdvancedSearchFields() {
+    console.log("Resetting advanced search fields...");
+    document.getElementById("categorySelect").value = "all"; // Reset danh mục về "all"
+    document.getElementById("brandSelect").value = ""; // Reset thương hiệu về giá trị mặc định
+    document.getElementById("priceSelect").value = ""; // Reset khoảng giá về giá trị mặc định
+    document.getElementById("searchInput2").value = ""; // Reset ô tìm kiếm nâng cao
 }
 
 function updatePagination(total) {
@@ -139,6 +168,7 @@ function updatePagination(total) {
     document.getElementById("prePage").innerText = currentPage - 1;
     document.getElementById("nextPage").innerText = currentPage + 1;
 
+    document.getElementById('currentPage').style.display = (total > 0) ? "block" : "none";
     document.getElementById('prePage').style.display = currentPage > 1 ? "block" : "none";
     document.getElementById('nextPage').style.display = currentPage < maxPage ? "block" : "none";
 }
@@ -153,19 +183,19 @@ document.getElementById('prePage').addEventListener('click', () => {
     loadProducts();
 });
 
-document.querySelectorAll('#category-list a').forEach(link => {
-    link.addEventListener('click', function (e) {
-        e.preventDefault();
-        currentCategory = this.getAttribute('data-category-id');
-        searchKeyword = '';
-        currentPage = 1;
+// document.querySelectorAll('#category-list a').forEach(link => {
+//     link.addEventListener('click', function (e) {
+//         e.preventDefault();
+//         currentCategory = this.getAttribute('data-category-id');
+//         searchKeyword = '';
+//         currentPage = 1;
 
-        document.querySelectorAll('#category-list a').forEach(a => a.classList.remove('active'));
-        this.classList.add('active');
+//         document.querySelectorAll('#category-list a').forEach(a => a.classList.remove('active'));
+//         this.classList.add('active');
 
-        loadProducts();
-    });
-});
+//         loadProducts();
+//     });
+// });
 
 function search(event) {
     event.preventDefault();
@@ -173,15 +203,11 @@ function search(event) {
     currentCategory = document.getElementById("categorySelect").value;
     selectedBrand = document.getElementById("brandSelect").value;
     selectedPrice = document.getElementById("priceSelect").value;
-    currentPage = 1;
     mode = "search"; // Đặt chế độ là tìm kiếm
+    resetAdvancedSearchFields();
+   
+
     loadProducts();
-    
-    searchInput.value = "";
-    document.getElementById("searchInput").value = "";
-    document.getElementById("categorySelect").value = "all";
-    document.getElementById("brandSelect").value = "";
-    document.getElementById("priceSelect").value = "";
 }
 
 function advance_search(){
