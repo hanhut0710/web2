@@ -56,6 +56,7 @@
         searchInput2.value = '';
         currentPage = 1;
         mode = "category"; // Đặt chế độ là danh mục
+        resetAdvancedSearchFields();
         document.querySelectorAll('#category-list a').forEach(a => a.classList.remove('active'));
         this.classList.add('active');
        
@@ -69,6 +70,7 @@
             currentPage = 1;
             mode = "brand"; // Đặt chế độ là theo brand
             searchInput.value = '';
+            resetAdvancedSearchFields();
             document.querySelectorAll('#brand-list a').forEach(a => a.classList.remove('active'));
             this.classList.add('active');
 
@@ -123,6 +125,7 @@ function loadProducts() {
 
             if (products.length === 0) {
                 productList.innerHTML = "<p>Không có sản phẩm nào.</p>";
+                updatePagination(0);
                 return;
             }
 
@@ -142,6 +145,7 @@ function loadProducts() {
                     </div>`;
                 productList.innerHTML += productHTML;
             });
+            
            
             updatePagination(total);
            
@@ -150,12 +154,21 @@ function loadProducts() {
         .catch(err => console.error("Lỗi load sản phẩm:", err));
 }
 
+function resetAdvancedSearchFields() {
+    console.log("Resetting advanced search fields...");
+    document.getElementById("categorySelect").value = "all"; // Reset danh mục về "all"
+    document.getElementById("brandSelect").value = ""; // Reset thương hiệu về giá trị mặc định
+    document.getElementById("priceSelect").value = ""; // Reset khoảng giá về giá trị mặc định
+    document.getElementById("searchInput2").value = ""; // Reset ô tìm kiếm nâng cao
+}
+
 function updatePagination(total) {
     let maxPage = Math.ceil(total / pageSize);
     document.getElementById('currentPage').innerText = currentPage;
     document.getElementById("prePage").innerText = currentPage - 1;
     document.getElementById("nextPage").innerText = currentPage + 1;
 
+    document.getElementById('currentPage').style.display = (total > 0) ? "block" : "none";
     document.getElementById('prePage').style.display = currentPage > 1 ? "block" : "none";
     document.getElementById('nextPage').style.display = currentPage < maxPage ? "block" : "none";
 }
@@ -191,11 +204,10 @@ function search(event) {
     selectedBrand = document.getElementById("brandSelect").value;
     selectedPrice = document.getElementById("priceSelect").value;
     mode = "search"; // Đặt chế độ là tìm kiếm
+    resetAdvancedSearchFields();
+   
+
     loadProducts();
-    
-    document.getElementById("categorySelect").value = "all";
-    document.getElementById("brandSelect").value = "";
-    document.getElementById("priceSelect").value = "";
 }
 
 function advance_search(){
