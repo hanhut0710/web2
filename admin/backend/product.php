@@ -178,11 +178,29 @@ class Product {
         return $row['img_src'];
     }
 
+
     public function getProductByName($name)
     {
         $sql = "SELECT * FROM products WHERE name = '$name' AND status = 1";
         $result = mysqli_query($this->conn, $sql);
         return mysqli_fetch_assoc($result);
+    }
+    
+    public function getProductById($id)
+    {
+        $sql = "SELECT p.*, b.name as brand_name, c.name as cat_name 
+                FROM products p 
+                LEFT JOIN brand b ON p.brand_id = b.id 
+                LEFT JOIN category c ON p.category_id = c.id 
+                WHERE p.id = $id";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result)
+        {
+            $row= mysqli_fetch_assoc($result);
+            if (empty($row['img_src'])) 
+                $row['img_src'] = $this->getFirstImage($row['id']) ?? '';
+        }
+        return $row;
     }
 }
 ?>

@@ -71,7 +71,7 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
                         </div>
                         <div class="list-control">
                             <div class="list-tool">
-                                <a href="./backend/xulySP.php&id=' . $value['id'] . '&act=edit"><button class="btn-edit" name="btnEditProduct"><i class="fa-light fa-pen-to-square"></i></button></a>
+                                <a href="index.php?page=editProduct&id='.$value['id'].'"><button class="btn-edit" name="btnEditProduct"><i class="fa-light fa-pen-to-square"></i></button></a>
                                 <a href="./backend/xulySP.php&id=' . $value['id'] . '&act=delete"><button class="btn-delete" name="btnDeleteProduct"><i class="fa-regular fa-trash"></i></button></a>
                             </div>
                         </div>

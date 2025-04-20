@@ -126,6 +126,9 @@
                         case "addProduct":
                             include "addProduct.php";
                             break;   
+                        case "editProduct":
+                            include "editProduct.php";
+                            break;   
                         case "productdetails":
                             include "productdetails.php";
                             break;
