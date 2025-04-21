@@ -56,7 +56,7 @@
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="">
                             <span class="label">Best Seller</span>
-                            <img src="${product.img_src}" onclick="openProductDetails(${product.id})">>
+                            <img src="${product.img_src}" onclick="openProductDetails(${product.id})">
                             <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                 <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>

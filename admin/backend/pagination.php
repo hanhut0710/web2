@@ -193,5 +193,26 @@ class Pagination {
         $html .= '</ul></div>';
         return $html;
     }
+
+    public function renderOrderList($startDate, $endDate, $sort) {
+        if ($this->totalPage <= 1)
+            return '';
+
+        $pageParam = isset($_GET['page']) ? 'page=' . $_GET['page'] : '';
+
+        $html = '<div class="page-nav">
+                    <ul class="page-nav-list">';
+        for ($i = 1; $i <= $this->totalPage; $i++) {
+            $url = '?view=table&sort=' . $sort .'&';
+            if($pageParam)
+                $url .= $pageParam . '&';
+            $url .= 'start-date='. $startDate . '&end-date='. $endDate . '&page_num='. $i;
+
+            $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
+            $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
+        }
+        $html .= '</ul></div>';
+        return $html;
+    }
 }
 ?>

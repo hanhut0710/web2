@@ -37,14 +37,14 @@
 
     $page_num = isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1;
     $limit = 5;
-    $totalOrder = $statistic->getTotalCustomerByTime($startDate, $endDate);
+    $totalOrder = $statistic->getTotalOrderByTime($startDate, $endDate);
     $sort = (isset($_GET['sort']) && $_GET['sort'] === 'asc') ? 'ASC' : 'DESC';
 
     $pagination = new Pagination($totalOrder, $page_num, $limit);
     $offset = $pagination->getOffset($page_num, $limit);
 
-    $data = $statistic->changeChartCustomerByTime($startDate, $endDate);
-    $order = $statistic->getCustomersByTime($startDate, $endDate, $limit, $offset, $sort);
+    $data = $statistic->changeChartOrderByTime($startDate, $endDate);
+    $order = $statistic->getOrderByTime($startDate, $endDate, $limit, $offset, $sort);
     $dataJson = json_encode($data);
 
 ?>
@@ -70,10 +70,10 @@
                     <input onchange="selectDate()" type="date" class="form-control-date" id="time-end-tk" name="end-date" value="<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>" >
                 </div>
                 <div style="display: <?php echo ($view === 'table') ? 'flex' : 'none' ?>">
-                    <a href="index.php?page=statisticCustomer&start-date=<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>&end-date=<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>&sort=asc&view=table&page_num=<?php echo $page_num?>" class="btn-reset-order">
+                    <a href="index.php?page=statisticOrder&start-date=<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>&end-date=<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>&sort=asc&view=table&page_num=<?php echo $page_num?>" class="btn-reset-order">
                         <i class="fa-regular fa-arrow-up-short-wide"></i> Tăng dần
                     </a>
-                    <a href="index.php?page=statisticCustomer&start-date=<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>&end-date=<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>&sort=desc&view=table&page_num=<?php echo $page_num?>" class="btn-reset-order">
+                    <a href="index.php?page=statisticOrder&start-date=<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>&end-date=<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>&sort=desc&view=table&page_num=<?php echo $page_num?>" class="btn-reset-order">
                         <i class="fa-regular fa-arrow-down-wide-short"></i> Giảm dần
                     </a>
                 </div>
@@ -82,13 +82,13 @@
     </div>
     <div class="dashboard-container">
         <div class="card-grid">
-            <a href="index.php?page=statisticRevenue" class="card blue">
-                <div class="icon">📊</div>
-                <div>
-                    <div class="card-title">DOANH THU</div>
-                    <div class="card-value"> <?php echo number_format($statistic->getTotalRevenueByTime($startDate, $endDate), 0, ',', '.').'đ'?> </div>
-                </div>
-            </a>
+                <a href="index.php?page=statisticRevenue" class="card blue">
+                    <div class="icon">📊</div>
+                    <div>
+                        <div class="card-title">DOANH THU</div>
+                        <div class="card-value"> <?php echo number_format($statistic->getTotalRevenueByTime($startDate, $endDate), 0, ',', '.').'đ'?> </div>
+                    </div>
+                </a>
             <a href="index.php?page=statisticOrder" class="card green">
                 <div class="icon">🛒</div>
                 <div>
@@ -100,7 +100,7 @@
                 <div class="icon">👤</div>
                 <div>
                     <div class="card-title">KHÁCH HÀNG</div>
-                    <div class="card-value"> <?php echo $statistic->getTotalCustomerByTime($startDate, $endDate) ?></div>
+                    <div class="card-value"><?php echo $statistic->getTotalCustomerByTime($startDate, $endDate) ?></div>
                 </div>
             </a>
             <a href="index.php?page=statisticTopCustomer" class="card orange">
@@ -114,22 +114,25 @@
                 <table width="100%">
                     <thead>
                         <tr>
+                            <td>Mã hóa đơn</td>
                             <td>Mã khách hàng</td>
                             <td>Tên khách hàng</td>
-                            <td>Email</td>
-                            <td>Tổng hóa đơn</td>
+                            <td>Phương thức thanh toán</td>
+                            <td>Ngày lập</td>
                             <td>Tổng tiền</td>
                         </tr>
                     </thead>
                     <tbody id="showTk">
                         <?php 
                             foreach($order as $item){
+                                $paymentMethod = $item['pay_method'] == 'cash' ? 'COD' : 'Chuyển khoản';
                                 echo ' 
                                     <tr>
                                         <td>'.$item['id'].'</td>
-                                        <td>'.$item['full_name'].'</td>
-                                        <td>'.$item['email'].'</td>
-                                        <td>'.$item['order_count'].'</td>
+                                        <td>'.$item['user_id'].'</td>
+                                        <td>'.$item['name'].'</td>
+                                        <td>'.$paymentMethod.'</td>
+                                        <td>'.$item['created_at'].'</td>
                                         <td>'.number_format($item['total_price'], 0, ',', '.').'₫</td>
                                     </tr>
                                 ';
@@ -157,7 +160,7 @@
     let mode = <?php echo (isset($_GET['time'])) ? "'filter'" : "'select'" ?>;
 
     button.addEventListener('click', function () {
-        let currentUrl = "index.php?page=statisticCustomer";
+        let currentUrl = "index.php?page=statisticOrder";
         const startDate = document.getElementById('time-start-tk').value;
         const endDate = document.getElementById('time-end-tk').value;
         const time = document.getElementById('time').value;
@@ -192,10 +195,10 @@
 
         if (currentUrl.includes('view=table')) {
             console.log('table');
-            currentUrl = "index.php?page=statisticCustomer&view=table&start-date=" + startDate + "&end-date=" + endDate;
+            currentUrl = "index.php?page=statisticOrder&view=table&start-date=" + startDate + "&end-date=" + endDate;
             window.location.href = currentUrl;
         } else {
-            currentUrl = "index.php?page=statisticCustomer&view=chart&start-date=" + startDate + "&end-date=" + endDate;
+            currentUrl = "index.php?page=statisticOrder&view=chart&start-date=" + startDate + "&end-date=" + endDate;
             window.location.href = currentUrl;
         }
     }
@@ -204,9 +207,9 @@
         const time = document.getElementById('time').value;
         let currentUrl = window.location.href;
         if(currentUrl.includes('view=table')) {
-            currentUrl = "index.php?page=statisticCustomer&view=table&time=" + time;
+            currentUrl = "index.php?page=statisticOrder&view=table&time=" + time;
         } else {
-            currentUrl = "index.php?page=statisticCustomer&view=chart&time=" + time;
+            currentUrl = "index.php?page=statisticOrder&view=chart&time=" + time;
         }
         window.location.href = currentUrl;
     }
@@ -218,8 +221,8 @@
         data: data,
         // Tên các trục
         xkey: 'date',
-        ykeys: ['customer_count'],
-        labels: ['Số lượng khách hàng'],
+        ykeys: ['order_count'],
+        labels: ['Số lượng đơn hàng'],
         resize: true
     });
 </script>

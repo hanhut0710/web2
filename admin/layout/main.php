@@ -64,9 +64,9 @@
                             </a>
                         </li>
                         <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=statisticCustomer" class="sidebar-link">
+                            <a href="index.php?page=statisticRevenue" class="sidebar-link">
                                 <div class="sidebar-icon"><i class="fa-solid fa-square-poll-vertical"></i></div>
-                                <div class="hidden-sidebar">Thống kê khách hàng</div>
+                                <div class="hidden-sidebar">Thống kê</div>
                             </a>
                         </li>
                         <li class="sidebar-list-item tab-content">
@@ -156,8 +156,20 @@
                         case "statisticProduct":
                             include "statisticProduct.php";
                             break;
+                        case "statisticRevenue":
+                            include "statisticRevenue.php";
+                            break;
+                        case "statisticOrder":
+                            include "statisticOrder.php";
+                            break;
                         case "statisticCustomer":
                             include "statisticCustomer.php";
+                            break;
+                        case "statisticTopCustomer":
+                            include "statisticTopCustomer.php";
+                            break;
+                        case "statisticCustomerDetail":
+                            include "orderdetails.php";
                             break;
                        
                         case "permission":
@@ -176,7 +188,7 @@
                         case "deleteStaff":
                             include "deleteStaff.php";
                             break;
-                            
+                       
                         default:
                             include "home.php";
                             break;

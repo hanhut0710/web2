@@ -35,17 +35,13 @@
     
     $statistic = new StatisticCustomer();
 
-    $page_num = isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1;
     $limit = 5;
     $totalOrder = $statistic->getTotalCustomerByTime($startDate, $endDate);
     $sort = (isset($_GET['sort']) && $_GET['sort'] === 'asc') ? 'ASC' : 'DESC';
+    $top5Customer = $statistic->getTop5Customers($startDate, $endDate, $limit, $sort);
 
-    $pagination = new Pagination($totalOrder, $page_num, $limit);
-    $offset = $pagination->getOffset($page_num, $limit);
-
-    $data = $statistic->changeChartCustomerByTime($startDate, $endDate);
-    $order = $statistic->getCustomersByTime($startDate, $endDate, $limit, $offset, $sort);
-    $dataJson = json_encode($data);
+    $dataJson = json_encode($top5Customer);
+   
 
 ?>
 <div class="section active">
@@ -66,18 +62,18 @@
                     <input onchange="selectDate()" type="date" class="form-control-date" id="time-start-tk" name="start-date" value="<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>" >
                 </div>
                 <div>
-                     <label for="time-end">Đến</label>
+                    <label for="time-end">Đến</label>
                     <input onchange="selectDate()" type="date" class="form-control-date" id="time-end-tk" name="end-date" value="<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>" >
                 </div>
                 <div style="display: <?php echo ($view === 'table') ? 'flex' : 'none' ?>">
-                    <a href="index.php?page=statisticCustomer&start-date=<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>&end-date=<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>&sort=asc&view=table&page_num=<?php echo $page_num?>" class="btn-reset-order">
+                    <a href="index.php?page=statisticTopCustomer&start-date=<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>&end-date=<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>&sort=asc&view=table" class="btn-reset-order">
                         <i class="fa-regular fa-arrow-up-short-wide"></i> Tăng dần
                     </a>
-                    <a href="index.php?page=statisticCustomer&start-date=<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>&end-date=<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>&sort=desc&view=table&page_num=<?php echo $page_num?>" class="btn-reset-order">
+                    <a href="index.php?page=statisticTopCustomer&start-date=<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>&end-date=<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>&sort=desc&view=table" class="btn-reset-order">
                         <i class="fa-regular fa-arrow-down-wide-short"></i> Giảm dần
                     </a>
                 </div>
-            </form>                  
+            </form>
         </div>
     </div>
     <div class="dashboard-container">
@@ -109,6 +105,12 @@
             </a>
         </div>
         <div class="chart-card">
+            <div class="ranking-header">
+                <div class="ranking-title">
+                    <h1>🏆 Bảng Xếp Hạng Khách Hàng Thân Thiết</h1>
+                    <p>Danh sách những khách hàng có đóng góp lớn nhất trong khoảng thời gian bạn chọn.</p>
+                </div>
+            </div>
         <div class="chart-placeholder">
             <div class="table" style="display : <?php echo ($view === 'table') ? 'block' : 'none'?> ">
                 <table width="100%">
@@ -116,33 +118,28 @@
                         <tr>
                             <td>Mã khách hàng</td>
                             <td>Tên khách hàng</td>
-                            <td>Email</td>
                             <td>Tổng hóa đơn</td>
                             <td>Tổng tiền</td>
+                            <td>Chi tiết</td>
                         </tr>
                     </thead>
                     <tbody id="showTk">
                         <?php 
-                            foreach($order as $item){
+                            foreach($top5Customer as $item){
                                 echo ' 
                                     <tr>
                                         <td>'.$item['id'].'</td>
                                         <td>'.$item['full_name'].'</td>
-                                        <td>'.$item['email'].'</td>
                                         <td>'.$item['order_count'].'</td>
                                         <td>'.number_format($item['total_price'], 0, ',', '.').'₫</td>
+                                        <td class="control control-table">
+                                            <a href="index.php?page=statisticCustomerDetail&id='.$item['id'].'&start-date='.$startDate.'&end-date='.$endDate.'&view=orders" class="btn-edit" ><i class="fa-solid fa-eye"></i> Chi tiết</a></td>
                                     </tr>
                                 ';
                             }
                         ?>
                     </tbody>
                 </table>
-                <?php 
-                    if($totalOrder > 0)
-                    {
-                        echo $pagination -> renderOrderList($startDate, $endDate, (isset($_GET['sort']) ? $_GET['sort'] : 'desc'));
-                    }
-                ?>
             </div>
             <div id="myfirstchart" style="height: 250px; display : <?php echo ($view === 'chart') ? 'block' : 'none'?>"></div>
             </div>
@@ -157,7 +154,7 @@
     let mode = <?php echo (isset($_GET['time'])) ? "'filter'" : "'select'" ?>;
 
     button.addEventListener('click', function () {
-        let currentUrl = "index.php?page=statisticCustomer";
+        let currentUrl = "index.php?page=statisticTopCustomer";
         const startDate = document.getElementById('time-start-tk').value;
         const endDate = document.getElementById('time-end-tk').value;
         const time = document.getElementById('time').value;
@@ -192,10 +189,10 @@
 
         if (currentUrl.includes('view=table')) {
             console.log('table');
-            currentUrl = "index.php?page=statisticCustomer&view=table&start-date=" + startDate + "&end-date=" + endDate;
+            currentUrl = "index.php?page=statisticTopCustomer&view=table&start-date=" + startDate + "&end-date=" + endDate;
             window.location.href = currentUrl;
         } else {
-            currentUrl = "index.php?page=statisticCustomer&view=chart&start-date=" + startDate + "&end-date=" + endDate;
+            currentUrl = "index.php?page=statisticTopCustomer&view=chart&start-date=" + startDate + "&end-date=" + endDate;
             window.location.href = currentUrl;
         }
     }
@@ -203,23 +200,28 @@
     function filterByTime() {
         const time = document.getElementById('time').value;
         let currentUrl = window.location.href;
-        if(currentUrl.includes('view=table')) {
-            currentUrl = "index.php?page=statisticCustomer&view=table&time=" + time;
+        if (currentUrl.includes('view=table')) {
+            currentUrl = "index.php?page=statisticTopCustomer&view=table&time=" + time;
         } else {
-            currentUrl = "index.php?page=statisticCustomer&view=chart&time=" + time;
+            currentUrl = "index.php?page=statisticTopCustomer&view=chart&time=" + time;
         }
         window.location.href = currentUrl;
     }
 
     const data = <?php echo $dataJson; ?>;
     console.log(data);
-    new Morris.Line({
+    new Morris.Bar({
         element: 'myfirstchart',
         data: data,
         // Tên các trục
-        xkey: 'date',
-        ykeys: ['customer_count'],
-        labels: ['Số lượng khách hàng'],
-        resize: true
+        xkey: ['full_name'],
+        ykeys: ['total_price'],
+        labels: 'Doanh thu',
+        resize: true,
+        barColors: function (row, series, type) {
+            // Gán màu sắc khác nhau cho từng thanh bar
+            const colors = ['#1e88e5', '#ff5722', '#43a047', '#fbc02d', '#8e24aa'];
+            return colors[row.x % colors.length]; // Lặp lại màu nếu vượt quá số lượng màu
+        }
     });
 </script>
