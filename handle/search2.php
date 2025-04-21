@@ -29,7 +29,7 @@ if (!empty($category) && $category !== 'all') {
 }
 
 if (!empty($brand) && $brand !== 'all') {
-    $where .= " AND product_details.brand = '$brand'";
+    $where .= " AND products.brand_id = '$brand'";
 }
 
 // Đếm tổng số sản phẩm phù hợp
@@ -45,7 +45,7 @@ $totalPages = ceil($total / $limit);
 
 // Lấy dữ liệu sản phẩm
 $sql = "
-    SELECT products.*, product_details.brand
+    SELECT products.*
     FROM products
     LEFT JOIN product_details ON products.id = product_details.product_id
     $where

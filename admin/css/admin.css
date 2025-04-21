@@ -626,6 +626,7 @@ tbody tr td {
 }
 
 .list-category,
+.list-brand,
 .list-stock {
     display: inline-block;
     margin-top: 10px;
@@ -693,6 +694,31 @@ tbody tr td {
     color: var(--text-color);
     text-decoration: none;
     outline: none;
+}
+
+.import-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.info-group {
+    flex: 1 1 200px;
+}
+.info-group label {
+    font-weight: bold;
+    display: block;
+}
+.total-quantity {
+    margin-top: 20px;
+    font-size: 1.1em;
+}
+.total-quantity label {
+    font-weight: bold;
+}
+.control-buttons {
+    margin-top: 20px;
+    text-align: right;
 }
 .btn-detail,
 .btn-edit,

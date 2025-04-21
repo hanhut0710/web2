@@ -1,5 +1,6 @@
 <?php
 require_once "database.php";
+
 class Product {
     private $conn;
     
@@ -11,7 +12,10 @@ class Product {
 
     public function getAllProduct()
     {
-        $sql = "SELECT * FROM products WHERE status=1";
+        $sql = "SELECT p.*, b.name as brand_name 
+                FROM products p 
+                LEFT JOIN brand b ON p.brand_id = b.id 
+                WHERE p.status=1";
         $result = mysqli_query($this->conn, $sql);
         $products = [];
         if ($result) {
@@ -26,7 +30,11 @@ class Product {
 
     public function getAllProductByPagination($limit, $offset)
     {
-        $sql = "SELECT * FROM products WHERE status=1 LIMIT $limit OFFSET $offset";
+        $sql = "SELECT p.*, b.name as brand_name 
+                FROM products p 
+                LEFT JOIN brand b ON p.brand_id = b.id 
+                WHERE p.status=1 
+                LIMIT $limit OFFSET $offset";
         $result = mysqli_query($this->conn, $sql);
         $products = [];
         if ($result) {
@@ -35,26 +43,26 @@ class Product {
                 $rows['stock'] = $this->calculateTotalStock($rows['id']);
                 $products[] = $rows;
             }
-                
         }
         return $products;
     }
 
     public function getAllProductByCategory($limit, $offset)
     {
-        $sql = "SELECT products.id, products.name, products.price, products.stock, products.img_src,
-                        category.name as cat_name 
-                FROM products 
-                LEFT JOIN category ON products.category_id = category.id 
-                WHERE products.status=1 
+        $sql = "SELECT p.id, p.name, p.price, p.stock, p.img_src, p.brand_id,
+                        c.name as cat_name, b.name as brand_name
+                FROM products p 
+                LEFT JOIN category c ON p.category_id = c.id 
+                LEFT JOIN brand b ON p.brand_id = b.id 
+                WHERE p.status=1 
                 LIMIT $limit OFFSET $offset";
-                
         $result = mysqli_query($this->conn, $sql);
         $products = [];
         if ($result) {
             while ($rows = mysqli_fetch_array($result)) {
                 $rows['stock'] = $this->calculateTotalStock($rows['id']);
                 $rows['cat_name'] = $rows['cat_name'] ?? 'Không xác định';
+                $rows['brand_name'] = $rows['brand_name'] ?? 'Không xác định';
                 $products[] = $rows;
             }
         }
@@ -64,10 +72,12 @@ class Product {
     public function getProductByCategory($idCategory, $limit, $page_num)
     {   
         $offset = ($page_num - 1) * $limit;
-        $sql = "SELECT products.id, products.name, products.price, products.stock, products.img_src, category.name as cat_name 
-                FROM products 
-                LEFT JOIN category ON products.category_id = category.id 
-                WHERE products.status=1 AND products.category_id = $idCategory 
+        $sql = "SELECT p.id, p.name, p.price, p.stock, p.img_src, p.brand_id,
+                        c.name as cat_name, b.name as brand_name
+                FROM products p 
+                LEFT JOIN category c ON p.category_id = c.id 
+                LEFT JOIN brand b ON p.brand_id = b.id 
+                WHERE p.status=1 AND p.category_id = $idCategory 
                 LIMIT $limit OFFSET $offset";
         $result = mysqli_query($this->conn, $sql);
         $products = [];
@@ -77,6 +87,7 @@ class Product {
             {   
                 $rows['stock'] = $this->calculateTotalStock($rows['id']);
                 $rows['cat_name'] = $rows['cat_name'] ?? 'Không xác định';
+                $rows['brand_name'] = $rows['brand_name'] ?? 'Không xác định';
                 $products[] = $rows;
             }
         } 
@@ -105,22 +116,23 @@ class Product {
         return $row['total'];
     }
 
-    public function insert($name, $price, $img, $category_id, $status)
+    public function insert($name, $price, $img, $category_id, $status, $brand_id)
     {
-        $sql = "INSERT INTO products(name, price, stock, img_src, category_id, status)
-                VALUES ('$name', '$price', 0, '$img', '$category_id', '$status')"; 
+        $sql = "INSERT INTO products(name, price, stock, img_src, category_id, status, brand_id)
+                VALUES ('$name', '$price', 0, '$img', '$category_id', '$status', '$brand_id')"; 
         $result = mysqli_query($this->conn, $sql);
         if ($result)
-            return true;
+            return mysqli_insert_id($this->conn);
         return false;
     }
 
-    public function update($id, $name, $price, $img_src, $category_id, $status) 
+    public function update($id, $name, $price, $img_src, $category_id, $status, $brand_id) 
     {
         $sql = "UPDATE products 
                 SET name = '$name', price = '$price', img_src = '$img_src', 
-                    category_id = '$category_id', status = '$status' 
+                    category_id = '$category_id', status = '$status', brand_id = '$brand_id'
                 WHERE id = $id";
+        $result = mysqli_query($this->conn, $sql);
         if ($result)
             return true;
         return false;
@@ -135,6 +147,16 @@ class Product {
             return true;
         return false;
     }
+
+    public function updatePrice($product_id, $price) 
+    {
+        $sql = "UPDATE products SET price = $price WHERE id = $product_id";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result)
+            return true;
+        return false;
+    }
+
 
     public function calculateTotalStock($product_id) 
     {
@@ -154,6 +176,31 @@ class Product {
         if ($result)
             $row = mysqli_fetch_assoc($result);
         return $row['img_src'];
+    }
+
+
+    public function getProductByName($name)
+    {
+        $sql = "SELECT * FROM products WHERE name = '$name' AND status = 1";
+        $result = mysqli_query($this->conn, $sql);
+        return mysqli_fetch_assoc($result);
+    }
+    
+    public function getProductById($id)
+    {
+        $sql = "SELECT p.*, b.name as brand_name, c.name as cat_name 
+                FROM products p 
+                LEFT JOIN brand b ON p.brand_id = b.id 
+                LEFT JOIN category c ON p.category_id = c.id 
+                WHERE p.id = $id";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result)
+        {
+            $row= mysqli_fetch_assoc($result);
+            if (empty($row['img_src'])) 
+                $row['img_src'] = $this->getFirstImage($row['id']) ?? '';
+        }
+        return $row;
     }
 }
 ?>

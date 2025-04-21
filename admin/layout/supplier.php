@@ -17,8 +17,8 @@ $offset = $pagination->getOffset();
             <!-- thanh tìm kiếm -->
         </div>
         <div class="admin-control-right">
-            <button class="btn-reset-supplier"><i class="fa-light fa-arrow-rotate-right"></i></button>
-            <a href="index.php?page=addSupplier"><button class="btn-control-large" id="btn-add-supplier"><i class="fa-light fa-plus"></i> Thêm nhà cung cấp mới</button></a>
+            <a href="index.php?page=supplier"><button class="btn-control-large" id="btn-cancel-product"><i class="fa-light fa-rotate-right"></i> Làm mới</button></a>
+            <a href="index.php?page=addSupplier"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Thêm nhà cung cấp</button></a>
         </div>
     </div>
 

@@ -1,6 +1,7 @@
 <?php
 require_once "database.php";
 require_once "product.php";
+
 class ProductDetails {
     private $conn;
     private $product;
@@ -14,7 +15,7 @@ class ProductDetails {
 
     public function getAllDetailsByPagination($limit, $offset, $product_id)
     {
-        $sql = "SELECT pd.id, pd.color, pd.size, pd.brand, pd.img_src, pd.stock, p.name as p_name
+        $sql = "SELECT pd.id, pd.color, pd.size, pd.img_src, pd.stock, p.name as p_name
                 FROM product_details pd, products p 
                 WHERE pd.product_id = p.id";
         if ($product_id != 0) {
@@ -33,7 +34,7 @@ class ProductDetails {
 
     public function getAllDetails()
     {
-        $sql = "SELECT pd.id, pd.color, pd.size, pd.brand, pd.img_src, pd.stock, p.name as product_name
+        $sql = "SELECT pd.id, pd.color, pd.size, pd.img_src, pd.stock, p.name as product_name
                 FROM product_details pd, products p
                 WHERE pd.product_id = p.id";
         $result = mysqli_query($this->conn, $sql);
@@ -66,22 +67,21 @@ class ProductDetails {
         return $row['total'] ;
     }
 
-    public function getDetailByAttributes($product_id, $color, $size, $brand) 
+    public function getDetailByAttributes($product_id, $color, $size) 
     {
         $sql = "SELECT * FROM product_details 
                 WHERE product_id = '$product_id' AND color = '$color' 
-                AND size = '$size' AND brand = '$brand'";
+                AND size = '$size'";
         $result = mysqli_query($this->conn, $sql);
         if ($result)
             $row = mysqli_fetch_assoc($result);
         return $row;
-        
     }
 
-    public function insertProductDetail($product_id, $color, $size, $brand, $stock, $img_src) 
+    public function insertProductDetail($product_id, $color, $size, $stock, $img_src) 
     {
-        $sql = "INSERT INTO product_details (product_id, color, size, brand, stock, img_src) 
-                VALUES ('$product_id', '$color', '$size', '$brand', '$stock', '$img_src')";
+        $sql = "INSERT INTO product_details (product_id, color, size, stock, img_src) 
+                VALUES ('$product_id', '$color', '$size', '$stock', '$img_src')";
         $result = mysqli_query($this->conn, $sql);
         if ($result) 
         {
@@ -109,11 +109,11 @@ class ProductDetails {
         return false;
     }
 
-    public function updateProductDetail($id, $product_id, $color, $size, $brand, $stock, $img_src) 
+    public function updateProductDetail($id, $product_id, $color, $size, $stock, $img_src) 
     {
         $sql = "UPDATE product_details 
                 SET product_id = '$product_id', color = '$color', size = '$size', 
-                    brand = '$brand', stock = '$stock', img_src = '$img_src' 
+                    stock = '$stock', img_src = '$img_src' 
                 WHERE id = $id";
         $result = mysqli_query($this->conn, $sql);
         if ($result) {

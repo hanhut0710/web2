@@ -126,11 +126,14 @@
                         case "addProduct":
                             include "addProduct.php";
                             break;   
+                        case "editProduct":
+                            include "editProduct.php";
+                            break;   
                         case "productdetails":
                             include "productdetails.php";
                             break;
                         case "addProductDetail":
-                            include "addProductDetail.php";
+                            include "addProductDetails.php";
                             break;
                         /*** NHÀ CUNG CẤP ***/ 
                         case "supplier":

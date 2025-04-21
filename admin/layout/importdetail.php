@@ -9,13 +9,8 @@ $productdetails = new ProductDetails();
 $product = new Product();
 $import = new Import();
 
-
 $import_id = isset($_GET['import_id']) ? (int)$_GET['import_id'] : 0;
-
-
 $import_info = $import_id ? $import->getImportById($import_id) : null;
-
-
 $import_details = $import->getImportDetailsByImport($import_id);
 
 // Tính tổng số lượng từ chi tiết
@@ -41,6 +36,10 @@ foreach ($import_details as $detail) {
                 <label>Ngày nhập:</label>
                 <span><?php echo $import_info ? date('d/m/Y', strtotime($import_info['created_at'])) : 'N/A'; ?></span>
             </div>
+            <div class="info-group">
+                <label>Tổng giá trị:</label>
+                <span><?php echo $import_info ? number_format($import_info['total_price'], 2) . ' VNĐ' : 'N/A'; ?></span>
+            </div>
         </div>
 
         <div class="table">
@@ -51,21 +50,25 @@ foreach ($import_details as $detail) {
                         <td>Màu sắc</td>
                         <td>Kích cỡ</td>
                         <td>Thương hiệu</td>
+                        <td>Giá nhập</td>
                         <td>Số lượng</td>
+                        <td>Tổng giá</td>
                     </tr>
                 </thead>
                 <tbody id="showImportDetails">
                     <?php
-                    if($import_details)
-                    {
-                        foreach ($import_details as $detail)
+                    if ($import_details) {
+                        foreach ($import_details as $detail) {
                             echo '<tr>
-                                <td>'.$detail['name'].'</td>
-                                <td>'.$detail['color'].'</td>
-                                <td>'.$detail['size'].'</td>
-                                <td>'.$detail['brand'].'</td>
-                                <td>'.$detail['quantity'].'</td>
+                                <td>' . $detail['name'] . '</td>
+                                <td>' . $detail['color'] . '</td>
+                                <td>' . $detail['size'] . '</td>
+                                <td>' . ($detail['brand_name'] ?? 'N/A') . '</td>
+                                <td>' . number_format($detail['price'], 2) . ' VNĐ</td>
+                                <td>' . $detail['quantity'] . '</td>
+                                <td>' . number_format($detail['total_price'], 2) . ' VNĐ</td>
                             </tr>';
+                        }
                     }
                     ?>
                 </tbody>
@@ -84,28 +87,5 @@ foreach ($import_details as $detail) {
 </div>
 
 <style>
-.import-info {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-.info-group {
-    flex: 1 1 200px;
-}
-.info-group label {
-    font-weight: bold;
-    display: block;
-}
-.total-quantity {
-    margin-top: 20px;
-    font-size: 1.1em;
-}
-.total-quantity label {
-    font-weight: bold;
-}
-.control-buttons {
-    margin-top: 20px;
-    text-align: right;
-}
+
 </style>

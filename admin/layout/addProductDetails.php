@@ -31,10 +31,6 @@ $product = new Product();
                     <label for="brand">Thương hiệu</label>
                     <input type="text" name="brand" id="brand" placeholder="VD: Adidas" required>
                 </div>
-                <div class="form-group">
-                    <label for="quantity">Số lượng</label>
-                    <input type="number" name="quantity" id="quantity" min="0" placeholder="VD: 50" required>
-                </div>
                 <div class="form-group full-width image-upload-container">
                     <label for="image">Hình ảnh</label>
                     <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(event)">

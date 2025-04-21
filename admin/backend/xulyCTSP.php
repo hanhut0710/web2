@@ -8,7 +8,6 @@ if (isset($_POST['btnAddDetails'])) {
     $product_id = $_POST['product'];
     $color = $_POST['color'];
     $size = $_POST['size'];
-    $brand = $_POST['brand'];
     $stock = $_POST['quantity'];
     $img_src = '';
 
@@ -26,7 +25,7 @@ if (isset($_POST['btnAddDetails'])) {
         }
     }
 
-    $result = $details->insertProductDetail($product_id, $color, $size, $brand, $stock, $img_src);
+    $result = $details->insertProductDetail($product_id, $color, $size, $stock, $img_src);
     if ($result) {
         echo '<script>alert("Thêm chi tiết sản phẩm thành công");
             window.location.href="../index.php?page=productdetails";

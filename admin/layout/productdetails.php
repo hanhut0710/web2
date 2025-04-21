@@ -7,7 +7,7 @@ $product = new Product();
 $details = new ProductDetails();
 
 $product_id = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
-$limit = 15;
+$limit = 10;
 $page_num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
 
 if ($product_id) {
@@ -27,9 +27,10 @@ $pagination = new Pagination($totalDetails, $page_num, $limit);
                 <option value="">Tất cả sản phẩm</option>
                 <?php
                 $productList = $product->getAllProduct();
-                foreach ($productList as $value) {
+                foreach ($productList as $value) 
+                {
                     $selected = ($product_id == $value['id']) ? 'selected' : '';
-                    echo '<option value="' . $value['id'] . '" ' . $selected . '>' . $value['name'] . '</option>';
+                    echo '<option value="'.$value['id'].'" '.$selected.'>'.$value['name'].'</option>';
                 }
                 ?>
             </select>
@@ -41,8 +42,8 @@ $pagination = new Pagination($totalDetails, $page_num, $limit);
             </form>
         </div>
         <div class="admin-control-right">
-            <button class="btn-reset-product-details"><i class="fa-light fa-arrow-rotate-right"></i></button>
-            <a href="index.php?page=addProductDetail"><button class="btn-control-large" id="btn-add-detail"><i class="fa-light fa-plus"></i> Thêm chi tiết mới</button></a>
+            <a href="index.php?page=productdetails"><button class="btn-control-large" id="btn-cancel-product"><i class="fa-light fa-rotate-right"></i> Làm mới</button></a>
+            <!-- <a href="index.php?page=addProductDetail"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Thêm chi tiết mới</button></a> -->
         </div>
     </div>
 
@@ -53,10 +54,8 @@ $pagination = new Pagination($totalDetails, $page_num, $limit);
                     <td>Sản phẩm</td>
                     <td>Màu sắc</td>
                     <td>Kích cỡ</td>
-                    <td>Thương hiệu</td>
                     <td>Số lượng</td>
                     <td>Hình ảnh</td>
-                    <td>Thao tác</td>
                 </tr>
             </thead>
             <tbody id="showProductDetails">
@@ -67,13 +66,8 @@ $pagination = new Pagination($totalDetails, $page_num, $limit);
                     <td>'.$value['p_name'].'</td>
                     <td>'.$value['color'].'</td>
                     <td>'.$value['size'].'</td>
-                    <td>'.$value['brand'].'</td>
                     <td>'.$value['stock'].'</td>
                     <td><img src="../'.$value['img_src'].'" alt="" style="max-width: 100px;"></td>
-                    <td class="control">
-                            <a href="index.php?page=editProductDetails&id=' . $value['id'] . '"><button class="btn-edit"><i class="fa-light fa-pen-to-square"></i> Sửa</button></a>
-                            <a href="./backend/xulyCTSP.php?act=xoa&id=' . $value['id'] . '"><button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button></a>
-                        </td>
                 </tr>';
                 }
                 ?>

@@ -58,13 +58,14 @@
                                     <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__brand">
-                                                <ul>
-                                                    <li><a href="#">Nike</a></li>
-                                                    <li><a href="#">Adidas</a></li>
-                                                    <li><a href="#">Puma</a></li>
-                                                    <li><a href="#">Vans</a></li>
-                                                    <li><a href="#">Converse</a></li>
-                                                    <li><a href="#">New Balance</a></li>
+                                                <ul id="brand-list">
+                                                    <li><a href="#" data-brand="all" class="active">All</a></li>
+                                                    <li><a href="#" data-brand="1">Nike</a></li>
+                                                    <li><a href="#" data-brand="2">Adidas</a></li>
+                                                    <li><a href="#" data-brand="3">Puma</a></li>
+                                                    <li><a href="#" data-brand="4">Vans</a></li>
+                                                    <li><a href="#" data-brand="5">Converse</a></li>
+                                                    <li><a href="#" data-brand="6">New Balance</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -99,12 +100,12 @@
 
                                     <select id="brandSelect">
                                         <option value="">Hãng</option>
-                                        <option value="Nike">Nike</option>
-                                        <option value="Adidas">Adidas</option>
-                                        <option value="Puma">Puma</option>
-                                        <option value="Vans">Vans</option>
-                                        <option value="Converse">Converse</option>
-                                        <option value="New Balance">New Balance</option>
+                                        <option value="1">Nike</option>
+                                        <option value="2">Adidas</option>
+                                        <option value="3">Puma</option>
+                                        <option value="4">Vans</option>
+                                        <option value="5">Converse</option>
+                                        <option value="6">New Balance</option>
                                     </select>
 
                                     <select id="priceSelect">
@@ -124,12 +125,12 @@
                     <div class="row products"></div>
                     <div class="row">   
                         <div class="col-lg-12">
-                            <div style="display: flex;justify-content: center;" class="product__pagination">
-                                <a style="display: none;margin: 0 10px;" id="prePage" href="#">Prev</a>
-                                <a class="active" style="margin: 0 10px;" href="#" id="currentPage">1</a>
-                                <a style="display: none;margin: 0 10px;" href="#" id="nextPage">Next</a>
+                                <div style="display: flex;justify-content: center;" class="product__pagination">
+                                    <a style="display: none;margin: 0 10px;" id="prePage" href="#">Prev</a>
+                                    <a class="active" style="margin: 0 10px;" href="#" id="currentPage">1</a>
+                                    <a style="display: none;margin: 0 10px;" href="#" id="nextPage">Next</a>
+                                </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
