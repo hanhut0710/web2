@@ -3,15 +3,15 @@
 $thongTinNguoiDung = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $thongTinNguoiDung = [
-        'ho' => $_POST['Họ'] ?? '',
-        'ten' => $_POST['Tên'] ?? '',
+        'ho' => $_POST['ho'] ?? '',
+        'ten' => $_POST['ten'] ?? '',
         'phone' => $_POST['phone'] ?? '',
         'email' => $_POST['email'] ?? '',
         'district' => $_POST['district'] ?? '',
         'ward' => $_POST['ward'] ?? '',
         'address' => $_POST['address'] ?? '',
         'note' =>$_POST['note'] ?? '',
-        'payment_method' => $_POST['payment_method_paypal'] ?? 'PayPal'
+        'payment_method' => $_POST['payment_method_paypal'] ?? 'banking'
     ];
 }
 ?>

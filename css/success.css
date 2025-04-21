@@ -1,0 +1,43 @@
+
+  .success-container {
+    text-align: center;
+  }
+  
+  .success-box {
+    background-color: #ffffff;
+    padding: 40px;
+    max-width: 500px;
+    margin: auto;
+    margin-bottom: 40px;
+  }
+  
+  .checkmark {
+    font-size: 60px;
+    color: #28a745;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    color: #555;
+    margin: 10px 0;
+  }
+  
+  .btn-home {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: #000000;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-home:hover {
+    background-color: #000000;
+  }
+  

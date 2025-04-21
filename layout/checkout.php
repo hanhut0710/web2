@@ -33,13 +33,13 @@ if (session_status() == PHP_SESSION_NONE) {
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Họ<span>*</span></p>
-                                    <input type="text" name="Họ">
+                                    <input type="text" name="ho">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Tên<span>*</span></p>
-                                    <input type="text" name = "Tên">
+                                    <input type="text" name = "ten">
                                 </div>
                             </div>
                         </div>
@@ -152,7 +152,7 @@ if (session_status() == PHP_SESSION_NONE) {
                             <div class="checkout__input__checkbox">
                                 <label for="paypal">
                                     Thanh Toán Bằng Thẻ Ngân Hàng
-                                    <input type="checkbox" id="paypal" name="payment_method_paypal" value="PayPal">
+                                    <input type="checkbox" id="paypal" name="payment_method_paypal" value="banking">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>

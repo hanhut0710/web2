@@ -1261,13 +1261,13 @@ if(selectBtn){
     window.addEventListener("DOMContentLoaded", function () {
     document.getElementById("checkout-form").onsubmit = function(event) {
       // Lấy giá trị của các trường input
-      let ho = document.getElementsByName("Họ")[0].value;
-      let ten = document.getElementsByName("Tên")[0].value;
+      let ho = document.getElementsByName("ho")[0].value;
+      let ten = document.getElementsByName("ten")[0].value;
       let phone = document.getElementsByName("phone")[0].value;
       let email = document.getElementsByName("email")[0].value;
       let address = document.getElementById("box-select-address").value;
-      let district = document.getElementById("box-select-district").value;
-      let ward = document.getElementById("box-select-ward").value;
+      let district = document.getElementById("box-select-district");
+      let ward = document.getElementById("box-select-ward");
       let ghiChu = document.getElementsByName("note")[0].value;
       
       // Kiểm tra các trường bắt buộc: Họ, Tên, Địa chỉ, Quận, Huyện
@@ -1289,13 +1289,17 @@ if(selectBtn){
         return false;
     }
     
-    if (district === "") {
+    if (district.value === "") {
         alert("Vui lòng chọn Quận / Huyện.");
         event.preventDefault();  // Ngừng gửi form nếu thiếu quận/huyện
         return false;
     }
-    
-    if (ward === "") {
+    if (phone ===""){
+      alert("Vui lòng nhập số điện thoại.");
+        event.preventDefault();  // Ngừng gửi form nếu thiếu phường/xã
+        return false;
+    }
+    if (ward.value === "") {
         alert("Vui lòng chọn Phường / Xã.");
         event.preventDefault();  // Ngừng gửi form nếu thiếu phường/xã
         return false;
@@ -1360,5 +1364,5 @@ if(selectBtn){
 }
 
 // Lắng nghe sự kiện input trên các trường "Họ" và "Tên"
-document.getElementsByName("Họ")[0].addEventListener("input", removeAsteriskOnInput);
-document.getElementsByName("Tên")[0].addEventListener("input", removeAsteriskOnInput);
+document.getElementsByName("ho")[0].addEventListener("input", removeAsteriskOnInput);
+document.getElementsByName("ten")[0].addEventListener("input", removeAsteriskOnInput);

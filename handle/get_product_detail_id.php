@@ -6,7 +6,7 @@ include('./connect.php');
 if (isset($_GET['product_id'])) {
     $productId = $_GET['product_id'];
 
-    $query = "SELECT id AS product_detail_id, size, color, brand, img_src, stock 
+    $query = "SELECT id AS product_detail_id, size, color, img_src, stock 
               FROM product_details 
               WHERE product_id = '$productId'";
 

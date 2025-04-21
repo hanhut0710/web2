@@ -1,5 +1,6 @@
 <?php
 $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password.php"
+
 ?>
 <section class="user-page">
     <div class="container">
@@ -84,22 +85,22 @@ $currentFile = basename($_SERVER['PHP_SELF']); // Kết quả: "account_password
 <div class="profile-main profile-main--no-border">
                 <div class="orders-page">
                     <div class="custom-tab-nav">
-                        <a class="custom-tab-nav-item custom-tab-nav-item--active" href="#" onclick="allPurchase()" data-target="#order-tab-all">
+                        <a class="custom-tab-nav-item custom-tab-nav-item--active" href="#"  data-target="#order-tab-all">
                             <span class="_0rjE9m">Tất cả</span>
                         </a>
-                        <a class="custom-tab-nav-item" href="#" data-target="#order-tab-pending-confirm" onclick="confirmPurchase()">
+                        <a class="custom-tab-nav-item" href="#" data-target="#order-tab-pending-confirm" >
                             <span class="_0rjE9m">Chờ xác nhận</span>
                         </a>
-                        <a class="custom-tab-nav-item" href="#" data-target="#order-tab-pending-pick" onclick="pickPurchase()">
+                        <a class="custom-tab-nav-item" href="#" data-target="#order-tab-pending-pick" >
                             <span class="_0rjE9m">Chờ lấy hàng</span>
                         </a>
-                        <a class="custom-tab-nav-item" href="#" data-target="#order-tab-process" onclick="processPurchase()">
+                        <a class="custom-tab-nav-item" href="#" data-target="#order-tab-process" >
                             <span class="_0rjE9m">Đang giao</span>
                         </a>
-                        <a class="custom-tab-nav-item" href="#" data-target="#order-tab-done" onclick="donePurchase()">
+                        <a class="custom-tab-nav-item" href="#" data-target="#order-tab-done" >
                             <span class="_0rjE9m">Đã giao</span>
                         </a>
-                        <a class="custom-tab-nav-item" href="#" data-target="#order-tab-cancel" onclick="cancelPurchase()">
+                        <a class="custom-tab-nav-item" href="#" data-target="#order-tab-cancel" >
                             <span class="_0rjE9m">Đã Hủy</span>
                         </a>
                     </div>

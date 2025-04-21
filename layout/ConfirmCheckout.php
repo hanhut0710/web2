@@ -1,5 +1,13 @@
 <?php
 // Nhận dữ liệu từ fetch POST
+require_once './class/Cart.php'; // chỉnh đường dẫn nếu cần
+require_once './handle/connect.php';
+$cart = new Cart();
+if ($_SESSION['user_id']){
+  $cartItems = $cart->getCartByUserId($_SESSION['user_id'],$con);
+} else {
+  echo "Khong thay user_id";
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
@@ -14,9 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     'ward' => $_POST['ward'] ?? '',
     'address' => $_POST['address'] ?? '',
     'note' => $_POST['note'] ?? '',
-    'payment_method' => $_POST['payment_method'] ?? 'COD',
+    'payment_method' => $_POST['payment_method'] ?? 'cash',
 ];
-
 // Thông tin thẻ (nếu có)
 $cardInfo = [
     'cardholder' => $_POST['cardholder'] ?? '',
@@ -29,6 +36,7 @@ $cardInfo = [
 // Lưu thông tin vào session (hoặc có thể xử lý lưu CSDL ở đây)
 $_SESSION['order'] = $order;
 $_SESSION['card'] = $cardInfo;
+$_SESSION['cart'] = $cartItems;
 }
 ?>
 
@@ -53,6 +61,7 @@ $card = $_SESSION['card'] ?? null;
     </div>
 </section>
 <div class="container">
+  <div class="form">
   <h2>Xác Nhận Đặt Hàng</h2>
 
   <?php if ($order): ?>
@@ -79,7 +88,11 @@ $card = $_SESSION['card'] ?? null;
 
       <div class="info-group">
         <label>Phương thức thanh toán:</label>
-        <p><?= htmlspecialchars($order['payment_method']) ?></p>
+        <?php  if ($order['payment_method'] === "banking" ): ?>
+          <p>Thanh toán bằng thẻ Ngân Hàng</p>
+        <?php elseif($order['payment_method'] === "cash" ): ?>
+          <p> Thanh toán khi nhận hàng </p>
+        <?php endif; ?>          
       </div>
 
       <div class="info-group">
@@ -98,7 +111,7 @@ $card = $_SESSION['card'] ?? null;
       </div>
     </div>
 
-    <?php if ($order['payment_method'] === 'PayPal' && $card): ?>
+    <?php if ($order['payment_method'] === 'banking' && $card): ?>
       <div class="info-group full-width">
         <label>Thông tin thẻ:</label>
         <p>Chủ thẻ: <?= htmlspecialchars($card['cardholder']) ?></p>
@@ -120,20 +133,20 @@ $card = $_SESSION['card'] ?? null;
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><img src="images/aothun.jpg" alt="Áo thun nam" width="60" height="60"></td>
-            <td>Áo thun nam</td>
-            <td>2</td>
-            <td>150,000₫</td>
-            <td>300,000₫</td>
-          </tr>
-          <tr>
-            <td><img src="images/quanjeans.jpg" alt="Quần jeans" width="60" height="60"></td>
-            <td>Quần jeans</td>
-            <td>1</td>
-            <td>350,000₫</td>
-            <td>350,000₫</td>
-          </tr>
+        <?php
+          $total = 0;
+          foreach ($cartItems as $item):
+              $thanhTien = $item['quantity'] * $item['price'];
+              $total += $thanhTien;
+          ?>
+            <tr>
+              <td><img src="<?= htmlspecialchars($item['img_src']) ?>" alt="<?= htmlspecialchars($item['product_name']) ?>" width="200" height="120"></td>
+              <td><?= htmlspecialchars($item['product_name']) ?></td>
+              <td><?= htmlspecialchars($item['quantity']) ?></td>
+              <td><?= number_format($item['price'], 0, ',', '.') ?>₫</td>
+              <td><?= number_format($thanhTien, 0, ',', '.') ?>₫</td>
+            </tr>
+          <?php endforeach; ?>
         </tbody>
       </table>
     </div>
@@ -150,13 +163,17 @@ $card = $_SESSION['card'] ?? null;
       </div>
     </div>
 
-    <h3 class="total">Tổng tiền cần thanh toán: 680,000₫</h3>
+    <h3 class="total">Tổng tiền cần thanh toán: 
+      <span id="total-item"><?= number_format($total + 30000, 0, ',', '.') ?>₫</span>
+    </h3>
 
-    <form action="ThanhToanFinal.php" method="post">
+    <form action="./ThanhToanFinal.php" method="post">
       <input type="hidden" name="confirm" value="yes">
       <button type="submit">Xác nhận đơn hàng</button>
     </form>
   <?php else: ?>
     <p>Không có dữ liệu đơn hàng. Vui lòng quay lại trang giỏ hàng.</p>
   <?php endif; ?>
+  </div>
 </div>
+
