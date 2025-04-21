@@ -214,7 +214,7 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             document.getElementById("popup-image").src = data.product.img_src;
             document.getElementById("popup-name").innerText = data.product.name;
             document.getElementById("popup-price").innerText = data.product.price;
-            document.getElementById("popup-brand").innerText = data.product.brand;
+            document.getElementById("popup-brand").innerText = data.product.brand_name;
             document.getElementById("popup-color").innerText = data.product.color;
             document.getElementById("popup-quantity").innerText = data.product.stock;
         

@@ -127,7 +127,6 @@ if (session_status() == PHP_SESSION_NONE) {
 
             <p><strong>Tồn hàng:</strong><span id="popup-quantity" class="quantities"></span></p>
             
-
             <p><strong>Màu sắc:</strong></p>   
             <div id="popup-color" class="color-options"></div>
             
