@@ -40,7 +40,7 @@
                             </a>
                         </li>
                         <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=customer" class="sidebar-link">
+                            <a href="index.php?page=user" class="sidebar-link">
                                 <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
                                 <div class="hidden-sidebar">Khách hàng</div>
                             </a>
@@ -149,8 +149,14 @@
                         case "order":
                             include "order.php";
                             break;
-                        case "customer":
-                            include "customer.php";
+                        case "user":
+                            include "user.php";
+                            break;
+                        case "addUser":
+                            include "addUser.php";
+                            break;
+                        case "editUser":
+                            include "editUser.php";
                             break;
                         /*** THỐNG KÊ ***/ 
                         case "statisticProduct":

@@ -2141,3 +2141,238 @@ body {
         flex: 0 0 100%; /* Chiếm toàn bộ chiều rộng container */
     }
 }
+
+/* User  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/
+.status-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+/* Màu xanh khi checkbox được tích */
+.status-checkbox:checked {
+    border-color: #4CAF50; /* Màu xanh khi checkbox được chọn */
+    background-color: #4CAF50;
+}
+
+/* Tạo hiệu ứng dấu tích khi checkbox được chọn */
+.status-checkbox:checked::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 8px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+/* Hiệu ứng hover khi di chuột qua checkbox */
+.status-checkbox:hover {
+    border-color: #4CAF50;
+}
+/* addUser aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */
+/* edit User */
+/* Container chính */
+.user-container {
+    max-width: 1000px;
+    margin: 100px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề */
+.user-page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: white;
+    background-color: var(--orange);
+    padding: 18px 25px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+/* Biểu tượng trong tiêu đề */
+.title-icon {
+    margin-right: 10px;
+    font-size: 22px;
+    color: white;
+}
+
+/* Grid cho form */
+.user-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px;
+}
+
+/* Cột trong grid */
+.user-form-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form group */
+.user-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.user-form-group label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--medium-gray);
+    font-size: 14px;
+}
+
+.user-form-group .required {
+    color: #e5a500;
+}
+
+/* Input và Select */
+.user-form-group input,
+.user-form-group select {
+    padding: 10px;
+    border: 1px solid var(--lighter-gray);
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.user-form-group input:focus,
+.user-form-group select:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 5px rgba(253, 185, 39, 0.3);
+}
+
+.user-form-group input::placeholder {
+    color: #aaa;
+}
+
+/* Select riêng */
+/* .user-form-group select {
+    appearance: none;
+    background: #fff url('data:image/svg+xml;utf8,<svg fill="%23666" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right 12px center;
+    background-size: 16px;
+    padding-right: 36px;
+    cursor: pointer;
+} */
+
+/* Button group */
+.user-btn-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Nút Submit (Thêm hoặc Cập nhật) */
+.user-btn-group button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-btn-group button[type="submit"]:hover {
+    background-color: #e5a500;
+    box-shadow: 0 4px 10px rgba(253, 185, 39, 0.3);
+}
+
+/* Nút Hủy */
+.user-btn-cancel {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+}
+
+.user-btn-cancel:hover {
+    background-color: #5a6268;
+}
+
+/* Status tình trạng */
+.status-active {
+    width: 90px;
+    background-color: #27ae60;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    display: inline-block;
+}
+
+.status-locked {
+    width: 90px;
+    background-color: #f04e2e;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .user-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-container {
+        margin: 20px;
+        padding: 15px;
+    }
+    .user-page-title {
+        font-size: 22px;
+        padding: 14px 20px;
+    }
+    .title-icon {
+        font-size: 18px;
+        left: 15px;
+    }
+    .user-form-group input,
+    .user-form-group select {
+        font-size: 14px;
+        padding: 8px;
+    }
+    .user-btn-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .user-btn-group button[type="submit"],
+    .user-btn-cancel {
+        width: 100%;
+    }
+}
