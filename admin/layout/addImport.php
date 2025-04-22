@@ -361,8 +361,8 @@ function previewImage(input, previewId) {
     const previewImg = document.getElementById(previewId);
     if (input.files && input.files[0]) {
         const file = input.files[0];
-        if (file.size > 1 * 1024 * 1024) {
-            alert('File ảnh quá lớn! Vui lòng chọn file nhỏ hơn 1MB.');
+        if (file.size > 2 * 1024 * 1024) {
+            alert('File ảnh quá lớn! Vui lòng chọn file nhỏ hơn 2MB.');
             input.value = '';
             previewImg.src = '#';
             previewImg.style.display = 'none';

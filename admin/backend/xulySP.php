@@ -30,7 +30,7 @@ if (isset($_POST['btnAddProduct'])) {
 
     // Xử lý upload hình ảnh (không bắt buộc)
     $upload = new Upload();
-    $imgPath = '';
+    $imgPath = 'img/shoes/default.png'; 
     if (isset($_FILES['img_src']) && $_FILES['img_src']['error'] !== 4) {
         $uploadResult = $upload->uploadImage($_FILES['img_src']);
         if (!$uploadResult['status']) {
