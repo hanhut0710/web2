@@ -108,4 +108,36 @@ if (isset($_POST['btnEditProduct'])) {
             </script>';
     }
 }
+
+/***** XÓA SẢN PHẨM******/ 
+if(isset($_GET['act']) && ($_GET['act']) == 'delete' && isset($_GET['id']))
+{
+    $productID = ($_GET['id']);
+
+    /*Kiểm tra sản phẩm đẵ bán hay chưa??? */
+    if($product->isProductSold($productID))
+    {
+        $result = $product->hideProduct($productID);
+        if($result)
+            echo '<script> alert("Sản phẩm đã được bán, tiến hành ẩn sản phẩm !");
+                    window.location.href= "../index.php?page=product";
+                    </script>';
+        else
+            echo '<script> alert("Ẩn sản phẩm thất bại!");
+                    window.location.href= "../index.php?page=product";
+                    </script>';
+    }
+    else 
+    {
+        $result = $product->deleteProduct($productID);
+        if($result)
+            echo '<script> alert("Xóa sản phẩm thành công !");
+                   window.location.href= "../index.php?page=product";       
+                </script>';
+        else
+            echo '<script> alert("Xóa sản phẩm thất bại !");
+                   window.location.href= "../index.php?page=product";       
+                </script>';
+    }
+}
 ?>

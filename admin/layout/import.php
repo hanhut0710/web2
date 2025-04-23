@@ -5,6 +5,21 @@ require_once "./backend/pagination.php";
 
 $supplier = new Supplier();
 $import = new Import();
+
+// Xử lý phân trang
+$itemsPerPage = 10; // Số phiếu nhập mỗi trang
+$currentPage = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
+$supplierId = isset($_GET['supplier_id']) ? intval($_GET['supplier_id']) : '';
+
+if ($supplierId) {
+    $totalItems = $import->getTotalImportBySupplier($supplierId);
+} else {
+    $totalItems = $import->getTotalImport();
+}
+
+$pagination = new Pagination($totalItems, $currentPage, $itemsPerPage);
+$offset = $pagination->getOffset();
+$importList = $import->getAllImportByPagination($itemsPerPage, $offset);
 ?>
 
 <div class="section import active">
@@ -15,7 +30,8 @@ $import = new Import();
                 <?php
                 $supplierList = $supplier->getAllSupplier();
                 foreach ($supplierList as $value) {
-                    echo '<option value="' . $value['id'] . '">' . $value['sup_name'] . '</option>';
+                    $selected = ($supplierId == $value['id']) ? 'selected' : '';
+                    echo '<option value="' . $value['id'] . '" ' . $selected . '>' . $value['sup_name'] . '</option>';
                 }
                 ?>
             </select>
@@ -46,7 +62,6 @@ $import = new Import();
             </thead>
             <tbody id="showImport">
                 <?php
-                $importList = $import->getAllImport();
                 foreach ($importList as $value) {
                     echo '<tr>
                         <td>IM' . date('Ymd', strtotime($value['created_at'])) . sprintf('%03d', $value['id']) . '</td>
@@ -64,12 +79,7 @@ $import = new Import();
         </table>
     </div>
 
-    <div class="page-nav">
-        <ul class="page-nav-list">
-            <li class="page-nav-item active"><a href="#">1</a></li>
-            <li class="page-nav-item"><a href="#">2</a></li>
-        </ul>
-    </div>
+    <?php echo $pagination->renderImport($supplierId); ?>
 </div>
 
 <script>

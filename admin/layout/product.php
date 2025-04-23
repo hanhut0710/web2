@@ -72,7 +72,7 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
                         <div class="list-control">
                             <div class="list-tool">
                                 <a href="index.php?page=editProduct&id='.$value['id'].'"><button class="btn-edit" name="btnEditProduct"><i class="fa-light fa-pen-to-square"></i></button></a>
-                                <a href="./backend/xulySP.php&id=' . $value['id'] . '&act=delete"><button class="btn-delete" name="btnDeleteProduct"><i class="fa-regular fa-trash"></i></button></a>
+                                <button class="btn-delete" onclick="confirmDelete('.$value['id'].', \''.$value['name'].'\')" name="btnDeleteProduct"><i class="fa-regular fa-trash"></i></button>
                             </div>
                         </div>
                     </div>
@@ -104,5 +104,11 @@ function filterByCategory(categoryId) {
         url += '&page_num=<?php echo $page_num; ?>';
     <?php } ?>
     window.location.href = url;
+}
+
+function confirmDelete(productId, productName) {
+    if (confirm(`Bạn có chắc chắn muốn xóa sản phẩm "${productName}"?`)) {
+        window.location.href = `./backend/xulySP.php?id=${productId}&act=delete`;
+    }
 }
 </script>

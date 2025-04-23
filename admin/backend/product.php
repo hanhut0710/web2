@@ -202,5 +202,48 @@ class Product {
         }
         return $row;
     }
+
+    public function isProductSold($productID)
+    {
+        $sql = "SELECT COUNT(*) as total
+                FROM order_details od
+                JOIN orders o ON od.order_id = o.id
+                WHERE od.order_id = $productID AND o.status IN ('Đã giao')";
+        $result = mysqli_query($this->conn, $sql);
+        $row = mysqli_fetch_array($result);
+        return $row['total'] > 0;
+    }
+
+    public function hideProduct($productID)
+    {
+        $sql = "UPDATE products SET status=0 WHERE id = $productID";
+        $result = mysqli_query($this->conn, $sql);
+        if($result)
+            return true;
+        return false;
+    }
+
+    public function deleteProduct($productID)
+    {   
+        //Giỏ hàng
+        $sql = "DELETE c FROM cart c
+                JOIN product_details pd ON c.product_detail_id = pd.id
+                WHERE pd.product_id = $productID";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result == false) 
+            return false;
+
+        //Biến thể
+        $sql = "DELETE FROM product_details WHERE product_id = $productID";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result == false) 
+            return false;
+        
+        //Sản phẩm
+        $sql = "DELETE FROM products WHERE id = $productID";
+        $result = mysqli_query($this->conn, $sql);
+        if($result)
+            return true;   
+    }
 }
 ?>

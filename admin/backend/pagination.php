@@ -128,6 +128,23 @@ class Pagination {
         return $html;
     }
     
+    public function renderImport($supplierId = '')
+    {
+        if ($this->totalPage <= 1)
+            return '';
+
+        $supplierParam = $supplierId ? '&supplier_id=' . intval($supplierId) : '';
+
+        $html = '<div class="page-nav">
+                    <ul class="page-nav-list">';
+        for ($i = 1; $i <= $this->totalPage; $i++) {
+            $url = '?page=import' . $supplierParam . '&page_num=' . $i;
+            $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
+            $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
+        }
+        $html .= '</ul></div>';
+        return $html;
+    }
     
     public function renderSupplier()
     {
