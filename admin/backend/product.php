@@ -14,8 +14,7 @@ class Product {
     {
         $sql = "SELECT p.*, b.name as brand_name 
                 FROM products p 
-                LEFT JOIN brand b ON p.brand_id = b.id 
-                WHERE p.status=1";
+                LEFT JOIN brand b ON p.brand_id = b.id";
         $result = mysqli_query($this->conn, $sql);
         $products = [];
         if ($result) {
@@ -54,7 +53,7 @@ class Product {
                 FROM products p 
                 LEFT JOIN category c ON p.category_id = c.id 
                 LEFT JOIN brand b ON p.brand_id = b.id 
-                WHERE p.status=1 
+                -- WHERE p.status=1 
                 LIMIT $limit OFFSET $offset";
         $result = mysqli_query($this->conn, $sql);
         $products = [];
@@ -77,7 +76,7 @@ class Product {
                 FROM products p 
                 LEFT JOIN category c ON p.category_id = c.id 
                 LEFT JOIN brand b ON p.brand_id = b.id 
-                WHERE p.status=1 AND p.category_id = $idCategory 
+                WHERE p.category_id = $idCategory 
                 LIMIT $limit OFFSET $offset";
         $result = mysqli_query($this->conn, $sql);
         $products = [];
