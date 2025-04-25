@@ -205,9 +205,10 @@ class Product {
     public function isProductSold($productID)
     {
         $sql = "SELECT COUNT(*) as total
-                FROM order_details od
-                JOIN orders o ON od.order_id = o.id
-                WHERE od.order_id = $productID AND o.status IN ('Đã giao')";
+            FROM order_details od
+            JOIN orders o ON od.order_id = o.id
+            JOIN product_details pd ON od.product_detail_id = pd.id
+            WHERE pd.product_id = $productID AND o.status IN ('Đã giao')";
         $result = mysqli_query($this->conn, $sql);
         $row = mysqli_fetch_array($result);
         return $row['total'] > 0;
@@ -224,6 +225,14 @@ class Product {
 
     public function deleteProduct($productID)
     {   
+        //Chi tiết đơn hàng
+        $sql = "DELETE od FROM order_details od
+                JOIN product_details pd ON od.product_detail_id = pd.id
+                WHERE pd.product_id = $productID";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result == false) 
+            return false;
+
         //Giỏ hàng
         $sql = "DELETE c FROM cart c
                 JOIN product_details pd ON c.product_detail_id = pd.id
