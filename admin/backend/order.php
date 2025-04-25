@@ -63,7 +63,7 @@
 
 
         public function getOrderDetailLeftByID($orderID){
-            $sql="SELECT od.order_id , od.quantity , od.price,
+            $sql="SELECT od.order_id , od.quanlity , od.price,
             pd.color, pd.size, pd.img_src, pd.stock,
             p.name
             FROM products p , product_details pd , order_details od

@@ -25,7 +25,7 @@
                                     <img src="../'.$infor['img_src'].'" alt="">
                                     <div class="order-product-info">
                                         <h4>'.$infor['name'].'</h4>
-                                        <p class="order-product-quantity">SL : '.$infor['quantity'].'</p>
+                                        <p class="order-product-quantity">SL : '.$infor['quanlity'].'</p>
                                         <p class="order-product-quantity">Size : '.$infor['size'].'</p>
                                         <p class="order-product-quantity">Color : '.$infor['color'].'</p>
                                     </div>
