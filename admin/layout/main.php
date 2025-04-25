@@ -155,6 +155,9 @@
                         case "editUser":
                             include "editUser.php";
                             break;
+                         case "orderdetails":
+                            include "orderdetails.php";
+                            break; 
                         /*** THỐNG KÊ ***/ 
                         case "statisticProduct":
                             include "statisticProduct.php";

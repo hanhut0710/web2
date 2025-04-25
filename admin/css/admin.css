@@ -1202,6 +1202,7 @@ label a {
 }
 
 .modal-detail-order {
+    height: 600px;
     display: flex;
 }
 
@@ -1282,6 +1283,7 @@ label a {
 }
 
 .order-product-current-price {
+    padding : 15px;
     color: var(--orange);
     font-weight: 500;
 }
@@ -2403,3 +2405,181 @@ button[type="submit"].btn-save{
     height: 100vh;
     object-fit: cover;
 }
+
+/* Bat dau css Orderrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr */
+/* luu y nho xoa status complete va no complete  */
+
+.form-all-content-order{
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    max-width: 85%;
+    margin: 150px auto;
+}
+
+
+.order-item-group {
+    margin-bottom: 20px;
+}
+
+.order-product {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.order-product-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.order-product-left img {
+    max-width: 100px; /* Giới hạn chiều rộng tối đa */
+    max-height: 100px; /* Giới hạn chiều cao tối đa */
+    width: auto; /* Giữ tỷ lệ gốc */
+    height: auto; /* Giữ tỷ lệ gốc */
+    object-fit: contain; /* Hiển thị toàn bộ ảnh, không cắt */
+    margin-right: 15px; /* Khoảng cách cơ bản giữa ảnh và chữ */
+    border-radius: 5px;
+}
+
+.order-product-info {
+    flex: 1;
+    padding-left: 20px; /* Đẩy chữ ra xa đồng đều */
+}
+
+.order-product-info h4 {
+    margin: 0 0 5px;
+    font-size: 16px;
+}
+
+.order-product-quantity {
+    margin: 3px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.order-product-right {
+    width: 150px;
+    text-align: right;
+}
+
+.order-product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Giữ các CSS khác cho trạng thái và nút */
+.status {
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-right: 15px;
+    color: #fff;
+    display: inline-block;
+    width: 130px; 
+    text-align: center;
+}
+
+.status-pending {
+    background-color: #f1c40f; /* Vàng */
+}
+
+.status-packing {
+    background-color: #e67e22; /* Cam */
+}
+
+.status-shipping {
+    background-color: #3498db; /* Xanh dương */
+}
+
+.status-delivered {
+    background-color: #27ae60; /* Xanh lá */
+}
+
+.status-cancelled {
+    background-color: #f04e2e; /* Đỏ */
+}
+
+.modal-detail-btn {
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    text-decoration: none; /* Để liên kết <a> không có gạch chân */
+    display: inline-block; /* Để liên kết trông giống nút */
+    width: 130px; 
+    text-align: center; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng nhẹ */
+    transition: box-shadow 0.2s, filter 0.2s; /* Hiệu ứng mượt */
+}
+
+.modal-detail-btn:hover {
+    filter: brightness(0.9); /* Sáng hơn 10% */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.modal-detail-btn:active {
+    transform: scale(0.95); /* Thu nhỏ nhẹ khi nhấp */
+}
+
+.modal-detail-btn i {
+    margin-right: 5px; /* Khoảng cách icon */
+}
+
+.btn-packing {
+    background-color: #e67e22; /* Đồng bộ với status-packing */
+}
+
+.btn-shipping {
+    background-color: #3498db; /* Đồng bộ với status-shipping */
+}
+
+.btn-delivered {
+    background-color: #27ae60; /* Đồng bộ với status-delivered */
+}
+
+.btn-cancel-order {
+    background-color: #f04e2e; /* Đỏ nhạt */
+}
+
+.status-group {
+    display: inline-block;
+    padding-right: 15px; /* Khoảng cách bên phải */
+    border-right: 2px solid #c5c3c3; /* Viền dọc xám */
+    margin-right: 15px; /* Khoảng cách với nút */
+}
+
+.modal-detail-bottom-right .status-group:last-child {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.modal-detail-bottom-right .status-group:last-child .status {
+    margin-right: 0;
+}
+
+/* css them cho user  */
+.admin-user-control-right {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px; /* hoặc margin-right: 20px; */
+}
+
+.btn-adminUser-control-large {
+    background-color: var(--orange);
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    width: auto !important;
+    margin-bottom: 10px;
+}
+
+
+                       
