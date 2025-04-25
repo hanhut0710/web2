@@ -542,6 +542,13 @@ body, input, button, textarea, pre {
     border-radius: 7px;
 }
 
+
+.table .table-header {
+    background: var(--lighter-gray);
+    padding: 10px 0;
+    position: relative;
+}
+
 .setting {
     position: absolute;
     top: -50%;
@@ -571,6 +578,13 @@ tbody tr td {
     padding: 10px 15px;
     text-align: center;
     white-space: nowrap;
+}
+
+tbody tr td.function{
+    text-align: unset;
+    padding: unset;
+    text-align: left;
+    padding-left: 70px;
 }
 
 .prd-img-tbl {
@@ -2375,4 +2389,17 @@ body {
     .user-btn-cancel {
         width: 100%;
     }
+}
+
+button[type="submit"].btn-save{
+    position: relative;
+    width: 150px;
+    margin-top: 20px;
+    right: 0;
+}
+
+#forbidden{
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
 }

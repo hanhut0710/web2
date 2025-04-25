@@ -1,7 +1,10 @@
 <?php 
     require_once "./backend/staff.php";
     require_once "./backend/pagination.php";
+    require_once "./backend/permission.php";
     $staff = new Staff();
+    $permission = new Permission();
+
     $page_num= isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1;
     $role = isset($_GET['role']) ? $_GET['role'] : 3;
     $search_id = isset($_GET['search_id']) ? $_GET['search_id'] : '';
@@ -21,7 +24,7 @@
     } else {
         $staffList = $staff->getStaffList($role, $limit, $offset);
         $totalStaff = $staff->getTotalStaffByRole($role);
-    }
+    }   
 ?>  
 <div class="section active">
     <div class="admin-control">
@@ -40,7 +43,11 @@
                                 <input id="form-search-order" type="text" name="search_id" class="form-search-input" placeholder="Tìm kiếm mã nhân viên..." value="<?php echo isset($_GET['search_id']) ? $_GET['search_id'] : ''; ?>">
                             </form>
                         </div>
-                        <a href="index.php?page=createStaff" id="btn-add-staff" class="btn-control-large" onclick="openCreateStaff()"><i class="fa-light fa-plus"></i>Thêm nhân viên</a>
+                        <?php 
+                            if($authManager->hasPermission($_SESSION['id'], 1)){
+                                echo '<a href="index.php?page=createStaff" id="btn-add-staff" class="btn-control-large" onclick="openCreateStaff()"><i class="fa-light fa-plus"></i>Thêm nhân viên</a>';
+                            }
+                        ?>
                     </div>
                     <div class="table">
                         <table width="100%">
@@ -51,7 +58,11 @@
                                     <td>Số điện thoại</td>
                                     <td>email</td>
                                     <td>Chức vụ</td>
+                                    <td>Tình trạng</td>
                                     <td>Thao tác</td>
+                                    <?php if($_SESSION['role'] == 2){ ?>
+                                        <td>Phân quyền</td>
+                                    <?php } ?>
                                 </tr>
                             </thead>
                             <tbody id="showStaff">
@@ -65,10 +76,20 @@
                                                 <td>'.$staff['phone'].'</td>
                                                 <td>'.$staff['email'].'</td>
                                                 <td>'.$staff['role'].'</td>
+                                                <td><span class="' . ($staff['status'] == 1 ? 'status-active' : 'status-locked') . '">' . ($staff['status'] == 1 ? 'Hoạt động' : 'Khóa') . '</span></td>
                                                 <td class="control control-table">
-                                                    <a href="index.php?page=updateStaff&id='.$staff['id'].'" class="btn-edit" ><i class="fa-light fa-pen-to-square"></i></a>
-                                                    <a href="index.php?page=deleteStaff&id='.$staff['id'].'" class="btn-delete" onclick="return confirm(\'Bạn có chắc chắn muốn xóa nhân viên này không?\')"><i class="fa-regular fa-trash"></i></a>
-                                                </td>
+                                                ';
+                                            if($authManager->hasPermission($_SESSION['id'], 2))
+                                                 echo '<a href="index.php?page=updateStaff&id='.$staff['id'].'" class="btn-edit" ><i class="fa-light fa-pen-to-square"></i></a>';
+                                            if($authManager->hasPermission($_SESSION['id'], 3))
+                                                 echo '<a href="index.php?page=deleteStaff&id='.$staff['id'].'&status='. $staff['status'] .'" class="btn-edit" onclick="return confirm(\'Bạn có chắc chắn muốn khóa nhân viên này không?\')">' . (($staff['status'] === '1') ? '<i class="fa-solid fa-lock"></i></a>' : '<i class="fa-solid fa-lock-open"></i></a>') . '
+                                                </td>';
+                                            if($_SESSION['role'] == 2){
+                                                echo '<td class="control control-table">
+                                                    <a href="index.php?page=permission&id='.$staff['id'].'" class="btn-edit" ><i class="fa-light fa-user-gear"></i></a>
+                                                </td>';
+                                            }
+                                            echo '
                                             </tr>
                                         ';
                                     }

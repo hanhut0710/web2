@@ -17,6 +17,7 @@ class Auth {
         if($result && mysqli_num_rows($result) > 0)
         {   
             $account = mysqli_fetch_assoc($result);
+            if($account['status'] == 0) return false; //Tài khoản đã bị khóa
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $account['username'];
             $_SESSION['id'] = $account['id'];
@@ -32,6 +33,15 @@ class Auth {
             return true;
         }
         return false; //Đăng nhập thất bại;
+    }
+
+    public function hasPermission($acc_id, $function_id){
+        $acc_id = mysqli_real_escape_string($this->conn, $acc_id);
+        $function_id = mysqli_real_escape_string($this->conn, $function_id);
+        $sql = "SELECT * FROM admin_function WHERE acc_id = '$acc_id' AND func_id = '$function_id'";
+        $result = mysqli_query($this->conn, $sql);
+    
+        return mysqli_num_rows($result) > 0; 
     }
 }
 ?>

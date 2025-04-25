@@ -44,8 +44,13 @@
             mysqli_query($this->conn, $sql);
         }
 
-        public function deleteAcc($id){
-            $sql = "DELETE FROM accounts WHERE id = '$id'";
+        public function lockAcc($id){
+            $sql = "UPDATE accounts SET status = 0 WHERE id = '$id'";
+            mysqli_query($this->conn, $sql);
+        }
+
+        public function unlockAcc($id){
+            $sql = "UPDATE accounts SET status = 1 WHERE id = '$id'";
             mysqli_query($this->conn, $sql);
         }
     }
