@@ -48,7 +48,7 @@ class Product {
 
     public function getAllProductByCategory($limit, $offset)
     {
-        $sql = "SELECT p.id, p.name, p.price, p.stock, p.img_src, p.brand_id,
+        $sql = "SELECT p.id, p.name, p.price, p.stock, p.img_src, p.brand_id, p.status,
                         c.name as cat_name, b.name as brand_name
                 FROM products p 
                 LEFT JOIN category c ON p.category_id = c.id 
@@ -71,7 +71,7 @@ class Product {
     public function getProductByCategory($idCategory, $limit, $page_num)
     {   
         $offset = ($page_num - 1) * $limit;
-        $sql = "SELECT p.id, p.name, p.price, p.stock, p.img_src, p.brand_id,
+        $sql = "SELECT p.id, p.name, p.price, p.stock, p.img_src, p.brand_id, p.status,
                         c.name as cat_name, b.name as brand_name
                 FROM products p 
                 LEFT JOIN category c ON p.category_id = c.id 

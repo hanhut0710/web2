@@ -638,6 +638,7 @@ tbody tr td.function{
 
 .list-category,
 .list-brand,
+.list-status,
 .list-stock {
     display: inline-block;
     margin-top: 10px;

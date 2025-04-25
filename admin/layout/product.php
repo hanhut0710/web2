@@ -53,7 +53,6 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
     <div id="show-product">
         <?php
         if (count($productList) > 0) {
-            $img_src = !empty($value['img_src']) ? $value['img_src'] : $product->getFirstImage($value['id']);
             foreach ($productList as $value) {
                 echo '<div class="list">
                     <div class="list-left">
@@ -63,6 +62,7 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
                             <span class="list-category">' . $value['cat_name'] . '</span>
                             <span class="list-category">' . $value['brand_name'] . '</span>
                             <span class="list-stock">Số lượng: ' . $value['stock'] . '</span>
+                            <span class="list-status">' . ($value['status'] == 1 ? 'Hiển thị' : 'Ẩn') . '</span>
                         </div>
                     </div>
                     <div class="list-right">
