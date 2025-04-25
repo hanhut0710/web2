@@ -13,35 +13,9 @@
 ?>
         <!-- Account  -->
             <div class="section active">
-                <div class="admin-control">
-                    <div class="admin-control-left">
-                        <select name="tinh-trang-user" id="tinh-trang-user" onchange="">
-                            <option value="2">Tất cả</option>
-                            <option value="1">Hoạt động</option>
-                            <option value="0">Bị khóa</option>
-                        </select>
+                    <div class="admin-user-control-right">  
+                        <a href="index.php?page=addUser"><button class="btn-adminUser-control-large" id="btn-add-product" ><i class="fa-light fa-plus"></i> Thêm khách hàng</button></a>     
                     </div>
-                    <div class="admin-control-center">
-                        <form action="" class="form-search">
-                            <span class="search-btn"><i class="fa-light fa-magnifying-glass" onclick="reloadPage()"></i></span>
-                            <input id="form-search-user" type="text" class="form-search-input" placeholder="Tìm kiếm khách hàng..." oninput="">
-                        </form>
-                    </div>
-                    <div class="admin-control-right">
-                        <form action="" class="fillter-date">
-                            <div>
-                                <label for="time-start">Từ</label>
-                                <input type="date" class="form-control-date" id="time-start-user" onchange="">
-                            </div>
-                            <div>
-                                <label for="time-end">Đến</label>
-                                <input type="date" class="form-control-date" id="time-end-user" onchange="">
-                            </div>
-                        </form>      
-                        <button class="btn-reset-order"><i class="fa-light fa-arrow-rotate-right"></i></button>     
-                        <a href="index.php?page=addUser"><button class="btn-control-large" id="btn-add-product" ><i class="fa-light fa-plus"></i> Thêm khách hàng</button></a>     
-                    </div>
-                </div>
                 <div class="table">
                     <table width="100%">
                         <thead>
@@ -53,7 +27,7 @@
                                 <td>Địa chỉ</td>
                                 <td>Email</td>
                                 <td>Tình trạng</td>
-                                <td></td>
+                                <td>Thao tác</td>
                             </tr>
                         </thead>
                         <tbody id="show-user">
@@ -80,7 +54,9 @@
                                             <td><span class="' . ($user['status'] == 1 ? 'status-active' : 'status-locked') . '">' . ($user['status'] == 1 ? 'Hoạt động' : 'Khóa') . '</span></td>
                                             <td class="control control-table">
                                             <a href="index.php?page=editUser&id='.$user['accID'].'" class="btn-edit" id="edit-account"><i class="fa-light fa-pen-to-square"></i></a>
-                                            <a href="./backend/xulyUser.php?act=xoa&id='.$user['accID'].'" class="btn-delete" id="delete-account" onclick="return confirmDelete();"><i class="fa-regular fa-trash"></i></a>
+                                            <a href="./backend/xulyUser.php?act=toggleStatus&id='.$user['accID'].'" class="btn-delete" id="edit-account" onclick="return confirmToggleStatus('.$user['status'].');">
+                                            <i class="'.($user['status']==1 ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock').'"></i>
+                                            </a>
                                             </td>
                                         </tr>
                                     ';
@@ -99,7 +75,7 @@
             ?>
 
 <script>
-    function confirmDelete() {
-        return confirm("Bạn có chắc chắn xoá khách hàng này không?");
+   function confirmToggleStatus(status) {
+        return confirm("Bạn có chắc chắn muốn " + (status == 1 ? "khóa" : "mở khóa") + " khách hàng này không?");
     }
 </script>

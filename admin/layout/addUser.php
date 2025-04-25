@@ -29,28 +29,56 @@
             </div>
             <!-- Cột phải -->
             <div class="user-form-column">
-                <div class="user-form-group">
-                    <label for="address-add">Địa chỉ</label>
-                    <input type="text" id="address_line-add" name="address_line" placeholder="Nhập địa chỉ" value="">
+                 <div class="user-form-group">
+                    <label for="address">Địa chỉ</label>
+                    <input type="text" id="address_line" name="address_line" placeholder="Nhập địa chỉ" value="">
                 </div>
                 <div class="user-form-group">
-                    <label for="ward-add">Phường/Xã</label>
-                    <input type="text" id="ward-add" name="ward" placeholder="Nhập phường/xã" value="">
+                <label for="district">Quận/Huyện</label>
+                    <select id="district" name="district" onchange="updateWardOptions()">
+                        <option value="">Chọn Quận/Huyện</option>
+                        <?php
+                            $districts = [
+                                "Huyện Bình Chánh",
+                                "Huyện Cần Giờ",
+                                "Huyện Hóc Môn",
+                                "Huyện Nhà Bè",
+                                "Huyện Củ Chi",
+                                "Quận 1",
+                                "Quận 2",
+                                "Quận 3",
+                                "Quận 4",
+                                "Quận 5",
+                                "Quận 6",
+                                "Quận 7",
+                                "Quận 8",
+                                "Quận 9",
+                                "Quận 10",
+                                "Quận 11",
+                                "Quận 12",
+                                "Quận Bình Tân",
+                                "Quận Bình Thạnh",
+                                "Quận Tân Phú",
+                                "Quận Gò Vấp",
+                                "Quận Phú Nhuận",
+                                "Quận Tân Bình",
+                            ];
+                            foreach ($districts as $district) {
+                                echo "<option value=\"$district\" $selected>$district</option>";
+                            }
+                        ?>
+                    </select>
                 </div>
                 <div class="user-form-group">
-                    <label for="district-add">Quận/Huyện</label>
-                    <input type="text" id="district-add" name="district" placeholder="Nhập quận/huyện" value="" >
+                    <label for="ward">Phường/Xã</label>
+                    <select id="ward" name="ward" disabled>
+                        <option value="">Chọn Phường/Xã</option>
+                    </select>
                 </div>
                 <div class="user-form-group">
-                    <label for="city-add">Thành phố</label>
-                    <input type="text" id="city-add" name="city" placeholder="Nhập thành phố" value="">
-                </div>
-                <!-- <span class="required">*</span> -->
-                <div class="user-form-group">
-                    <label for="status-add">Tình trạng</label>
-                    <select id="status-add" name="status">
-                        <option value="1">Hoạt động</option>
-                        <option value="0">Khóa</option>
+                    <label for="city">Thành phố</label>
+                    <select id="city" name="city">
+                        <option value="Hồ Chí Minh" selected>Hồ Chí Minh</option>
                     </select>
                 </div>
             </div>
@@ -63,6 +91,331 @@
 </div>
 
 <script>
+     const wardData = {
+        "Quận 1": [
+            "Phường Bến Nghé",
+            "Phường Bến Thành",
+            "Phường Cô Giang",
+            "Phường Cầu Kho",
+            "Phường Đa Kao",
+            "Phường Nguyễn Cư Trinh",
+            "Phường Nguyễn Thái Bình",
+            "Phường Phạm Ngũ Lão",
+            "Phường Tân Định",
+            "Phường Thủ Thiêm"
+        ],
+        "Quận 2": [
+            "Phường An Khánh",
+            "Phường An Lợi Đông",
+            "Phường An Phú",
+            "Phường Bình An",
+            "Phường Bình Khánh",
+            "Phường Cát Lái",
+            "Phường Thạnh Mỹ Lợi",
+            "Phường Thủ Thiêm",
+            "Phường Tân Phú",
+            "Phường Xuân Thạnh"
+        ],
+        "Quận 3": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 6",
+            "Phường 7",
+            "Phường 8",
+            "Phường 9",
+            "Phường Võ Thị Sáu"
+        ],
+        "Quận 4": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 6",
+            "Phường 7",
+            "Phường 8",
+            "Phường 9",
+            "Phường 10",
+            "Phường 11"
+        ],
+        "Quận 5": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 6",
+            "Phường 7",
+            "Phường 8",
+            "Phường 9",
+            "Phường 10",
+            "Phường 11"
+        ],
+        "Quận 6": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 6",
+            "Phường 7",
+            "Phường 8",
+            "Phường 9",
+            "Phường 10"
+        ],
+        "Quận 7": [
+            "Phường Tân Kiểng",
+            "Phường Tân Hưng",
+            "Phường Tân Phong",
+            "Phường Tân Thuận Đông",
+            "Phường Tân Thuận Tây",
+            "Phường Phú Mỹ",
+            "Phường Bình Thuận",
+            "Phường Hưng Thạnh",
+            "Phường Phú Thuận",
+            "Phường Xuân Thủy"
+        ],
+        "Quận 8": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 6",
+            "Phường 7",
+            "Phường 8",
+            "Phường 9",
+            "Phường 10",
+            "Phường 11",
+            "Phường 12",
+            "Phường 13",
+            "Phường 14",
+            "Phường 15"
+        ],
+        "Quận 9": [
+            "Phường Hiệp Phú",
+            "Phường Long Bình",
+            "Phường Long Thạnh Mỹ",
+            "Phường Phú Hữu",
+            "Phường Tân Phú",
+            "Phường Trường Thạnh",
+            "Phường Tam Bình",
+            "Phường Linh Đông",
+            "Phường Linh Xuân",
+            "Phường An Phú",
+            "Phường Bình An"
+        ],
+        "Quận 10": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 6",
+            "Phường 7",
+            "Phường 8",
+            "Phường 9",
+            "Phường 10"
+        ],
+        "Quận 11": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 6",
+            "Phường 7",
+            "Phường 8",
+            "Phường 9",
+            "Phường 10"
+        ],
+        "Quận 12": [
+            "Phường An Phú Đông",
+            "Phường Đông Hưng Thuận",
+            "Phường Hiệp Thành",
+            "Phường Tân Chánh Hiệp",
+            "Phường Tân Hưng Thuận",
+            "Phường Tân Thới Nhất",
+            "Phường Tân Thới Hiệp",
+            "Phường Thạnh Lộc",
+            "Phường Thạnh Xuân",
+            "Phường Trung Mỹ Tây"
+        ],
+        "Huyện Bình Chánh": [
+            "Xã Bình Hưng",
+            "Xã Bình Lợi",
+            "Xã Bình Tân",
+            "Xã Hưng Long",
+            "Xã Lê Minh Xuân",
+            "Xã Phạm Văn Hai",
+            "Xã Tân Kiên",
+            "Xã Tân Quý Tây",
+            "Xã Vĩnh Lộc A",
+            "Xã Vĩnh Lộc B",
+            "Thị trấn Tân Túc"
+        ],
+        "Quận Bình Tân": [
+            "Phường Bình Hưng Hòa",
+            "Phường Bình Hưng Hòa A",
+            "Phường Bình Hưng Hòa B",
+            "Phường Bình Trị Đông",
+            "Phường Bình Trị Đông A",
+            "Phường Bình Trị Đông B",
+            "Phường An Lạc",
+            "Phường An Lạc A",
+            "Phường An Lạc B",
+            "Phường Tân Tạo",
+            "Phường Tân Tạo A",
+            "Phường Tân Tạo B"
+        ],
+        "Huyện Cần Giờ": [
+            "Thị trấn Cần Thạnh",
+            "Xã Bình Khánh",
+            "Xã An Thới Đông",
+            "Xã Cần Thạnh",
+            "Xã Long Hòa",
+            "Xã Tam Thôn Hiệp",
+            "Xã Phú Mỹ"
+        ],
+        "Huyện Củ Chi": [
+            "Trung Lập Hạ",
+            "Thị trấn Củ Chi",
+            "Xã Phước Hiệp",
+            "Xã Phước Vĩnh An",
+            "Xã Tân An Hội",
+            "Xã Tân Phú Trung",
+            "Xã Nhuận Đức",
+            "Xã Bình Mỹ",
+            "Xã Hòa Phú",
+            "Xã An Nhơn Tây",
+            "Xã Trung An",
+            "Xã Tân Thạnh Tây",
+            "Xã Tân Thông Hội",
+            "Xã Lê Minh Xuân"
+        ],
+        "Huyện Hóc Môn": [
+            "Thị trấn Hóc Môn",
+            "Xã Bà Điểm",
+            "Xã Đông Thạnh",
+            "Xã Nhị Bình",
+            "Xã Tân Hiệp",
+            "Xã Tân Thới Nhì",
+            "Xã Tân Xuân",
+            "Xã Xuân Thới Sơn",
+            "Xã Xuân Thới Thượng"
+        ],
+        "Huyện Nhà Bè": [
+            "Thị trấn Nhà Bè",
+            "Xã Hiệp Phước",
+            "Xã Long Thới",
+            "Xã Phước Kiển",
+            "Xã Nhơn Đức",
+            "Xã Tân Quý Tây",
+            "Xã An Phú",
+            "Xã Phước An"
+        ],
+        "Quận Gò Vấp": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 6",
+            "Phường 7",
+            "Phường 8",
+            "Phường 9",
+            "Phường 10",
+            "Phường 11",
+            "Phường 12"
+        ],
+        "Quận Tân Phú": [
+            "Phường Tân Quý",
+            "Phường Tân Thới Nhất",
+            "Phường Phú Thọ Hòa",
+            "Phường Sơn Kỳ",
+            "Phường Tân Sơn Nhì",
+            "Phường Hiệp Tân",
+            "Phường Hòa Thạnh",
+            "Phường Tây Thạnh",
+            "Phường Phú Trung",
+            "Phường Nguyễn Sơn"
+        ],
+        "Quận Phú Nhuận": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 7",
+            "Phường 9",
+            "Phường 10",
+            "Phường 11",
+            "Phường 12"
+        ],
+        "Quận Tân Bình": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 6",
+            "Phường 7",
+            "Phường 8",
+            "Phường 9",
+            "Phường 10",
+            "Phường 11",
+            "Phường 12"
+        ],
+        "Quận Bình Thạnh": [
+            "Phường 1",
+            "Phường 2",
+            "Phường 3",
+            "Phường 4",
+            "Phường 5",
+            "Phường 6",
+            "Phường 7",
+            "Phường 8",
+            "Phường 9",
+            "Phường 10",
+            "Phường 11",
+            "Phường 12",
+            "Phường 13",
+            "Phường 14",
+            "Phường 15"
+        ]
+    };
+
+    function updateWardOptions(){
+        const districtSelect = document.getElementById('district');
+        const wardSelect = document.getElementById('ward');
+        const selectedDistrict = districtSelect.value;
+
+        wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+
+        if(!selectedDistrict){
+        wardSelect.disabled = true;
+        return;
+        }
+
+        wardSelect.disabled = false;
+        const wards = wardData[selectedDistrict];
+        wards.forEach(ward => {
+            const option = document.createElement('option');
+            option.value = ward;
+            option.textContent = ward;
+            wardSelect.appendChild(option);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', updateWardOptions);
+
+
+
+
+
     function validateAddUser(event){
         let fullname = document.getElementById('fullname-add').value.trim();
         let email = document.getElementById('email-add').value.trim();

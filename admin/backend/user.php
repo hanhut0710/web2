@@ -96,7 +96,23 @@ class User{
         if (!$result)
             return false;
 
+        //Truong hop neu address chua ton tai
+        $sql = "SELECT id FROM users WHERE acc_id='$accID'";
+        $result = mysqli_query($this->conn, $sql);
+        if ($result && mysqli_num_rows($result) > 0) {
+            $user = mysqli_fetch_assoc($result);
+            $user_id = $user['id'];
+        }
+        $sql = "SELECT id FROM address WHERE user_id='$user_id'";
+        $result = mysqli_query($this->conn, $sql);
+
+        if ($result && mysqli_num_rows($result) > 0) {
         $sql = "UPDATE address SET address_line = '$address_line', ward = '$ward', district= '$district', city='$city' WHERE user_id = (SELECT id FROM users WHERE acc_id = '$accID')";
+        } else {
+            $sql = "INSERT INTO address (user_id, address_line, ward, district, city, `default`) 
+                    VALUES ('$user_id', '$address_line', '$ward', '$district', '$city', 1)";
+        }
+
         $result = mysqli_query($this->conn, $sql);
         if (!$result)
             return false;
@@ -105,23 +121,40 @@ class User{
     }
 
 
-    public function delete($accID){
-        $sql = "DELETE FROM address WHERE user_id = (SELECT id FROM users WHERE acc_id ='$accID')";
-        $result = mysqli_query($this->conn, $sql);
-        if(!$result)
-            return false;
+    // public function delete($accID){
+    //     $sql = "DELETE FROM address WHERE user_id = (SELECT id FROM users WHERE acc_id ='$accID')";
+    //     $result = mysqli_query($this->conn, $sql);
+    //     if(!$result)
+    //         return false;
 
-        $sql ="DELETE FROM users WHERE acc_id ='$accID'";
-        $result = mysqli_query($this->conn, $sql);
-        if(!$result)
-            return false;  
+    //     $sql = "DELETE FROM cart WHERE user_id = (SELECT id FROM users WHERE acc_id ='$accID')";
+    //     $result = mysqli_query($this->conn,$sql);
+    //     if(!$result)
+    //         return false;
+
+    //     $sql ="DELETE FROM users WHERE acc_id ='$accID'";
+    //     $result = mysqli_query($this->conn, $sql);
+    //     if(!$result)
+    //         return false;  
+
         
-        $sql = "DELETE FROM accounts WHERE id = '$accID'";
-        $result = mysqli_query($this->conn, $sql);
-        if(!$result)
-            return false; 
+    //     $sql = "DELETE FROM accounts WHERE id = '$accID'";
+    //     $result = mysqli_query($this->conn, $sql);
+    //     if(!$result)
+    //         return false; 
 
-        return true;
+    //     return true;
+    // }
+
+    //chuyen trang thai cho user khoa / mo 
+    public function toggleStatus($accID){
+        $sql = "UPDATE accounts SET status = CASE 
+                    WHEN status = 1 THEN 0
+                    ELSE 1 
+                END 
+                WHERE id = '$accID'";
+        $result = mysqli_query($this->conn, $sql);
+        return $result;
     }
 
 

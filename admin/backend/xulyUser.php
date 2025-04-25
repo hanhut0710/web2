@@ -99,12 +99,12 @@
     }
 
 
-        if(isset($_GET['act'])&& ($_GET['act']) === 'xoa'){
+        if(isset($_GET['act'])&& ($_GET['act']) === 'toggleStatus'){
             $accID = $_GET['id'];
-            $delete = $user -> delete($accID);
-            if($delete){
+            $toggle = $user -> toggleStatus($accID);
+            if($toggle){
                 echo "<script>
-                alert('Xóa khách hàng thành công!');
+                alert('Thay đổi trạng thái khách hàng thành công!');
                 window.location.href = '../index.php?page=user';
                 </script>";
             }
