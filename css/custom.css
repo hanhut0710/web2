@@ -1,0 +1,17 @@
+/* Loại bỏ padding mặc định bên trái của container */
+.container {
+    padding-left: 0 !important;
+}
+
+/* Loại bỏ padding bên trái của cột */
+.col-lg-3 {
+    padding-left: 0 !important;
+}
+
+/* Đẩy sidebar gần lề trái với khoảng cách 20px */
+.shop__sidebar {
+    margin-left: 20px !important;
+}
+.shop__sidebar {
+    margin-left: 0 !important;
+}

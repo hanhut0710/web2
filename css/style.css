@@ -135,8 +135,14 @@ ol {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: top center;
+	/* background: linear-gradient(to bottom, #1a1d21, #9bb8bd); */
 }
 
+.set-bg:hover{
+	cursor: pointer;
+	transform: scale(1.1);
+	transition: all 0.5s ease-in-out;
+}
 .spad {
 	padding-top: 100px;
 	padding-bottom: 100px;
@@ -1145,7 +1151,13 @@ ol {
 -----------------------*/
 
 .shop__sidebar {
-	padding-right: 20px;
+	padding-right: 5px;
+	margin-left: 50px !important;
+}
+
+.sidebar{
+	padding: unset;
+	margin: unset;
 }
 
 .shop__sidebar__search {
@@ -1156,7 +1168,7 @@ ol {
 	position: relative;
 }
 
-.shop__sidebar__search form input {
+.search {
 	width: 100%;
 	font-size: 15px;
 	color: #b7b7b7;
@@ -1196,6 +1208,8 @@ ol {
 	top: 0;
 	height: 100%;
 }
+
+
 
 .shop__sidebar__accordion .card {
 	border: none;
@@ -1500,12 +1514,14 @@ ol {
 -----------------------*/
 
 .product__details__pic {
-	height: 300px;
-    width: 400px;
+	align-content: center;
+	height: 800px;
+    width: 600px;
+	margin: 0 auto;
 	text-align: center;
-	background: #d8d7d7;
+	background: linear-gradient(to bottom, #1a1d21, #9bb8bd);
 	padding: 40px 0 60px;
-	margin-bottom: 50px;
+	border-radius: 5px;
 }
 
 .product__details__pic .nav-tabs {
@@ -1606,7 +1622,7 @@ ol {
 }
 
 .product__details__text {
-	text-align: center;
+	text-align: left;
 }
 
 .product__details__text h4 {
@@ -1620,10 +1636,14 @@ ol {
 }
 
 .product__details__text .rating i {
-	font-size: 15px;
+	font-size: 30px;
 	color: #f7941d;
 	display: inline-block;
 	margin-right: -5px;
+}
+#popup-name{
+	font-size: 30px;
+
 }
 
 .product__details__text .rating span {
@@ -1648,6 +1668,15 @@ ol {
 
 .product__details__text p {
 	margin-bottom: 35px;
+
+}
+
+#popup-price ,#popup-brand, #popup-quantity{
+	font-size: 20px;
+}
+
+.product__details__text p strong{
+font-size: 20px;
 }
 
 .product__details__option {
@@ -4060,9 +4089,7 @@ ol {
 /* Ảnh sản phẩm */
 .product__details__pic img {
     width: 100%;
-    max-height: 200px;
     object-fit: cover;
-    border-radius: 5px;
 	
 }
 
@@ -4081,34 +4108,39 @@ ol {
 /* Nút bấm */
 .btn-addcart, .btn-buynow {
     width: 100%;
-    padding: 10px;
-    margin-top: 10px;
+
+    padding: 25px 40px;
+    margin-top: 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 100px;
     font-size: 16px;
     cursor: pointer;
 }
 
 .btn-addcart {
-    background: #ff6600;
-    color: white;
+    background: #9bb8bd;
+    color: rgb(0, 0, 0);
+	font-size: 20px;
+	font-weight: 800;	
 }
 
 .btn-buynow {
-    background: #ff0000;
-    color: white;
+    background: #1a1d21;
+    color: rgb(255, 255, 255);
+	font-size: 20px;
+	font-weight: 800;
 }
 
 .btn-addcart:hover {
-    background: #e65c00;
+    scale: 1.03;
 }
 
 .btn-buynow:hover {
-    background: #cc0000;
+    scale: 1.03;
 }
 
 .size-options span{
-	border: 3px solid black;
+	border: 1px solid black;
 	margin: 10px;
 	padding: 8px 15px;
 	border-radius: 10px;
@@ -4133,15 +4165,15 @@ ol {
     margin-top: 5px;
 }
 
-.color-option {
+/* .color-option {
     width: 30px;
     height: 30px;
-    border-radius: 50%; /* Biến thành hình tròn */
+    border-radius: 50%; 
     display: inline-block;
-    border: 2px solid #ddd; /* Viền màu xám nhẹ */
+    border: 2px solid #ddd;
     cursor: pointer;
     transition: transform 0.2s, border-color 0.2s;
-}
+} */
 
 .color-option:hover {
     transform: scale(1.1); /* Phóng to khi hover */
@@ -4149,4 +4181,51 @@ ol {
 
 .color-option.active {
     border-color: black; /* Viền đậm khi được chọn */
+}
+
+.fa-solid.fa-filter {
+	cursor: pointer;
+	font-size: 25px;
+	transition: 0.3s;
+}
+.fa-solid.fa-filter:hover {
+	transform: scale(1.3);
+	
+}
+
+#advancedSearchForm {
+	display: none; 
+	position: relative;
+	transform: translateY(-100px); /* Ẩn bên trên */
+	padding: 10px;
+	transition: 0.3s;
+	z-index: 9999;
+}
+
+#advancedSearchForm.active {
+	display: block; /* Hiển thị khi active */
+	transform: translateY(0); /* Trượt vào */
+	transition: 0,3s;
+}
+.filter_box {
+	background: #fff;
+	border: none;
+}
+.color-option {
+	align-items: center;
+    display: inline-block;
+    margin: 20px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.color-option.active {
+    border-color: #000; /* hoặc màu highlight */
+}
+
+.color-thumbnail {
+    height: 50px;
+    object-fit: cover;
+    border-radius: 10px;
 }

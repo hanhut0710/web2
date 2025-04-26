@@ -20,11 +20,11 @@
     <section class="shop spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-3 sidebar">
                     <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
                         <form id="searchForm" onsubmit="search(event)">
-                            <input type="text" id="searchInput" placeholder="Search...">
+                            <input type="text" id="searchInput" class="search" placeholder="Search...">
                             <button type="submit"><span class="icon_search"></span></button>
                         </form>
                     </div>
@@ -83,10 +83,11 @@
                                 <div class="shop__product__option__left">
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="col-lg-6 col-md-6 col-sm-6">    
                                 <div class="shop__product__option__right">
+                                   <button class="filter_box" onclick="openFilter()"><span>LỌC NÂNG CAO</span><i class="fa-solid fa-filter"></i></button> 
                                 <form id="advancedSearchForm" onclick="loadProducts()">
-                                    <input type="text" id="searchInput2" placeholder="Từ khóa...">
+                                    <input type="text" id="searchInput2" class="search" placeholder="Từ khóa...">
                                     
                                     <select id="categorySelect">
                                         <option value="all">Danh mục</option>
