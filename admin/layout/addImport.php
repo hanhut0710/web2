@@ -34,7 +34,7 @@ $productList = $product->getAllProduct();
                     </tr>
                     <tr>
                         <th>Ngày tạo phiếu</th>
-                        <td><input type="date" name="created_at" id="created_at" required></td>
+                        <td><input type="date" name="created_at" id="created_at" value="<?php echo date('Y-m-d'); ?>" required></td>
                         <th>Phần trăm lợi nhuận (%)</th>
                         <td><input type="text" name="profit_percentage" placeholder="Nhập phần trăm lợi nhuận" pattern="^\d+(\.\d{1,2})?$" required></td>
                     </tr>

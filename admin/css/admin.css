@@ -2745,13 +2745,6 @@ button[type="submit"].btn-save{
     background-color: #218838;
 }
 
-.btn-delete {
-    background-color: #dc3545;
-}
-
-.btn-delete:hover {
-    background-color: #c82333;
-}
 
 .custom-file-upload {
     padding: 5px 10px;
