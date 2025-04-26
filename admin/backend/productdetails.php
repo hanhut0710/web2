@@ -15,9 +15,9 @@ class ProductDetails {
 
     public function getAllDetailsByPagination($limit, $offset, $product_id)
     {
-        $sql = "SELECT pd.id, pd.color, pd.size, pd.img_src, pd.stock, p.name as p_name
+        $sql = "SELECT pd.*, p.name as p_name
                 FROM product_details pd, products p 
-                WHERE pd.product_id = p.id";
+                WHERE p.isdeleted = 1 AND pd.product_id = p.id";
         if ($product_id != 0) {
             $sql .= " AND pd.product_id = $product_id";
         }
@@ -35,8 +35,9 @@ class ProductDetails {
     public function getAllDetails()
     {
         $sql = "SELECT pd.id, pd.color, pd.size, pd.img_src, pd.stock, p.name as product_name
-                FROM product_details pd, products p
-                WHERE pd.product_id = p.id";
+            FROM product_details pd
+            JOIN products p ON pd.product_id = p.id
+            WHERE p.isDeleted = 1";
         $result = mysqli_query($this->conn, $sql);
         $details = [];
         if ($result) {
@@ -49,8 +50,9 @@ class ProductDetails {
     public function getTotalDetailsByProduct($idProduct)
     {
         $sql = "SELECT COUNT(*) as total 
-                FROM product_details 
-                WHERE product_id=" .$idProduct;
+            FROM product_details pd
+            INNER JOIN products p ON pd.product_id = p.id
+            WHERE pd.product_id = $idProduct AND p.isDeleted = 1";
         $result = mysqli_query($this->conn, $sql);
         if ($result)
             $row = mysqli_fetch_assoc($result);
@@ -60,7 +62,9 @@ class ProductDetails {
     public function getTotalDetails()
     {
         $sql = "SELECT COUNT(*) as total 
-                FROM product_details";
+            FROM product_details pd
+            JOIN products p ON pd.product_id = p.id
+            WHERE p.isDeleted = 1";
         $result = mysqli_query($this->conn, $sql);
         if ($result)
             $row = mysqli_fetch_assoc($result);
