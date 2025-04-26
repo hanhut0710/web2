@@ -3,15 +3,23 @@ require_once "./backend/supplier.php";
 require_once "./backend/import.php";
 require_once "./backend/productdetails.php";
 require_once "./backend/product.php";
+require_once "./backend/staff.php"; // Thêm class Staff
 
 $supplier = new Supplier();
 $productdetails = new ProductDetails();
 $product = new Product();
 $import = new Import();
+$staff = new Staff(); // Khởi tạo class Staff
 
 $import_id = isset($_GET['import_id']) ? (int)$_GET['import_id'] : 0;
 $import_info = $import_id ? $import->getImportById($import_id) : null;
 $import_details = $import->getImportDetailsByImport($import_id);
+
+// Lấy thông tin nhân viên nếu import_info tồn tại
+$staff_info = null;
+if ($import_info && isset($import_info['staff_id'])) {
+    $staff_info = $staff->getStaffById($import_info['staff_id']);
+}
 
 // Tính tổng số lượng từ chi tiết
 $total_quantity = 0;
@@ -30,15 +38,19 @@ foreach ($import_details as $detail) {
             </div>
             <div class="info-group">
                 <label>Nhà cung cấp:</label>
-                <span><?php echo $import_info ? ($import_info['sup_name']) : 'N/A'; ?></span>
+                <span><?php echo $import_info ? htmlspecialchars($import_info['sup_name']) : 'N/A'; ?></span>
+            </div>
+            <div class="info-group">
+                <label>Nhân viên nhập:</label>
+                <span><?php echo $staff_info ? htmlspecialchars($staff_info['username']) : 'N/A'; ?></span>
             </div>
             <div class="info-group">
                 <label>Ngày nhập:</label>
                 <span><?php echo $import_info ? date('d/m/Y', strtotime($import_info['created_at'])) : 'N/A'; ?></span>
             </div>
             <div class="info-group">
-                <label>Tổng giá trị:</label>
-                <span><?php echo $import_info ? number_format($import_info['total_price'], 2) . ' VNĐ' : 'N/A'; ?></span>
+                <label>Tổng thành tiền:</label>
+                <span><?php echo $import_info ? number_format($import_info['total_price'], 0) . ' VNĐ' : 'N/A'; ?></span>
             </div>
         </div>
 
@@ -49,10 +61,9 @@ foreach ($import_details as $detail) {
                         <td>Sản phẩm</td>
                         <td>Màu sắc</td>
                         <td>Kích cỡ</td>
-                        <td>Thương hiệu</td>
                         <td>Giá nhập</td>
                         <td>Số lượng</td>
-                        <td>Tổng giá</td>
+                        <td>Thành tiền</td>
                     </tr>
                 </thead>
                 <tbody id="showImportDetails">
@@ -60,13 +71,12 @@ foreach ($import_details as $detail) {
                     if ($import_details) {
                         foreach ($import_details as $detail) {
                             echo '<tr>
-                                <td>' . $detail['name'] . '</td>
-                                <td>' . $detail['color'] . '</td>
-                                <td>' . $detail['size'] . '</td>
-                                <td>' . ($detail['brand_name'] ?? 'N/A') . '</td>
-                                <td>' . number_format($detail['price'], 2) . ' VNĐ</td>
+                                <td>' . htmlspecialchars($detail['name']) . '</td>
+                                <td>' . htmlspecialchars($detail['color']) . '</td>
+                                <td>' . htmlspecialchars($detail['size']) . '</td>
+                                <td>' . number_format($detail['price'], 0) . ' VNĐ</td>
                                 <td>' . $detail['quantity'] . '</td>
-                                <td>' . number_format($detail['total_price'], 2) . ' VNĐ</td>
+                                <td>' . number_format($detail['total_price'], 0) . ' VNĐ</td>
                             </tr>';
                         }
                     }
@@ -85,7 +95,3 @@ foreach ($import_details as $detail) {
         </div>
     </div>
 </div>
-
-<style>
-
-</style>

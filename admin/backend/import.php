@@ -101,7 +101,7 @@ class Import {
 
     public function getImportDetailsByImport($importID)
     {
-        $sql = "SELECT p.name, pd.size, pd.color, id.quantity, id.price, id.total_price, b.name as brand_name
+        $sql = "SELECT p.name, pd.size, pd.color, pd.img_src, id.quantity, id.price, id.total_price, b.name as brand_name
                 FROM import_details id
                 JOIN product_details pd ON id.product_detail_id = pd.id
                 JOIN products p ON pd.product_id = p.id

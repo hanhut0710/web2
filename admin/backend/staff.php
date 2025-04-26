@@ -25,6 +25,20 @@
             return $data;
         }
 
+        public function getAllStaff()
+        {
+            $sql = "SELECT admin.*, accounts.status 
+                    FROM admin 
+                    JOIN accounts ON admin.acc_id = accounts.id";
+            $result = mysqli_query($this->conn, $sql);
+            $list = [];
+            while($row = mysqli_fetch_assoc($result)){
+                $list[] = $row;
+            }
+            
+            return $list;
+        }
+
         public function addStaff($full_name, $phone, $email, $role, $acc_id){
             $sql = "INSERT INTO admin (full_name, phone, email, role, acc_id) VALUES ('$full_name', '$phone', '$email', '$role', '$acc_id')";
             mysqli_query($this->conn, $sql);
