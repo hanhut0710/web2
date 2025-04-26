@@ -64,13 +64,13 @@ if (isset($_POST['btnEditProduct'])) {
     $brand_id = $_POST['brand_id'];
     $price = $_POST['price'];
 
-    // Kiểm tra dữ liệu đầu vào
-    if (empty($id) || empty($name) || empty($category_id) || empty($brand_id)) {
-        echo '<script>alert("Vui lòng điền đầy đủ thông tin sản phẩm!");
-            window.location.href = "../index.php?page=editProduct&id=' . $id . '";
-            </script>';
-        exit();
-    }
+    // // Kiểm tra dữ liệu đầu vào
+    // if (empty($id) || empty($name) || empty($category_id) || empty($brand_id)) {
+    //     echo '<script>alert("Vui lòng điền đầy đủ thông tin sản phẩm!");
+    //         window.location.href = "../index.php?page=editProduct&id=' . $id . '";
+    //         </script>';
+    //     exit();
+    // }
 
     // Kiểm tra trùng lặp sản phẩm (trừ sản phẩm hiện tại)
     $existingProduct = $product->getProductByName($name);
