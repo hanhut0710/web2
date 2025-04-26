@@ -480,21 +480,19 @@
             alert('Vui lòng nhập địa chỉ.');
             return false;
         }
-        //ward
-        if (!ward) {
-            alert('Vui lòng nhập Phường/Xã.');
-            return false;
-        }
-        //district
         if (!district) {
-            alert('Vui lòng nhập Quận/Huyện.');
+            alert('Vui lòng chọn Quận/Huyện.');
             return false;
         }
-        //city
+        if (!ward) {
+            alert('Vui lòng chọn Phường/Xã.');
+            return false;
+        }
         if (!city) {
-            alert('Vui lòng nhập Thành phố.');
+            alert('Vui lòng chọn Thành phố.');
             return false;
         }
+
     return true;
     }
 

@@ -14,7 +14,7 @@
         $city = $_POST['city'];
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $status = $_POST['status'];
+
 
         if($user -> checkDuplicateEmail($email)){
             // header('Location: ../index.php?page=addUser&error=email');
@@ -44,7 +44,7 @@
             exit;
         }
 
-        $user -> insert($fullname, $email, $phone, $address_line, $ward, $district, $city, $username, $password, $status);
+        $user -> insert($fullname, $email, $phone, $address_line, $ward, $district, $city, $username, $password);
         // header('Location: ../index.php?page=user');
         echo "<script>
             alert('Thêm khách hàng thành công!');
@@ -63,7 +63,8 @@
         $city = $_POST['city'];
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $status = $_POST['status'];
+
+        
 
         $currentUser = $user -> getInforUserByAccId($accID);
 
@@ -91,7 +92,7 @@
             exit;
         }
 
-        $user -> update($fullname, $email, $phone,$accID, $address_line, $ward, $district, $city, $username, $password, $status);
+        $user -> update($fullname, $email, $phone,$accID, $address_line, $ward, $district, $city, $username, $password);
         echo "<script>
         alert('Sửa khách hàng thành công!');
         window.location.href = '../index.php?page=user';
