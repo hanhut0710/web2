@@ -56,10 +56,10 @@ class User{
     }
     
 
-    public function insert($fullname, $email, $phone, $address_line, $ward, $district, $city, $username, $password, $status )
+    public function insert($fullname, $email, $phone, $address_line, $ward, $district, $city, $username, $password)
     {
-        $sql = "INSERT INTO accounts(username, password, status)
-                VALUES ('$username', '$password', '$status')";
+        $sql = "INSERT INTO accounts(username, password)
+                VALUES ('$username', '$password')";
         $result = mysqli_query($this->conn, $sql);
         if (!$result)
             return false;
@@ -81,12 +81,12 @@ class User{
         return true;
     }
 
-    public function update($fullname, $email, $phone,$accID, $address_line, $ward, $district, $city, $username, $password, $status){
+    public function update($fullname, $email, $phone,$accID, $address_line, $ward, $district, $city, $username, $password){
 
         if(!empty($password))
-            $sql ="UPDATE accounts SET username = '$username', password = '$password', status = '$status' WHERE id ='$accID'";
+            $sql ="UPDATE accounts SET username = '$username', password = '$password' WHERE id ='$accID'";
         else 
-            $sql ="UPDATE accounts SET username = '$username', status = '$status' WHERE id ='$accID'";
+            $sql ="UPDATE accounts SET username = '$username' WHERE id ='$accID'";
         $result = mysqli_query($this->conn, $sql);
         if (!$result)
             return false;

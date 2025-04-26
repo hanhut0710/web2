@@ -30,12 +30,18 @@
             <!-- Cột phải -->
             <div class="user-form-column">
                  <div class="user-form-group">
-                    <label for="address">Địa chỉ</label>
-                    <input type="text" id="address_line" name="address_line" placeholder="Nhập địa chỉ" value="">
+                    <label for="address-add">Địa chỉ</label>
+                    <input type="text" id="address_line-add" name="address_line" placeholder="Nhập địa chỉ" value="">
+                </div>
+                  <div class="user-form-group">
+                    <label for="city-add">Thành phố</label>
+                    <select id="city-add" name="city">
+                        <option value="Hồ Chí Minh" selected>Hồ Chí Minh</option>
+                    </select>
                 </div>
                 <div class="user-form-group">
-                <label for="district">Quận/Huyện</label>
-                    <select id="district" name="district" onchange="updateWardOptions()">
+                <label for="district-add">Quận/Huyện</label>
+                    <select id="district-add" name="district" onchange="updateWardOptions()">
                         <option value="">Chọn Quận/Huyện</option>
                         <?php
                             $districts = [
@@ -64,23 +70,18 @@
                                 "Quận Tân Bình",
                             ];
                             foreach ($districts as $district) {
-                                echo "<option value=\"$district\" $selected>$district</option>";
+                                echo "<option value=\"$district\">$district</option>";
                             }
                         ?>
                     </select>
                 </div>
                 <div class="user-form-group">
-                    <label for="ward">Phường/Xã</label>
-                    <select id="ward" name="ward" disabled>
+                    <label for="ward-add">Phường/Xã</label>
+                    <select id="ward-add" name="ward" disabled>
                         <option value="">Chọn Phường/Xã</option>
                     </select>
                 </div>
-                <div class="user-form-group">
-                    <label for="city">Thành phố</label>
-                    <select id="city" name="city">
-                        <option value="Hồ Chí Minh" selected>Hồ Chí Minh</option>
-                    </select>
-                </div>
+              
             </div>
         </div>
         <div class="user-btn-group">
@@ -389,8 +390,8 @@
     };
 
     function updateWardOptions(){
-        const districtSelect = document.getElementById('district');
-        const wardSelect = document.getElementById('ward');
+        const districtSelect = document.getElementById('district-add');
+        const wardSelect = document.getElementById('ward-add');
         const selectedDistrict = districtSelect.value;
 
         wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
@@ -463,26 +464,23 @@
             alert('Vui lòng nhập mật khẩu.');
             return false;
         }
-        //address
         if (!address_line) {
             alert('Vui lòng nhập địa chỉ.');
             return false;
         }
-        //ward
-        if (!ward) {
-            alert('Vui lòng nhập Phường/Xã.');
-            return false;
-        }
-        //district
         if (!district) {
-            alert('Vui lòng nhập Quận/Huyện.');
+            alert('Vui lòng chọn Quận/Huyện.');
             return false;
         }
-        //city
+        if (!ward) {
+            alert('Vui lòng chọn Phường/Xã.');
+            return false;
+        }
         if (!city) {
-            alert('Vui lòng nhập Thành phố.');
+            alert('Vui lòng chọn Thành phố.');
             return false;
         }
+
     return true;
     }
 
