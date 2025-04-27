@@ -5,45 +5,24 @@ require_once "upload.php";
 require_once "product.php";
 
 if (isset($_POST['btnAddImport'])) {
-    $sup_id = $_POST['sup_id'] ?? '';
-    $staff_id = $_POST['staff_id'] ?? '';
-    $profit_percentage = (float)($_POST['profit_percentage'] ?? 0);
-    $created_at = $_POST['created_at'] ?? '';
-    $products = $_POST['products'] ?? [];
+    session_start();
+    $sup_id = $_POST['sup_id'];
+    $staff_id = $_POST['staff_id'];
+    $profit_percentage = (float)$_POST['profit_percentage'];
+    $created_at = $_POST['created_at'];
+    $products = $_POST['products'];
 
     $import = new Import();
     $productDetails = new ProductDetails();
     $upload = new Upload();
     $product = new Product();
 
-    // Kiểm tra dữ liệu đầu vào
-    if (empty($sup_id) || empty($staff_id) || empty($created_at) || empty($products)) {
-        echo '<script>alert("Vui lòng điền đầy đủ thông tin phiếu nhập, thông tin nhân viên và thêm ít nhất một sản phẩm!");
-            window.location.href = "../index.php?page=addImport";
-            </script>';
-        exit();
-    }
-
-    // Kiểm tra phần trăm lợi nhuận
-    if ($profit_percentage < 0 || $profit_percentage > 100) {
-        echo '<script>alert("Phần trăm lợi nhuận phải nằm trong khoảng từ 0 đến 100%!");
-            window.location.href = "../index.php?page=addImport";
-            </script>';
-        exit();
-    }
-
     // Tính tổng số lượng và tổng giá trị
     $total_quantity = 0;
     $total_price = 0;
     foreach ($products as $p) {
-        $quantity = (int)($p['quantity'] ?? 0);
-        $import_price = (float)($p['import_price'] ?? 0);
-        if ($quantity <= 0 || $import_price <= 0) {
-            echo '<script>alert("Số lượng và giá nhập phải lớn hơn 0!");
-                window.location.href = "../index.php?page=addImport";
-                </script>';
-            exit();
-        }
+        $quantity = (int)$p['quantity'];
+        $import_price = (float)$p['import_price'];
         $total_quantity += $quantity;
         $total_price += $import_price * $quantity;
     }
@@ -54,19 +33,11 @@ if (isset($_POST['btnAddImport'])) {
     if ($import_id) {
         // 2. Xử lý từng sản phẩm
         foreach ($products as $product_index => $p) {
-            $product_id = $p['product_id'] ?? '';
-            $color = $p['color'] ?? '';
-            $size = $p['size'] ?? '';
-            $import_price = (float)($p['import_price'] ?? 0);
-            $quantity = (int)($p['quantity'] ?? 0);
-
-            // Kiểm tra dữ liệu sản phẩm
-            if (empty($product_id) || empty($color) || empty($size)) {
-                echo '<script>alert("Dữ liệu sản phẩm hoặc màu sắc/kích cỡ của sản phẩm ' . ($product_index + 1) . ' không hợp lệ!");
-                    window.location.href = "../index.php?page=addImport";
-                    </script>';
-                exit();
-            }
+            $product_id = $p['product_id'];
+            $color = $p['color'];
+            $size = $p['size'];
+            $import_price = (float)$p['import_price'];
+            $quantity = (int)$p['quantity'];
 
             // Xử lý upload ảnh biến thể (nếu có)
             $img_src = '';

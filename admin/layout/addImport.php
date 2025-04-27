@@ -7,10 +7,18 @@ $product = new Product();
 
 $supplierList = $supplier->getAllSupplier();
 $productList = $product->getAllProduct();
+
 ?>
 
 <section class="section add-import active">
     <h2 class="page-title">Thêm Phiếu Nhập Hàng</h2>
+
+    <?php if (empty($supplierList)) { ?>
+        <p style="color: red; text-align: center;">Không có nhà cung cấp nào trong hệ thống!</p>
+    <?php } ?>
+    <?php if (empty($productList)) { ?>
+        <p style="color: red; text-align: center;">Không có sản phẩm nào trong hệ thống!</p>
+    <?php } ?>
 
     <form id="importForm" method="post" action="backend/xulyPNH.php" enctype="multipart/form-data">
         <div class="info-table-container">
@@ -19,10 +27,10 @@ $productList = $product->getAllProduct();
                     <tr>
                         <th>Nhà cung cấp</th>
                         <td>
-                            <select name="sup_id" required>
+                            <select name="sup_id" id="sup_id">
                                 <option value="">Chọn nhà cung cấp</option>
                                 <?php foreach ($supplierList as $value) {
-                                    echo '<option value="' . $value['id'] . '">' . $value['sup_name'] . '</option>';
+                                    echo '<option value="' . $value['id'] . '">' . htmlspecialchars($value['sup_name']) . '</option>';
                                 } ?>
                             </select>
                         </td>
@@ -34,9 +42,9 @@ $productList = $product->getAllProduct();
                     </tr>
                     <tr>
                         <th>Ngày tạo phiếu</th>
-                        <td><input type="date" name="created_at" id="created_at" value="<?php echo date('Y-m-d'); ?>" required></td>
+                        <td><input type="date" name="created_at" id="created_at"></td>
                         <th>Phần trăm lợi nhuận (%)</th>
-                        <td><input type="text" name="profit_percentage" placeholder="Nhập phần trăm lợi nhuận" pattern="^\d+(\.\d{1,2})?$" required></td>
+                        <td><input type="text" name="profit_percentage" id="profit_percentage" placeholder="Nhập phần trăm lợi nhuận" pattern="^\d+(\.\d{1,2})?$"></td>
                     </tr>
                 </tbody>
             </table>
@@ -64,17 +72,17 @@ $productList = $product->getAllProduct();
                     <tr>
                         <td>1</td>
                         <td>
-                            <select name="products[0][product_id]" required>
+                            <select name="products[0][product_id]">
                                 <option value="">Chọn sản phẩm</option>
                                 <?php foreach ($productList as $p) {
-                                    echo '<option value="' . $p['id'] . '">' . $p['name'] . '</option>';
+                                    echo '<option value="' . $p['id'] . '">' .($p['name']). '</option>';
                                 } ?>
                             </select>
                         </td>
-                        <td><input type="number" name="products[0][quantity]" min="1" value="1" required></td>
-                        <td><input type="text" name="products[0][import_price]" placeholder="Giá nhập" pattern="^\d+(\.\d{1,2})?$" required></td>
-                        <td><input type="text" name="products[0][color]" placeholder="Màu sắc" required></td>
-                        <td><input type="text" name="products[0][size]" placeholder="Kích cỡ" required></td>
+                        <td><input type="number" name="products[0][quantity]" min="1" value="1"></td>
+                        <td><input type="text" name="products[0][import_price]" placeholder="Giá nhập" pattern="^\d+(\.\d{1,2})?$"></td>
+                        <td><input type="text" name="products[0][color]" placeholder="Màu sắc"></td>
+                        <td><input type="text" name="products[0][size]" placeholder="Kích cỡ"></td>
                         <td>
                             <label class="btn-upload" for="upload-img-1">Tải ảnh</label>
                             <input type="file" id="upload-img-1" name="products[0][img_src]" accept="image/*" style="display: none;" onchange="previewImage(this, 1)">
@@ -117,17 +125,17 @@ document.getElementById('add-row').addEventListener('click', function() {
     row.innerHTML = `
         <td>${count++}</td>
         <td>
-            <select name="products[${rowIndex}][product_id]" required>
+            <select name="products[${rowIndex}][product_id]">
                 <option value="">Chọn sản phẩm</option>
                 <?php foreach ($productList as $p) {
-                    echo '<option value="' . $p['id'] . '">' . $p['name'] . '</option>';
+                    echo '<option value="' . $p['id'] . '">' .($p['name']) . '</option>';
                 } ?>
             </select>
         </td>
-        <td><input type="number" name="products[${rowIndex}][quantity]" min="1" value="1" required></td>
-        <td><input type="text" name="products[${rowIndex}][import_price]" placeholder="Giá nhập" pattern="^\d+(\.\d{1,2})?$" required></td>
-        <td><input type="text" name="products[${rowIndex}][color]" placeholder="Màu sắc" required></td>
-        <td><input type="text" name="products[${rowIndex}][size]" placeholder="Kích cỡ" required></td>
+        <td><input type="number" name="products[${rowIndex}][quantity]" min="1" value="1"></td>
+        <td><input type="text" name="products[${rowIndex}][import_price]" placeholder="Giá nhập" pattern="^\\d+(\\.\\d{1,2})?$"></td>
+        <td><input type="text" name="products[${rowIndex}][color]" placeholder="Màu sắc"></td>
+        <td><input type="text" name="products[${rowIndex}][size]" placeholder="Kích cỡ"></td>
         <td>
             <label class="btn-upload" for="upload-img-${count}">Tải ảnh</label>
             <input type="file" id="upload-img-${count}" name="products[${rowIndex}][img_src]" accept="image/*" style="display: none;" onchange="previewImage(this, ${count})">
@@ -174,6 +182,72 @@ function previewImage(input, index) {
         previewImg.style.display = 'none';
     }
 }
+
+document.getElementById('importForm').addEventListener('submit', function(e) {
+    let errors = [];
+
+    // Kiểm tra nhà cung cấp
+    const supId = document.getElementById('sup_id').value;
+    if (!supId) 
+        errors.push('Vui lòng chọn nhà cung cấp.');
+    
+
+    // Kiểm tra ngày tạo phiếu
+    const createdAt = document.getElementById('created_at').value;
+    if (!createdAt || !/^\d{4}-\d{2}-\d{2}$/.test(createdAt)) 
+        errors.push('Vui lòng chọn ngày tạo phiếu hợp lệ (định dạng YYYY-MM-DD).');
+
+
+    // Kiểm tra phần trăm lợi nhuận
+    const profitPercentage = document.getElementById('profit_percentage').value;
+    if (!profitPercentage) {
+        errors.push('Vui lòng nhập phần trăm lợi nhuận.');
+    } else {
+        const profitValue = parseFloat(profitPercentage);
+        if (isNaN(profitValue) || profitValue < 0 || profitValue > 100) {
+            errors.push('Phần trăm lợi nhuận phải là số từ 0 đến 100.');
+        }
+    }
+
+    // Kiểm tra danh sách sản phẩm
+    const productRows = document.querySelectorAll('#product-body tr');
+    if (productRows.length === 0) {
+        errors.push('Vui lòng thêm ít nhất một sản phẩm.');
+    } else {
+        productRows.forEach((row, index) => {
+            const productId = row.cells[1].querySelector('select').value;
+            const quantity = row.cells[2].querySelector('input').value;
+            const importPrice = row.cells[3].querySelector('input').value;
+            const color = row.cells[4].querySelector('input').value;
+            const size = row.cells[5].querySelector('input').value;
+
+            if (!productId) {
+                errors.push(`Sản phẩm ${index + 1}: Vui lòng chọn sản phẩm.`);
+            }
+            if (!quantity || parseInt(quantity) <= 0) {
+                errors.push(`Sản phẩm ${index + 1}: Số lượng phải lớn hơn 0.`);
+            }
+            if (!importPrice || parseFloat(importPrice) <= 0) {
+                errors.push(`Sản phẩm ${index + 1}: Giá nhập phải lớn hơn 0.`);
+            } 
+            if (!color) {
+                errors.push(`Sản phẩm ${index + 1}: Vui lòng nhập màu sắc.`);
+            }
+            if (!size) {
+                errors.push(`Sản phẩm ${index + 1}: Vui lòng nhập kích cỡ.`);
+            }
+            if (!imgInput.files || imgInput.files.length === 0) {
+                errors.push(`Sản phẩm ${index + 1}: Vui lòng chọn ảnh.`);
+            }
+        });
+    }
+
+    // Nếu có lỗi, ngăn gửi form và hiển thị thông báo
+    if (errors.length > 0) {
+        e.preventDefault();
+        alert(errors.join('\n'));
+    }
+});
 </script>
 
 <style>

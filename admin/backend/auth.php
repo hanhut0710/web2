@@ -29,6 +29,7 @@ class Auth {
             {
                 $admin = mysqli_fetch_assoc($result2);
                 $_SESSION['role'] = $admin['role'];
+                $_SESSION['staff_id'] = $admin['id'];
             }
             return true;
         }

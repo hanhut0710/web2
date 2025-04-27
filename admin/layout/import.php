@@ -54,6 +54,7 @@ $importList = $import->getAllImportByPagination($itemsPerPage, $offset);
                 <tr>
                     <td>Mã phiếu</td>
                     <td>Nhà cung cấp</td>
+                    <td>Nhân viên nhập</td>
                     <td>Ngày nhập</td>
                     <td>Tổng số lượng</td>
                     <td>Thành tiền</td>
@@ -65,10 +66,11 @@ $importList = $import->getAllImportByPagination($itemsPerPage, $offset);
                 foreach ($importList as $value) {
                     echo '<tr>
                         <td>IM' . date('Ymd', strtotime($value['created_at'])) . sprintf('%03d', $value['id']) . '</td>
-                        <td>' . $value['sp_name'] . '</td>
+                        <td>' . $value['sp_name']. '</td>
+                        <td>' . $value['staff_name']. '</td>
                         <td>' . date('d/m/Y', strtotime($value['created_at'])) . '</td>
                         <td>' . $value['quantity'] . '</td>
-                        <td>' . number_format($value['total_price'], 2) . ' VNĐ</td>
+                        <td>' . number_format($value['total_price'], 0) . ' VNĐ</td>
                         <td class="control">
                             <button class="btn-detail" onclick="location.href=\'index.php?page=importdetail&import_id=' . $value['id'] . '\'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
                         </td>
