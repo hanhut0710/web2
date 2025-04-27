@@ -11,14 +11,6 @@ if (isset($_POST['btnAddProduct'])) {
     $brand_id = $_POST['brand_id'];
     $price = 0; // Giá bán mặc định là 0
 
-    // Kiểm tra dữ liệu đầu vào
-    if (empty($name) || empty($category_id) || empty($brand_id)) {
-        echo '<script>alert("Vui lòng điền đầy đủ thông tin sản phẩm!");
-            window.location.href = "../index.php?page=addProduct";
-            </script>';
-        exit();
-    }
-
     // Kiểm tra trùng lặp sản phẩm
     $existingProduct = $product->getProductByName($name);
     if ($existingProduct) {

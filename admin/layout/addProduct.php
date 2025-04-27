@@ -15,11 +15,11 @@ $brandList = $brand->getAllBrand();
         <div class="form-grid">
             <div class="form-group">
                 <label for="name">Tên sản phẩm</label>
-                <input type="text" name="name" id="name" required placeholder="Nhập tên sản phẩm">
+                <input type="text" name="name" id="name" placeholder="Nhập tên sản phẩm">
             </div>
             <div class="form-group">
                 <label for="brand_id">Thương hiệu</label>
-                <select name="brand_id" id="brand_id" required>
+                <select name="brand_id" id="brand_id">
                     <option value="">Chọn thương hiệu</option>
                     <?php 
                         foreach ($brandList as $value) {
@@ -30,7 +30,7 @@ $brandList = $brand->getAllBrand();
             </div>
             <div class="form-group">
                 <label for="category_id">Danh mục</label>
-                <select name="category_id" id="category_id" required>
+                <select name="category_id" id="category_id">
                     <option value="">Chọn danh mục</option>
                     <?php 
                         foreach ($categoryList as $value) {
@@ -45,7 +45,7 @@ $brandList = $brand->getAllBrand();
             </div>
             <div class="form-group">
                 <label for="status">Trạng thái</label>
-                <select name="status" id="status" required>
+                <select name="status" id="status">
                     <option value="1" selected>Hiển thị</option>
                     <option value="0">Ẩn</option>
                 </select>
@@ -114,4 +114,39 @@ function previewImage(event) {
         output.style.display = 'none';
     }
 }
+
+document.querySelector('form').addEventListener('submit', function(event) {
+    const name = document.getElementById('name').value.trim();
+    const brandId = document.getElementById('brand_id').value;
+    const categoryId = document.getElementById('category_id').value;
+    const status = document.getElementById('status').value;
+    const imgInput = document.getElementById('img_src');
+    
+    // Biến lưu thông báo lỗi
+    let errorMessage = '';
+
+    if (name === '') {
+        errorMessage += 'Vui lòng nhập tên sản phẩm!\n';
+    } else if (name.length < 3) {
+        errorMessage += 'Tên sản phẩm phải có ít nhất 3 ký tự!\n';
+    }
+
+    if (brandId === '') {
+        errorMessage += 'Vui lòng chọn thương hiệu!\n';
+    }
+
+    if (categoryId === '') {
+        errorMessage += 'Vui lòng chọn danh mục!\n';
+    }
+
+    if (status === '') {
+        errorMessage += 'Vui lòng chọn trạng thái!\n';
+    }
+
+
+    if (errorMessage !== '') {
+        alert(errorMessage);
+        event.preventDefault(); 
+    }
+});
 </script>
