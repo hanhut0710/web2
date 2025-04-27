@@ -175,7 +175,7 @@
                             include "statisticTopCustomer.php";
                             break;
                         case "statisticCustomerDetail":
-                            include "orderdetails.php";
+                            include "orderdetailStatistic.php";
                             break;
                        
                         /*** NHÂN VIÊN ***/

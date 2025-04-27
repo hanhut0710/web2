@@ -60,7 +60,7 @@
                             </li>
                             <li class="detail-order-item tb">
                                 <span class="detail-order-item-t"><i class="fa-light fa-location-dot"></i> Địa chỉ nhận</span>
-                                <p class="detail-order-item-b"><?php echo $orderItem['address']?></p>
+                                <p class="detail-order-item-b"><?php echo $orderItem['address_line']. ', '.$orderItem['ward']. ', '.$orderItem['district']. ', '.$orderItem['city']?></p>
                             </li>
                         </ul>
                     </div>
