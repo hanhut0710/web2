@@ -6,9 +6,9 @@
         $orderID = $_GET['id'];
         $detailLeft = $order -> getOrderDetailLeftByID($orderID);
         $detailRight = $order -> getOrderDetailRightByID($orderID);
-        echo '<pre>';
-        print_r($detailLeft);
-        echo '</pre>';
+        // echo '<pre>';
+        // print_r($detailLeft);
+        // echo '</pre>';
         }
 
 ?>
