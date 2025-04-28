@@ -6,14 +6,17 @@
         $orderID = $_GET['id'];
         $detailLeft = $order -> getOrderDetailLeftByID($orderID);
         $detailRight = $order -> getOrderDetailRightByID($orderID);
-        // echo '<pre>';
-        // print_r($detailRight);
-        // echo '</pre>';
+        echo '<pre>';
+        print_r($detailLeft);
+        echo '</pre>';
         }
 
 ?>
     
     <main class="content">
+        <a href="index.php?page=order" class=" btn-exit">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
         <div class="form-all-content-order">
                 <div class="modal-detail-order">
                     <div class="modal-detail-left">
@@ -42,6 +45,12 @@
                         ?>
                     </div>
                     <?php
+                     $fullAddress = implode(', ', [
+                        $detailRight['address_line'],
+                        $detailRight['ward'],
+                        $detailRight['district'],
+                        $detailRight['city']
+                    ]);
                     echo '
                     <div class="modal-detail-right">
                         <ul class="detail-order-group">
@@ -75,7 +84,7 @@
                             </li>
                             <li class="detail-order-item tb">
                                 <span class="detail-order-item-t"><i class="fa-light fa-location-dot"></i> Địa chỉ nhận</span>
-                                <p class="detail-order-item-b">'.$detailRight['address'].'</p>
+                                <p class="detail-order-item-b">'.$fullAddress.'</p>
                             </li>
                         </ul>
                     </div>
@@ -113,6 +122,7 @@
                 }
                     
                     ?>
+                    
                     </div>
                 </div>                                  
             </div>

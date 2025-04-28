@@ -34,16 +34,34 @@
             return $data;
         }
 
-        public function getAllOrder($limit , $offset){
+        public function getAllOrder($limit , $offset, $status = 'all' , $district = '' , $start_date = '' , $end_date = ''){
             $sql = "SELECT orders.id, orders.user_id, orders.pay_method, orders.total_price, orders.status, orders.created_at,
-            orders.name, orders.address, orders.phone, orders.email, 
+            orders.name, orders.address_id, orders.phone, orders.email, 
             order_status.status_name, order_status.updated_at, order_status.status AS order_status_status, 
-            accounts.username
+            accounts.username,
+            address.address_line, address.ward, address.district, address.city 
             FROM orders 
+            LEFT JOIN address ON orders.address_id = address.id
             LEFT JOIN users ON orders.user_id = users.id
             LEFT JOIN accounts ON users.acc_id = accounts.id
-            LEFT JOIN order_status ON orders.status = order_status.status_name
-            LIMIT $limit OFFSET $offset";
+            LEFT JOIN order_status ON orders.status = order_status.status_name";
+
+            $conditions = [];
+            if ($status != 'all') {
+                $conditions[] = "order_status.status = '$status'";
+            }
+            if ($district != '') {
+                $conditions[] = "address.district = '$district'";
+            }
+            if($start_date != '' && $end_date != ''){
+                $conditions[] = "orders.created_at BETWEEN '$start_date' AND '$end_date'";
+            }
+
+            if (!empty($conditions)) {
+                $sql .= " WHERE " . implode(" AND ", $conditions);
+            }
+
+            $sql .= " LIMIT $limit OFFSET $offset";
             $result = mysqli_query($this->conn,$sql);
             $orders=[];
             if($result){
@@ -53,12 +71,37 @@
             return $orders;
         }
 
-        public function getTotalOrder(){
-            $sql = "SELECT COUNT(*) as total FROM orders";
+        public function getTotalOrder($status = 'all' , $district = '', $start_date = '', $end_date = ''){
+            $sql = "SELECT COUNT(*) as total 
+            FROM orders
+            LEFT JOIN order_status ON orders.status = order_status.status_name
+            LEFT JOIN address ON orders.address_id = address.id";
+                    
+            $conditions =[];
+            if($status != 'all'){
+                $conditions[] = "order_status.status = '$status'";
+            }
+
+            if ($district != '') {
+                $conditions[] = "address.district = '$district'";
+            }
+
+            if ($start_date != '' && $end_date != '') {
+                $conditions[] = "orders.created_at BETWEEN '$start_date' AND '$end_date'";
+            }
+
+            if (!empty($conditions)) {
+                $sql .= " WHERE " . implode(" AND ", $conditions);
+            }
+
+            
+
             $result = mysqli_query($this->conn,$sql);
-            if($result)
-            $row = mysqli_fetch_assoc($result);
+            if ($result) {
+                $row = mysqli_fetch_assoc($result);
                 return $row['total'];
+            }
+            return 0;
         }
 
 
@@ -78,11 +121,13 @@
         }
 
         public function getOrderDetailRightByID($orderID){
-            $sql="SELECT orders.* , accounts.username , order_status.status AS statusEng
+            $sql="SELECT orders.* , accounts.username , order_status.status AS statusEng,
+            address.address_line, address.ward, address.district, address.city 
             FROM orders
             JOIN users ON orders.user_id = users.id
             JOIN accounts ON users.acc_id = accounts.id
             JOIN order_status ON orders.status = order_status.status_name
+            JOIN address ON orders.address_id = address.id
             WHERE orders.id = '$orderID'
             ";
             $result = mysqli_query($this->conn , $sql);
@@ -104,6 +149,24 @@
                 $status_update = $status_change[$status];
             else 
                 $status_update = $status;
+
+            if($status == 'cancelled'){
+               $sql = "SELECT product_detail_id, product_id, quanlity FROM order_details WHERE order_id = '$orderID'";
+               $result = mysqli_query($this->conn , $sql);
+               if($result){
+                    while($row = mysqli_fetch_assoc($result)){
+                        $productDetailID = $row['product_detail_id'];
+                        $productID = $row['product_id'];
+                        $quanlity = $row['quanlity'];
+
+                        $sql_update_products = "UPDATE products SET stock = stock + $quanlity WHERE id = $productID";
+                        mysqli_query($this->conn, $sql_update_products);
+
+                        $sql_update_details = "UPDATE product_details SET stock = stock + $quanlity WHERE id = $productDetailID";
+                        mysqli_query($this->conn, $sql_update_details);
+                    }
+               }
+            }
             
             $sql = "UPDATE orders SET status ='$status_update' WHERE id = '$orderID'";
             return mysqli_query($this->conn, $sql);
