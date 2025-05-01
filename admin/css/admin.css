@@ -2875,3 +2875,9 @@ button[type="submit"].btn-save{
     background-color: var(--orange);
     color: #fff;
 }
+
+.admin-order-control-center {
+    flex: 1;
+    width : 500px;
+    margin: 0 100px ;
+}

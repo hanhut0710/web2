@@ -65,13 +65,17 @@
                             <option value="Quận Tân Bình" <?php echo $district == 'Quận Tân Bình' ? 'selected' : ''; ?>>Quận Tân Bình</option>
                         </select>
                     </div>
-                    <div class="space"></div>
+                    <div class="admin-order-control-center">             
+                            <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
+                            <input id="form-search-order" type="text" class="form-search-input"
+                                placeholder="Tìm kiếm mã đơn, khách hàng..." disabled title="Chức năng tìm kiếm đang phát triển">
+                    </div>
                     <div class="admin-control-right">
-                        <div>
+                        <div class="fillter-date">
                             <label for="start_date">Từ</label>
                             <input type="date" name="start_date" id="start_date" class="form-control-date" value="<?php echo $start_date; ?>" onchange="this.form.submit()">
                         </div>
-                        <div>
+                        <div class="fillter-date">
                             <label for="end_date">Đến</label>
                             <input type="date" name="end_date" id="end_date" class="form-control-date" value="<?php echo $end_date; ?>" onchange="this.form.submit()">
                         </div>
