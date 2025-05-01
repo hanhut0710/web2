@@ -226,7 +226,15 @@ class Product {
 
     public function deleteProduct($productID)
     {   
-    // Xóa các bản ghi liên quan trong cart trước
+    // import_details
+    $sql = "DELETE id FROM import_details id
+    JOIN product_details pd ON id.product_detail_id = pd.id
+    WHERE pd.product_id = $productID";
+    $result = mysqli_query($this->conn, $sql);
+    if ($result === false) 
+    return false;
+
+    // cart
     $sql = "DELETE c FROM cart c
     JOIN product_details pd ON c.product_detail_id = pd.id
     WHERE pd.product_id = $productID";
@@ -235,7 +243,7 @@ class Product {
         return false;
     
 
-    // Xóa các bản ghi liên quan trong product_details
+    // product_details
     $sql = "DELETE FROM product_details WHERE product_id = $productID";
     $result = mysqli_query($this->conn, $sql);
     if ($result === false) 
