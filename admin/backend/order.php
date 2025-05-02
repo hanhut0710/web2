@@ -14,7 +14,7 @@
              $endDate = mysqli_real_escape_string($this->conn, $endDate);
              $user_id = mysqli_real_escape_string($this->conn, $user_id);
 
-             $sql = "SELECT o.*, a.address_line, a.ward, a.district, a.city FROM orders o JOIN address a ON o.address_id = a.id WHERE o.created_at BETWEEN '$startDate' AND '$endDate' AND o.user_id = '$user_id'";
+             $sql = "SELECT o.*, a.address_line, a.ward, a.district, a.city FROM orders o JOIN address a ON o.address_id = a.id WHERE o.created_at BETWEEN '$startDate' AND '$endDate' AND o.user_id = $user_id";
              $result = mysqli_query($this->conn, $sql);
              $data = [];
              while($row = mysqli_fetch_assoc($result)){

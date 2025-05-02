@@ -71,10 +71,10 @@
                 </div>
                 <div style="display: <?php echo ($view === 'table') ? 'flex' : 'none' ?>">
                     <a href="index.php?page=statisticOrder&start-date=<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>&end-date=<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>&sort=asc&view=table&page_num=<?php echo $page_num?>" class="btn-reset-order">
-                        <i class="fa-regular fa-arrow-up-short-wide"></i> Tăng dần
+                        <i class="fa-regular fa-arrow-up-short-wide"></i>
                     </a>
                     <a href="index.php?page=statisticOrder&start-date=<?php echo isset($_GET['start-date']) ? $_GET['start-date'] : ''; ?>&end-date=<?php echo isset($_GET['end-date']) ? $_GET['end-date'] : date('Y-m-d'); ?>&sort=desc&view=table&page_num=<?php echo $page_num?>" class="btn-reset-order">
-                        <i class="fa-regular fa-arrow-down-wide-short"></i> Giảm dần
+                        <i class="fa-regular fa-arrow-down-wide-short"></i>
                     </a>
                 </div>
             </form>                  
@@ -82,28 +82,28 @@
     </div>
     <div class="dashboard-container">
         <div class="card-grid">
-                <a href="index.php?page=statisticRevenue" class="card blue">
+                <a href="index.php?page=statisticRevenue&time=<?php echo $time ?>&start-date=<?php echo $startDate ?>&end-date=<?php echo $endDate ?>" class="card blue">
                     <div class="icon">📊</div>
                     <div>
                         <div class="card-title">DOANH THU</div>
                         <div class="card-value"> <?php echo number_format($statistic->getTotalRevenueByTime($startDate, $endDate), 0, ',', '.').'đ'?> </div>
                     </div>
                 </a>
-            <a href="index.php?page=statisticOrder" class="card green">
+            <a href="index.php?page=statisticOrder&time=<?php echo $time ?>&start-date=<?php echo $startDate ?>&end-date=<?php echo $endDate ?>" class="card green">
                 <div class="icon">🛒</div>
                 <div>
                      <div class="card-title">ĐƠN HÀNG</div>
                     <div class="card-value"> <?php echo $statistic->getTotalOrderByTime($startDate, $endDate);?> </div>
                 </div>
             </a>
-            <a href="index.php?page=statisticCustomer" class="card teal">
+            <a href="index.php?page=statisticCustomer&time=<?php echo $time ?>&start-date=<?php echo $startDate ?>&end-date=<?php echo $endDate ?>" class="card teal">
                 <div class="icon">👤</div>
                 <div>
                     <div class="card-title">KHÁCH HÀNG</div>
                     <div class="card-value"><?php echo $statistic->getTotalCustomerByTime($startDate, $endDate) ?></div>
                 </div>
             </a>
-            <a href="index.php?page=statisticTopCustomer" class="card orange">
+            <a href="index.php?page=statisticTopCustomer&time=<?php echo $time ?>&start-date=<?php echo $startDate ?>&end-date=<?php echo $endDate ?>" class="card orange">
                 <div class="icon">⭐</div>
                 <div class="card-value">TOP KHÁCH HÀNG</div>
             </a>

@@ -11,6 +11,8 @@
         }
 
         public function addAccount($username, $passwd){
+            $username = mysqli_real_escape_string($this->conn, $username);
+
             $sql = "INSERT INTO accounts (username, password) VALUES ('$username', '$passwd')";
             mysqli_query($this->conn, $sql);
         }
@@ -40,7 +42,14 @@
         }
 
         public function updateAccount($id, $username, $passwd){
-            $sql = "UPDATE accounts SET username = '$username', password = '$passwd' WHERE id = '$id'";
+            if(empty($passwd)){
+                $sql = "UPDATE accounts SET username = '$username' WHERE id = '$id'";
+                mysqli_query($this->conn, $sql);
+                return;
+            }
+            $hash = password_hash($passwd, PASSWORD_DEFAULT);
+
+            $sql = "UPDATE accounts SET username = '$username', password = '$hash' WHERE id = '$id'";
             mysqli_query($this->conn, $sql);
         }
 

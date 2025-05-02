@@ -88,10 +88,10 @@
         }
 
         public function searchStaffById($id, $limit, $offset) {
-            $id = mysqli_real_escape_string($this->conn, $id); // Tránh SQL Injection
-            $sql = "SELECT admin.id AS admin_id, admin.full_name, admin.phone, admin.email, admin.role, accounts.status 
+            // $id = mysqli_real_escape_string($this->conn, $id); // Tránh SQL Injection
+            $sql = "SELECT admin.id, admin.full_name, admin.phone, admin.email, admin.role, accounts.status 
                     FROM admin 
-                    JOIN accounts ON admin.acc_id = accounts.id 
+                    JOIN accounts ON admin.acc_id = accounts.id
                     WHERE admin.id LIKE '%$id%' 
                     LIMIT $limit OFFSET $offset";
             $result = mysqli_query($this->conn, $sql);

@@ -7,14 +7,15 @@
 
     $order = new Order();
     $orderList = $order->getOrderByTime($startDate, $endDate, $user_id);
-    
+   
 
 ?>
 <div class="section active">
 <?php foreach($orderList as $orderItem): ?>
         <div class="form-all-content">
                 <div class="modal-detail-order">
-                        <?php $orderDetail = $order->getOrderDetail($orderItem['id']); ?>
+                        <?php $orderDetail = $order->getOrderDetail($orderItem['id']); 
+                        ?>
                     <div class="modal-detail-left">
                         <div class="order-item-group">
                             <?php foreach($orderDetail as $item): ?>
