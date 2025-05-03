@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/custom.css"> <!-- file chứa đoạn trên -->
+
 </head>
 
 <body>
@@ -211,11 +213,11 @@ function search(event) {
 }
 
 function advance_search(){
+    event.preventDefault();
     mode = "advance_search";
     currentPage = 1; // Đặt chế độ là tìm kiếm nâng cao
     loadProducts();
-    
-   
+ 
 }
 
 

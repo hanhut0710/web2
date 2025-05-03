@@ -1,8 +1,8 @@
 <?php
 class Upload {
     private $targetDir = "../../img/shoes/";
-    private $allowedType = ["image/jpeg", "image/jpg", "image/png", "image/pjpeg", "image/x-png"];
-    private $maxSize = 1 * 1024 * 1024; // 1MB
+    private $allowedType = ["image/jpeg", "image/jpg", "image/png", "image/pjpeg"];
+    private $maxSize = 2 * 1024 * 1024; 
 
     public function uploadImage($file, $index = null) 
     {

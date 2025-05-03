@@ -4,6 +4,7 @@ class Pagination {
     private $totalPage; // Tổng số trang
     private $totalItem; //Tổng số bản ghi
     private $itemPerPage; //Số bản ghi mỗi trang
+    private $extraParams; //Danh cho loc order
 
     public function __construct($totalItem, $currentPage, $itemPerPage) 
     {
@@ -11,7 +12,15 @@ class Pagination {
         $this->itemPerPage = $itemPerPage;
         $this->totalPage = ceil($totalItem / $itemPerPage);
         $this->currentPage = max(1, min($currentPage, $this->totalPage));
+        $this -> extraParams =[];
     }
+
+    public function setExtraParams ($params){
+        $this->extraParams = array_filter($params , function($value){
+            return $value !== null && $value !== '';
+        });
+    }
+
 
     public function getOffset()
     {
@@ -128,6 +137,23 @@ class Pagination {
         return $html;
     }
     
+    public function renderImport($supplierId = '')
+    {
+        if ($this->totalPage <= 1)
+            return '';
+
+        $supplierParam = $supplierId ? '&supplier_id=' . intval($supplierId) : '';
+
+        $html = '<div class="page-nav">
+                    <ul class="page-nav-list">';
+        for ($i = 1; $i <= $this->totalPage; $i++) {
+            $url = '?page=import' . $supplierParam . '&page_num=' . $i;
+            $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
+            $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
+        }
+        $html .= '</ul></div>';
+        return $html;
+    }
     
     public function renderSupplier()
     {
@@ -186,6 +212,71 @@ class Pagination {
             if($pageParam)
                 $url .= $pageParam . '&';
             $url .= 'search_id='. $id . '&page_num='. $i;
+
+            $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
+            $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
+        }
+        $html .= '</ul></div>';
+        return $html;
+    }
+
+    public function renderOrderList($startDate, $endDate, $sort) {
+        if ($this->totalPage <= 1)
+            return '';
+
+        $pageParam = isset($_GET['page']) ? 'page=' . $_GET['page'] : '';
+
+        $html = '<div class="page-nav">
+                    <ul class="page-nav-list">';
+        for ($i = 1; $i <= $this->totalPage; $i++) {
+            $url = '?view=table&sort=' . $sort .'&';
+            if($pageParam)
+                $url .= $pageParam . '&';
+            $url .= 'start-date='. $startDate . '&end-date='. $endDate . '&page_num='. $i;
+
+            $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
+            $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
+        }
+        $html .= '</ul></div>';
+        return $html;
+    }
+
+    public function renderUser()
+    {
+        if($this->totalPage <= 1)
+            return '';
+
+        $pageParam = isset($_GET['page']) ? 'page=' . $_GET['page'] : '';
+
+        $html = '<div class="page-nav">
+                    <ul class="page-nav-list">';
+        for ($i = 1; $i <= $this->totalPage; $i++) {
+            $url = '?';
+            if($pageParam)
+                $url .= $pageParam . '&';
+            $url .= 'page_num='. $i;
+
+            $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
+            $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
+        }
+        $html .= '</ul></div>';
+        return $html;
+    }
+
+    public function renderOrder()
+    {
+        if($this->totalPage <= 1)
+            return '';
+
+        $pageParam = isset($_GET['page']) ? 'page=' . $_GET['page'] : 'page=order';
+        $extraParams = http_build_query($this->extraParams);
+        $html = '<div class="page-nav">
+                    <ul class="page-nav-list">';
+        for ($i = 1; $i <= $this->totalPage; $i++) {
+            $url = '?' . $pageParam;
+            if($extraParams)
+                $url .= '&' . $extraParams;
+            $url .= '&page_num='. $i;
 
             $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
             $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';

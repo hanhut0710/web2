@@ -28,16 +28,16 @@ class Import {
 
     public function getAllImportByPagination($limit, $offset)
     {
-        $sql = "SELECT ip.id, ip.created_at, ip.quantity, ip.total_price, 
-                       sp.sup_name AS sp_name
-                FROM import ip
-                LEFT JOIN supplier sp ON ip.sup_id = sp.id
+        $sql = "SELECT i.*, s.sup_name as sp_name, a.full_name as staff_name
+                FROM import i
+                LEFT JOIN supplier s ON i.sup_id = s.id
+                LEFT JOIN admin a ON i.staff_id = a.id
                 LIMIT $limit OFFSET $offset";
         $result = mysqli_query($this->conn, $sql);
         $imports = [];
         if ($result) {
-            while ($rows = mysqli_fetch_array($result)) {
-                $imports[] = $rows;
+            while ($row = mysqli_fetch_assoc($result)) {
+                $imports[] = $row;
             }
         }
         return $imports;
@@ -65,10 +65,10 @@ class Import {
         return 0;
     }
 
-    public function insertImport($supID, $quantity, $date, $totalPrice)
-    {
-        $sql = "INSERT INTO import (sup_id, quantity, created_at, total_price) 
-                VALUES ('$supID', '$quantity', '$date', '$totalPrice')";
+    public function insertImport($supID, $staffID, $quantity, $date, $totalPrice)
+    {   
+        $sql = "INSERT INTO import (sup_id, staff_id, quantity, created_at, total_price) 
+                VALUES ('$supID', '$staffID', '$quantity', '$date', '$totalPrice')";
         $result = mysqli_query($this->conn, $sql);
         if ($result) {
             return mysqli_insert_id($this->conn); // Trả về ID của phiếu nhập
@@ -101,7 +101,7 @@ class Import {
 
     public function getImportDetailsByImport($importID)
     {
-        $sql = "SELECT p.name, pd.size, pd.color, id.quantity, id.price, id.total_price, b.name as brand_name
+        $sql = "SELECT p.name, pd.size, pd.color, pd.img_src, id.quantity, id.price, id.total_price, b.name as brand_name
                 FROM import_details id
                 JOIN product_details pd ON id.product_detail_id = pd.id
                 JOIN products p ON pd.product_id = p.id
@@ -119,7 +119,7 @@ class Import {
 
     public function getImportById($import_id)
     {
-        $sql = "SELECT ip.id, ip.created_at, ip.quantity, ip.total_price, sp.sup_name
+        $sql = "SELECT ip.id, ip.created_at, ip.quantity, ip.total_price, ip.staff_id, sp.sup_name
                 FROM import ip
                 JOIN supplier sp ON ip.sup_id = sp.id
                 WHERE ip.id = '$import_id'";

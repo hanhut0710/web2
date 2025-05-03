@@ -53,9 +53,9 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
     <div id="show-product">
         <?php
         if (count($productList) > 0) {
-            $img_src = !empty($value['img_src']) ? $value['img_src'] : $product->getFirstImage($value['id']);
-            foreach ($productList as $value) {
-                echo '<div class="list">
+            foreach ($productList as $value) 
+            {
+                    echo '<div class="list">
                     <div class="list-left">
                         <img src="../' .$value['img_src'] . '" alt="" style="max-width: 100px;">
                         <div class="list-info">
@@ -63,6 +63,7 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
                             <span class="list-category">' . $value['cat_name'] . '</span>
                             <span class="list-category">' . $value['brand_name'] . '</span>
                             <span class="list-stock">Số lượng: ' . $value['stock'] . '</span>
+                            <span class="list-status">' . ($value['status'] == 1 ? 'Hiển thị' : 'Ẩn') . '</span>
                         </div>
                     </div>
                     <div class="list-right">
@@ -72,7 +73,7 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
                         <div class="list-control">
                             <div class="list-tool">
                                 <a href="index.php?page=editProduct&id='.$value['id'].'"><button class="btn-edit" name="btnEditProduct"><i class="fa-light fa-pen-to-square"></i></button></a>
-                                <a href="./backend/xulySP.php&id=' . $value['id'] . '&act=delete"><button class="btn-delete" name="btnDeleteProduct"><i class="fa-regular fa-trash"></i></button></a>
+                                <button class="btn-delete" onclick="confirmDelete('.$value['id'].', \''.$value['name'].'\')" name="btnDeleteProduct"><i class="fa-regular fa-trash"></i></button>
                             </div>
                         </div>
                     </div>
@@ -104,5 +105,11 @@ function filterByCategory(categoryId) {
         url += '&page_num=<?php echo $page_num; ?>';
     <?php } ?>
     window.location.href = url;
+}
+
+function confirmDelete(productId, productName) {
+    if (confirm(`Bạn có chắc chắn muốn xóa sản phẩm "${productName}"?`)) {
+        window.location.href = `./backend/xulySP.php?id=${productId}&act=delete`;
+    }
 }
 </script>

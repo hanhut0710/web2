@@ -7,7 +7,13 @@ if (isset($_GET['product_id'])) {
     $productId = $_GET['product_id'];
 
     // Truy vấn chi tiết sản phẩm
-    $query = "SELECT * FROM products p, product_details pd WHERE p.id = '$productId' AND pd.product_id = p.id GROUP BY pd.size"; 
+    $query = "SELECT p.*, b.name AS brand_name, pd.*
+    FROM products p
+    JOIN product_details pd ON p.id = pd.product_id
+    JOIN brand b ON p.brand_id = b.id
+    WHERE p.id = '$productId'
+    GROUP BY pd.size";
+    
     $query2 = "SELECT DISTINCT pd.size 
     FROM product_details pd , products p
     WHERE pd.product_id = p.id";

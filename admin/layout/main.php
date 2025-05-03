@@ -40,7 +40,7 @@
                             </a>
                         </li>
                         <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=customer" class="sidebar-link">
+                            <a href="index.php?page=user" class="sidebar-link">
                                 <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
                                 <div class="hidden-sidebar">Khách hàng</div>
                             </a>
@@ -51,30 +51,24 @@
                                 <div class="hidden-sidebar">Đơn hàng</div>
                             </a>
                         </li>
-                        <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=staff" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa fa-users" aria-hidden="true"></i></div>
-                                <div class="hidden-sidebar">Nhân viên</div>
-                            </a>
-                        </li>
-                        <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=statisticProduct" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
-                                <div class="hidden-sidebar">Thống kê sản phẩm</div>
-                            </a>
-                        </li>
-                        <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=statisticCustomer" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa-solid fa-square-poll-vertical"></i></div>
-                                <div class="hidden-sidebar">Thống kê khách hàng</div>
-                            </a>
-                        </li>
-                        <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=permission" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa-solid fa-list-check"></i></div>
-                                <div class="hidden-sidebar">Quản lý quyền</div>
-                            </a>
-                        </li>
+                        <?php 
+                            if($authManager->hasPermission($_SESSION['id'], 4)){
+                                echo '<li class="sidebar-list-item tab-content">
+                                        <a href="index.php?page=staff" class="sidebar-link">
+                                            <div class="sidebar-icon"><i class="fa fa-users" aria-hidden="true"></i></div>
+                                            <div class="hidden-sidebar">Nhân viên</div>
+                                        </a>
+                                     </li>';
+                            } ?>
+                        <?php 
+                            if($authManager->hasPermission($_SESSION['id'], 13)){
+                                echo '<li class="sidebar-list-item tab-content">
+                                        <a href="index.php?page=statisticRevenue" class="sidebar-link">
+                                            <div class="sidebar-icon"><i class="fa-solid fa-square-poll-vertical"></i></div>
+                                            <div class="hidden-sidebar">Thống kê</div>
+                                        </a>
+                                    </li>';
+                            } ?>
                     </ul>
                 </div>
                 <div class="bottom-sidebar">
@@ -149,34 +143,96 @@
                         case "order":
                             include "order.php";
                             break;
-                        case "customer":
-                            include "customer.php";
+                        case "user":
+                            include "user.php";
                             break;
+                        case "addUser":
+                            include "addUser.php";
+                            break;
+                        case "editUser":
+                            include "editUser.php";
+                            break;
+                         case "orderdetails":
+                            include "orderdetails.php";
+                            break; 
                         /*** THỐNG KÊ ***/ 
                         case "statisticProduct":
-                            include "statisticProduct.php";
+                            if($authManager->hasPermission($_SESSION['id'], 13))
+                                include "statisticProduct.php";
+                            else 
+                                include "403.php";
+                            break;
+                        case "statisticRevenue":
+                            if($authManager->hasPermission($_SESSION['id'], 13))
+                                include "statisticRevenue.php";
+                            else 
+                                include "403.php";
+                            break;
+                        case "statisticOrder":
+                            if($authManager->hasPermission($_SESSION['id'], 13))
+                                include "statisticOrder.php";
+                            else 
+                                include "403.php";
                             break;
                         case "statisticCustomer":
-                            include "statisticCustomer.php";
+                            if($authManager->hasPermission($_SESSION['id'], 13))
+                                include "statisticCustomer.php";
+                            else 
+                                include "403.php";
+                            break;
+                        case "statisticTopCustomer":
+                            if($authManager->hasPermission($_SESSION['id'], 13))
+                                include "statisticTopCustomer.php";
+                            else 
+                                include "403.php";
+                            break;
+                        case "statisticCustomerDetail":
+                            if($authManager->hasPermission($_SESSION['id'], 13))
+                                include "orderdetailStatistic.php";
+                            else 
+                                include "403.php";
                             break;
                        
-                        case "permission":
-                            include "permission.php";
-                            break;
                         /*** NHÂN VIÊN ***/
                         case "staff":
-                            include "staff.php";
+                            if($authManager->hasPermission($_SESSION['id'], 4)){
+                                include "staff.php";
+                            }else{
+                                include "403.php";
+                            }
                             break;
                         case "createStaff":
-                            include "addStaff.php";
+                            if($authManager->hasPermission($_SESSION['id'], 1)){
+                                include "addStaff.php";
+                            }else{
+                                include "403.php";
+                            }
                             break;
                         case "updateStaff":
-                            include "updateStaff.php";
+                            if($authManager->hasPermission($_SESSION['id'], 2)){
+                                include "updateStaff.php";
+                            }else{
+                                include "403.php";
+                            }
                             break;
                         case "deleteStaff":
-                            include "deleteStaff.php";
+                            if($authManager->hasPermission($_SESSION['id'], 3)){
+                                include "deleteStaff.php";
+                            }else{
+                                include "403.php";
+                            }
                             break;
-                            
+
+                        //Phân quyền
+                        case "permission":
+                            if($_SESSION['role'] == 2){
+                                include "permission.php";
+                            }
+                            else{
+                                include "403.php";
+                            }
+                            break;
+                       
                         default:
                             include "home.php";
                             break;

@@ -76,7 +76,7 @@ $brandList = $brand->getAllBrand();
         </div>
         <div class="submit-btn">
             <button type="submit" name="btnEditProduct" class="btn-control-large"><i class="fa fa-save"></i> Lưu thay đổi</button>
-            <a href="../index.php?page=product"><button type="button" class="btn-control-large">Hủy</button></a>
+            <a href="index.php?page=product"><button type="button" class="btn-control-large">Hủy</button></a>
         </div>
     </form>
 </div>

@@ -214,7 +214,7 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             document.getElementById("popup-image").src = data.product.img_src;
             document.getElementById("popup-name").innerText = data.product.name;
             document.getElementById("popup-price").innerText = data.product.price;
-            document.getElementById("popup-brand").innerText = data.product.brand;
+            document.getElementById("popup-brand").innerText = data.product.brand_name;
             document.getElementById("popup-color").innerText = data.product.color;
             document.getElementById("popup-quantity").innerText = data.product.stock;
         
@@ -245,20 +245,25 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             data.color.forEach(color => {
                 const colorElement = document.createElement("span");
                 colorElement.classList.add("color-option");
-                colorElement.style.backgroundColor = color.color; // Gán màu nền
-                
+            
+                const img = document.createElement("img");
+                img.src = color.img_src;
+                img.alt = color.color;
+                img.classList.add("color-thumbnail"); // Thêm class để dễ CSS
+                colorElement.appendChild(img);
+            
                 colorContainer.appendChild(colorElement);
+            
                 colorElement.addEventListener("click", function () {
-                    // Xóa class active của các màu trước đó
                     document.querySelectorAll('.color-option').forEach(e => e.classList.remove("active"));
                     colorElement.classList.add("active");
                     selectedColor = color.color;
-                    // console.log("Màu đã chọn:", color.color);
-                    // Thay đổi hình ảnh tương ứng với màu được chọn
-                    // console.log("URL hình ảnh:", color.img_src);
-                    productImage.src = color.img_src; // Cập nhật ảnh theo màu
+                    console.log(selectedColor);
+                    productImage.src = color.img_src;
                     updateSelectedDetailId();
                     });
+
+                    
             });
             let productDetails = [];
             function fetchProductDetails(productId) {
@@ -276,6 +281,7 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             }
             fetchProductDetails(productId);
             function updateSelectedDetailId() {
+                console.log(selectedColor);
                 if (selectedSize && selectedColor && productDetails) {
                     const match = productDetails.find(d => d.size === selectedSize && d.color === selectedColor);
                     if (match) {
@@ -368,5 +374,10 @@ document.getElementById("productDetails").classList.add("show");
 // Ẩn popup khi nhấn nút đóng
 function closeProductDetails() {
 document.getElementById("productDetails").classList.remove("show");
+}
+
+function openFilter() {
+    const form = document.querySelector('#advancedSearchForm');
+    form.classList.toggle('active');
 }
 

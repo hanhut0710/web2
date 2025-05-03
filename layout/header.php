@@ -122,21 +122,20 @@ if (session_status() == PHP_SESSION_NONE) {
         <!-- Thông tin sản phẩm -->
         <div class="product__details__text">
             <h4 id="popup-name">Tên sản phẩm</h4>
-            <p><strong>Giá:</strong> <span id="popup-price"></span></p>
-            <p><strong>Thương hiệu:</strong> <span id="popup-brand"></span></p>
+            <p><strong>Giá: </strong> <span id="popup-price"></span></p>
+            <p><strong>Thương hiệu: </strong> <span id="popup-brand"></span></p>
 
-            <p><strong>Tồn hàng:</strong><span id="popup-quantity" class="quantities"></span></p>
+            <p><strong>Tồn hàng: </strong><span id="popup-quantity" class="quantities"></span></p>
             
-
-            <p><strong>Màu sắc:</strong></p>   
+            <p><strong></strong></p>   
             <div id="popup-color" class="color-options"></div>
             
-            <p><strong>Kích thước:</strong></p>
+            <p><strong>Kích thước: </strong></p>
             <div id="popup-sizes" class="size-options"></div>
             
             <!-- Nút Thêm vào giỏ hàng & Mua ngay -->
-            <button class="btn-addcart">Thêm vào giỏ hàng</button>
-            <button class="btn-buynow">Mua ngay</button>
+            <button class="btn-addcart">Thêm vào giỏ hàng <i class="fa-solid fa-cart-plus"></i></button>
+            <button class="btn-buynow">Mua ngay <i class="fa-solid fa-sack-dollar"></i></button>
         </div>
     </div>
 </div>

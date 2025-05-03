@@ -61,6 +61,22 @@
     .cards{
         flex-wrap: wrap;
     }
+
+    .fillter-date div{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+    }
+
+    .fillter-date{
+        flex-wrap: wrap;
+    }
+
+    .btn-reset-order{
+        margin: 10px;
+    }
 }
 
 @media only screen and (max-width: 786px) {
@@ -82,6 +98,7 @@
         min-width: 140px;
         height: 110px;
     }
+
 }
 
 @media only screen and (max-width: 615px) {

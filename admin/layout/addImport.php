@@ -1,368 +1,171 @@
 <?php
 require_once "./backend/supplier.php";
 require_once "./backend/product.php";
-require_once "./backend/category.php";
-require_once "./backend/brand.php";
 
 $supplier = new Supplier();
 $product = new Product();
-$category = new Category();
-$brand = new Brand();
 
 $supplierList = $supplier->getAllSupplier();
 $productList = $product->getAllProduct();
-$categoryList = $category->getAllCategory();
-$brandList = $brand->getAllBrand();
+
 ?>
 
-<div class="section add-import active">
-    <div class="form-container">
-        <h2>Thêm Phiếu Nhập Hàng</h2>
-        <form id="importForm" action="./backend/xulyPNH.php" method="post" enctype="multipart/form-data">
-            <!-- Thông tin chung -->
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="sup_id">Nhà cung cấp</label>
-                    <select id="sup_id" name="sup_id" required>
-                        <option value="">Chọn nhà cung cấp</option>
-                        <?php foreach ($supplierList as $value) {
-                            echo '<option value="' . $value['id'] . '">' . $value['sup_name'] . '</option>';
-                        } ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="profit_percentage">Phần trăm lợi nhuận (%)</label>
-                    <input type="number" id="profit_percentage" name="profit_percentage" step="0.1" min="0" required placeholder="Nhập % lợi nhuận">
-                </div>
-                <div class="form-group">
-                    <label for="created_at">Ngày nhập</label>
-                    <input type="date" id="created_at" name="created_at" required>
-                </div>
-            </div>
+<section class="section add-import active">
+    <h2 class="page-title">Thêm Phiếu Nhập Hàng</h2>
 
-            <!-- Danh sách sản phẩm -->
-            <div class="form-group full-width">
-                <label>Sản phẩm</label>
-                <div id="product-container">
-                    <!-- Sản phẩm đầu tiên -->
-                    <div class="product-group" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
-                        <h4>Sản phẩm 1</h4>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="products_0_product_id">Chọn sản phẩm</label>
-                                <select name="products[0][product_id]" id="products_0_product_id" onchange="toggleNewProductForm(0)">
-                                    <option value="">Chọn sản phẩm</option>
-                                    <?php foreach ($productList as $p) {
-                                        echo '<option value="' . $p['id'] . '">' . $p['name'] . '</option>';
-                                    } ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <button type="button" class="btn-small" onclick="showNewProductForm(0)">Thêm sản phẩm mới</button>
-                            </div>
-                        </div>
-                        <!-- Form thêm sản phẩm mới (ẩn mặc định) -->
-                        <div class="new-product-form" id="newProductForm_0" style="display: none; margin-top: 20px;">
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="products_0_new_product_name">Tên sản phẩm</label>
-                                    <input type="text" name="products[0][new_product_name]" id="products_0_new_product_name" placeholder="Nhập tên sản phẩm">
-                                </div>
-                                <div class="form-group">
-                                    <label for="products_0_new_product_brand">Thương hiệu</label>
-                                    <select name="products[0][new_product_brand]" id="products_0_new_product_brand">
-                                        <option value="">Chọn thương hiệu</option>
-                                        <?php foreach ($brandList as $value) {
-                                            echo '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
-                                        } ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="products_0_new_product_category">Danh mục</label>
-                                    <select name="products[0][new_product_category]" id="products_0_new_product_category">
-                                        <option value="">Chọn danh mục</option>
-                                        <?php foreach ($categoryList as $value) {
-                                            echo '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
-                                        } ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="products_0_new_product_status">Trạng thái</label>
-                                    <select name="products[0][new_product_status]" id="products_0_new_product_status">
-                                        <option value="1" selected>Hiển thị</option>
-                                        <option value="0">Ẩn</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="products_0_new_product_img">Ảnh đại diện</label>
-                                    <label for="products_0_new_product_img" class="custom-file-upload">Chọn ảnh</label>
-                                    <input type="file" id="products_0_new_product_img" name="products[0][new_product_img]" accept="image/*">
-                                    <img class="preview-img" id="preview_products_0_new_product_img" src="#" alt="Ảnh xem trước" style="display: none; max-width: 100px;">
-                                </div>
-                                <div class="form-group">
-                                    <label for="products_0_new_product_price">Giá bán</label>
-                                    <input type="number" name="products[0][new_product_price]" id="products_0_new_product_price" step="0.01" value="0" readonly>
-                                </div>
-                            </div>
-                            <button type="button" class="btn-small" onclick="hideNewProductForm(0)">Ẩn form</button>
-                        </div>
-                        <!-- Biến thể (chỉ 1) -->
-                        <div class="form-group full-width">
-                            <label>Chi tiết biến thể</label>
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="products_0_color">Màu sắc</label>
-                                    <input type="text" name="products[0][color]" id="products_0_color" placeholder="Màu sắc" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="products_0_size">Kích cỡ</label>
-                                    <input type="text" name="products[0][size]" id="products_0_size" placeholder="Kích cỡ" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="products_0_import_price">Giá nhập</label>
-                                    <input type="number" name="products[0][import_price]" id="products_0_import_price" placeholder="Giá nhập" step="0.01" min="0" required oninput="updateNewProductPrice(0)">
-                                </div>
-                                <div class="form-group">
-                                    <label for="products_0_quantity">Số lượng</label>
-                                    <input type="number" name="products[0][quantity]" id="products_0_quantity" placeholder="Số lượng" min="1" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="products_0_img_src">Ảnh biến thể</label>
-                                    <label for="products_0_img_src" class="custom-file-upload">Chọn ảnh</label>
-                                    <input type="file" id="products_0_img_src" name="products[0][img_src]" accept="image/*" onchange="previewImage(this, 'preview_products_0_img_src')">
-                                    <img class="preview-img" id="preview_products_0_img_src" src="#" alt="Ảnh xem trước" style="display: none; max-width: 100px;">
-                                </div>
-                            </div>
-                        </div>
-                        <button type="button" class="btn-small btn-delete" onclick="removeProduct(this)" style="background-color: #e74c3c; margin-top: 10px;">Xóa sản phẩm</button>
-                    </div>
-                </div>
-                <button type="button" class="btn-small" onclick="addProduct()">Thêm sản phẩm</button>
-            </div>
+    <?php if (empty($supplierList)) { ?>
+        <p style="color: red; text-align: center;">Không có nhà cung cấp nào trong hệ thống!</p>
+    <?php } ?>
+    <?php if (empty($productList)) { ?>
+        <p style="color: red; text-align: center;">Không có sản phẩm nào trong hệ thống!</p>
+    <?php } ?>
 
-            <!-- Nút điều khiển -->
-            <div class="submit-btn">
-                <button type="submit" name="btnAddImport" class="btn-control-large">Lưu</button>
-                <a href="index.php?page=import"><button type="button" class="btn-control-large">Hủy</button></a>
-            </div>
-        </form>
-    </div>
-</div>
+    <form id="importForm" method="post" action="backend/xulyPNH.php" enctype="multipart/form-data">
+        <div class="info-table-container">
+            <table class="info-table">
+                <tbody>
+                    <tr>
+                        <th>Nhà cung cấp</th>
+                        <td>
+                            <select name="sup_id" id="sup_id">
+                                <option value="">Chọn nhà cung cấp</option>
+                                <?php foreach ($supplierList as $value) {
+                                    echo '<option value="' . $value['id'] . '">' . htmlspecialchars($value['sup_name']) . '</option>';
+                                } ?>
+                            </select>
+                        </td>
+                        <th>Nhân viên</th>
+                        <td>
+                            <input type="text" name="staff_name" value="<?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : ''; ?>" readonly>
+                            <input type="hidden" name="staff_id" value="<?php echo isset($_SESSION['staff_id']) ? htmlspecialchars($_SESSION['staff_id']) : ''; ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Ngày tạo phiếu</th>
+                        <td><input type="date" name="created_at" id="created_at"></td>
+                        <th>Phần trăm lợi nhuận (%)</th>
+                        <td><input type="text" name="profit_percentage" id="profit_percentage" placeholder="Nhập phần trăm lợi nhuận" pattern="^\d+(\.\d{1,2})?$"></td>
+                    </tr>
+                </tbody>
+            </table>
 
-<style>
-.product-group {
-    background-color: #f9f9f9;
-}
-.product-type-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.btn-small {
-    padding: 5px 10px;
-    background-color: var(--orange);
-    color: white;
-    border-radius: 5px;
-    font-size: 14px;
-}
-.btn-small:hover {
-    background-color: #e5a500;
-}
-.btn-delete {
-    background-color: #e74c3c;
-}
-.btn-delete:hover {
-    background-color: #c0392b;
-}
-.custom-file-upload {
-    padding: 8px 15px;
-    font-size: 14px;
-    background-color: var(--orange);
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.custom-file-upload:hover {
-    background-color: #e5a500;
-}
-.preview-img {
-    max-height: 100px;
-    object-fit: cover;
-    margin-top: 10px;
-}
-.new-product-form {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-}
-@media (max-width: 768px) {
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
+            <div class="control-buttons">
+                <button type="button" class="btn-control-large" id="add-row">Thêm dòng</button>
+            </div>
+        </div>
+
+        <div class="table">
+            <table id="product-table" class="product-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá nhập</th>
+                        <th>Màu sắc</th>
+                        <th>Kích cỡ</th>
+                        <th>Upload ảnh</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="product-body">
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <select name="products[0][product_id]">
+                                <option value="">Chọn sản phẩm</option>
+                                <?php foreach ($productList as $p) {
+                                    echo '<option value="' . $p['id'] . '">' .($p['name']). '</option>';
+                                } ?>
+                            </select>
+                        </td>
+                        <td><input type="number" name="products[0][quantity]" min="1" value="1"></td>
+                        <td><input type="text" name="products[0][import_price]" placeholder="Giá nhập" pattern="^\d+(\.\d{1,2})?$"></td>
+                        <td><input type="text" name="products[0][color]" placeholder="Màu sắc"></td>
+                        <td><input type="text" name="products[0][size]" placeholder="Kích cỡ"></td>
+                        <td>
+                            <label class="btn-upload" for="upload-img-1">Tải ảnh</label>
+                            <input type="file" id="upload-img-1" name="products[0][img_src]" accept="image/*" style="display: none;" onchange="previewImage(this, 1)">
+                            <img id="preview-img-1" class="preview-img" src="#" alt="Ảnh xem trước" style="display: none;">
+                        </td>
+                        <td><button type="button" class="btn-delete" onclick="deleteRow(this)">Xóa</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-buttons">
+            <button type="submit" name="btnAddImport" class="btn-control-large">Tạo Phiếu Nhập</button>
+        </div>
+    </form>
+</section>
 
 <script>
-let productCount = 1;
+let count = 1;
 
-function addProduct() {
-    const container = document.getElementById('product-container');
-    const productGroup = document.createElement('div');
-    productGroup.className = 'product-group';
-    productGroup.style.border = '1px solid #ddd';
-    productGroup.style.padding = '15px';
-    productGroup.style.marginBottom = '15px';
-    productGroup.style.borderRadius = '8px';
-    productGroup.innerHTML = `
-        <h4>Sản phẩm ${productCount + 1}</h4>
-        <div class="form-grid">
-            <div class="form-group">
-                <label for="products_${productCount}_product_id">Chọn sản phẩm</label>
-                <select name="products[${productCount}][product_id]" id="products_${productCount}_product_id" onchange="toggleNewProductForm(${productCount})">
-                    <option value="">Chọn sản phẩm</option>
-                    <?php foreach ($productList as $p) {
-                        echo '<option value="' . $p['id'] . '">' . $p['name'] . '</option>';
-                    } ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <button type="button" class="btn-small" onclick="showNewProductForm(${productCount})">Thêm sản phẩm mới</button>
-            </div>
-        </div>
-        <div class="new-product-form" id="newProductForm_${productCount}" style="display: none; margin-top: 20px;">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="products_${productCount}_new_product_name">Tên sản phẩm</label>
-                    <input type="text" name="products[${productCount}][new_product_name]" id="products_${productCount}_new_product_name" placeholder="Nhập tên sản phẩm">
-                </div>
-                <div class="form-group">
-                    <label for="products_${productCount}_new_product_brand">Thương hiệu</label>
-                    <select name="products[${productCount}][new_product_brand]" id="products_${productCount}_new_product_brand">
-                        <option value="">Chọn thương hiệu</option>
-                        <?php foreach ($brandList as $value) {
-                            echo '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
-                        } ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="products_${productCount}_new_product_category">Danh mục</label>
-                    <select name="products[${productCount}][new_product_category]" id="products_${productCount}_new_product_category">
-                        <option value="">Chọn danh mục</option>
-                        <?php foreach ($categoryList as $value) {
-                            echo '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
-                        } ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="products_${productCount}_new_product_status">Trạng thái</label>
-                    <select name="products[${productCount}][new_product_status]" id="products_${productCount}_new_product_status">
-                        <option value="1" selected>Hiển thị</option>
-                        <option value="0">Ẩn</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="products_${productCount}_new_product_img">Ảnh đại diện</label>
-                    <label for="products_${productCount}_new_product_img" class="custom-file-upload">Chọn ảnh</label>
-                    <input type="file" id="products_${productCount}_new_product_img" name="products[${productCount}][new_product_img]" accept="image/*">
-                    <img class="preview-img" id="preview_products_${productCount}_new_product_img" src="#" alt="Ảnh xem trước" style="display: none; max-width: 100px;">
-                </div>
-                <div class="form-group">
-                    <label for="products_${productCount}_new_product_price">Giá bán</label>
-                    <input type="number" name="products[${productCount}][new_product_price]" id="products_${productCount}_new_product_price" step="0.01" value="0" readonly>
-                </div>
-            </div>
-            <button type="button" class="btn-small" onclick="hideNewProductForm(${productCount})">Ẩn form</button>
-        </div>
-        <div class="form-group full-width">
-            <label>Chi tiết biến thể</label>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="products_${productCount}_color">Màu sắc</label>
-                    <input type="text" name="products[${productCount}][color]" id="products_${productCount}_color" placeholder="Màu sắc" required>
-                </div>
-                <div class="form-group">
-                    <label for="products_${productCount}_size">Kích cỡ</label>
-                    <input type="text" name="products[${productCount}][size]" id="products_${productCount}_size" placeholder="Kích cỡ" required>
-                </div>
-                <div class="form-group">
-                    <label for="products_${productCount}_import_price">Giá nhập</label>
-                    <input type="number" name="products[${productCount}][import_price]" id="products_${productCount}_import_price" placeholder="Giá nhập" step="0.01" min="0" required oninput="updateNewProductPrice(${productCount})">
-                </div>
-                <div class="form-group">
-                    <label for="products_${productCount}_quantity">Số lượng</label>
-                    <input type="number" name="products[${productCount}][quantity]" id="products_${productCount}_quantity" placeholder="Số lượng" min="1" required>
-                </div>
-                <div class="form-group">
-                    <label for="products_${productCount}_img_src">Ảnh biến thể</label>
-                    <label for="products_${productCount}_img_src" class="custom-file-upload">Chọn ảnh</label>
-                    <input type="file" id="products_${productCount}_img_src" name="products[${productCount}][img_src]" accept="image/*" onchange="previewImage(this, 'preview_products_${productCount}_img_src')">
-                    <img class="preview-img" id="preview_products_${productCount}_img_src" src="#" alt="Ảnh xem trước" style="display: none; max-width: 100px;">
-                </div>
-            </div>
-        </div>
-        <button type="button" class="btn-small btn-delete" onclick="removeProduct(this)" style="background-color: #e74c3c; margin-top: 10px;">Xóa sản phẩm</button>
+// Hàm để lấy ngày hiện tại và điền vào input date
+function setCurrentDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const currentDate = `${year}-${month}-${day}`;
+    document.getElementById('created_at').value = currentDate;
+}
+
+// Gọi hàm khi trang được tải
+document.addEventListener('DOMContentLoaded', function() {
+    setCurrentDate();
+});
+
+document.getElementById('add-row').addEventListener('click', function() {
+    const tbody = document.getElementById('product-body');
+    const row = document.createElement('tr');
+    const rowIndex = count;
+    row.innerHTML = `
+        <td>${count++}</td>
+        <td>
+            <select name="products[${rowIndex}][product_id]">
+                <option value="">Chọn sản phẩm</option>
+                <?php foreach ($productList as $p) {
+                    echo '<option value="' . $p['id'] . '">' .($p['name']) . '</option>';
+                } ?>
+            </select>
+        </td>
+        <td><input type="number" name="products[${rowIndex}][quantity]" min="1" value="1"></td>
+        <td><input type="text" name="products[${rowIndex}][import_price]" placeholder="Giá nhập" pattern="^\\d+(\\.\\d{1,2})?$"></td>
+        <td><input type="text" name="products[${rowIndex}][color]" placeholder="Màu sắc"></td>
+        <td><input type="text" name="products[${rowIndex}][size]" placeholder="Kích cỡ"></td>
+        <td>
+            <label class="btn-upload" for="upload-img-${count}">Tải ảnh</label>
+            <input type="file" id="upload-img-${count}" name="products[${rowIndex}][img_src]" accept="image/*" style="display: none;" onchange="previewImage(this, ${count})">
+            <img id="preview-img-${count}" class="preview-img" src="#" alt="Ảnh xem trước" style="display: none;">
+        </td>
+        <td><button type="button" class="btn-delete" onclick="deleteRow(this)">Xóa</button></td>
     `;
-    container.appendChild(productGroup);
-    productCount++;
-    // Gắn sự kiện preview ảnh cho sản phẩm mới
-    document.getElementById(`products_${productCount-1}_new_product_img`).addEventListener('change', function() {
-        previewImage(this, `preview_products_${productCount-1}_new_product_img`);
+    tbody.appendChild(row);
+});
+
+function deleteRow(btn) {
+    const row = btn.closest('tr');
+    row.remove();
+    updateRowNumbers();
+}
+
+function updateRowNumbers() {
+    const rows = document.querySelectorAll('#product-body tr');
+    count = 1;
+    rows.forEach((row) => {
+        row.cells[0].textContent = count++;
     });
-    // Gắn sự kiện preview ảnh cho biến thể
-    document.getElementById(`products_${productCount-1}_img_src`).addEventListener('change', function() {
-        previewImage(this, `preview_products_${productCount-1}_img_src`);
-    });
 }
 
-function removeProduct(button) {
-    if (document.querySelectorAll('.product-group').length > 1) {
-        button.closest('.product-group').remove();
-        productCount--;
-    } else {
-        alert('Phải có ít nhất một sản phẩm!');
-    }
-}
-
-function toggleNewProductForm(productIndex) {
-    const select = document.getElementById(`products_${productIndex}_product_id`);
-    const form = document.getElementById(`newProductForm_${productIndex}`);
-    if (select.value) {
-        form.style.display = 'none';
-        hideNewProductForm(productIndex);
-    }
-}
-
-function showNewProductForm(productIndex) {
-    document.getElementById(`newProductForm_${productIndex}`).style.display = 'block';
-    document.getElementById(`products_${productIndex}_product_id`).value = '';
-    updateNewProductPrice(productIndex);
-}
-
-function hideNewProductForm(productIndex) {
-    const form = document.getElementById(`newProductForm_${productIndex}`);
-    form.style.display = 'none';
-    // Reset form
-    document.getElementById(`products_${productIndex}_new_product_name`).value = '';
-    document.getElementById(`products_${productIndex}_new_product_brand`).value = '';
-    document.getElementById(`products_${productIndex}_new_product_category`).value = '';
-    document.getElementById(`products_${productIndex}_new_product_status`).value = '1';
-    document.getElementById(`products_${productIndex}_new_product_price`).value = '0';
-    document.getElementById(`products_${productIndex}_new_product_img`).value = '';
-    document.getElementById(`preview_products_${productIndex}_new_product_img`).style.display = 'none';
-}
-
-function previewImage(input, previewId) {
-    const previewImg = document.getElementById(previewId);
+function previewImage(input, index) {
+    const previewImg = document.getElementById(`preview-img-${index}`);
     if (input.files && input.files[0]) {
         const file = input.files[0];
-        if (file.size > 1 * 1024 * 1024) {
-            alert('File ảnh quá lớn! Vui lòng chọn file nhỏ hơn 1MB.');
+        if (file.size > 2 * 1024 * 1024) {
+            alert('File ảnh quá lớn! Vui lòng chọn file nhỏ hơn 2MB.');
             input.value = '';
             previewImg.src = '#';
             previewImg.style.display = 'none';
@@ -380,18 +183,220 @@ function previewImage(input, previewId) {
     }
 }
 
-function updateNewProductPrice(productIndex) {
-    const importPrice = document.getElementById(`products_${productIndex}_import_price`);
-    const profitPercentage = parseFloat(document.getElementById('profit_percentage').value) || 0;
-    const price = parseFloat(importPrice.value) || 0;
-    const salePrice = price * (1 + profitPercentage / 100);
-    document.getElementById(`products_${productIndex}_new_product_price`).value = salePrice.toFixed(2);
-}
+document.getElementById('importForm').addEventListener('submit', function(e) {
+    let errors = [];
 
-// Gắn sự kiện preview ảnh và cập nhật giá bán
-document.getElementById('profit_percentage').addEventListener('input', function() {
-    for (let i = 0; i < productCount; i++) {
-        updateNewProductPrice(i);
+    // Kiểm tra nhà cung cấp
+    const supId = document.getElementById('sup_id').value;
+    if (!supId) 
+        errors.push('Vui lòng chọn nhà cung cấp.');
+    
+
+    // Kiểm tra ngày tạo phiếu
+    const createdAt = document.getElementById('created_at').value;
+    if (!createdAt || !/^\d{4}-\d{2}-\d{2}$/.test(createdAt)) 
+        errors.push('Vui lòng chọn ngày tạo phiếu hợp lệ (định dạng YYYY-MM-DD).');
+
+
+    // Kiểm tra phần trăm lợi nhuận
+    const profitPercentage = document.getElementById('profit_percentage').value;
+    if (!profitPercentage) {
+        errors.push('Vui lòng nhập phần trăm lợi nhuận.');
+    } else {
+        const profitValue = parseFloat(profitPercentage);
+        if (isNaN(profitValue) || profitValue < 0 || profitValue > 100) {
+            errors.push('Phần trăm lợi nhuận phải là số từ 0 đến 100.');
+        }
+    }
+
+    // Kiểm tra danh sách sản phẩm
+    const productRows = document.querySelectorAll('#product-body tr');
+    if (productRows.length === 0) {
+        errors.push('Vui lòng thêm ít nhất một sản phẩm.');
+    } else {
+        productRows.forEach((row, index) => {
+            const productId = row.cells[1].querySelector('select').value;
+            const quantity = row.cells[2].querySelector('input').value;
+            const importPrice = row.cells[3].querySelector('input').value;
+            const color = row.cells[4].querySelector('input').value;
+            const size = row.cells[5].querySelector('input').value;
+
+            if (!productId) {
+                errors.push(`Sản phẩm ${index + 1}: Vui lòng chọn sản phẩm.`);
+            }
+            if (!quantity || parseInt(quantity) <= 0) {
+                errors.push(`Sản phẩm ${index + 1}: Số lượng phải lớn hơn 0.`);
+            }
+            if (!importPrice || parseFloat(importPrice) <= 0) {
+                errors.push(`Sản phẩm ${index + 1}: Giá nhập phải lớn hơn 0.`);
+            } 
+            if (!color) {
+                errors.push(`Sản phẩm ${index + 1}: Vui lòng nhập màu sắc.`);
+            }
+            if (!size) {
+                errors.push(`Sản phẩm ${index + 1}: Vui lòng nhập kích cỡ.`);
+            }
+            if (!imgInput.files || imgInput.files.length === 0) {
+                errors.push(`Sản phẩm ${index + 1}: Vui lòng chọn ảnh.`);
+            }
+        });
+    }
+
+    // Nếu có lỗi, ngăn gửi form và hiển thị thông báo
+    if (errors.length > 0) {
+        e.preventDefault();
+        alert(errors.join('\n'));
     }
 });
 </script>
+
+<style>
+.section.add-import {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+}
+
+.info-table-container {
+    margin-bottom: 30px;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-table th, .info-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.info-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #555;
+}
+
+.info-table td input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.table {
+    overflow-x: auto;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-table th, .product-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.product-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #555;
+}
+
+.product-table td input[type="number"],
+.product-table td input[type="text"] {
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.product-table td:nth-child(3) input, /* Số lượng */
+.product-table td:nth-child(4) input, /* Giá nhập */
+.product-table td:nth-child(5) input, /* Màu sắc */
+.product-table td:nth-child(6) input  /* Kích cỡ */ {
+    width: 100px;
+}
+
+.product-table td select {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn-upload:hover {
+    background-color: #2980b9;
+}
+
+.preview-img {
+    display: block;
+    max-width: 80px;
+    margin-top: 5px;
+    border-radius: 4px;
+}
+
+.control-buttons {
+    text-align: right;
+    margin: 20px 0;
+}
+
+.btn-control-large {
+    padding: 10px 20px;
+    background-color: #ff9800 !important;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-control-large:hover {
+    background-color: #e68900 !important;
+}
+
+.btn-delete {
+    padding: 6px 12px;
+    background-color: #e74c3c !important;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b !important;
+}
+</style>

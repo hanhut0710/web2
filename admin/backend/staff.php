@@ -12,9 +12,9 @@
 
         public function getStaffList($role, $limit, $offset) {
             if($role == 3){
-                $sql = "SELECT * FROM admin LIMIT $limit OFFSET $offset";
+                $sql = "SELECT admin.*, accounts.status FROM admin JOIN accounts ON admin.acc_id = accounts.id LIMIT $limit OFFSET $offset";
             }else{
-                $sql = "SELECT * FROM admin WHERE role = '$role' LIMIT $limit OFFSET $offset";
+                $sql = "SELECT admin.*, accounts.status FROM admin JOIN accounts ON admin.acc_id = accounts.id WHERE role = '$role' LIMIT $limit OFFSET $offset";
             }
             $result = mysqli_query($this->conn, $sql);
             $data = [];
@@ -23,6 +23,20 @@
             }
             
             return $data;
+        }
+
+        public function getAllStaff()
+        {
+            $sql = "SELECT admin.*, accounts.status 
+                    FROM admin 
+                    JOIN accounts ON admin.acc_id = accounts.id";
+            $result = mysqli_query($this->conn, $sql);
+            $list = [];
+            while($row = mysqli_fetch_assoc($result)){
+                $list[] = $row;
+            }
+            
+            return $list;
         }
 
         public function addStaff($full_name, $phone, $email, $role, $acc_id){
@@ -74,8 +88,12 @@
         }
 
         public function searchStaffById($id, $limit, $offset) {
-            $id = mysqli_real_escape_string($this->conn, $id); // Tránh SQL Injection
-            $sql = "SELECT * FROM admin WHERE id LIKE '%$id%' LIMIT $limit OFFSET $offset";
+            // $id = mysqli_real_escape_string($this->conn, $id); // Tránh SQL Injection
+            $sql = "SELECT admin.id, admin.full_name, admin.phone, admin.email, admin.role, accounts.status 
+                    FROM admin 
+                    JOIN accounts ON admin.acc_id = accounts.id
+                    WHERE admin.id LIKE '%$id%' 
+                    LIMIT $limit OFFSET $offset";
             $result = mysqli_query($this->conn, $sql);
             $staffList = [];
             while ($row = mysqli_fetch_assoc($result)) {
@@ -86,7 +104,7 @@
 
         public function getTotalStaffByRole($role) {
             if($role == 3){
-                $sql = "SELECT COUNT(*) as total FROM admin";
+                $sql = "SELECT COUNT(*) as total FROM admin ";
             }
             else{
                 $sql = "SELECT COUNT(*) as total FROM admin WHERE role = '$role'";
