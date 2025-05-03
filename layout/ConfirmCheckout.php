@@ -2,7 +2,19 @@
 // Nhận dữ liệu từ fetch POST
 require_once './class/Cart.php'; // chỉnh đường dẫn nếu cần
 require_once './handle/connect.php';
+require_once './class/address.php'
 $cart = new Cart();
+$address_str = '';
+if (!empty($address_id)) {
+    $addressObj = new Address();
+    if ($addressObj->getAddressById($address_id, $con)) {
+        // Gộp thông tin địa chỉ thành 1 chuỗi
+        $address_str = $addressObj->getAddressLine() . ', ' .
+                       $addressObj->getWard() . ', ' .
+                       $addressObj->getDistrict() . ', ' .
+                       $addressObj->getCity();
+    }
+}
 if ($_SESSION['user_id']){
   $cartItems = $cart->getCartByUserId($_SESSION['user_id'],$con);
 } else {

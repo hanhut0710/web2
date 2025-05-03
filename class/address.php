@@ -139,5 +139,23 @@ class Address {
         }
         return false;
     }
+    public function getAddressById($id, $con) {
+        $stmt = $con->prepare("SELECT * FROM address WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $address = $result->fetch_assoc();
+            $this->setId($address['id']);
+            $this->setUserId($address['user_id']);
+            $this->setAddressLine($address['address_line']);
+            $this->setWard($address['ward']);
+            $this->setDistrict($address['district']);
+            $this->setCity($address['city']);
+            $this->setDefault($address['default']);
+            return true;
+        }
+        return false;
+    }
 }
 ?>

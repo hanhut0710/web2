@@ -1,6 +1,23 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+    session_start();   
+}
+?>
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $product_id = $_POST['product_id'] ?? null;
+    $product_detail_id = $_POST['product_detail_id'] ?? null;
+    $quantity = $_POST['quantity'] ?? 1;
+    $action = $_POST['action'] ?? '';
+
+    if ($action === 'buy_now') {
+        // 👉 Đây là hành động mua ngay
+        // Xử lý tạo đơn hàng tạm, redirect tới trang thanh toán, v.v.
+        echo "Mua ngay sản phẩm ID: $product_id, chi tiết: $product_detail_id, SL: $quantity";
+    } else {
+        // Nếu muốn xử lý các action khác (nếu có)
+        echo "Hành động không xác định.";
+    }
 }
 ?>
 <section class="breadcrumb-option">
@@ -60,12 +77,12 @@ if (session_status() == PHP_SESSION_NONE) {
                         <h4 style="margin-bottom: 10px;">Thông tin nhận hàng</h4>
                                 <div class="box-select"> 
                                       <div class="box-input box-input--hasvalue">
-                                          <input type="search" id="box-select-city" placeholder="Hồ Chí Minh" autocomplete="off" class="box-input__main" value="Hồ Chí Minh" readonly="">
+                                          <input type="search" id="box-select-city" placeholder="Hồ Chí Minh" autocomplete="off" class="box-input__main" value="Hồ Chí Minh" readonly="" disabled>
                                           <label for="box-select-city" class="email-label">Tỉnh / Thành phố</label> 
                                           <div class="box-input__line"></div> 
                                   </div>
                                   <div class="box-input"> 
-                                        <input type="search" id="box-select-district" placeholder="" autocomplete="off" class="box-input__main" name ="district">
+                                        <input type="search" id="box-select-district" placeholder="" autocomplete="off" class="box-input__main" name ="district" disabled>
                                         <label for="box-select-district" class="email-label">Quận / huyện</label>
                                         <div class="box-input__line"></div> 
                                         <div class="box-input__arrow"> 
@@ -79,7 +96,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                 </div>
                                 <div class="box-select">
                                   <div class="box-input">
-                                    <input id="box-select-ward" type="search" placeholder="" autocomplete="off" class="box-input__main" name ="ward">
+                                    <input id="box-select-ward" type="search" placeholder="" autocomplete="off" class="box-input__main" name ="ward" disabled>
                                     <label for="box-select-ward" class="email-label">Chọn phường / xã</label>
                                     <div class="box-input__line"></div>
                                     <div class="box-input__arrow"> 
@@ -95,7 +112,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                       </div>
                                   </div>
                                   <div class="box-input">
-                                    <input id="box-select-address" type="text" placeholder="Địa chỉ" maxlength="1000" autocomplete="off" class="box-input__main" fdprocessedid="p3ho0i" name = "address">
+                                    <input id="box-select-address" type="text" placeholder="Địa chỉ" maxlength="1000" autocomplete="off" class="box-input__main" fdprocessedid="p3ho0i" name = "address" disabled>
                                     <label for="box-select-address" class="email-label">Địa chỉ</label>
                                     <div class="box-input__line"></div>
                                   </div>

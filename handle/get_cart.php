@@ -13,7 +13,6 @@ if (!isset($_SESSION['user_id'])) {
     if (!isset($_SESSION['guest_id'])) {
         $_SESSION['guest_id'] = mt_rand(100000000, 999999999);
     }
-
     // Giỏ hàng tạm thời
     $user_id = $_SESSION['guest_id'];
     $cart = new Cart();

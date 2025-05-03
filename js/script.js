@@ -288,8 +288,6 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             }
             // Gán lại sự kiện nút thêm vào giỏ mỗi khi mở popup
             const btnaddCart = document.querySelector(".btn-addcart");
-
-            // Xóa sự kiện cũ nếu có
             const newBtn = btnaddCart.cloneNode(true);
             btnaddCart.parentNode.replaceChild(newBtn, btnaddCart);
             newBtn.addEventListener("click", function () {
@@ -335,6 +333,30 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                 });
             });                
             
+
+            const btnBuyNow = document.querySelector(".btn-buynow");
+            const btnBuyNownew = btnBuyNow.cloneNode(true);
+            btnBuyNow.parentNode.replaceChild(btnBuyNownew,btnBuyNow);
+            btnBuyNownew.addEventListener("click" , function(){
+                if (!selectedProductDetailId || !productId) {
+                    alert("Vui lòng chọn size và màu sắc!");
+                    return;
+                }
+                console.log("Gửi dữ liệu:", {
+                    product_id: productId,
+                    product_detail_id: selectedProductDetailId,
+                    quantity: 1
+                });
+                fetch(`./checkout.php`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: "product_id=" + encodeURIComponent(productId) +
+                          "&product_detail_id=" + encodeURIComponent(selectedProductDetailId) +
+                          "&quantity=1" + "&action=buy_now"
+                })
+            });
         }
     })
     

@@ -1,7 +1,7 @@
 <?php
 include('./handle/connect.php');
 session_start();
-
+include('./class/address.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
     $order = $_SESSION['order'] ?? null;
     $userId = $_SESSION['user_id'] ?? 0;
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
     $fullAddress = $order['address'] . ', ' . $order['ward'] . ', ' . $order['district'];
 
     // Chuẩn bị dữ liệu chèn
-    $sql = "INSERT INTO orders (user_id, pay_method, total_price, status, created_at, name, address, phone, email)
+    $sql = "INSERT INTO orders (user_id, pay_method, total_price, status, created_at, name, address_id, phone, email)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($con, $sql);

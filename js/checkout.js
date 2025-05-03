@@ -1,4 +1,8 @@
       // Danh sách các quận/huyện có sẵn
+      let IDaddress = 0;
+      document.querySelectorAll('.box-select input').forEach(function(input) {
+        input.disabled = true;
+      });
       const districts = [
         "Huyện Bình Chánh",
         "Huyện Cần Giờ",
@@ -575,6 +579,7 @@ if(selectBtn){
                 const addressInput = document.getElementById('box-select-address');
                 const wardInput = document.getElementById('box-select-ward');
                 li.addEventListener("click", () => {
+                    IDaddress = addr.id;
                     addressInput.value = addr.address_line;
                     districtInput.value = addr.district;
                     wardInput.value = addr.ward ;
@@ -1269,7 +1274,6 @@ if(selectBtn){
       let district = document.getElementById("box-select-district");
       let ward = document.getElementById("box-select-ward");
       let ghiChu = document.getElementsByName("note")[0].value;
-      
       // Kiểm tra các trường bắt buộc: Họ, Tên, Địa chỉ, Quận, Huyện
       if (ho === "") {
         alert("Vui lòng nhập Họ.");
@@ -1304,7 +1308,6 @@ if(selectBtn){
         event.preventDefault();  // Ngừng gửi form nếu thiếu phường/xã
         return false;
     }
-      
       // Kiểm tra định dạng email (nếu có nhập email)
       if (email !== "" && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
           alert("Email không hợp lệ.");
@@ -1318,7 +1321,7 @@ if(selectBtn){
           event.preventDefault();  // Ngừng gửi form nếu số điện thoại không hợp lệ
           return false;
       }
-  
+      
       // Kiểm tra nếu người dùng đã chọn ghi chú, thì ghi chú không được bỏ trống
       let ghiChuCheckbox = document.getElementById("diff-acc");
       if (ghiChuCheckbox.checked && ghiChu === "") {
@@ -1336,6 +1339,33 @@ if(selectBtn){
           return false;
       }
     if (paymentCheckbox.checked) {
+      if (ward.value && district.value && address){
+        IDaddress = 0;
+      }
+      if(IDaddress == 0 ){
+        fetch('./handle/account_saveInf.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // hoặc 'application/json' nếu bạn dùng JSON
+            },
+            body: new URLSearchParams({
+                District: district.value,
+                Ward: ward.value,
+                Address: address
+            })
+        })
+        .then(response => response.text()) // hoặc .json() nếu bạn trả về JSON
+        .then(data => {
+            console.log('Kết quả từ server:', data);
+            alert("Đã lưu địa chỉ!");
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Lỗi khi gửi dữ liệu:', error);
+            alert('Có lỗi xảy ra khi lưu thông tin!');
+        });
+        IDaddress = data.id;
+      }
         // Nếu là COD, gửi form sang trang xác nhận thanh toán (xuly_thanhtoan.php)
         event.preventDefault();  // Ngừng gửi form
         this.action = "OrderConfirmation.php";  // Đặt URL gửi form đến trang xác nhận thanh toán
@@ -1344,6 +1374,33 @@ if(selectBtn){
     // Kiểm tra nếu phương thức thanh toán là PayPal
     else if (paypalCheckbox.checked) {
         // Nếu là PayPal, chuyển sang trang PayPal (giả sử là trang thanh toán PayPal)
+        if (ward.value && district.value && address){
+          IDaddress = 0;
+        }
+        if(IDaddress == 0 ){
+          fetch('./handle/account_saveInf.php', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded' // hoặc 'application/json' nếu bạn dùng JSON
+              },
+              body: new URLSearchParams({
+                  District: district.value,
+                  Ward: ward.value,
+                  Address: address
+              })
+          })
+          .then(response => response.text()) // hoặc .json() nếu bạn trả về JSON
+          .then(data => {
+              console.log('Kết quả từ server:', data);
+              alert("Đã lưu địa chỉ!");
+              location.reload();
+          })
+          .catch(error => {
+              console.error('Lỗi khi gửi dữ liệu:', error);
+              alert('Có lỗi xảy ra khi lưu thông tin!');
+          });
+          IDaddress = data.id;
+        }
         event.preventDefault();  // Ngừng gửi form
         this.action = "MethodPayByCart.php";  // Đặt URL gửi form đến trang thanh toán PayPal
         this.submit();  // Gửi form sau khi đã thay đổi action

@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             </td>
                         </tr>`;
                     return;
-                    
+
                 }
                 
                 // Nếu có sản phẩm
