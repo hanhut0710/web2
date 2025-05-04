@@ -353,15 +353,25 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                     product_detail_id: selectedProductDetailId,
                     quantity: 1
                 });
-                fetch(`./checkout.php`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    body: "product_id=" + encodeURIComponent(productId) +
-                          "&product_detail_id=" + encodeURIComponent(selectedProductDetailId) +
-                          "&quantity=1" + "&action=buy_now"
-                })
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.action = "./BuyNow.php";
+
+                const addField = (name, value) => {
+                    const input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = name;
+                    input.value = value;
+                    form.appendChild(input);
+                };
+
+                addField("product_id", productId);
+                addField("product_detail_id", selectedProductDetailId);
+                addField("quantity", 1);
+                addField("action", "buy_now");
+
+                document.body.appendChild(form);
+                form.submit();  // Chuyển trang và gửi dữ liệu POST              
             });
         }
     })

@@ -29,7 +29,14 @@
 <body>
 
     <?php include("./layout/header.php");?>
-    <?php include("./layout/ConfirmCheckout.php");?>
+    <?php $orderType = $_POST['order_type'] ?? 'cart'; // mặc định là từ giỏ hàng
+    if ($orderType === 'buy_now') {
+        include ("./layout/ConfirmCheckout_BN.php");
+    } else {
+         include("./layout/ConfirmCheckout.php");
+    }
+    ?>
+
     <?php include("./layout/footer.php");?>
 
     <script src="js/jquery-3.3.1.min.js"></script>

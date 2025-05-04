@@ -580,6 +580,8 @@ if(selectBtn){
                 const wardInput = document.getElementById('box-select-ward');
                 li.addEventListener("click", () => {
                     IDaddress = addr.id;
+                    document.getElementById("address_id").value = IDaddress;
+                    console.log(IDaddress);
                     addressInput.value = addr.address_line;
                     districtInput.value = addr.district;
                     wardInput.value = addr.ward ;
@@ -1123,7 +1125,10 @@ if(selectBtn){
                 saveBtn.className = 'btn custom-button';
                 saveBtn.style = 'pointer-events: auto !important; opacity: 1;';
                 saveBtn.addEventListener('click', () => {
-            
+                  if(districtInput.value == "" || wardInput.value == "" || addressInput.value.trim() == ""){
+                    alert("Vui lòng nhập đầy đủ thông tin địa chỉ");
+                    return ;
+                  }
                     fetch('./handle/account_saveInf.php', {
                     method: 'POST',
                     headers: {
@@ -1266,6 +1271,7 @@ if(selectBtn){
     window.addEventListener("DOMContentLoaded", function () {
     document.getElementById("checkout-form").onsubmit = function(event) {
       // Lấy giá trị của các trường input
+
       let ho = document.getElementsByName("ho")[0].value;
       let ten = document.getElementsByName("ten")[0].value;
       let phone = document.getElementsByName("phone")[0].value;
@@ -1339,33 +1345,6 @@ if(selectBtn){
           return false;
       }
     if (paymentCheckbox.checked) {
-      if (ward.value && district.value && address){
-        IDaddress = 0;
-      }
-      if(IDaddress == 0 ){
-        fetch('./handle/account_saveInf.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded' // hoặc 'application/json' nếu bạn dùng JSON
-            },
-            body: new URLSearchParams({
-                District: district.value,
-                Ward: ward.value,
-                Address: address
-            })
-        })
-        .then(response => response.text()) // hoặc .json() nếu bạn trả về JSON
-        .then(data => {
-            console.log('Kết quả từ server:', data);
-            alert("Đã lưu địa chỉ!");
-            location.reload();
-        })
-        .catch(error => {
-            console.error('Lỗi khi gửi dữ liệu:', error);
-            alert('Có lỗi xảy ra khi lưu thông tin!');
-        });
-        IDaddress = data.id;
-      }
         // Nếu là COD, gửi form sang trang xác nhận thanh toán (xuly_thanhtoan.php)
         event.preventDefault();  // Ngừng gửi form
         this.action = "OrderConfirmation.php";  // Đặt URL gửi form đến trang xác nhận thanh toán
@@ -1374,33 +1353,6 @@ if(selectBtn){
     // Kiểm tra nếu phương thức thanh toán là PayPal
     else if (paypalCheckbox.checked) {
         // Nếu là PayPal, chuyển sang trang PayPal (giả sử là trang thanh toán PayPal)
-        if (ward.value && district.value && address){
-          IDaddress = 0;
-        }
-        if(IDaddress == 0 ){
-          fetch('./handle/account_saveInf.php', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded' // hoặc 'application/json' nếu bạn dùng JSON
-              },
-              body: new URLSearchParams({
-                  District: district.value,
-                  Ward: ward.value,
-                  Address: address
-              })
-          })
-          .then(response => response.text()) // hoặc .json() nếu bạn trả về JSON
-          .then(data => {
-              console.log('Kết quả từ server:', data);
-              alert("Đã lưu địa chỉ!");
-              location.reload();
-          })
-          .catch(error => {
-              console.error('Lỗi khi gửi dữ liệu:', error);
-              alert('Có lỗi xảy ra khi lưu thông tin!');
-          });
-          IDaddress = data.id;
-        }
         event.preventDefault();  // Ngừng gửi form
         this.action = "MethodPayByCart.php";  // Đặt URL gửi form đến trang thanh toán PayPal
         this.submit();  // Gửi form sau khi đã thay đổi action

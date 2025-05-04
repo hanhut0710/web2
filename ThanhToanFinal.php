@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
         echo "Thiếu thông tin đơn hàng hoặc chưa đăng nhập.";
         exit;
     }
-
     // Tính tổng tiền
     include ('./class/Cart.php');
     $cart = new Cart();
@@ -23,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
     $tongTien += 30000; // phí vận chuyển
 
     // Định dạng địa chỉ
-    $fullAddress = $order['address'] . ', ' . $order['ward'] . ', ' . $order['district'];
+    $fullAddress = $order['address_id'];
 
     // Chuẩn bị dữ liệu chèn
     $sql = "INSERT INTO orders (user_id, pay_method, total_price, status, created_at, name, address_id, phone, email)
@@ -65,6 +64,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
                     mysqli_stmt_close($stmtDetail);
                 } else {
                     echo "Lỗi prepare chi tiết đơn hàng: " . mysqli_error($con);
+                }
+                $sqlUpdateStock = "UPDATE product SET stock = stock - ? WHERE id = ?";
+                $stmtUpdate = mysqli_prepare($con, $sqlUpdateStock);
+                if ($stmtUpdate) {
+                    mysqli_stmt_bind_param($stmtUpdate, "ii", $quantity, $productId);
+                    if (!mysqli_stmt_execute($stmtUpdate)) {
+                        echo "Lỗi khi cập nhật số lượng tồn kho: " . mysqli_stmt_error($stmtUpdate);
+                    }
+                    mysqli_stmt_close($stmtUpdate);
+                } else {
+                    echo "Lỗi prepare cập nhật tồn kho: " . mysqli_error($con);
+                }
+                $sqlDetailStock = "UPDATE product_details SET stock = stock - ? WHERE id = ?";
+                $stmtUpdateDetailStock = mysqli_prepare($con,$sqlDetailStock);
+                if($stmtUpdateDetailStock){
+                    mysqli_stmt_blind_param($stmtUpdateDetailStock, "ii", $quantity, $detailId);
+                    if(!mysqli_stmt_execute($stmtUpdateDetailStock)){
+                        echo "Lỗi khi cập nhật số lượng tồn kho: " . mysqli_stmt_error($stmtUpdateDetailStock);
+                    }
+                    mysqli_stmt_close($stmtUpdateDetailStock);
+                } else {
+                    echo "Lỗi prepare cập nhật tồn kho: " . mysqli_error($con);
                 }
             }
             // Xóa giỏ hàng sau khi đặt hàng

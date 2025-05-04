@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_detail_id = $_POST['product_detail_id'] ?? null;
     $quantity = $_POST['quantity'] ?? 1;
     $action = $_POST['action'] ?? '';
-
     if ($action === 'buy_now') {
         // 👉 Đây là hành động mua ngay
         // Xử lý tạo đơn hàng tạm, redirect tới trang thanh toán, v.v.
@@ -117,6 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="box-input__line"></div>
                                   </div>
                                 </div>
+                                <input type="hidden" name="address_id" id="address_id">
                                 <?php if(isset($_SESSION['user_id'])) {
                                     echo <<<HTML
                                 <div style=" margin-bottom: 10px;">

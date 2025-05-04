@@ -68,7 +68,6 @@ class Cart {
                 products.price, 
                 product_details.img_src,
                 product_details.color
-
             FROM cart
             JOIN products ON cart.product_id = products.id
             JOIN product_details ON cart.product_detail_id = product_details.id

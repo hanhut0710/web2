@@ -2,37 +2,32 @@
 // Nhận dữ liệu từ fetch POST
 require_once './class/Cart.php'; // chỉnh đường dẫn nếu cần
 require_once './handle/connect.php';
-require_once './class/address.php'
+require_once './class/address.php';
 $cart = new Cart();
 $address_str = '';
-if (!empty($address_id)) {
+$cartItems = $cart->getCartByUserId($_SESSION['user_id'],$con);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+   // Thông tin khách hàng
+   if (!empty($_POST['address_id'])) {
     $addressObj = new Address();
-    if ($addressObj->getAddressById($address_id, $con)) {
+    if ($addressObj->getAddressById($_POST['address_id'], $con)) {
         // Gộp thông tin địa chỉ thành 1 chuỗi
         $address_str = $addressObj->getAddressLine() . ', ' .
                        $addressObj->getWard() . ', ' .
                        $addressObj->getDistrict() . ', ' .
                        $addressObj->getCity();
     }
-}
-if ($_SESSION['user_id']){
-  $cartItems = $cart->getCartByUserId($_SESSION['user_id'],$con);
-} else {
-  echo "Khong thay user_id";
-}
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-   // Thông tin khách hàng
+  }
    $order = [
     'ho' => $_POST['ho'] ?? '',
     'ten' => $_POST['ten'] ?? '',
     'phone' => $_POST['phone'] ?? '',
     'email' => $_POST['email'] ?? '',
-    'district' => $_POST['district'] ?? '',
-    'ward' => $_POST['ward'] ?? '',
-    'address' => $_POST['address'] ?? '',
+    'address' => $address_str ?? '',
+    'address_id' => $_POST['address_id'],
     'note' => $_POST['note'] ?? '',
     'payment_method' => $_POST['payment_method'] ?? 'cash',
 ];
@@ -95,7 +90,7 @@ $card = $_SESSION['card'] ?? null;
 
       <div class="info-group">
         <label>Địa chỉ nhận hàng:</label>
-        <p><?= htmlspecialchars($order['address']) ?>, <?= htmlspecialchars($order['ward']) ?>, <?= htmlspecialchars($order['district']) ?></p>
+        <p><?= htmlspecialchars($order['address']) ?></p>
       </div>
 
       <div class="info-group">
