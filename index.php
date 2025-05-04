@@ -56,7 +56,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="">
-                            <span class="label">Best Seller</span>
+                            <span class="label">Mua nhiều</span>
                             <img src="${product.img_src}" onclick="openProductDetails(${product.id})">
                             <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>

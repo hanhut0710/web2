@@ -4200,7 +4200,7 @@ font-size: 20px;
 	transform: translateY(-100px); /* Ẩn bên trên */
 	padding: 10px;
 	transition: 0.3s;
-	z-index: 9999;
+	z-index: 100;
 }
 
 #advancedSearchForm.active {

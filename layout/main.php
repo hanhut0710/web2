@@ -3,9 +3,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul style="margin-bottom: 70px;" class="filter__controls">
-                        <li class="active" data-filter="*">Best Sellers</li>
-                        <li data-filter=".new-arrivals">New Arrivals</li>
-                        <li data-filter=".hot-sales">Hot Sales</li>
+                        <li class="active" data-filter="*">MUA NHIỀU NHẤT</li>
                     </ul>
                 </div>
             </div>
