@@ -48,7 +48,7 @@ loginForm.addEventListener("keypress", function (event) {
         const password = document.getElementById("passwd").value.trim();
 
         if (username === "" || password === "") {
-            alert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
+            alert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");            
         } else {
             submitForm("login"); // Gọi hàm đăng nhập nếu đủ thông tin
         }
@@ -300,7 +300,8 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             btnaddCart.parentNode.replaceChild(newBtn, btnaddCart);
             newBtn.addEventListener("click", function () {
                 if (!selectedProductDetailId || !productId) {
-                    alert("Vui lòng chọn size và màu sắc!");
+                    // alert("Vui lòng chọn size và màu sắc!");
+                    showToast("Vui lòng chọn size và màu sắc","fail");
                     return;
                 }
             
