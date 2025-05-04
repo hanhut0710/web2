@@ -12,11 +12,11 @@ class Auth {
 
     public function checkLogin($username, $password)
     {
-        $sql = "SELECT * FROM accounts WHERE username = '$username' AND password = '$password'";
+        $sql = "SELECT * FROM accounts WHERE username = '$username'";
         $result = mysqli_query($this->conn, $sql);
-        if($result && mysqli_num_rows($result) > 0)
+        $account = mysqli_fetch_assoc($result);
+        if($result && mysqli_num_rows($result) > 0 && password_verify($password, $account['password']))
         {   
-            $account = mysqli_fetch_assoc($result);
             if($account['status'] == 0) return false; //Tài khoản đã bị khóa
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $account['username'];
@@ -29,6 +29,7 @@ class Auth {
             {
                 $admin = mysqli_fetch_assoc($result2);
                 $_SESSION['role'] = $admin['role'];
+                $_SESSION['staff_id'] = $admin['id'];
             }
             return true;
         }

@@ -53,8 +53,9 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
     <div id="show-product">
         <?php
         if (count($productList) > 0) {
-            foreach ($productList as $value) {
-                echo '<div class="list">
+            foreach ($productList as $value) 
+            {
+                    echo '<div class="list">
                     <div class="list-left">
                         <img src="../' .$value['img_src'] . '" alt="" style="max-width: 100px;">
                         <div class="list-info">

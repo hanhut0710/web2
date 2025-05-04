@@ -7,14 +7,15 @@
 
     $order = new Order();
     $orderList = $order->getOrderByTime($startDate, $endDate, $user_id);
-    
+   
 
 ?>
 <div class="section active">
 <?php foreach($orderList as $orderItem): ?>
         <div class="form-all-content">
                 <div class="modal-detail-order">
-                        <?php $orderDetail = $order->getOrderDetail($orderItem['id']); ?>
+                        <?php $orderDetail = $order->getOrderDetail($orderItem['id']); 
+                        ?>
                     <div class="modal-detail-left">
                         <div class="order-item-group">
                             <?php foreach($orderDetail as $item): ?>
@@ -60,7 +61,7 @@
                             </li>
                             <li class="detail-order-item tb">
                                 <span class="detail-order-item-t"><i class="fa-light fa-location-dot"></i> Địa chỉ nhận</span>
-                                <p class="detail-order-item-b"><?php echo $orderItem['address']?></p>
+                                <p class="detail-order-item-b"><?php echo $orderItem['address_line']. ', '.$orderItem['ward']. ', '.$orderItem['district']. ', '.$orderItem['city']?></p>
                             </li>
                         </ul>
                     </div>

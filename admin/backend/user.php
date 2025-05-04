@@ -58,8 +58,10 @@ class User{
 
     public function insert($fullname, $email, $phone, $address_line, $ward, $district, $city, $username, $password)
     {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
         $sql = "INSERT INTO accounts(username, password)
-                VALUES ('$username', '$password')";
+                VALUES ('$username', '$hashed_password')";
         $result = mysqli_query($this->conn, $sql);
         if (!$result)
             return false;
@@ -83,8 +85,10 @@ class User{
 
     public function update($fullname, $email, $phone,$accID, $address_line, $ward, $district, $city, $username, $password){
 
-        if(!empty($password))
-            $sql ="UPDATE accounts SET username = '$username', password = '$password' WHERE id ='$accID'";
+        if(!empty($password)){
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $sql ="UPDATE accounts SET username = '$username', password = '$hashed_password' WHERE id ='$accID'";
+        }
         else 
             $sql ="UPDATE accounts SET username = '$username' WHERE id ='$accID'";
         $result = mysqli_query($this->conn, $sql);

@@ -60,6 +60,8 @@ $pagination = new Pagination($totalDetails, $page_num, $limit);
             </thead>
             <tbody id="showProductDetails">
                 <?php
+                if (empty($detailsList)) 
+                    echo '<tr><td colspan="5" style="text-align: center;">Không có chi tiết sản phẩm nào.</td></tr>';
                 foreach ($detailsList as $value) {
                     # code...
                     echo '<tr>

@@ -25,7 +25,7 @@
 
         $acc_info = $acc->getAccById($staff_acc_id);
         $staff_username = $acc_info['username'];
-        $staff_passwd = $acc_info['password'];
+        $staff_passwd = "";
         $current_phone = $staff_phone;
         $current_username = $staff_username;
         $current_email = $staff_email;
@@ -80,7 +80,7 @@
         <div class="form-group">
             <label for="staff-password">Mật khẩu</label>
             <div class="passwd_input">
-                <input type="password" id="staff-password" name="staff_password" placeholder="Nhập mật khẩu" value="<?php echo $staff_passwd?>">
+                <input type="password" id="staff-password" name="staff_password" placeholder="Nhập mật khẩu mới nếu muốn đổi mật khẩu" >
                 <i class="fa-solid fa-eye-slash eye" id="toggle-password"></i>
             </div>
         </div>
@@ -120,7 +120,7 @@
         const phoneRegex = /^(84|0)(3|5|7|8|9)[0-9]{8}$/;
         const nameRegex = /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?: [A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/;
 
-        if(!name || !phone || !email || !password || !username) {
+        if(!name || !phone || !email || !username) {
             showNotification("Vui lòng nhập đầy đủ thông tin.", "error");
             return false;
         }
@@ -150,10 +150,6 @@
         }
         if(!username) {
             showNotification("Vui lòng nhập tên tài khoản.", "error");
-            return false;
-        }
-        if(!password) {
-            showNotification("Vui lòng nhập mật khẩu.", "error");
             return false;
         }
 

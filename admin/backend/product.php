@@ -14,7 +14,8 @@ class Product {
     {
         $sql = "SELECT p.*, b.name as brand_name 
                 FROM products p 
-                LEFT JOIN brand b ON p.brand_id = b.id";
+                LEFT JOIN brand b ON p.brand_id = b.id
+                WHERE p.isdeleted = 1";
         $result = mysqli_query($this->conn, $sql);
         $products = [];
         if ($result) {
@@ -32,7 +33,7 @@ class Product {
         $sql = "SELECT p.*, b.name as brand_name 
                 FROM products p 
                 LEFT JOIN brand b ON p.brand_id = b.id 
-                WHERE p.status=1 
+                WHERE p.status=1 AND p.isdeleted = 1
                 LIMIT $limit OFFSET $offset";
         $result = mysqli_query($this->conn, $sql);
         $products = [];
@@ -48,12 +49,12 @@ class Product {
 
     public function getAllProductByCategory($limit, $offset)
     {
-        $sql = "SELECT p.id, p.name, p.price, p.stock, p.img_src, p.brand_id, p.status,
+        $sql = "SELECT p.*,
                         c.name as cat_name, b.name as brand_name
                 FROM products p 
                 LEFT JOIN category c ON p.category_id = c.id 
                 LEFT JOIN brand b ON p.brand_id = b.id 
-                -- WHERE p.status=1 
+                WHERE p.isdeleted = 1
                 LIMIT $limit OFFSET $offset";
         $result = mysqli_query($this->conn, $sql);
         $products = [];
@@ -71,12 +72,12 @@ class Product {
     public function getProductByCategory($idCategory, $limit, $page_num)
     {   
         $offset = ($page_num - 1) * $limit;
-        $sql = "SELECT p.id, p.name, p.price, p.stock, p.img_src, p.brand_id, p.status,
+        $sql = "SELECT p.*,
                         c.name as cat_name, b.name as brand_name
                 FROM products p 
                 LEFT JOIN category c ON p.category_id = c.id 
                 LEFT JOIN brand b ON p.brand_id = b.id 
-                WHERE p.category_id = $idCategory 
+                WHERE p.isdeleted = 1 AND p.category_id = $idCategory 
                 LIMIT $limit OFFSET $offset";
         $result = mysqli_query($this->conn, $sql);
         $products = [];
@@ -96,8 +97,8 @@ class Product {
     public function getTotalProduct()
     {
         $sql = "SELECT COUNT(*) as total 
-                FROM products 
-                WHERE status=1";
+                FROM products";
+                // WHERE status=1;
         $result = mysqli_query($this->conn, $sql);
         if ($result)
             $row = mysqli_fetch_assoc($result);
@@ -108,7 +109,7 @@ class Product {
     {
         $sql = "SELECT COUNT(*) as total 
                 FROM products
-                WHERE status=1 AND category_id=$idCategory";
+                WHERE category_id=$idCategory";
         $result = mysqli_query($this->conn, $sql);
         if ($result)
             $row = mysqli_fetch_assoc($result);
@@ -180,7 +181,7 @@ class Product {
 
     public function getProductByName($name)
     {
-        $sql = "SELECT * FROM products WHERE name = '$name' AND status = 1";
+        $sql = "SELECT * FROM products WHERE name = '$name' AND status = 1 AND isdeleted = 1";
         $result = mysqli_query($this->conn, $sql);
         return mysqli_fetch_assoc($result);
     }
@@ -191,7 +192,7 @@ class Product {
                 FROM products p 
                 LEFT JOIN brand b ON p.brand_id = b.id 
                 LEFT JOIN category c ON p.category_id = c.id 
-                WHERE p.id = $id";
+                WHERE p.id = $id AND p.isdeleted = 1";
         $result = mysqli_query($this->conn, $sql);
         if ($result)
         {
@@ -216,7 +217,7 @@ class Product {
 
     public function hideProduct($productID)
     {
-        $sql = "UPDATE products SET status=0 WHERE id = $productID";
+        $sql = "UPDATE products SET isDeleted = 0 WHERE id = $productID";
         $result = mysqli_query($this->conn, $sql);
         if($result)
             return true;
@@ -225,33 +226,34 @@ class Product {
 
     public function deleteProduct($productID)
     {   
-        //Chi tiết đơn hàng
-        $sql = "DELETE od FROM order_details od
-                JOIN product_details pd ON od.product_detail_id = pd.id
-                WHERE pd.product_id = $productID";
-        $result = mysqli_query($this->conn, $sql);
-        if ($result == false) 
-            return false;
+    // import_details
+    $sql = "DELETE id FROM import_details id
+    JOIN product_details pd ON id.product_detail_id = pd.id
+    WHERE pd.product_id = $productID";
+    $result = mysqli_query($this->conn, $sql);
+    if ($result === false) 
+    return false;
 
-        //Giỏ hàng
-        $sql = "DELETE c FROM cart c
-                JOIN product_details pd ON c.product_detail_id = pd.id
-                WHERE pd.product_id = $productID";
-        $result = mysqli_query($this->conn, $sql);
-        if ($result == false) 
-            return false;
+    // cart
+    $sql = "DELETE c FROM cart c
+    JOIN product_details pd ON c.product_detail_id = pd.id
+    WHERE pd.product_id = $productID";
+    $result = mysqli_query($this->conn, $sql);
+    if ($result === false) 
+        return false;
+    
 
-        //Biến thể
-        $sql = "DELETE FROM product_details WHERE product_id = $productID";
-        $result = mysqli_query($this->conn, $sql);
-        if ($result == false) 
-            return false;
-        
-        //Sản phẩm
-        $sql = "DELETE FROM products WHERE id = $productID";
-        $result = mysqli_query($this->conn, $sql);
-        if($result)
-            return true;   
+    // product_details
+    $sql = "DELETE FROM product_details WHERE product_id = $productID";
+    $result = mysqli_query($this->conn, $sql);
+    if ($result === false) 
+        return false;
+    
+
+    // Xóa sản phẩm khỏi bảng products
+    $sql = "DELETE FROM products WHERE id = $productID";
+    $result = mysqli_query($this->conn, $sql);
+    return $result !== false;
     }
 }
 ?>
