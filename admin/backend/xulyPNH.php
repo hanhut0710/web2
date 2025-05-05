@@ -5,7 +5,6 @@ require_once "upload.php";
 require_once "product.php";
 
 if (isset($_POST['btnAddImport'])) {
-    session_start();
     $sup_id = $_POST['sup_id'];
     $staff_id = $_POST['staff_id'];
     $profit_percentage = (float)$_POST['profit_percentage'];
