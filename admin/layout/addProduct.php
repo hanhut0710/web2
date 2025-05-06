@@ -46,8 +46,8 @@ $brandList = $brand->getAllBrand();
             <div class="form-group">
                 <label for="status">Trạng thái</label>
                 <select name="status" id="status">
-                    <option value="1" selected>Hiển thị</option>
-                    <option value="0">Ẩn</option>
+                    <option value="1">Hiển thị</option>
+                    <option value="0" selected>Ẩn</option>
                 </select>
             </div>
             <div class="form-group full-width image-upload-container">

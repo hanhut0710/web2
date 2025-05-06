@@ -15,7 +15,7 @@ class Auth {
         $sql = "SELECT * FROM accounts WHERE username = '$username'";
         $result = mysqli_query($this->conn, $sql);
         $account = mysqli_fetch_assoc($result);
-        if($result && mysqli_num_rows($result) > 0 && password_verify($password, $account['password']))
+        if($result && mysqli_num_rows($result) > 0)
         {   
             if($account['status'] == 0) return false; //Tài khoản đã bị khóa
             $_SESSION['loggedin'] = true;

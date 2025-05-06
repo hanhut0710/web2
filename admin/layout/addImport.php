@@ -7,7 +7,6 @@ $product = new Product();
 
 $supplierList = $supplier->getAllSupplier();
 $productList = $product->getAllProduct();
-
 ?>
 
 <section class="section add-import active">
@@ -44,7 +43,7 @@ $productList = $product->getAllProduct();
                         <th>Ngày tạo phiếu</th>
                         <td><input type="date" name="created_at" id="created_at"></td>
                         <th>Phần trăm lợi nhuận (%)</th>
-                        <td><input type="text" name="profit_percentage" id="profit_percentage" placeholder="Nhập phần trăm lợi nhuận" pattern="^\d+(\.\d{1,2})?$"></td>
+                        <td><input type="text" name="profit_percentage" id="profit_percentage" placeholder="Nhập phần trăm lợi nhuận"></td>
                     </tr>
                 </tbody>
             </table>
@@ -75,12 +74,12 @@ $productList = $product->getAllProduct();
                             <select name="products[0][product_id]">
                                 <option value="">Chọn sản phẩm</option>
                                 <?php foreach ($productList as $p) {
-                                    echo '<option value="' . $p['id'] . '">' .($p['name']). '</option>';
+                                    echo '<option value="' . $p['id'] . '">' . htmlspecialchars($p['name']) . '</option>';
                                 } ?>
                             </select>
                         </td>
                         <td><input type="number" name="products[0][quantity]" min="1" value="1"></td>
-                        <td><input type="text" name="products[0][import_price]" placeholder="Giá nhập" pattern="^\d+(\.\d{1,2})?$"></td>
+                        <td><input type="text" name="products[0][import_price]" placeholder="Giá nhập"></td>
                         <td><input type="text" name="products[0][color]" placeholder="Màu sắc"></td>
                         <td><input type="text" name="products[0][size]" placeholder="Kích cỡ"></td>
                         <td>
@@ -128,12 +127,12 @@ document.getElementById('add-row').addEventListener('click', function() {
             <select name="products[${rowIndex}][product_id]">
                 <option value="">Chọn sản phẩm</option>
                 <?php foreach ($productList as $p) {
-                    echo '<option value="' . $p['id'] . '">' .($p['name']) . '</option>';
+                    echo '<option value="' . $p['id'] . '">' . htmlspecialchars($p['name']) . '</option>';
                 } ?>
             </select>
         </td>
         <td><input type="number" name="products[${rowIndex}][quantity]" min="1" value="1"></td>
-        <td><input type="text" name="products[${rowIndex}][import_price]" placeholder="Giá nhập" pattern="^\\d+(\\.\\d{1,2})?$"></td>
+        <td><input type="text" name="products[${rowIndex}][import_price]" placeholder="Giá nhập"></td>
         <td><input type="text" name="products[${rowIndex}][color]" placeholder="Màu sắc"></td>
         <td><input type="text" name="products[${rowIndex}][size]" placeholder="Kích cỡ"></td>
         <td>
@@ -190,13 +189,11 @@ document.getElementById('importForm').addEventListener('submit', function(e) {
     const supId = document.getElementById('sup_id').value;
     if (!supId) 
         errors.push('Vui lòng chọn nhà cung cấp.');
-    
 
     // Kiểm tra ngày tạo phiếu
     const createdAt = document.getElementById('created_at').value;
     if (!createdAt || !/^\d{4}-\d{2}-\d{2}$/.test(createdAt)) 
         errors.push('Vui lòng chọn ngày tạo phiếu hợp lệ (định dạng YYYY-MM-DD).');
-
 
     // Kiểm tra phần trăm lợi nhuận
     const profitPercentage = document.getElementById('profit_percentage').value;
@@ -216,25 +213,28 @@ document.getElementById('importForm').addEventListener('submit', function(e) {
     } else {
         productRows.forEach((row, index) => {
             const productId = row.cells[1].querySelector('select').value;
-            const quantity = row.cells[2].querySelector('input').value;
-            const importPrice = row.cells[3].querySelector('input').value;
-            const color = row.cells[4].querySelector('input').value;
-            const size = row.cells[5].querySelector('input').value;
+            const quantity = row.cells[2].querySelector('input').value.trim();
+            const importPrice = row.cells[3].querySelector('input').value.trim();
+            const color = row.cells[4].querySelector('input').value.trim().toLowerCase();
+            const size = row.cells[5].querySelector('input').value.trim();
+            const imgInput = row.cells[6].querySelector('input[type="file"]');
 
             if (!productId) {
                 errors.push(`Sản phẩm ${index + 1}: Vui lòng chọn sản phẩm.`);
             }
-            if (!quantity || parseInt(quantity) <= 0) {
-                errors.push(`Sản phẩm ${index + 1}: Số lượng phải lớn hơn 0.`);
+            if (!quantity || !/^\d+$/.test(quantity) || parseInt(quantity) <= 0) {
+                errors.push(`Sản phẩm ${index + 1}: Số lượng phải là số nguyên lớn hơn 0.`);
             }
-            if (!importPrice || parseFloat(importPrice) <= 0) {
-                errors.push(`Sản phẩm ${index + 1}: Giá nhập phải lớn hơn 0.`);
-            } 
+            if (!importPrice || !/^\d+(\.\d{1,2})?$/.test(importPrice) || parseFloat(importPrice) <= 0) {
+                errors.push(`Sản phẩm ${index + 1}: Giá nhập phải là số dương, tối đa 2 chữ số thập phân.`);
+            }
             if (!color) {
                 errors.push(`Sản phẩm ${index + 1}: Vui lòng nhập màu sắc.`);
             }
             if (!size) {
                 errors.push(`Sản phẩm ${index + 1}: Vui lòng nhập kích cỡ.`);
+            } else if (!/^\d+$/.test(size)) {
+                errors.push(`Sản phẩm ${index + 1}: Kích cỡ phải là số.`);
             }
             if (!imgInput.files || imgInput.files.length === 0) {
                 errors.push(`Sản phẩm ${index + 1}: Vui lòng chọn ảnh.`);
