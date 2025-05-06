@@ -26,8 +26,8 @@ if (session_status() == PHP_SESSION_NONE) {
                         <ul>
                             <li><a href="./index.php">Trang chủ</a></li>
                             <li><a href="./shop.php">Sản phẩm</a></li>
-                            <li><a href="./history.php">Lịch sử</a></li>
-                            <li><a href="">Đơn hàng</a></li>
+                            <li><a href="#" id="historyBtn">Lịch sử</a></li>
+                            <li><a href="./cart.php">Giỏ hàng</a></li>
                         </ul>
                     </nav>
                 </div>

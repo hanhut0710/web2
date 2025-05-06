@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'buy_now') {
         // 👉 Đây là hành động mua ngay
         // Xử lý tạo đơn hàng tạm, redirect tới trang thanh toán, v.v.
-        echo "Mua ngay sản phẩm ID: $product_id, chi tiết: $product_detail_id, SL: $quantity";
     } else {
         // Nếu muốn xử lý các action khác (nếu có)
         echo "Hành động không xác định.";

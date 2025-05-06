@@ -22,7 +22,7 @@ function showToast(message, type = "success") {
     container.appendChild(toast);
   
     // Sau 3 giây, áp dụng hiệu ứng slide-out và xóa thông báo
-    setTimeout(() => {
+    setTimeout(() => {  
       toast.classList.add('slide-out');
       setTimeout(() => {
         toast.remove();

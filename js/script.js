@@ -12,7 +12,20 @@ let selectedPrice = '';
 const userIcon = document.querySelector(".nav-link.user");
 const loginModal = document.querySelector(".login_modal");
 const loginForm = document.querySelector(".container__login");
-
+const btnHistory = document.getElementById('historyBtn');
+btnHistory.addEventListener("click" , function(event){
+    fetch('./handle/Check_Login.php')
+    .then(res => res.json())
+    .then(data => {
+        if(data.isLogin){
+            window.location.href = "./account_history.php";
+        }
+        else {
+            event.preventDefault();
+            showToast("Bạn chưa đăng nhập!","fail");
+        }
+    });
+});
 function openModal() {
     loginModal.classList.add("active");
     loginForm.classList.add("active");
@@ -48,7 +61,7 @@ loginForm.addEventListener("keypress", function (event) {
         const password = document.getElementById("passwd").value.trim();
 
         if (username === "" || password === "") {
-            alert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");            
+            showToast("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!","fail");            
         } else {
             submitForm("login"); // Gọi hàm đăng nhập nếu đủ thông tin
         }
@@ -130,16 +143,11 @@ if (type === "login") {
 } else if (type === 'register') {
     form = document.getElementById("registerForm");
 }
-console.log("Form:", form); // Kiểm tra form có tồn tại không
-if (!form) {
-    alert("Lỗi: Không tìm thấy form.");
-    return;
-}
 // Kiểm tra thông tin trước khi gửi
 const username = form.querySelector("#username")?.value.trim();
 const password = form.querySelector("#passwd")?.value.trim();
 if (!username || !password) {
-    alert("Vui lòng nhập đầy đủ thông tin!");
+    showToast("Vui lòng nhập đầy đủ thông tin!","fail");
     return;
 }
 let formData;
@@ -150,11 +158,11 @@ if (type === 'login') {
     const phone = form.querySelector("#phone")?.value.trim();
     const repassword = form.querySelector("#repasswd")?.value.trim();
     if (!fullname || !phone || !username || !password || !repassword) {
-        alert("Vui lòng nhập đầy đủ thông tin!");
+        showToast("Vui lòng nhập đầy đủ thông tin!","fail");
         return;
     }
     if (password !== repassword) {
-        alert("Mật khẩu nhập lại không khớp!");
+        showToast("Mật khẩu nhập lại không khớp!","fail");
         return;
     }
     formData = new FormData(document.getElementById('registerForm'));
@@ -175,15 +183,15 @@ fetch("handle/login.php", {
 })
 .then(data => {
     if (data.status === 'error') {
-        alert(data.message);
+        showToast(data.message,"fail");
     } else {
-        alert(data.message);
-        window.location.href = "index.php";
+        showToast(data.message,"success");
+        location.reload();
     }
 })
 .catch(error => {
     console.error("Lỗi kết nối:", error);
-    alert("Có lỗi xảy ra khi kết nối với máy chủ. Vui lòng thử lại!");
+    showToast("Có lỗi xảy ra khi kết nối với máy chủ. Vui lòng thử lại!","fail");
 });
 
 }
@@ -214,7 +222,7 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             document.getElementById("popup-brand").innerText = data.product.brand_name;
             document.getElementById("popup-color").innerText = data.product.color;
             document.getElementById("popup-quantity").innerText = data.product.stock;
-        
+            
             const sizeContainer = document.getElementById("popup-sizes");
             sizeContainer.innerHTML = ""; // Xóa danh sách cũ // Chuyển chuỗi size thành mảng
             data.size.forEach(size => {
@@ -222,7 +230,7 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                 sizeElement.classList.add("size-option");
                 sizeElement.innerText = size.size;
                 sizeContainer.appendChild(sizeElement);
-
+                
                 sizeElement.addEventListener("click", function () {
                     // Xóa active cũ
                     document.querySelectorAll('.size-option').forEach(e => e.classList.remove("active"));
@@ -310,46 +318,54 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             const newBtn = btnaddCart.cloneNode(true);
             btnaddCart.parentNode.replaceChild(newBtn, btnaddCart);
             newBtn.addEventListener("click", function () {
-                if (!selectedProductDetailId || !productId) {
-                    // alert("Vui lòng chọn size và màu sắc!");
-                    showToast("Vui lòng chọn size và màu sắc","fail");
-                    return;
-                }
-            
-                console.log("Gửi dữ liệu:", {
-                    product_id: productId,
-                    product_detail_id: selectedProductDetailId,
-                    quantity: 1
-                });
-                fetch(`./handle/add_to_Cart.php`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    body: "product_id=" + encodeURIComponent(productId) +
-                          "&product_detail_id=" + encodeURIComponent(selectedProductDetailId) +
-                          "&quantity=1"
-                })
-                .then(res => res.text())
-                .then(text => {
-                    console.log("Phản hồi thô từ server:", text);
-                    try {
-                        const data = JSON.parse(text);
-                        console.log("Parsed JSON:", data);
-                        if (data.success) {
-                            alert("✅ Thêm sản phẩm vào giỏ hàng thành công!");
-                            location.reload();
-                        } else {
-                            alert("❌ Không thể thêm sản phẩm: " + (data.message || "Lỗi không xác định."));
+                fetch('./handle/Check_Login.php')
+                .then(res => res.json())
+                .then(data => {
+                    if(data.isLogin){
+                        if (!selectedProductDetailId || !productId) {
+                            showToast("Vui lòng chọn size và màu sắc","fail");
+                            return;
                         }
-                    } catch (e) {
-                        console.error("Lỗi khi parse JSON:", e);
-                        alert("❌ Đã xảy ra lỗi khi xử lý phản hồi từ server.");
+                    
+                        console.log("Gửi dữ liệu:", {
+                            product_id: productId,
+                            product_detail_id: selectedProductDetailId,
+                            quantity: 1
+                        });
+                        fetch(`./handle/add_to_Cart.php`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded",
+                            },
+                            body: "product_id=" + encodeURIComponent(productId) +
+                                  "&product_detail_id=" + encodeURIComponent(selectedProductDetailId) +
+                                  "&quantity=1"
+                        })
+                        .then(res => res.text())
+                        .then(text => {
+                            console.log("Phản hồi thô từ server:", text);
+                            try {
+                                const data = JSON.parse(text);
+                                console.log("Parsed JSON:", data);
+                                if (data.success) {
+                                    showToast("✅ Thêm sản phẩm vào giỏ hàng thành công!","success");
+                                    location.reload();
+                                } else {
+                                    showToast("❌ Không thể thêm sản phẩm: " + (data.message || "Lỗi không xác định."),"fail");
+                                }
+                            } catch (e) {
+                                console.error("Lỗi khi parse JSON:", e);
+                                showToast("❌ Đã xảy ra lỗi khi xử lý phản hồi từ server.","fail");
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Lỗi khi gọi API:", err);
+                            showToast("❌ Lỗi kết nối đến server.","fail");
+                        });
                     }
-                })
-                .catch(err => {
-                    console.error("Lỗi khi gọi API:", err);
-                    alert("❌ Lỗi kết nối đến server.");
+                    else {
+                        alert("Bạn cần đăng nhập trước khi thêm sản phẩm");
+                    }
                 });
             });                
             
@@ -358,34 +374,43 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             const btnBuyNownew = btnBuyNow.cloneNode(true);
             btnBuyNow.parentNode.replaceChild(btnBuyNownew,btnBuyNow);
             btnBuyNownew.addEventListener("click" , function(){
-                if (!selectedProductDetailId || !productId) {
-                    alert("Vui lòng chọn size và màu sắc!");
-                    return;
-                }
-                console.log("Gửi dữ liệu:", {
-                    product_id: productId,
-                    product_detail_id: selectedProductDetailId,
-                    quantity: 1
-                });
-                const form = document.createElement("form");
-                form.method = "POST";
-                form.action = "./BuyNow.php";
-
-                const addField = (name, value) => {
-                    const input = document.createElement("input");
-                    input.type = "hidden";
-                    input.name = name;
-                    input.value = value;
-                    form.appendChild(input);
-                };
-
-                addField("product_id", productId);
-                addField("product_detail_id", selectedProductDetailId);
-                addField("quantity", 1);
-                addField("action", "buy_now");
-
-                document.body.appendChild(form);
-                form.submit();  // Chuyển trang và gửi dữ liệu POST              
+                fetch('./handle/Check_Login.php')
+                .then(res => res.json())
+                .then(data => {
+                    if(data.isLogin){
+                        if (!selectedProductDetailId || !productId) {
+                            alert("Vui lòng chọn size và màu sắc!");
+                            return;
+                        }
+                        console.log("Gửi dữ liệu:", {
+                            product_id: productId,
+                            product_detail_id: selectedProductDetailId,
+                            quantity: 1
+                        });
+                        const form = document.createElement("form");
+                        form.method = "POST";
+                        form.action = "./BuyNow.php";
+        
+                        const addField = (name, value) => {
+                            const input = document.createElement("input");
+                            input.type = "hidden";
+                            input.name = name;
+                            input.value = value;
+                            form.appendChild(input);
+                        };
+        
+                        addField("product_id", productId);
+                        addField("product_detail_id", selectedProductDetailId);
+                        addField("quantity", 1);
+                        addField("action", "buy_now");
+        
+                        document.body.appendChild(form);
+                        form.submit();  // Chuyển trang và gửi dữ liệu POST  
+                    }
+                    else {
+                        alert("Bạn cần đăng nhập trước khi mua");
+                    }
+                })
             });
         }
     })

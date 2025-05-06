@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+    let btnCheckoout = document.getElementById("checkoutBtn");
+    btnCheckoout.classList.add('disable-link');
+    btnCheckoout.addEventListener("click" , function(event){
+        event.preventDefault();
+
+    })
     let product = [];
     function updateCartTotal(){
         const cartItems = document.querySelectorAll('tbody tr');
@@ -39,12 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <p style="margin-top: 10px; font-size: 18px;">Giỏ hàng của bạn đang trống</p>
                             </td>
                         </tr>`;
+                        btnCheckoout.addEventListener("click", function(event){
+                            event.preventDefault();
+                            alert("Giỏ hàng không có sản phẩm");
+                        })
                     return;
-
+                    
                 }
                 
                 // Nếu có sản phẩm
                 data.data.forEach(item => {
+                    btnCheckoout.classList.remove('disable-link');
+                    btnCheckoout.addEventListener("click", function(event){
+                        event.preventDefault();
+                        location.href ="./checkout.php";
+                    });
                     console.log(item );
                     const total = item.price * item.quantity;
                     cartBody.innerHTML += `

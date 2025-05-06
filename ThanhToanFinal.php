@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
                 } else {
                     echo "Lỗi prepare chi tiết đơn hàng: " . mysqli_error($con);
                 }
-                $sqlUpdateStock = "UPDATE product SET stock = stock - ? WHERE id = ?";
+                $sqlUpdateStock = "UPDATE products SET stock = stock - ? WHERE id = ?";
                 $stmtUpdate = mysqli_prepare($con, $sqlUpdateStock);
                 if ($stmtUpdate) {
                     mysqli_stmt_bind_param($stmtUpdate, "ii", $quantity, $productId);
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
                 $sqlDetailStock = "UPDATE product_details SET stock = stock - ? WHERE id = ?";
                 $stmtUpdateDetailStock = mysqli_prepare($con,$sqlDetailStock);
                 if($stmtUpdateDetailStock){
-                    mysqli_stmt_blind_param($stmtUpdateDetailStock, "ii", $quantity, $detailId);
+                    mysqli_stmt_bind_param($stmtUpdateDetailStock, "ii", $quantity, $detailId);
                     if(!mysqli_stmt_execute($stmtUpdateDetailStock)){
                         echo "Lỗi khi cập nhật số lượng tồn kho: " . mysqli_stmt_error($stmtUpdateDetailStock);
                     }

@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     fetchOrders();
-
     const tabNavItems = document.querySelectorAll(".custom-tab-nav-item");
     const tabContents = document.querySelectorAll(".custom-tab-content-item");
 
@@ -103,7 +102,7 @@ function renderOrders(orders) {
     });
 
     for (const tab in tabContainers) {
-        if (tabContainers[tab].innerHTML.trim() === "") {
+        if (tabContainers[tab].children.length === 0) {
             tabContainers[tab].innerHTML = `
                 <div class="no-orders">
                     <div class="no-orders-thumb"></div>
