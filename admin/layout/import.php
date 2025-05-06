@@ -44,7 +44,11 @@ $importList = $import->getAllImportByPagination($itemsPerPage, $offset);
         </div>
         <div class="admin-control-right">
             <a href="index.php?page=import"><button class="btn-control-large" id="btn-cancel-product"><i class="fa-light fa-rotate-right"></i> Làm mới</button></a>
-            <a href="index.php?page=addImport"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Tạo phiếu nhập</button></a>
+            <?php 
+                if($authManager->hasPermission($_SESSION['id'], 17)) {
+                    echo '<a href="index.php?page=addImport"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Tạo phiếu nhập</button></a>';
+                }
+            ?>
         </div>
     </div>
 
@@ -71,9 +75,11 @@ $importList = $import->getAllImportByPagination($itemsPerPage, $offset);
                         <td>' . date('d/m/Y', strtotime($value['created_at'])) . '</td>
                         <td>' . $value['quantity'] . '</td>
                         <td>' . number_format($value['total_price'], 0) . ' VNĐ</td>
-                        <td class="control">
-                            <button class="btn-detail" onclick="location.href=\'index.php?page=importdetail&import_id=' . $value['id'] . '\'"><i class="fa-regular fa-eye"></i> Chi tiết</button>
-                        </td>
+                        <td class="control">';
+                            if($authManager->hasPermission($_SESSION['id'], 23)) {
+                                echo '<button class="btn-detail" onclick="location.href=\'index.php?page=importdetail&import_id=' . $value['id'] . '\'"><i class="fa-regular fa-eye"></i> Chi tiết</button>';
+                            }
+                       echo '</td>
                     </tr>';
                 }
                 ?>

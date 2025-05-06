@@ -2,10 +2,10 @@
     <div class="container">
             <aside class="sidebar open">
                 <div class="top-sidebar">
-                    <a href="#" class="channel-logo"><img src="../img/logo.png" alt="Lucy Coffe Logo"></a>
-                    <div class="hidden-sidebar your-channel"><img src="../img/logo.png"
+                    <a href="#"  style="height: 150px; width: 100%" class="channel-logo"><img src="../img/logo.png" alt="Lucy Coffe Logo"></a>
+                    <!-- <div class="hidden-sidebar your-channel"><img src="../img/logo.png"
                             style="height: 30px;" alt="">
-                    </div>
+                    </div> -->
                 </div>
                 <div class="middle-sidebar">
                     <ul class="sidebar-list">
@@ -15,42 +15,60 @@
                                 <div class="hidden-sidebar">Trang tổng quan</div>
                             </a>
                         </li>
-                        <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=product" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa-light fa-pot-food"></i></div>
-                                <div class="hidden-sidebar">Sản phẩm</div>
-                            </a>
-                        </li>
-                        <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=productdetails" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa-solid fa-boot"></i></div>
-                                <div class="hidden-sidebar">Chi tiết sản phẩm</div>
-                            </a>
-                        </li>
-                        <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=import" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa fa-ticket" aria-hidden="true"></i></div>
-                                <div class="hidden-sidebar">Phiếu nhập hàng</div>
-                            </a>
-                        </li>
-                        <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=supplier" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa-solid fa-user-tie"></i></div>
-                                <div class="hidden-sidebar">Nhà cung cấp</div>
-                            </a>
-                        </li>
-                        <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=user" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
-                                <div class="hidden-sidebar">Khách hàng</div>
-                            </a>
-                        </li>
-                        <li class="sidebar-list-item tab-content">
-                            <a href="index.php?page=order" class="sidebar-link">
-                                <div class="sidebar-icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
-                                <div class="hidden-sidebar">Đơn hàng</div>
-                            </a>
-                        </li>
+                        <?php 
+                            if($authManager->hasPermission($_SESSION['id'], 12)){
+                                echo '<li class="sidebar-list-item tab-content">
+                                        <a href="index.php?page=product" class="sidebar-link">
+                                            <div class="sidebar-icon"><i class="fa-light fa-pot-food"></i></div>
+                                            <div class="hidden-sidebar">Sản phẩm</div>
+                                        </a>
+                                    </li>';
+                            } ?>
+                        <?php 
+                            if($authManager->hasPermission($_SESSION['id'], 16)){
+                                echo '<li class="sidebar-list-item tab-content">
+                                        <a href="index.php?page=productdetails" class="sidebar-link">
+                                            <div class="sidebar-icon"><i class="fa-solid fa-boot"></i></div>
+                                            <div class="hidden-sidebar">Chi tiết sản phẩm</div>
+                                        </a>
+                                    </li>';
+                            } ?>
+                        <?php 
+                            if($authManager->hasPermission($_SESSION['id'], 24)){
+                                echo '<li class="sidebar-list-item tab-content">
+                                        <a href="index.php?page=import" class="sidebar-link">
+                                            <div class="sidebar-icon"><i class="fa fa-ticket" aria-hidden="true"></i></div>
+                                            <div class="hidden-sidebar">Phiếu nhập hàng</div>
+                                        </a>
+                                    </li>';
+                            } ?>
+                        <?php 
+                            if($authManager->hasPermission($_SESSION['id'], 22)){
+                                echo '<li class="sidebar-list-item tab-content">
+                                        <a href="index.php?page=supplier" class="sidebar-link">
+                                            <div class="sidebar-icon"><i class="fa-solid fa-user-tie"></i></div>
+                                            <div class="hidden-sidebar">Nhà cung cấp</div>
+                                        </a>
+                                    </li>';
+                            } ?>
+                        <?php
+                            if($authManager->hasPermission($_SESSION['id'], 8)){
+                                echo '<li class="sidebar-list-item tab-content">
+                                        <a href="index.php?page=user" class="sidebar-link">
+                                            <div class="sidebar-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
+                                            <div class="hidden-sidebar">Khách hàng</div>
+                                        </a>
+                                    </li>';
+                            } ?>
+                        <?php
+                            if($authManager->hasPermission($_SESSION['id'], 14)){
+                                echo '<li class="sidebar-list-item tab-content">
+                                <a href="index.php?page=order" class="sidebar-link">
+                                    <div class="sidebar-icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
+                                    <div class="hidden-sidebar">Đơn hàng</div>
+                                </a>
+                            </li>';
+                        } ?>
                         <?php 
                             if($authManager->hasPermission($_SESSION['id'], 4)){
                                 echo '<li class="sidebar-list-item tab-content">
@@ -105,55 +123,100 @@
                             break;
                         /*** PHIẾU NHẬP HÀNG ***/ 
                         case "import":
-                            include "import.php";
+                            if($authManager->hasPermission($_SESSION['id'], 24))
+                                include "import.php";
+                            else 
+                                include "403.php";
                             break;
                         case "importdetail":
-                            include "importdetail.php";
+                            if($authManager->hasPermission($_SESSION['id'], 23))
+                                include "importdetail.php";
+                            else 
+                                include "403.php";
                             break;
                         case "addImport":
-                            include "addImport.php";
+                           if($authManager->hasPermission($_SESSION['id'], 17))
+                                include "addImport.php";
+                            else 
+                                include "403.php";
                             break;
                         /*** SẢN PHẨM ***/ 
                         case "product":
-                            include "product.php";
+                            if($authManager->hasPermission($_SESSION['id'], 12))
+                                include "product.php";
+                            else 
+                                include "403.php";
                             break;
                         case "addProduct":
-                            include "addProduct.php";
+                           if($authManager->hasPermission($_SESSION['id'], 9))
+                                include "addProduct.php";
+                            else 
+                                include "403.php";
                             break;   
                         case "editProduct":
-                            include "editProduct.php";
+                            if($authManager->hasPermission($_SESSION['id'], 10))
+                                include "editProduct.php";
+                            else 
+                                include "403.php";
                             break;   
                         case "productdetails":
-                            include "productdetails.php";
+                            if($authManager->hasPermission($_SESSION['id'], 16))
+                                include "productdetails.php";
+                            else 
+                                include "403.php";
                             break;
                         case "addProductDetail":
                             include "addProductDetails.php";
                             break;
                         /*** NHÀ CUNG CẤP ***/ 
                         case "supplier":
-                            include "supplier.php";
+                            if($authManager->hasPermission($_SESSION['id'], 22))
+                                include "supplier.php";
+                            else 
+                                include "403.php";
                             break;
                         case "addSupplier":
-                            include "addSupplier.php";
+                            if($authManager->hasPermission($_SESSION['id'], 18))
+                                include "addSupplier.php";
+                            else 
+                                include "403.php";
                             break;
                         case "editSupplier":
-                            include "editSupplier.php";
+                            if($authManager->hasPermission($_SESSION['id'], 19))
+                                include "editSupplier.php";
+                            else 
+                                include "403.php";
                             break;
                         /*** ĐƠN HÀNG ***/ 
                         case "order":
-                            include "order.php";
+                            if($authManager->hasPermission($_SESSION['id'], 14))
+                                include "order.php";
+                            else 
+                                include "403.php";
                             break;
                         case "user":
-                            include "user.php";
+                            if($authManager->hasPermission($_SESSION['id'], 8))
+                                include "user.php";
+                            else 
+                                include "403.php";
                             break;
                         case "addUser":
-                            include "addUser.php";
+                            if($authManager->hasPermission($_SESSION['id'], 5))
+                                include "addUser.php";
+                            else 
+                                include "403.php";
                             break;
                         case "editUser":
-                            include "editUser.php";
+                            if($authManager->hasPermission($_SESSION['id'], 6))
+                                include "editUser.php";
+                            else 
+                                include "403.php";
                             break;
                          case "orderdetails":
-                            include "orderdetails.php";
+                            if($authManager->hasPermission($_SESSION['id'], 21))
+                                include "orderdetails.php";
+                            else 
+                                include "403.php";
                             break; 
                         /*** THỐNG KÊ ***/ 
                         case "statisticProduct":

@@ -4,18 +4,17 @@ require_once "productdetails.php";
 require_once "upload.php";
 require_once "product.php";
 
+$import = new Import();
+$productDetails = new ProductDetails();
+$upload = new Upload();
+$product = new Product();
+
 if (isset($_POST['btnAddImport'])) {
-    session_start();
     $sup_id = $_POST['sup_id'];
     $staff_id = $_POST['staff_id'];
     $profit_percentage = (float)$_POST['profit_percentage'];
     $created_at = $_POST['created_at'];
     $products = $_POST['products'];
-
-    $import = new Import();
-    $productDetails = new ProductDetails();
-    $upload = new Upload();
-    $product = new Product();
 
     // Tính tổng số lượng và tổng giá trị
     $total_quantity = 0;

@@ -6,9 +6,9 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
+                                    <th>SẢN PHẨM</th>
+                                    <th>SỐ LƯỢNG</th>
+                                    <th>TỔNG CỘNG</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -99,7 +99,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn">
-                                <a href="shop.php">Continue Shopping</a>
+                                <a href="shop.php">Tiếp tục mua đồ</a>
                             </div>
                         </div>
                     </div>

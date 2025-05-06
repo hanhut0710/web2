@@ -3,39 +3,39 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <span>Latest News</span>
-                        <h2>Fashion New Trends</h2>
+                        <span>Tin mới nhất</span>
+                        <h2>Phong trào giày mới nhất</h2>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-1.jpg"></div>
+                        <div class="blog__item__pic set-bg" data-setbg="img/blog/b1.jpg"></div>
                         <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 16 February 2020</span>
-                            <h5>What Curling Irons Are The Best Ones</h5>
-                            <a href="#">Read More</a>
+                            <span><img src="img/icon/calendar.png" alt=""> 16 02 2020</span>
+                            <h5>Không chỉ là đôi giày, đó là tuyên ngôn của phong cách bạn.</h5>
+                            <a >Đọc thêm</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-2.jpg"></div>
+                        <div class="blog__item__pic set-bg" data-setbg="img/blog/b2.jpg"></div>
                         <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 21 February 2020</span>
-                            <h5>Eternity Bands Do Last Forever</h5>
-                            <a href="#">Read More</a>
+                            <span><img src="img/icon/calendar.png" alt=""> 21 02 2020</span>
+                            <h5>Giày đẹp chưa đủ, phải thật chất để khác biệt.</h5>
+                            <a >Đọc thêm</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-3.jpg"></div>
+                        <div class="blog__item__pic set-bg" data-setbg="img/blog/b3.jpg"></div>
                         <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 28 February 2020</span>
-                            <h5>The Health Benefits Of Sunglasses</h5>
-                            <a href="#">Read More</a>
+                            <span><img src="img/icon/calendar.png" alt=""> 28 02 2020</span>
+                            <h5>Mỗi bước chân đều mang theo một dấu ấn riêng.</h5>
+                            <a >Đọc thêm</a>
                         </div>
                     </div>
                 </div>

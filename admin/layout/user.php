@@ -14,8 +14,12 @@
         <!-- Account  -->
             <div class="section active">
                     <div class="admin-user-control-right">  
-                        <a href="index.php?page=addUser"><button class="btn-adminUser-control-large" id="btn-add-product" ><i class="fa-light fa-plus"></i> Thêm khách hàng</button></a>     
-                    </div>
+                    <?php
+                        if($authManager->hasPermission($_SESSION['id'], 5)) {
+                            echo '<a href="index.php?page=addUser"><button class="btn-adminUser-control-large" id="btn-add-product" ><i class="fa-light fa-plus"></i> Thêm khách hàng</button></a>';
+                        }     
+                    ?>
+                        </div>
                 <div class="table">
                     <table width="100%">
                         <thead>
@@ -52,11 +56,14 @@
                                             <td>'.$fullAddress.'</td>
                                             <td>'.$user['email'].'</td>
                                             <td><span class="' . ($user['status'] == 1 ? 'status-active' : 'status-locked') . '">' . ($user['status'] == 1 ? 'Hoạt động' : 'Khóa') . '</span></td>
-                                            <td class="control control-table">
-                                            <a href="index.php?page=editUser&id='.$user['accID'].'" class="btn-edit" id="edit-account"><i class="fa-light fa-pen-to-square"></i></a>
-                                            <a href="./backend/xulyUser.php?act=toggleStatus&id='.$user['accID'].'" class="btn-delete" id="edit-account" onclick="return confirmToggleStatus('.$user['status'].');">
-                                            <i class="'.($user['status']==1 ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock').'"></i>
-                                            </a>
+                                            <td class="control control-table">';
+                                            if($authManager->hasPermission($_SESSION['id'], 6))
+                                                echo '<a href="index.php?page=editUser&id='.$user['accID'].'" class="btn-edit" id="edit-account"><i class="fa-light fa-pen-to-square"></i></a>';
+                                            if($authManager->hasPermission($_SESSION['id'], 7))
+                                                echo '<a href="./backend/xulyUser.php?act=toggleStatus&id='.$user['accID'].'" class="btn-delete" id="edit-account" onclick="return confirmToggleStatus('.$user['status'].');">
+                                                        <i class="'.($user['status']==1 ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock').'"></i>
+                                                        </a>';
+                                            echo '
                                             </td>
                                         </tr>
                                     ';

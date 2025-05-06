@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn-submit'])) {
         $acc->addAccount($staff_username, $hash_passwd);
         $acc_id = $acc->getAccId($staff_username, $hash_passwd);
         $staff->addStaff($staff_name, $staff_phone, $staff_email, $staff_role, $acc_id);
-        var_dump($acc_id);
     }
 }
 ?>

@@ -608,7 +608,7 @@ ol {
 }
 
 .hero__text h2 {
-	color: #111111;
+	color: #ffffff;
 	font-size: 48px;
 	font-weight: 700;
 	line-height: 58px;
@@ -622,6 +622,7 @@ ol {
 }
 
 .hero__text p {
+	color: #e53637;
 	font-size: 16px;
 	line-height: 28px;
 	margin-bottom: 35px;
@@ -4199,7 +4200,7 @@ font-size: 20px;
 	transform: translateY(-100px); /* Ẩn bên trên */
 	padding: 10px;
 	transition: 0.3s;
-	z-index: 9999;
+	z-index: 100;
 }
 
 #advancedSearchForm.active {
@@ -4228,4 +4229,91 @@ font-size: 20px;
     height: 50px;
     object-fit: cover;
     border-radius: 10px;
+}
+
+/* toast */
+.toast-container {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	z-index: 9999;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	font-family: Arial, sans-serif;
+  }
+  
+  .toast-message {
+	padding: 20px 30px;  /* Tăng kích thước padding */
+	border-radius: 8px;  /* Tăng border-radius để làm tròn góc nhiều hơn */
+	min-width: 400px;  /* Tăng độ rộng tối thiểu */
+	max-width: 700px;  /* Tăng độ rộng tối đa */
+	color: #fff;
+	font-size: 16px;
+	animation: slideIn 0.3s ease-out;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+	display: flex;
+	align-items: center;
+  }
+  
+  .toast-message i {
+	margin-right: 10px;
+	font-size: 20px;
+  }
+  
+  .toast-success {
+	background-color: #28a745;
+  }
+  
+  .toast-fail {
+	background-color: #dc3545;
+  }
+  
+  .toast-warning {
+	background-color: #ffc107;
+	color: #333;
+  }
+  
+  .toast-text {
+	flex: 1;
+  }
+  
+  @keyframes slideIn {
+	from {
+	  opacity: 0;
+	  transform: translateX(100%);
+	}
+	to {
+	  opacity: 1;
+	  transform: translateX(0);
+	}
+  }
+  
+  @keyframes slideOut {
+	from {
+	  opacity: 1;
+	  transform: translateX(0);
+	}
+	to {
+	  opacity: 0;
+	  transform: translateX(100%);
+	}
+  }
+  
+  .toast-message.slide-out {
+	animation: slideOut 0.3s ease-out forwards;
+  }
+  /* Thiết lập vị trí của thanh kéo dọc */
+  .swiper-scrollbar {
+    position: relative; 
+	height: 10px !important;
+    height: 20px; /* Dày hơn mặc định */
+    background-color: #eee;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.swiper-scrollbar-drag {
+    background-color: #ff5050;
+    border-radius: 6px;
 }

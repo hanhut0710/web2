@@ -24,7 +24,7 @@
                     <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
                         <form id="searchForm" onsubmit="search(event)">
-                            <input type="text" id="searchInput" class="search" placeholder="Search...">
+                            <input type="text" id="searchInput" class="search" placeholder="Tìm kiếm ...">
                             <button type="submit"><span class="icon_search"></span></button>
                         </form>
                     </div>
@@ -32,13 +32,13 @@
                             <div class="accordion" id="accordionExample">
                                 <div class="card">
                                     <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                        <a data-toggle="collapse" data-target="#collapseOne">Phân Loại</a>
                                     </div>
                                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
                                             <ul id="category-list">
-                                                <li><a href="#" data-category-id="all" class="active">All</a></li>
+                                                <li><a href="#" data-category-id="all" class="active">Tất cả</a></li>
                                                 <li><a href="#" data-category-id="1">Casualwear</a></li>
                                                 <li><a href="#" data-category-id="5">Sportwear</a></li>
                                                 <li><a href="#" data-category-id="2">Running</a></li>
@@ -53,13 +53,13 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseTwo">Branding</a>
+                                        <a data-toggle="collapse" data-target="#collapseTwo">Thương hiệu</a>
                                     </div>
                                     <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__brand">
                                                 <ul id="brand-list">
-                                                    <li><a href="#" data-brand="all" class="active">All</a></li>
+                                                    <li><a href="#" data-brand="all" class="active">Tất cả</a></li>
                                                     <li><a href="#" data-brand="1">Nike</a></li>
                                                     <li><a href="#" data-brand="2">Adidas</a></li>
                                                     <li><a href="#" data-brand="3">Puma</a></li>

@@ -48,7 +48,7 @@ loginForm.addEventListener("keypress", function (event) {
         const password = document.getElementById("passwd").value.trim();
 
         if (username === "" || password === "") {
-            alert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
+            alert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");            
         } else {
             submitForm("login"); // Gọi hàm đăng nhập nếu đủ thông tin
         }
@@ -202,15 +202,12 @@ let selectedSize = null;
 let selectedColor = null;
 let selectedProductDetailId = null; // thêm biến này
 console.log("Product ID:", productId); // Kiểm tra giá trị
-// Gửi yêu cầu AJAX để lấy chi tiết sản phẩm từ database
 fetch(`./handle/get_product_details.php?product_id=${productId}`)
     .then(response => response.json())
     .then(data => {
         if (data.error) {
             console.error("Lỗi:", data.error);
         } else {
-            // console.log("Dữ liệu sản phẩm:", data); // Kiểm tra dữ liệu
-            // Điền thông tin vào popup
             document.getElementById("popup-image").src = data.product.img_src;
             document.getElementById("popup-name").innerText = data.product.name;
             document.getElementById("popup-price").innerText = data.product.price;
@@ -280,9 +277,25 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                     .catch(err => console.error("Lỗi khi fetch:", err));
             }
             fetchProductDetails(productId);
+
             function updateSelectedDetailId() {
                 console.log(selectedColor);
                 if (selectedSize && selectedColor && productDetails) {
+                    fetch(`./handle/get_product_details.php?product_id=${productId}&size=${selectedSize}&color=${selectedColor}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.selected_variant) {
+                            document.getElementById("popup-quantity").innerText = data.selected_variant.stock;
+                        } else {
+                            document.getElementById("popup-quantity").innerText = "0";
+                            
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Lỗi khi lấy stock:", err);
+                        document.getElementById("popup-quantity").innerText = "0";
+                    });
+                    
                     const match = productDetails.find(d => d.size === selectedSize && d.color === selectedColor);
                     if (match) {
                         selectedProductDetailId = match.product_detail_id;
@@ -298,7 +311,8 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             btnaddCart.parentNode.replaceChild(newBtn, btnaddCart);
             newBtn.addEventListener("click", function () {
                 if (!selectedProductDetailId || !productId) {
-                    alert("Vui lòng chọn size và màu sắc!");
+                    // alert("Vui lòng chọn size và màu sắc!");
+                    showToast("Vui lòng chọn size và màu sắc","fail");
                     return;
                 }
             

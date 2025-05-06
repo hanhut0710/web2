@@ -3,19 +3,19 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="instagram__pic">
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-1.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-2.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-3.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-4.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-5.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-6.jpg"></div>
+                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/a1.jpg"></div>
+                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/a2.jpg"></div>
+                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/a3.jpg"></div>
+                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/a4.jpg"></div>
+                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/a5.jpg"></div>
+                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/a6.jpg"></div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="instagram__text">
                         <h2>Instagram</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
+                        <p>Đi một đôi giày đẹp, mở ra ngàn lối sống chất</p>
+                        <p>Gu giày chất - Cá tính bật - Tự tin chất ngất.</p>
                         <h3>#Male_Fashion</h3>
                     </div>
                 </div>

@@ -1,9 +1,21 @@
+<?php 
+    require_once "./backend/user.php";
+    require_once "./backend/product.php";
+    require_once "./backend/statisticCustomer.php";
+
+    $user = new User();
+    $product = new Product();
+    $statistic = new StatisticCustomer();
+    $totalUser= $user -> getTotalUser();
+    $totalProduct = $product -> getTotalProduct();
+    $totalRevenue = $statistic -> getTotalRevenueByTime('' ,  date('Y-m-d'));
+?>
 <div class="section active">
-                <h1 class="page-title">Trang quản lý cửa hàng Lucy Coffee</h1>
-                <div class="cards">
-                    <div class="card-single">
+                <h1 class="page-title">Trang quản lý cửa hàng bán giày Dattebayo</h1>
+                <div class="cards" >
+                    <a href="index.php?page=user" class="card-single">
                         <div class="box">
-                            <h2 id="amount-user">4</h2>
+                            <h2 id="amount-user"><?php echo $totalUser ?></h2>
                             <div class="on-box">
                                 <img src="../assets/img/admin/s1.png" alt="" style=" width: 200px;">
                                 <h3>Khách hàng</h3>
@@ -12,22 +24,22 @@
                             </div>
 
                         </div>
-                    </div>
-                    <div class="card-single">
+                    </a>
+                    <a href="index.php?page=product" class="card-single">
                         <div class="box">
                             <div class="on-box">
                                 <img src="assets/img/admin/s2.png" alt="" style=" width: 200px;">
-                                <h2 id="amount-product">15</h2>
+                                <h2 id="amount-product"><?php echo $totalProduct ?></h2>
                                 <h3>Sản phẩm</h3>
                                 <p>Sản phẩm là bất cứ cái gì có thể đưa vào thị trường để tạo sự chú ý, mua sắm, sử dụng
                                     hay tiêu dùng nhằm thỏa mãn một nhu cầu hay ước muốn. Nó có thể là những vật thể,
                                     dịch vụ, con người, địa điểm, tổ chức hoặc một ý tưởng. </p>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-single">
+                    </a>
+                    <a href="index.php?page=statisticRevenue" class="card-single">
                         <div class="box">
-                            <h2 id="doanh-thu">500.000 ₫</h2>
+                            <h2 id="doanh-thu"><?php echo number_format($totalRevenue, 0, ',', '.') ?>đ</h2>
                             <div class="on-box">
                                 <img src="assets/img/admin/s3.png" alt="" style=" width: 200px;">
                                 <h3>Doanh thu</h3>
@@ -35,6 +47,6 @@
                                     cấp dịch vụ với sản lượng.</p>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
