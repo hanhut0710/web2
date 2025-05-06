@@ -44,7 +44,11 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
         </div>
         <div class="admin-control-right">
             <a href="index.php?page=product"><button class="btn-control-large" id="btn-cancel-product"><i class="fa-light fa-rotate-right"></i> Làm mới</button></a>
-            <a href="index.php?page=addProduct"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Thêm sản phẩm</button></a>
+            <?php 
+                if($authManager->hasPermission($_SESSION['id'], 9)) {
+                    echo '<a href="index.php?page=addProduct"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Thêm sản phẩm</button></a>';
+                }
+            ?>
         </div>
     </div>
     <!-- End of admin control -->
@@ -71,10 +75,13 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
                             <span class="list-current-price">' . $value['price'] . '₫</span>
                         </div>
                         <div class="list-control">
-                            <div class="list-tool">
-                                <a href="index.php?page=editProduct&id='.$value['id'].'"><button class="btn-edit" name="btnEditProduct"><i class="fa-light fa-pen-to-square"></i></button></a>
-                                <button class="btn-delete" onclick="confirmDelete('.$value['id'].', \''.$value['name'].'\')" name="btnDeleteProduct"><i class="fa-regular fa-trash"></i></button>
-                            </div>
+                            <div class="list-tool">';
+                                if($authManager->hasPermission($_SESSION['id'], 10)) {
+                                    echo '<a href="index.php?page=editProduct&id='.$value['id'].'"><button class="btn-edit" name="btnEditProduct"><i class="fa-light fa-pen-to-square"></i></button></a>';
+                                }
+                                if($authManager->hasPermission($_SESSION['id'], 11))
+                                    echo '<button class="btn-delete" onclick="confirmDelete('.$value['id'].', \''.$value['name'].'\')" name="btnDeleteProduct"><i class="fa-regular fa-trash"></i></button>';
+                           echo ' </div>
                         </div>
                     </div>
                 </div>';

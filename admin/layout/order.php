@@ -124,26 +124,30 @@
                                         </td>
                                         <td class="update-status">
                                         ';
-                                        if($order['order_status_status'] != 'delivered' && $order['order_status_status'] != 'cancelled'){
+                                        if($authManager->hasPermission($_SESSION['id'], 15)){
+                                            if($order['order_status_status'] != 'delivered' && $order['order_status_status'] != 'cancelled'){
                                            
-                                            if($order['order_status_status'] == 'pending')
-                                                echo '<a href="./backend/xulyOrder.php?id='.$order['id'].'&status=packing" onclick="return confirmPacking()" class="modal-detail-btn btn-packing">
-                                            <i class="fa-solid fa-check"></i> Xác nhận</a>';
-                                            if($order['order_status_status'] == 'packing')
-                                                echo '<a href="./backend/xulyOrder.php?id='.$order['id'].'&status=shipping" onclick="return confirmShipping()" class="modal-detail-btn btn-shipping">
-                                            <i class="fa-solid fa-truck"></i> Giao hàng</a>';
-                                            if($order['order_status_status'] == 'shipping')
-                                                echo '<a href="./backend/xulyOrder.php?id='.$order['id'].'&status=delivered" onclick="return confirmDelivered()" class="modal-detail-btn btn-delivered">
-                                            <i class="fa-solid fa-check-circle"></i> Hoàn tất</a>'; 
-                                            echo '<a href="./backend/xulyOrder.php?id='.$order['id'].'&status=cancelled" onclick="return confirmCancel()" class="modal-detail-btn btn-cancel-order">
-                                            <i class="fa-solid fa-times"></i> Hủy đơn</a>';
+                                                if($order['order_status_status'] == 'pending')
+                                                    echo '<a href="./backend/xulyOrder.php?id='.$order['id'].'&status=packing" onclick="return confirmPacking()" class="modal-detail-btn btn-packing">
+                                                <i class="fa-solid fa-check"></i> Xác nhận</a>';
+                                                if($order['order_status_status'] == 'packing')
+                                                    echo '<a href="./backend/xulyOrder.php?id='.$order['id'].'&status=shipping" onclick="return confirmShipping()" class="modal-detail-btn btn-shipping">
+                                                <i class="fa-solid fa-truck"></i> Giao hàng</a>';
+                                                if($order['order_status_status'] == 'shipping')
+                                                    echo '<a href="./backend/xulyOrder.php?id='.$order['id'].'&status=delivered" onclick="return confirmDelivered()" class="modal-detail-btn btn-delivered">
+                                                <i class="fa-solid fa-check-circle"></i> Hoàn tất</a>'; 
+                                                echo '<a href="./backend/xulyOrder.php?id='.$order['id'].'&status=cancelled" onclick="return confirmCancel()" class="modal-detail-btn btn-cancel-order">
+                                                <i class="fa-solid fa-times"></i> Hủy đơn</a>';
+                                            }
                                         }
+                                         echo '</td>';
+                                        if($authManager->hasPermission($_SESSION['id'], 21))
                                         echo '</td>
                                         <td class="control">
                                             <a href="index.php?page=orderdetails&id='.$order['id'].'" class="btn-detail"><i class="fa-regular fa-eye"></i> Chi tiết</a>
-                                        </td>
-                            </tr>
-                                    ';
+                                        </td>';
+                                
+                                 echo '</tr>';
                                 }
                             
                             

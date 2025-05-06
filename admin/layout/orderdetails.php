@@ -106,20 +106,22 @@
                         </span>
                     </div>
                     ';
-                    if($detailRight['statusEng'] != 'delivered' && $detailRight['statusEng'] != 'cancelled'){
+                    if($authManager->hasPermission($_SESSION['id'], 15)){
+                        if($detailRight['statusEng'] != 'delivered' && $detailRight['statusEng'] != 'cancelled'){
                         
-                        if($detailRight['statusEng'] == 'pending')
-                            echo '<a href="./backend/xulyOrder.php?id='.$detailRight['id'].'&status=packing&from=details" onclick="return confirmPacking()" class="modal-detail-btn btn-packing">
-                        <i class="fa-solid fa-check"></i> Xác nhận</a>';
-                        if($detailRight['statusEng'] == 'packing')
-                            echo '<a href="./backend/xulyOrder.php?id='.$detailRight['id'].'&status=shipping&from=details" onclick="return confirmShipping()" class="modal-detail-btn btn-shipping">
-                        <i class="fa-solid fa-truck"></i> Giao hàng</a>';
-                        if($detailRight['statusEng'] == 'shipping')
-                            echo '<a href="./backend/xulyOrder.php?id='.$detailRight['id'].'&status=delivered&from=details" onclick="return confirmDelivered()" class="modal-detail-btn btn-delivered">
-                        <i class="fa-solid fa-check-circle"></i> Hoàn tất</a>';
-                            echo '<a href="./backend/xulyOrder.php?id='.$detailRight['id'].'&status=cancelled&from=details" onclick="return confirmCancel()" class="modal-detail-btn btn-cancel-order">
-                        <i class="fa-solid fa-times"></i> Hủy đơn</a>';
-                }
+                            if($detailRight['statusEng'] == 'pending')
+                                echo '<a href="./backend/xulyOrder.php?id='.$detailRight['id'].'&status=packing&from=details" onclick="return confirmPacking()" class="modal-detail-btn btn-packing">
+                            <i class="fa-solid fa-check"></i> Xác nhận</a>';
+                            if($detailRight['statusEng'] == 'packing')
+                                echo '<a href="./backend/xulyOrder.php?id='.$detailRight['id'].'&status=shipping&from=details" onclick="return confirmShipping()" class="modal-detail-btn btn-shipping">
+                            <i class="fa-solid fa-truck"></i> Giao hàng</a>';
+                            if($detailRight['statusEng'] == 'shipping')
+                                echo '<a href="./backend/xulyOrder.php?id='.$detailRight['id'].'&status=delivered&from=details" onclick="return confirmDelivered()" class="modal-detail-btn btn-delivered">
+                            <i class="fa-solid fa-check-circle"></i> Hoàn tất</a>';
+                                echo '<a href="./backend/xulyOrder.php?id='.$detailRight['id'].'&status=cancelled&from=details" onclick="return confirmCancel()" class="modal-detail-btn btn-cancel-order">
+                            <i class="fa-solid fa-times"></i> Hủy đơn</a>';
+                    }
+                    }
                     
                     ?>
                     

@@ -18,8 +18,12 @@ $offset = $pagination->getOffset();
         </div>
         <div class="admin-control-right">
             <a href="index.php?page=supplier"><button class="btn-control-large" id="btn-cancel-product"><i class="fa-light fa-rotate-right"></i> Làm mới</button></a>
-            <a href="index.php?page=addSupplier"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Thêm nhà cung cấp</button></a>
-        </div>
+            <?php
+            if($authManager->hasPermission($_SESSION['id'], 18)){
+                echo '<a href="index.php?page=addSupplier"><button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Thêm nhà cung cấp</button></a>';
+            }
+            ?>
+            </div>
     </div>
 
     <div class="table">
@@ -40,10 +44,13 @@ $offset = $pagination->getOffset();
                         <td>' .$value['sup_name'].'</td>
                         <td>' .$value['email'].'</td>
                         <td>' .$value['phone'].'</td>
-                        <td class="control">
-                            <a href="index.php?page=editSupplier&id=' . $value['id'] . '"><button class="btn-edit"><i class="fa-light fa-pen-to-square"></i> Sửa</button></a>
-                            <a href="./backend/xulyNCC.php?act=xoa&id=' . $value['id'] . '"><button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button></a>
-                        </td>
+                        <td class="control">';
+                        if($authManager->hasPermission($_SESSION['id'], 19))
+                            echo '<a href="index.php?page=editSupplier&id=' . $value['id'] . '"><button class="btn-edit"><i class="fa-light fa-pen-to-square"></i> Sửa</button></a>';
+                        if($authManager->hasPermission($_SESSION['id'], 20))
+                            echo '<a href="./backend/xulyNCC.php?act=xoa&id=' . $value['id'] . '"><button class="btn-delete"><i class="fa-regular fa-trash"></i> Xóa</button></a>';
+                        echo '
+                            </td>
                     </tr>';
                 }
             ?>
