@@ -54,7 +54,7 @@
     data.forEach(product => {
         const productItem = `
         <div class="swiper-slide">
-            <div class="product__item" style="background-color: rgb(209, 209, 209);">
+            <div class="product__item" style="background-color: rgb(233, 233, 233);">
                     <div class="product__item__pic" style="height: 190px; margin-bottom: 60px;">
                     <span style="color: red; font-weight: bold;">MỚI!!!</span>
                     <img src="${product.img_src}" onclick="openProductDetails(${product.id})">
@@ -64,7 +64,12 @@
                         <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
                     </ul>
                 </div>
-               
+               <div class="product__item__text" style="font-family: 'Staatliches', sans-serif; font-weight: bolder; font-size: 24px; color: #333; text-transform: uppercase; letter-spacing: 1px; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); text-align: center;">
+                    <h6>${product.name}</h6>
+                </div>
+
+
+
             </div>
         </div>`;
         swiperWrapper.innerHTML += productItem;
@@ -73,7 +78,7 @@
     // Khởi tạo swiper sau khi thêm xong sản phẩm
     new Swiper(".mySwiper", {
     slidesPerView: 3,
-    spaceBetween: 30,
+    spaceBetween: 10,
     loop: false, // Bỏ loop
     scrollbar: {
         el: ".swiper-scrollbar",
