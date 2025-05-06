@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -46,54 +47,62 @@
 <script src="js/toast.js"></script>
 
     <script>
-        fetch("./handle/get_bestseller.php")
-        .then(response => response.json())
-        .then(data => {
-            const bestSeller = document.querySelector(".row.product__filter");
-            data.forEach(product => {
-                console.log(product);
-                const productItem = `
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="">
-                            <span class="label">Mua nhiều</span>
-                            <img src="${product.img_src}" onclick="openProductDetails(${product.id})">
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>${product.name}</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>${product.price}</h5>
-                            <div class="product__color__select">
-                                <label for="pc-1">
-                                    <input type="radio" id="pc-1">
-                                </label>
-                                <label class="active black" for="pc-2">
-                                    <input type="radio" id="pc-2">
-                                </label>
-                                <label class="grey" for="pc-3">
-                                    <input type="radio" id="pc-3">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+       fetch("./handle/get_bestseller.php")
+.then(response => response.json())
+.then(data => {
+    const swiperWrapper = document.querySelector(".swiper-wrapper");
+    data.forEach(product => {
+        const productItem = `
+        <div class="swiper-slide">
+            <div class="product__item" style="background-color: rgb(209, 209, 209);">
+                    <div class="product__item__pic" style="height: 190px; margin-bottom: 60px;">
+                    <span style="color: red; font-weight: bold;">MỚI!!!</span>
+                    <img src="${product.img_src}" onclick="openProductDetails(${product.id})">
+                    <ul class="product__hover">
+                        <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
+                        <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                        <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                    </ul>
                 </div>
-                `;
-                bestSeller.innerHTML += productItem;
-            })
-        })
+               
+            </div>
+        </div>`;
+        swiperWrapper.innerHTML += productItem;
+    });
+
+    // Khởi tạo swiper sau khi thêm xong sản phẩm
+    new Swiper(".mySwiper", {
+    slidesPerView: 3,
+    spaceBetween: 30,
+    loop: false, // Bỏ loop
+    scrollbar: {
+        el: ".swiper-scrollbar",
+        hide: false,
+        draggable: true
+    },
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+    },
+    breakpoints: {
+        0: {
+            slidesPerView: 1
+        },
+        576: {
+            slidesPerView: 2
+        },
+        768: {
+            slidesPerView: 3
+        }
+    }
+});
+
+
+});
+
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 </body>
 
 </html>

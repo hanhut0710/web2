@@ -4303,4 +4303,17 @@ font-size: 20px;
   .toast-message.slide-out {
 	animation: slideOut 0.3s ease-out forwards;
   }
-  
+  /* Thiết lập vị trí của thanh kéo dọc */
+  .swiper-scrollbar {
+    position: relative; 
+	height: 10px !important;
+    height: 20px; /* Dày hơn mặc định */
+    background-color: #eee;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.swiper-scrollbar-drag {
+    background-color: #ff5050;
+    border-radius: 6px;
+}

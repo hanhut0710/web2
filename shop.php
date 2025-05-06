@@ -219,6 +219,7 @@ function advance_search(){
     mode = "advance_search";
     currentPage = 1; // Đặt chế độ là tìm kiếm nâng cao
     loadProducts();
+    document.getElementById("searchInput").value = "";
  
 }
 

@@ -4,10 +4,10 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img  src="img/logo.png" alt=""></a>
+                            <a ><img  src="img/logo.png" alt=""></a>
                         </div>
                         <p>Khách hàng là trọng tâm trong mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
+                        <a ><img src="img/payment.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
@@ -39,7 +39,6 @@
                             <p>Hãy là người đầu tiên biết về hàng mới về, danh mục sản phẩm, chương trình khuyến mãi và bán hàng!</p>
                             <form action="#">
                                 <input type="text" placeholder="Email của bạn">
-                                <button type="submit"><span class="icon_mail_alt"></span></button>
                             </form>
                         </div>
                     </div>
