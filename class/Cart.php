@@ -108,7 +108,7 @@ class Cart {
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
             // Nếu sản phẩm đã có trong giỏ, cập nhật số lượng
-            $stmt = $con->prepare("UPDATE cart SET quanlity = quantity + ? WHERE user_id = ? AND product_id = ? AND product_detail_id = ?");
+            $stmt = $con->prepare("UPDATE cart SET quantity = quantity + ? WHERE user_id = ? AND product_id = ? AND product_detail_id = ?");
             $stmt->bind_param("iiii", $this->quantity, $this->user_id, $this->product_id, $this->product_detail_id);
             $stmt->execute();
         } else {
