@@ -44,7 +44,7 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/buynow.js"></script>
-
+    <script src="js/toast.js"></script>
 </body>
 
 </html>

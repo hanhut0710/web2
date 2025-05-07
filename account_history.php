@@ -42,6 +42,8 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/account_status.js"></script>
+    <script src="js/toast.js"></script>
+
     
 </body>
 

@@ -364,7 +364,7 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                         });
                     }
                     else {
-                        alert("Bạn cần đăng nhập trước khi thêm sản phẩm");
+                        showToast("Bạn cần đăng nhập trước khi thêm sản phẩm","fail");
                     }
                 });
             });                
@@ -379,7 +379,7 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                 .then(data => {
                     if(data.isLogin){
                         if (!selectedProductDetailId || !productId) {
-                            alert("Vui lòng chọn size và màu sắc!");
+                            showToast("Vui lòng chọn size và màu sắc!","fail");
                             return;
                         }
                         console.log("Gửi dữ liệu:", {
@@ -408,7 +408,7 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                         form.submit();  // Chuyển trang và gửi dữ liệu POST  
                     }
                     else {
-                        alert("Bạn cần đăng nhập trước khi mua");
+                        showToast("Bạn cần đăng nhập trước khi mua","fail");
                     }
                 })
             });

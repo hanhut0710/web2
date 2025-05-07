@@ -7,11 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'ten' => $_POST['ten'] ?? '',
         'phone' => $_POST['phone'] ?? '',
         'email' => $_POST['email'] ?? '',
-        'district' => $_POST['district'] ?? '',
-        'ward' => $_POST['ward'] ?? '',
-        'address' => $_POST['address'] ?? '',
-        'note' =>$_POST['note'] ?? '',
-        'payment_method' => $_POST['payment_method_paypal'] ?? 'banking'
+        'address' => $address_str ?? '',
+        'address_id' => $_POST['address_id'],
+        'note' => $_POST['note'] ?? '',
+        'payment_method' => $_POST['payment_method_paypal'] ?? 'banking',
     ];
 }
 ?>
@@ -42,18 +41,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <label for="cardholder">Tên chủ thẻ</label>
-    <input type="text" id="cardholder" placeholder="Họ và Tên" required>
+    <input type="text" id="cardholder" placeholder="Họ và Tên" name="name" required>
 
     <label for="cardnumber">Số thẻ</label>
-    <input type="text" id="cardnumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
+    <input type="text" id="cardnumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" name="cardnumber" required>
 
     <div class="form-group inline">
         <div class="expiry-container">
             <div>
                 <label for="expiry-month">Tháng hết hạn</label>
-                <select id="expiry-month" required>
+                <select id="expiry-month" name="expiry-month"> 
                 <option value="">MM</option>
-                <!-- Sinh tự động 01 -> 12 -->
                 <script>
                     for (let i = 1; i <= 12; i++) {
                     const mm = i.toString().padStart(2, '0');
@@ -64,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div>
                 <label for="expiry-year">Năm hết hạn</label>
-                <select id="expiry-year" required>
+                <select id="expiry-year" name="expiry-year">
                 <option value="">YY</option>
                 <!-- Sinh tự động từ năm hiện tại đến 10 năm sau -->
                 <script>
@@ -79,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="cvv-field">
             <label for="cvv">CVV</label>
-            <input type="password" id="cvv" maxlength="4" required>
+            <input type="password" id="cvv" maxlength="4" name="cvv" required>
             <img class="cvv-icon" src="https://img.icons8.com/ios-glyphs/20/lock--v1.png" alt="cvv">
         </div>
     </div>

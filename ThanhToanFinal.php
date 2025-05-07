@@ -106,7 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
                 if ($stmtCard) {
                     mysqli_stmt_bind_param($stmtCard, "isssss", $orderId, $cardholder, $cardnumber, $expiryMonth, $expiryYear, $cvv);
                     if (mysqli_stmt_execute($stmtCard)) {
-                        echo "Thông tin thẻ đã được lưu.";
                     } else {
                         echo "Lỗi khi lưu thông tin thẻ: " . mysqli_stmt_error($stmtCard);
                     }

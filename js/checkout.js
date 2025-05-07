@@ -544,7 +544,7 @@ if(selectBtn){
                 showAddressModal(data);
             })
             .catch(error => {
-                alert(error.message);
+                showToast(error.message,"fail");
             });
     });
 }
@@ -1126,7 +1126,7 @@ if(selectBtn){
                 saveBtn.style = 'pointer-events: auto !important; opacity: 1;';
                 saveBtn.addEventListener('click', () => {
                   if(districtInput.value == "" || wardInput.value == "" || addressInput.value.trim() == ""){
-                    alert("Vui lòng nhập đầy đủ thông tin địa chỉ");
+                    showToast("Vui lòng nhập đầy đủ thông tin địa chỉ","fail");
                     return ;
                   }
                     fetch('./handle/account_saveInf.php', {
@@ -1143,12 +1143,12 @@ if(selectBtn){
                 .then(response => response.text()) // hoặc .json() nếu bạn trả về JSON
                 .then(data => {
                     console.log('Kết quả từ server:', data);
-                    alert("Đã lưu địa chỉ!");
+                    showToast("Đã lưu địa chỉ!","success");
                     location.reload();
                 })
                 .catch(error => {
                     console.error('Lỗi khi gửi dữ liệu:', error);
-                    alert('Có lỗi xảy ra khi lưu thông tin!');
+                    showToast('Có lỗi xảy ra khi lưu thông tin!',"fail");
                 });
                 });
             
@@ -1282,48 +1282,48 @@ if(selectBtn){
       let ghiChu = document.getElementsByName("note")[0].value;
       // Kiểm tra các trường bắt buộc: Họ, Tên, Địa chỉ, Quận, Huyện
       if (ho === "") {
-        alert("Vui lòng nhập Họ.");
+        showToast("Vui lòng nhập Họ.","fail");
         event.preventDefault();  // Ngừng gửi form nếu thiếu họ
         return false;
     }
     
     if (ten === "") {
-        alert("Vui lòng nhập Tên.");
+        showToast("Vui lòng nhập Tên.","fail");
         event.preventDefault();  // Ngừng gửi form nếu thiếu tên
         return false;
     }
     
     if (address === "") {
-        alert("Vui lòng nhập Địa chỉ.");
+        showToast("Vui lòng nhập Địa chỉ.","fail");
         event.preventDefault();  // Ngừng gửi form nếu thiếu địa chỉ
         return false;
     }
     
     if (district.value === "") {
-        alert("Vui lòng chọn Quận / Huyện.");
+      showToast("Vui lòng chọn Quận / Huyện.","fail");
         event.preventDefault();  // Ngừng gửi form nếu thiếu quận/huyện
         return false;
     }
     if (phone ===""){
-      alert("Vui lòng nhập số điện thoại.");
+      showToast("Vui lòng nhập số điện thoại.","fail");
         event.preventDefault();  // Ngừng gửi form nếu thiếu phường/xã
         return false;
     }
     if (ward.value === "") {
-        alert("Vui lòng chọn Phường / Xã.");
+        showToast("Vui lòng chọn Phường / Xã.","fail");
         event.preventDefault();  // Ngừng gửi form nếu thiếu phường/xã
         return false;
     }
       // Kiểm tra định dạng email (nếu có nhập email)
       if (email !== "" && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
-          alert("Email không hợp lệ.");
+          showToast("Email không hợp lệ.","fail");
           event.preventDefault();  // Ngừng gửi form nếu email không hợp lệ
           return false;
       }
   
       // Kiểm tra số điện thoại (nếu có nhập số điện thoại)
       if (phone !== "" && !/^[0-9]{10,11}$/.test(phone)) {
-          alert("Số điện thoại không hợp lệ.");
+          showToast("Số điện thoại không hợp lệ.","fail");
           event.preventDefault();  // Ngừng gửi form nếu số điện thoại không hợp lệ
           return false;
       }
@@ -1331,7 +1331,7 @@ if(selectBtn){
       // Kiểm tra nếu người dùng đã chọn ghi chú, thì ghi chú không được bỏ trống
       let ghiChuCheckbox = document.getElementById("diff-acc");
       if (ghiChuCheckbox.checked && ghiChu === "") {
-          alert("Vui lòng nhập ghi chú nếu bạn chọn ghi chú cho đơn hàng.");
+          showToast("Vui lòng nhập ghi chú nếu bạn chọn ghi chú cho đơn hàng.","fail");
           event.preventDefault();  // Ngừng gửi form nếu ghi chú trống khi đã chọn ghi chú
           return false;
       }
@@ -1340,7 +1340,7 @@ if(selectBtn){
 
       // Kiểm tra nếu cả hai đều không được chọn
       if (!paymentCheckbox.checked && !paypalCheckbox.checked) {
-          alert("Vui lòng chọn phương thức thanh toán.");
+          showToast("Vui lòng chọn phương thức thanh toán.","fail");
           event.preventDefault();
           return false;
       }

@@ -1142,12 +1142,12 @@ document.getElementById('add').addEventListener('click', () => {
     .then(response => response.text()) // hoặc .json() nếu bạn trả về JSON
     .then(data => {
         console.log('Kết quả từ server:', data);
-        alert("Đã lưu địa chỉ!");
+        showToast("Đã lưu địa chỉ!","success");
         location.reload();
     })
     .catch(error => {
         console.error('Lỗi khi gửi dữ liệu:', error);
-        alert('Có lỗi xảy ra khi lưu thông tin!');
+        showToast('Có lỗi xảy ra khi lưu thông tin!',"fail");
     });
     });
 
@@ -1209,7 +1209,7 @@ document.getElementById('add').addEventListener('click', () => {
 
   setDefaultBtn.addEventListener('click', () => {
     if (!selectedItem) {
-      alert("Vui lòng chọn một địa chỉ trước!");
+      showToast("Vui lòng chọn một địa chỉ trước!","fail");
       return;
     }
 
@@ -1232,15 +1232,15 @@ document.getElementById('add').addEventListener('click', () => {
     })
     .then(data => {
       if (data.success) {
-        alert('Địa chỉ đã được đặt làm mặc định');
+        showToast('Địa chỉ đã được đặt làm mặc định',"success");
         location.reload();
       } else {
-        alert('Có lỗi xảy ra: ' + data.error);
+        showToast('Có lỗi xảy ra: ' + data.error,"fail");
       }
     })
     .catch(error => {
       console.error('Lỗi:', error);
-      alert('Có lỗi xảy ra khi gửi yêu cầu.');
+      showToast('Có lỗi xảy ra khi gửi yêu cầu.',"fail");
     });
   });
   const deleteBtn = document.createElement('button');
@@ -1249,7 +1249,7 @@ document.getElementById('add').addEventListener('click', () => {
 
   deleteBtn.addEventListener('click', () => {
     if (!selectedItem) {
-      alert("Vui lòng chọn một địa chỉ trước!");
+      showToast("Vui lòng chọn một địa chỉ trước!","fail");
       return;
     }
 
@@ -1270,7 +1270,7 @@ document.getElementById('add').addEventListener('click', () => {
     })
     .then(data => {
       if (data.success) {
-        alert('Địa chỉ đã được xóa');
+        showToast('Địa chỉ đã được xóa',"success");
         location.reload();
         fetch('./handle/get_address.php')
         .then(response => response.json())
@@ -1287,15 +1287,15 @@ document.getElementById('add').addEventListener('click', () => {
         if (selectItem) {
           selectItem.remove();
         } else {
-          alert("Chưa chọn địa chỉ nào để xóa.");
+          showToast("Chưa chọn địa chỉ nào để xóa.","fail");
         }
       } else {
-        alert('Có lỗi xảy ra: ' + data.error);
+        showToast('Có lỗi xảy ra: ' + data.error,"fail");
       }
     })
     .catch(error => {
       console.error('Lỗi:', error);
-      alert('Có lỗi xảy ra khi gửi yêu cầu.');
+      showToast('Có lỗi xảy ra khi gửi yêu cầu.',"fail");
     });
   });
 
@@ -1347,9 +1347,9 @@ document.getElementById('save-button').addEventListener('click', function(event)
         element.style.opacity = '0.5'; // Làm mờ phần tử
     });
     if (districtInput.value && !input.value) {
-        alert('Vui lòng chọn phường/xã!');
+        showToast('Vui lòng chọn phường/xã!',"fail");
     } else if( districtInput.value && input.value &&!address.value) {
-        alert('Vui lòng nhập địa chỉ!');
+        showToast('Vui lòng nhập địa chỉ!',"fail");
     }
     console.log(FullName,Phone, districtInput.value,input.value,address.value);
     fetch('./handle/account_saveInf.php', {
@@ -1360,9 +1360,6 @@ document.getElementById('save-button').addEventListener('click', function(event)
         body: new URLSearchParams({
             FullName: FullName,
             Phone: Phone,
-            District: districtInput.value,
-            Ward: input.value,
-            Address: address.value
         })
     })
     .then(response => response.text()) // hoặc .json() nếu bạn trả về JSON
@@ -1376,6 +1373,6 @@ document.getElementById('save-button').addEventListener('click', function(event)
     })
     .catch(error => {
         console.error('Lỗi khi gửi dữ liệu:', error);
-        alert('Có lỗi xảy ra khi lưu thông tin!');
+        showToast('Có lỗi xảy ra khi lưu thông tin!',"fail");
     });
 });

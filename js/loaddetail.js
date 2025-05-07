@@ -9,10 +9,10 @@ function renderOrderDetail(order) {
         <div class="mb-3"><strong>Mã đơn:</strong> ${order.id}</div>
         <div class="mb-3"><strong>Ngày tạo:</strong> ${order.created_at}</div>
         <div class="mb-3"><strong>Người nhận:</strong> ${order.name}</div>
-        <div class="mb-3"><strong>Địa chỉ:</strong> ${order.address_line}</div>
+        <div class="mb-3"><strong>Địa chỉ:</strong> ${order.full_address}</div>
         <div class="mb-3"><strong>SĐT:</strong> ${order.phone}</div>
         <div class="mb-3"><strong>Email:</strong> ${order.email}</div>
-        <div class="mb-3"><strong>Phương thức thanh toán:</strong> ${order.pay_method === 'cash' ? 'Tiền mặt' : order.pay_method}</div>
+        <div class="mb-3"><strong>Phương thức thanh toán:</strong> ${order.pay_method === 'cash' ? 'Thanh Toán Khi Nhận Hàng' : order.pay_method}</div>
         <div class="mb-3"><strong>Trạng thái:</strong> ${order.status}</div>
         <hr>
         <h5 class="mt-4">Danh sách sản phẩm</h5>

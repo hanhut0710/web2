@@ -50,6 +50,8 @@ if (isset($_SESSION['msg'])) {
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/toast.js"></script>
+
 </body>
 
 </html>

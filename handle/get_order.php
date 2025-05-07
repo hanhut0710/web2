@@ -6,9 +6,11 @@ session_start();
 $userId = $_SESSION['user_id'] ?? null;
 
 // Truy vấn tất cả đơn hàng của người dùng
-$sql = "SELECT orders.*
+$sql = "SELECT orders.*, 
+               CONCAT_WS(', ', address.address_line, address.ward, address.district, address.city) AS full_address
         FROM orders 
-        WHERE user_id = ?";
+        JOIN address ON orders.address_id = address.id
+        WHERE orders.user_id = ?";
 $stmt = mysqli_prepare($con, $sql);
 mysqli_stmt_bind_param($stmt, "i", $userId);
 mysqli_stmt_execute($stmt);

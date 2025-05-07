@@ -9,19 +9,19 @@ function submitPayment(event) {
   const cvv = document.getElementById('cvv').value.trim();
 
   // Kiểm tra đơn giản
-  if (!cardholder || !cardnumber || !expiryMonth || !cvv) {
-    alert("Vui lòng điền đầy đủ thông tin!");
-    return;
-  }
 
   if (!/^\d{16}$/.test(cardnumber)) {
-    alert("Số thẻ không hợp lệ. Vui lòng kiểm tra lại.");
+    showToast("Số thẻ không hợp lệ. Vui lòng kiểm tra lại.","fail");
     return;
   }
 
-    if (!expiryMonth || !expiryYear) {
-    alert("Vui lòng chọn ngày hết hạn.");
+    if (!expiryMonth) {
+    showToast("Vui lòng chọn tháng hết hạn.","fail");
     return;
+    }
+    if (!expiryYear) {
+      showToast("Vui lòng chọn năm hết hạn.","fail");
+      return;
     }
 
     // So sánh với thời gian hiện tại
@@ -29,11 +29,11 @@ function submitPayment(event) {
     const expiryDate = new Date(`20${expiryYear}`, expiryMonth); // YYYY, MM
 
     if (expiryDate <= now) {
-    alert("Thẻ đã hết hạn. Vui lòng kiểm tra lại.");
+    showToast("Thẻ đã hết hạn. Vui lòng kiểm tra lại.","fail");
     return;
     }
   if (!/^\d{3,4}$/.test(cvv)) {
-    alert("CVV không hợp lệ.");
+    showToast("CVV không hợp lệ.","fail");
     return;
   }
   const paymentData = {
@@ -61,6 +61,6 @@ function submitPayment(event) {
   })
   .catch(error => {
     console.error('Lỗi gửi dữ liệu:', error);
-    alert("Đã xảy ra lỗi khi gửi thanh toán.");
+    showToast("Đã xảy ra lỗi khi gửi thanh toán.","fail");
   });
 }
