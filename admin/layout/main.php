@@ -19,7 +19,7 @@
                             if($authManager->hasPermission($_SESSION['id'], 12)){
                                 echo '<li class="sidebar-list-item tab-content">
                                         <a href="index.php?page=product" class="sidebar-link">
-                                            <div class="sidebar-icon"><i class="fa-light fa-pot-food"></i></div>
+                                            <div class="sidebar-icon"><i class="fa-solid fa-bag-shopping"></i></div>
                                             <div class="hidden-sidebar">Sản phẩm</div>
                                         </a>
                                     </li>';
