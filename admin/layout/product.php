@@ -41,9 +41,9 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
             </select>
         </div>
         <div class="admin-control-center">
-    <form action="" class="form-search" onsubmit="searchProduct(event)">
+        <form action="" class="form-search" onsubmit="searchProduct(event)">
         <span class="search-btn" onclick="searchProductByButton()"><i class="fa-light fa-magnifying-glass"></i></span>
-        <input id="form-search-product" type="text" name="search" class="form-search-input" placeholder="Tìm kiếm tên sản phẩm" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+        <input id="form-search-product" type="text" name="search" class="form-search-input" placeholder="Tìm kiếm tên sản phẩm" value="<?php echo isset($_GET['search']) ? ($_GET['search']) : ''; ?>">
     </form>
 </div>
         <div class="admin-control-right">

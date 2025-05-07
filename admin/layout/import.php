@@ -48,8 +48,8 @@ if ($search) {
         </div>
         <div class="admin-control-center">
             <form action="" class="form-search" onsubmit="searchImport(event)">
-                <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
-                <input id="form-search-import" type="text" class="form-search-input" placeholder="Tìm kiếm mã phiếu...">
+                <span class="search-btn" onclick="searchImportByButton()"><i class="fa-light fa-magnifying-glass"></i></span>
+                <input id="form-search-import" type="text" name="search" class="form-search-input" placeholder="Tìm kiếm mã phiếu, nhà cung cấp..." value="<?php echo isset($_GET['search']) ? ($_GET['search']) : ''; ?>">
             </form>
         </div>
         <div class="admin-control-right">
@@ -77,6 +77,9 @@ if ($search) {
             </thead>
             <tbody id="showImport">
                 <?php
+                if (empty($importList)) {
+                    echo '<tr><td colspan="7" style="text-align: center;">Không có phiếu nhập nào.</td></tr>';
+                }
                 foreach ($importList as $value) {
                     echo '<tr>
                         <td>IM' . date('Ymd', strtotime($value['created_at'])) . sprintf('%03d', $value['id']) . '</td>
@@ -103,11 +106,31 @@ if ($search) {
 <script>
 function filterBySupplier(supplierId) {
     let url = "index.php?page=import" + (supplierId ? "&supplier_id=" + supplierId : "");
+    <?php if (isset($_GET['search']) && $_GET['search'] !== '') { ?>
+        url += '&search=<?php echo urlencode($_GET['search']); ?>';
+    <?php } ?>
+    <?php if (isset($_GET['page_num']) && $_GET['page_num'] > 1) { ?>
+        url += '&page_num=<?php echo $currentPage; ?>';
+    <?php } ?>
     window.location.href = url;
 }
 
 function searchImport(event) {
     event.preventDefault();
+    let searchValue = document.getElementById('form-search-import').value.trim();
+    let url = "index.php?page=import";
+    
+    if (searchValue) {
+        url += '&search=' + encodeURIComponent(searchValue);
+    }
+    
+    <?php if (isset($_GET['supplier_id']) && $_GET['supplier_id'] !== '') { ?>
+        url += '&supplier_id=<?php echo intval($_GET['supplier_id']); ?>';
+    <?php } ?>
+    window.location.href = url;
+}
+
+function searchImportByButton() {
     let searchValue = document.getElementById('form-search-import').value.trim();
     let url = "index.php?page=import";
     
