@@ -2881,3 +2881,149 @@ button[type="submit"].btn-save{
     width : 500px;
     margin: 0 100px ;
 }
+
+/* Responsive cho Orderrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr */
+/* Container chính cho ô tìm kiếm */
+.admin-order-control-center {
+    flex: 1;
+    max-width: 600px; /* Giới hạn chiều rộng tối đa */
+    min-width: 200px; /* Đảm bảo không quá nhỏ */
+    margin: 0 auto; /* Căn giữa */
+    padding: 0 10px; /* Thêm padding để tránh sát lề */
+}
+
+/* Bộ lọc ngày và trạng thái */
+.fillter-date {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Cho phép xuống dòng */
+    gap: 10px; /* Khoảng cách giữa các thành phần */
+    justify-content: center; /* Căn giữa trên màn hình nhỏ */
+    padding: 0 10px;
+}
+
+.fillter-date > div {
+    display: flex !important; /* Đảm bảo flex không bị ghi đè */
+    flex-direction: row !important; /* Luôn căn ngang label và input */
+    align-items: center;
+    gap: 5px; /* Khoảng cách giữa label và input */
+    flex: 1 1 auto; /* Co giãn linh hoạt */
+    min-width: 160px; /* Đủ chỗ cho label và input */
+}
+
+.fillter-date > div > label {
+    font-size: 15px;
+    white-space: nowrap; /* Ngăn label xuống dòng */
+    color: var(--medium-gray);
+    flex: 0 0 auto; /* Label chỉ chiếm chiều rộng cần thiết */
+}
+
+.form-control-date,
+#tinh-trang {
+    background-color: #eee;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    height: 40px;
+    font-size: 14px;
+    flex: 1; /* Input chiếm phần còn lại */
+    min-width: 100px; /* Đảm bảo input không quá nhỏ */
+}
+
+.fillter-date button,
+.btn-reset-order {
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.fillter-date button:hover,
+.btn-reset-order:hover {
+    background-color: var(--orange);
+    color: #fff;
+}
+
+/* Responsive: Tablet (dưới 768px) */
+@media (max-width: 768px) {
+    .admin-order-control-center {
+        max-width: 100%; /* Ô tìm kiếm chiếm toàn bộ chiều rộng */
+        min-width: 100%;
+        padding: 0 5px;
+        margin-bottom: 10px;
+    }
+
+    .fillter-date {
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .fillter-date > div {
+        flex: 1 1 45%; /* Mỗi bộ lọc chiếm gần nửa chiều rộng */
+        min-width: 140px;
+    }
+
+    .form-control-date,
+    #tinh-trang {
+        font-size: 13px;
+        padding: 8px 10px;
+        height: 36px;
+    }
+
+    .fillter-date > div > label {
+        font-size: 14px;
+    }
+
+    .fillter-date button,
+    .btn-reset-order {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+    }
+}
+
+/* Responsive: Mobile (dưới 480px) */
+@media (max-width: 480px) {
+    .admin-order-control-center {
+        padding: 0;
+    }
+
+    .fillter-date {
+        gap: 8px;
+    }
+
+    .fillter-date > div {
+        flex: 1 1 100%; /* Mỗi bộ lọc chiếm toàn bộ chiều rộng */
+        min-width: 100%;
+        flex-direction: row !important; /* Vẫn giữ căn ngang */
+        align-items: center;
+        gap: 5px;
+    }
+
+    .fillter-date > div > label {
+        font-size: 13px;
+        flex: 0 0 auto;
+    }
+
+    .form-control-date,
+    #tinh-trang {
+        height: 36px;
+        font-size: 12px;
+        padding: 8px;
+        flex: 1;
+    }
+
+    .fillter-date button,
+    .btn-reset-order {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+    }
+}
