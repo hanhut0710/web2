@@ -2,12 +2,13 @@
 header("Content-Type: application/json");
 include('./connect.php');
 session_start();
-
 // Lấy user_id từ session nếu có
 $userId = $_SESSION['user_id'] ?? null;
 
 // Truy vấn tất cả đơn hàng của người dùng
-$sql = "SELECT * FROM orders WHERE user_id = ?";
+$sql = "SELECT orders.*
+        FROM orders 
+        WHERE user_id = ?";
 $stmt = mysqli_prepare($con, $sql);
 mysqli_stmt_bind_param($stmt, "i", $userId);
 mysqli_stmt_execute($stmt);

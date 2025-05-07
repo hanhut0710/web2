@@ -39,7 +39,7 @@ class Account {
     // Phương thức đăng nhập (kiểm tra username và password)
     public function login($username, $password, $con) {
         // Truy vấn cơ sở dữ liệu để tìm tài khoản với username tương ứng
-        $stmt = $con->prepare("SELECT * FROM accounts WHERE username = ?");
+        $stmt = $con->prepare("SELECT * FROM accounts WHERE username = ? AND status = 1");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
