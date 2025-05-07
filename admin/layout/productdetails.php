@@ -7,16 +7,22 @@ $product = new Product();
 $details = new ProductDetails();
 
 $product_id = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
+$search = isset($_GET['search']) ? trim(htmlspecialchars($_GET['search'])) : '';
 $limit = 10;
 $page_num = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
 
-if ($product_id) {
+if ($search) {
+    $totalDetails = $details->getTotalDetailsBySearch($search, $product_id);
+    $detailsList = $details->getDetailsBySearch($search, $product_id, $limit, ($page_num - 1) * $limit);
+} elseif ($product_id) {
     $totalDetails = $details->getTotalDetailsByProduct($product_id);
     $detailsList = $details->getAllDetailsByPagination($limit, ($page_num - 1) * $limit, $product_id);
 } else {
     $totalDetails = $details->getTotalDetails();
     $detailsList = $details->getAllDetailsByPagination($limit, ($page_num - 1) * $limit, 0);
 }
+
+$pagination = new Pagination($totalDetails, $page_num, $limit);
 
 $pagination = new Pagination($totalDetails, $page_num, $limit);
 ?>
@@ -36,7 +42,7 @@ $pagination = new Pagination($totalDetails, $page_num, $limit);
             </select>
         </div>
         <div class="admin-control-center">
-            <form action="" class="form-search">
+            <form action="" class="form-search" onsubmit="searchProductDetails(event)">
                 <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
                 <input id="form-search-product-details" type="text" class="form-search-input" placeholder="Tìm kiếm tên, màu sắc, kích cỡ, thương hiệu...">
             </form>
@@ -86,6 +92,21 @@ $pagination = new Pagination($totalDetails, $page_num, $limit);
 <script>
 function filterByProduct(productId) {
     let url = "index.php?page=productdetails" + (productId ? "&product_id=" + productId : "");
+    window.location.href = url;
+}
+
+function searchProductDetails(event) {
+    event.preventDefault();
+    let searchValue = document.getElementById('form-search-product-details').value.trim();
+    let url = "index.php?page=productdetails";
+    
+    if (searchValue) {
+        url += '&search=' + encodeURIComponent(searchValue);
+    }
+    
+    <?php if (isset($_GET['product_id']) && $_GET['product_id'] !== '') { ?>
+        url += '&product_id=<?php echo intval($_GET['product_id']); ?>';
+    <?php } ?>
     window.location.href = url;
 }
 </script>

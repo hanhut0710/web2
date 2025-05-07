@@ -10,16 +10,26 @@ $import = new Import();
 $itemsPerPage = 10; // Số phiếu nhập mỗi trang
 $currentPage = isset($_GET['page_num']) ? intval($_GET['page_num']) : 1;
 $supplierId = isset($_GET['supplier_id']) ? intval($_GET['supplier_id']) : '';
+$search = isset($_GET['search']) ? trim(htmlspecialchars($_GET['search'])) : '';
 
-if ($supplierId) {
+if ($search) {
+    $totalItems = $import->getTotalImportBySearch($search, $supplierId);
+} elseif ($supplierId) {
     $totalItems = $import->getTotalImportBySupplier($supplierId);
 } else {
     $totalItems = $import->getTotalImport();
 }
 
 $pagination = new Pagination($totalItems, $currentPage, $itemsPerPage);
-$offset = $pagination->getOffset();
-$importList = $import->getAllImportByPagination($itemsPerPage, $offset);
+$offset = $pagination->getOffset(); // Định nghĩa $offset trước khi sử dụng
+
+if ($search) {
+    $importList = $import->getImportBySearch($search, $supplierId, $itemsPerPage, $offset);
+} elseif ($supplierId) {
+    $importList = $import->getAllImportByPagination($itemsPerPage, $offset, $supplierId);
+} else {
+    $importList = $import->getAllImportByPagination($itemsPerPage, $offset);
+}
 ?>
 
 <div class="section import active">
@@ -37,7 +47,7 @@ $importList = $import->getAllImportByPagination($itemsPerPage, $offset);
             </select>
         </div>
         <div class="admin-control-center">
-            <form action="" class="form-search">
+            <form action="" class="form-search" onsubmit="searchImport(event)">
                 <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
                 <input id="form-search-import" type="text" class="form-search-input" placeholder="Tìm kiếm mã phiếu...">
             </form>
@@ -93,6 +103,21 @@ $importList = $import->getAllImportByPagination($itemsPerPage, $offset);
 <script>
 function filterBySupplier(supplierId) {
     let url = "index.php?page=import" + (supplierId ? "&supplier_id=" + supplierId : "");
+    window.location.href = url;
+}
+
+function searchImport(event) {
+    event.preventDefault();
+    let searchValue = document.getElementById('form-search-import').value.trim();
+    let url = "index.php?page=import";
+    
+    if (searchValue) {
+        url += '&search=' + encodeURIComponent(searchValue);
+    }
+    
+    <?php if (isset($_GET['supplier_id']) && $_GET['supplier_id'] !== '') { ?>
+        url += '&supplier_id=<?php echo intval($_GET['supplier_id']); ?>';
+    <?php } ?>
     window.location.href = url;
 }
 </script>

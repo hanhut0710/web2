@@ -26,13 +26,14 @@ class Import {
         return $imports;
     }
 
-    public function getAllImportByPagination($limit, $offset)
+    public function getAllImportByPagination($limit, $offset, $supplierId = '')
     {
         $sql = "SELECT i.*, s.sup_name as sp_name, a.full_name as staff_name
-                FROM import i
-                LEFT JOIN supplier s ON i.sup_id = s.id
-                LEFT JOIN admin a ON i.staff_id = a.id
-                LIMIT $limit OFFSET $offset";
+            FROM import i
+            LEFT JOIN supplier s ON i.sup_id = s.id
+            LEFT JOIN admin a ON i.staff_id = a.id";
+        if ($supplierId) 
+            $sql .= " WHERE i.sup_id = $supplierId";
         $result = mysqli_query($this->conn, $sql);
         $imports = [];
         if ($result) {
@@ -127,6 +128,46 @@ class Import {
         if ($result) 
             return mysqli_fetch_assoc($result);
         return null;
+    }
+
+    public function getTotalImportBySearch($search, $supplierId = '') 
+    {
+        $search = mysqli_real_escape_string($this->conn, $search);
+        $sql = "SELECT COUNT(*) as total 
+                FROM import i 
+                LEFT JOIN supplier s ON i.sup_id = s.id 
+                WHERE (i.id LIKE '%$search%' OR s.sup_name LIKE '%$search%')";
+        if ($supplierId) {
+            $sql .= " AND i.sup_id = $supplierId";
+        }
+        $result = mysqli_query($this->conn, $sql);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['total'];
+        }
+        return 0;
+    }
+    
+    public function getImportBySearch($search, $supplierId = '', $limit, $offset) 
+    {
+        $search = mysqli_real_escape_string($this->conn, $search);
+        $sql = "SELECT i.*, s.sup_name as sp_name, a.full_name as staff_name 
+                FROM import i 
+                LEFT JOIN supplier s ON i.sup_id = s.id 
+                LEFT JOIN admin a ON i.staff_id = a.id 
+                WHERE (i.id LIKE '%$search%' OR s.sup_name LIKE '%$search%')";
+        if ($supplierId) {
+            $sql .= " AND i.sup_id = $supplierId";
+        }
+        $sql .= " LIMIT $limit OFFSET $offset";
+        $result = mysqli_query($this->conn, $sql);
+        $imports = [];
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $imports[] = $row;
+            }
+        }
+        return $imports;
     }
 } 
 ?>

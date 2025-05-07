@@ -30,18 +30,15 @@ class Pagination {
     public function renderProduct()
     {
         if ($this->totalPage <= 1)
-            return '';
+        return '';
 
-        $categoryParam = isset($_GET['category_id']) && $_GET['category_id'] !== '' ? 'category_id=' . intval($_GET['category_id']) : '';
+        $categoryParam = isset($_GET['category_id']) && $_GET['category_id'] !== '' ? '&category_id=' . intval($_GET['category_id']) : '';
+        $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? '&search=' . urlencode($_GET['search']) : '';
 
         $html = '<div class="page-nav">
-                    <ul class="page-nav-list">';
+                <ul class="page-nav-list">';
         for ($i = 1; $i <= $this->totalPage; $i++) {
-            $url = '?page=product';
-            if ($categoryParam)
-                $url .= '&' . $categoryParam;
-            $url .= '&page_num=' . $i;
-
+            $url = '?page=product' . $categoryParam . $searchParam . '&page_num=' . $i;
             $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
             $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
         }
@@ -77,23 +74,24 @@ class Pagination {
             return '';
 
         $productParam = isset($_GET['product_id']) && $_GET['product_id'] !== '' ? '&product_id=' . intval($_GET['product_id']) : '';
+        $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? '&search=' . urlencode($_GET['search']) : '';
         $maxPagesToShow = 5; // Số trang số tối đa hiển thị
         $halfPages = floor($maxPagesToShow / 2);
         $startPage = max(1, $this->currentPage - $halfPages);
         $endPage = min($this->totalPage, $startPage + $maxPagesToShow - 1);
 
         // Điều chỉnh startPage nếu endPage gần cuối
-        if ($endPage - $startPage < $maxPagesToShow - 1) {
-            $startPage = max(1, $endPage - $maxPagesToShow + 1);
-        }
+        if ($endPage - $startPage < $maxPagesToShow - 1) 
+        $startPage = max(1, $endPage - $maxPagesToShow + 1);
+    
 
         $html = '<div class="page-nav">
-                    <ul class="page-nav-list">';
+                <ul class="page-nav-list">';
 
         // Nút Trang trước
         if ($this->currentPage > 1) {
             $prevPage = $this->currentPage - 1;
-            $url = "?page=productdetails{$productParam}&page_num={$prevPage}";
+            $url = "?page=productdetails{$productParam}{$searchParam}&page_num={$prevPage}";
             $html .= '<li class="page-nav-item"><a href="' . $url . '">&lt;</a></li>';
         } else {
             $html .= '<li class="page-nav-item disabled"><span>&lt;</span></li>';
@@ -101,16 +99,16 @@ class Pagination {
 
         // Trang đầu
         if ($startPage > 1) {
-            $url = "?page=productdetails{$productParam}&page_num=1";
+            $url = "?page=productdetails{$productParam}{$searchParam}&page_num=1";
             $html .= '<li class="page-nav-item"><a href="' . $url . '">1</a></li>';
             if ($startPage > 2) {
-                $html .= '<li class="page-nav-item"><span>...</span></li>';
+            $html .= '<li class="page-nav-item"><span>...</span></li>';
             }
         }
 
         // Các trang số
         for ($i = $startPage; $i <= $endPage; $i++) {
-            $url = "?page=productdetails{$productParam}&page_num={$i}";
+            $url = "?page=productdetails{$productParam}{$searchParam}&page_num={$i}";
             $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
             $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
         }
@@ -120,21 +118,21 @@ class Pagination {
             if ($endPage < $this->totalPage - 1) {
                 $html .= '<li class="page-nav-item"><span>...</span></li>';
             }
-            $url = "?page=productdetails{$productParam}&page_num={$this->totalPage}";
+            $url = "?page=productdetails{$productParam}{$searchParam}&page_num={$this->totalPage}";
             $html .= '<li class="page-nav-item"><a href="' . $url . '">' . $this->totalPage . '</a></li>';
         }
 
         // Nút Trang sau
         if ($this->currentPage < $this->totalPage) {
             $nextPage = $this->currentPage + 1;
-            $url = "?page=productdetails{$productParam}&page_num={$nextPage}";
+            $url = "?page=productdetails{$productParam}{$searchParam}&page_num={$nextPage}";
             $html .= '<li class="page-nav-item"><a href="' . $url . '">&gt;</a></li>';
         } else {
             $html .= '<li class="page-nav-item disabled"><span>&gt;</span></li>';
         }
 
         $html .= '</ul></div>';
-        return $html;
+     return $html;
     }
     
     public function renderImport($supplierId = '')
@@ -143,11 +141,12 @@ class Pagination {
             return '';
 
         $supplierParam = $supplierId ? '&supplier_id=' . intval($supplierId) : '';
+        $searchParam = isset($_GET['search']) && $_GET['search'] !== '' ? '&search=' . urlencode($_GET['search']) : '';
 
         $html = '<div class="page-nav">
-                    <ul class="page-nav-list">';
+                <ul class="page-nav-list">';
         for ($i = 1; $i <= $this->totalPage; $i++) {
-            $url = '?page=import' . $supplierParam . '&page_num=' . $i;
+            $url = '?page=import' . $supplierParam . $searchParam . '&page_num=' . $i;
             $active = ($i == $this->currentPage) ? ' class="page-nav-item active"' : ' class="page-nav-item"';
             $html .= '<li' . $active . '><a href="' . $url . '">' . $i . '</a></li>';
         }

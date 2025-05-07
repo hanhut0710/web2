@@ -126,5 +126,46 @@ class ProductDetails {
         }
         return false;
     }
+
+    public function getTotalDetailsBySearch($search, $product_id = 0) 
+    {
+        $search = mysqli_real_escape_string($this->conn, $search);
+        $sql = "SELECT COUNT(*) as total 
+                FROM product_details pd 
+                INNER JOIN products p ON pd.product_id = p.id 
+                WHERE p.isdeleted = 1 
+                AND (p.name LIKE '%$search%' OR pd.color LIKE '%$search%' OR pd.size LIKE '%$search%')";
+        if ($product_id != 0) {
+            $sql .= " AND pd.product_id = $product_id";
+        }
+        $result = mysqli_query($this->conn, $sql);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['total'];
+        }
+        return 0;
+    }
+    
+    public function getDetailsBySearch($search, $product_id = 0, $limit, $offset) 
+    {
+        $search = mysqli_real_escape_string($this->conn, $search);
+        $sql = "SELECT pd.*, p.name as p_name 
+                FROM product_details pd 
+                INNER JOIN products p ON pd.product_id = p.id 
+                WHERE p.isdeleted = 1 
+                AND (p.name LIKE '%$search%' OR pd.color LIKE '%$search%' OR pd.size LIKE '%$search%')";
+        if ($product_id != 0) {
+            $sql .= " AND pd.product_id = $product_id";
+        }
+        $sql .= " LIMIT $limit OFFSET $offset";
+        $result = mysqli_query($this->conn, $sql);
+        $details = [];
+        if ($result) {
+            while ($rows = mysqli_fetch_array($result)) {
+                $details[] = $rows;
+            }
+        }
+        return $details;
+    }
 }
 ?>

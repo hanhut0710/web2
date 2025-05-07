@@ -10,8 +10,12 @@ $page_num = isset($_GET['page_num']) ? max(1, intval($_GET['page_num'])) : 1;
 $limit = 5;
 
 $category_id = isset($_GET['category_id']) ? intval($_GET['category_id']) : '';
+$search = isset($_GET['search']) ? trim(($_GET['search'])) : '';
 $product = new Product();
-if ($category_id) {
+if ($search) {
+    $totalProduct = $product->getTotalProductBySearch($search, $category_id);
+    $productList = $product->getProductBySearch($search, $category_id, $limit, ($page_num - 1) * $limit);
+} else if ($category_id) {
     $totalProduct = $product->getTotalProductByCategory($category_id);
     $productList = $product->getProductByCategory($category_id, $limit, $page_num);
 } else {
@@ -37,11 +41,11 @@ $pagination = new Pagination($totalProduct, $page_num, $limit);
             </select>
         </div>
         <div class="admin-control-center">
-            <form action="" class="form-search">
-                <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
-                <input id="form-search-product" type="text" class="form-search-input" placeholder="Tìm kiếm tên sản phẩm" disabled title="Chức năng tìm kiếm đang phát triển">
-            </form>
-        </div>
+    <form action="" class="form-search" onsubmit="searchProduct(event)">
+        <span class="search-btn" onclick="searchProductByButton()"><i class="fa-light fa-magnifying-glass"></i></span>
+        <input id="form-search-product" type="text" name="search" class="form-search-input" placeholder="Tìm kiếm tên sản phẩm" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+    </form>
+</div>
         <div class="admin-control-right">
             <a href="index.php?page=product"><button class="btn-control-large" id="btn-cancel-product"><i class="fa-light fa-rotate-right"></i> Làm mới</button></a>
             <?php 
@@ -107,9 +111,40 @@ function filterByCategory(categoryId) {
     if (categoryId) 
         url += '&category_id=' + categoryId;
     
-    <?php if (isset($_GET['page_num']) && $_GET['page_num'] > 1) 
-    { ?>
+    <?php if (isset($_GET['search']) && $_GET['search'] !== '') { ?>
+        url += '&search=<?php echo urlencode($_GET['search']); ?>';
+    <?php } ?>
+    <?php if (isset($_GET['page_num']) && $_GET['page_num'] > 1) { ?>
         url += '&page_num=<?php echo $page_num; ?>';
+    <?php } ?>
+    window.location.href = url;
+}
+
+function searchProduct(event) {
+    event.preventDefault();
+    let searchValue = document.getElementById('form-search-product').value.trim();
+    let url = window.location.pathname + "?page=product";
+    
+    if (searchValue) {
+        url += '&search=' + encodeURIComponent(searchValue);
+    }
+    
+    <?php if (isset($_GET['category_id']) && $_GET['category_id'] !== '') { ?>
+        url += '&category_id=<?php echo intval($_GET['category_id']); ?>';
+    <?php } ?>
+    window.location.href = url;
+}
+
+function searchProductByButton() {
+    let searchValue = document.getElementById('form-search-product').value.trim();
+    let url = window.location.pathname + "?page=product";
+    
+    if (searchValue) {
+        url += '&search=' + encodeURIComponent(searchValue);
+    }
+    
+    <?php if (isset($_GET['category_id']) && $_GET['category_id'] !== '') { ?>
+        url += '&category_id=<?php echo intval($_GET['category_id']); ?>';
     <?php } ?>
     window.location.href = url;
 }

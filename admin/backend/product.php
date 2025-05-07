@@ -255,5 +255,54 @@ class Product {
     $result = mysqli_query($this->conn, $sql);
     return $result !== false;
     }
+
+    public function getTotalProductBySearch($search, $category_id = '') 
+    {
+        $search = mysqli_real_escape_string($this->conn, $search);
+        $sql = "SELECT COUNT(*) as total 
+                FROM products p 
+                LEFT JOIN category c ON p.category_id = c.id 
+                LEFT JOIN brand b ON p.brand_id = b.id 
+                WHERE p.isdeleted = 1 AND p.name LIKE '%$search%'";
+        
+        if ($category_id) {
+            $sql .= " AND p.category_id = $category_id";
+        }
+        
+        $result = mysqli_query($this->conn, $sql);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['total'];
+        }
+        return 0;
+    }
+    
+    public function getProductBySearch($search, $category_id = '', $limit, $offset) 
+    {
+        $search = mysqli_real_escape_string($this->conn, $search);
+        $sql = "SELECT p.*, c.name as cat_name, b.name as brand_name 
+                FROM products p 
+                LEFT JOIN category c ON p.category_id = c.id 
+                LEFT JOIN brand b ON p.brand_id = b.id 
+                WHERE p.isdeleted = 1 AND p.name LIKE '%$search%'";
+        
+        if ($category_id) {
+            $sql .= " AND p.category_id = $category_id";
+        }
+        
+        $sql .= " LIMIT $limit OFFSET $offset";
+        
+        $result = mysqli_query($this->conn, $sql);
+        $products = [];
+        if ($result) {
+            while ($rows = mysqli_fetch_array($result)) {
+                $rows['stock'] = $this->calculateTotalStock($rows['id']);
+                $rows['cat_name'] = $rows['cat_name'] ?? 'Không xác định';
+                $rows['brand_name'] = $rows['brand_name'] ?? 'Không xác định';
+                $products[] = $rows;
+            }
+        }
+        return $products;
+    }
 }
 ?>
