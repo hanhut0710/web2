@@ -173,7 +173,7 @@ $card = $_SESSION['card'] ?? null;
       <span id="total-item"><?= number_format($total + 30000, 0, ',', '.') ?>₫</span>
     </h3>
 
-    <form action="./ThanhToanFinal.php" method="post">
+    <form action="./ThanhToanFinal_BN.php" method="post">
       <input type="hidden" name="confirm" value="yes">
       <button type="submit">Xác nhận đơn hàng</button>
     </form>
