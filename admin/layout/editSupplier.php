@@ -40,7 +40,7 @@ function validateEditSupplier() {
     let phone = document.getElementById('phone').value.trim();
 
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    const phonePattern = /^\d{10}$/;
+    const phonePattern = /^[0-9\s]{1,20}$/;;
 
     if (name === '') {
         alert('Vui lòng nhập tên nhà cung cấp!');
@@ -63,7 +63,7 @@ function validateEditSupplier() {
     }
 
     if (!phonePattern.test(phone)) {
-        alert('Nhập sai định dạng số điện thoại (10 chữ số). Vui lòng thử lại!');
+        alert('Nhập sai định dạng số điện thoại. Vui lòng thử lại!');
         return false;
     }
 

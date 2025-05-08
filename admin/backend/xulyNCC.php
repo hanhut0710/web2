@@ -54,36 +54,36 @@ if(isset($_POST['btnEditSupplier']))
     $email = $_POST['email']; 
     $phone = $_POST['phone']; 
 
-    $checked = $supplier -> check($sup_name, $email, $phone);
-    if($checked['error'])
-    {
-        $message = "Thông tin đã tồn tại: ";
-        if($checked['sup_name'])
-            $message .= "Tên nhà cung cấp, ";
-        if($checked['email'])
-            $message .= "Email, ";
-        if($checked['phone'])
-            $message .= "SĐT, ";
-        $message = rtrim($message, ", ");
-        echo '<script>
-            alert("' . $message . '"); 
-            window.location.href = "../index.php?page=editSupplier";
-            </script>';
-        exit();
-    }
+    // $checked = $supplier -> check($sup_name, $email, $phone);
+    // if($checked['error'])
+    // {
+    //     $message = "Thông tin đã tồn tại: ";
+    //     if($checked['sup_name'])
+    //         $message .= "Tên nhà cung cấp, ";
+    //     if($checked['email'])
+    //         $message .= "Email, ";
+    //     if($checked['phone'])
+    //         $message .= "SĐT, ";
+    //     $message = rtrim($message, ", ");
+    //     echo '<script>
+    //         alert("' . $message . '"); 
+    //         window.location.href = "../index.php?page=editSupplier";
+    //         </script>';
+    //     exit();
+    // }
 
     $updated = $supplier -> update($id, $sup_name, $email, $phone);
     if($updated)
     {
         echo '<script> 
-            alert("Thêm thành công !");
+            alert("Sửa thành công !");
             window.location.href = "../index.php?page=supplier";
             </script>';
     }
     else
     {
         echo '<script> 
-            alert("Thêm thất bại !");
+            alert("Sửa thất bại !");
             window.location.href = "../index.php?page=editsupplier";
             </script>';
     }

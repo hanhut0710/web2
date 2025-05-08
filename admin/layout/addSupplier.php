@@ -70,7 +70,7 @@ function validateAddSupplier() {
     let phone = document.getElementById('phone').value.trim();
 
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    const phonePattern = /^\d{15}$/;
+    const phonePattern = /^[0-9\s]{1,20}$/;;
 
     if (name === '') {
         alert('Vui lòng nhập tên nhà cung cấp!');
