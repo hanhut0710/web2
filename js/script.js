@@ -186,7 +186,9 @@ fetch("handle/login.php", {
         showToast(data.message,"fail");
     } else {
         showToast(data.message,"success");
-        location.reload();
+        setTimeout((e)=>{
+            location.reload();
+        }, 2000);
     }
 })
 .catch(error => {
