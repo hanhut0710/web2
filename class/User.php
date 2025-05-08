@@ -65,7 +65,7 @@ class User {
         return false;
     }
 
-    public static function addUser($full_name, $phone, $acc_id, $con) {
+    public static function addUser($full_name, $phone,$email, $acc_id, $con) {
         // Kiểm tra xem các tham số có hợp lệ không
         if (empty($full_name) || empty($phone) || empty($acc_id)) {
             return false;
@@ -77,9 +77,8 @@ class User {
         }
     
         // Thêm thông tin người dùng vào bảng users
-        $stmt = $con->prepare("INSERT INTO users (full_name, phone, acc_id) VALUES (?, ?, ?)");
-        $stmt->bind_param("ssi", $full_name, $phone, $acc_id);  // s: string, i: integer
-    
+        $stmt = $con->prepare("INSERT INTO users (full_name, phone,email, acc_id) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("sssi", $full_name, $phone,$email, $acc_id);  // s: string, i: integer
         if ($stmt->execute()) {
             $user_id = $stmt->insert_id;  // Lấy id người dùng đã chèn
             $user = new User();

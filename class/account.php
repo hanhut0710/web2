@@ -57,8 +57,8 @@ class Account {
         return false;
     }
     // Phương thức đăng ký
-    public function register($username, $password, $fullname, $phone, $con) {
-        if (empty($username) || empty($password) || empty($fullname) || empty($phone)) {
+    public function register($username, $password, $fullname, $phone,$email, $con) {
+        if (empty($username) || empty($password) || empty($fullname) || empty($phone) ||empty($email)) {
             return ['status' => 'error', 'message' => 'Vui lòng điền đầy đủ thông tin!'];
         }
         // Kiểm tra username đã tồn tại
@@ -80,7 +80,7 @@ class Account {
         if ($stmt->execute()) {
             $account_id = $stmt->insert_id;
             // Thêm vào bảng users
-            if (User::addUser($fullname, $phone, $account_id, $con)) {
+            if (User::addUser($fullname, $phone, $email, $account_id, $con)) {
                 return ['status' => 'success', 'message' => 'Đăng ký thành công!'];
             } else {
                 return ['status' => 'error', 'message' => 'Lỗi khi lưu thông tin người dùng!'];

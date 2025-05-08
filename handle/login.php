@@ -19,7 +19,7 @@ $passwd = isset($_POST['passwd']) ? trim($_POST['passwd']) : '';
 $fullname = isset($_POST['fullname']) ? trim($_POST['fullname']) : '';
 $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
 $repasswd = isset($_POST['repasswd']) ? trim($_POST['repasswd']) : '';
-
+$email = isset($_POST['email']) ? trim($_POST['email']) : '';
 if (empty($username) || empty($passwd)) {
     $response = ['status' => 'error', 'message' => 'Thiếu thông tin!'];
 } else {
@@ -32,7 +32,7 @@ if (empty($username) || empty($passwd)) {
         elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
             $response = ['status' => 'error', 'message' => 'Số điện thoại không hợp lệ!'];
         } else {
-            $response = $account->register($username, $passwd, $fullname, $phone, $con);
+            $response = $account->register($username, $passwd, $fullname, $phone,$email, $con);
         }
     } else {
         // Đăng nhập

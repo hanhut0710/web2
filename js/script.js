@@ -77,10 +77,13 @@ function changeLogin(event) {
         formContainer.innerHTML = `
             <h3>Đăng Ký</h3>
             <form id="registerForm">
-             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <div class="input_box">
                     <label for="fullname">Họ và tên</label><br>
                     <input type="text" id="fullname" name="fullname" placeholder="Họ và tên" value="HaNhut">
+                </div>
+                <div class="input_box">
+                    <label for="email">Email</label><br>
+                    <input type="email" id="email" name="email" placeholder="Email" value="">
                 </div>
                 <div class="input_box">
                     <label for="phone">Số điện thoại</label><br>
@@ -137,7 +140,6 @@ function changeLogin(event) {
 
 function submitForm(type) {
 let form;
-let csrfToken = document.querySelector('input[name="csrf_token"]').value; // Lấy CSRF token từ form
 if (type === "login") {
     form = document.getElementById("loginForm");
 } else if (type === 'register') {
@@ -154,11 +156,18 @@ let formData;
 if (type === 'login') {
     formData = new FormData(document.getElementById('loginForm'));
 } else if (type === "register") {
+    const email = form.querySelector("#email")?.value.trim();
     const fullname = form.querySelector("#fullname")?.value.trim();
     const phone = form.querySelector("#phone")?.value.trim();
     const repassword = form.querySelector("#repasswd")?.value.trim();
-    if (!fullname || !phone || !username || !password || !repassword) {
+    if (!fullname || !phone || !username || !password || !repassword || !email) {
         showToast("Vui lòng nhập đầy đủ thông tin!","fail");
+        return;
+    }
+    const emailRegex =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(email)){
+        console.log(email);
+        showToast("Email không hợp lệ","fail");
         return;
     }
     if (password !== repassword) {
@@ -167,7 +176,6 @@ if (type === 'login') {
     }
     formData = new FormData(document.getElementById('registerForm'));
 }
-formData.append('csrf_token', csrfToken);
 fetch("handle/login.php", {
     method: 'POST',
     body: formData,
