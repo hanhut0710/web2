@@ -351,7 +351,10 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                                 console.log("Parsed JSON:", data);
                                 if (data.success) {
                                     showToast("✅ Thêm sản phẩm vào giỏ hàng thành công!","success");
-                                    location.reload();
+                                    const cartlink = document.querySelector('a[href="cart.php"]');
+                                    const cartSpan =cartlink.querySelector('span');
+                                    let currentSpan = parseInt(cartSpan.textContent.trim()) || 0;
+                                    cartSpan.textContent = currentSpan + 1;
                                 } else {
                                     showToast("❌ Không thể thêm sản phẩm: " + (data.message || "Lỗi không xác định."),"fail");
                                 }
