@@ -38,7 +38,7 @@ if (isset($_POST['btnAddImport'])) {
             $import_price = (float)$p['import_price'];
             $quantity = (int)$p['quantity'];
 
-            // Xử lý upload ảnh biến thể (nếu có)
+            // Xử lý upload ảnh biến thể
             $img_src = '';
             if (isset($_FILES['products']['name'][$product_index]['img_src']) && $_FILES['products']['error'][$product_index]['img_src'] !== 4) {
                 $uploadResult = $upload->uploadImage($_FILES['products'], [$product_index, 'img_src']);
