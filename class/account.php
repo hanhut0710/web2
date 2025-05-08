@@ -65,12 +65,22 @@ class Account {
         $stmt = $con->prepare("SELECT * FROM accounts WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
-        $result = $stmt->get_result();
-    
-        if ($result->num_rows > 0) {
+        $resultName = $stmt->get_result();
+        if ($resultName->num_rows > 0) {
             return ['status' => 'error', 'message' => 'Tên đăng nhập đã tồn tại!'];
         }
         // Mã hóa mật khẩu
+        $stmt = $con->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s" , $email);
+        $stmt->execute();
+        $resultEmail = $stmt->get_result();
+        if($resultEmail->num_rows > 0) return ['status' => 'error','message' => 'Email đã tồn tại!'];
+
+        $stmt = $con->prepare("SELECT * FROM users WHERE phone = ?");
+        $stmt->bind_param("i", $phone);
+        $stmt->execute();
+        $resultPhone = $stmt->get_result();
+        if($resultPhone->num_rows > 0) return ['status' => 'error', 'message' => 'Số điện thoại đã tồn tại!'];
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     
         // Thêm vào bảng accounts
