@@ -3908,6 +3908,9 @@ font-size: 20px;
     opacity: 0; /* Mặc định ẩn */
     transform: translateX(100%); /* Ẩn bên ngoài màn hình */
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+
+	max-height: 100vh;
+	overflow-y: auto;
 }
 
 .container__login.active {
