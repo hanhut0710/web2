@@ -242,6 +242,13 @@ class Product {
     if ($result === false) 
         return false;
     
+    // order details
+    $sql = "DELETE od FROM order_details od
+            JOIN product_details pd ON od.product_detail_id = pd.id
+            WHERE pd.product_id = $productID";
+    $result = mysqli_query($this->conn, $sql);
+    if ($result === false) 
+        return false;
 
     // product_details
     $sql = "DELETE FROM product_details WHERE product_id = $productID";
