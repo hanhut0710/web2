@@ -42,7 +42,7 @@
                             <option value="">Chọn quận</option>
                             <option value="Huyện Bình Chánh" <?php echo $district == 'Huyện Bình Chánh' ? 'selected' : ''; ?>>Huyện Bình Chánh</option>
                             <option value="Huyện Cần Giờ" <?php echo $district == 'Huyện Cần Giờ' ? 'selected' : ''; ?>>Huyện Cần Giờ</option>
-                            <option value="Huyện Hóc Môn" <?php echo $district == 'Huyện Hóc Môn' ? 'selected' : ''; ?>>Huyện Hóc Môn</option>
+                            <option value="Huyện Hóc Môn" <?php echo $district == 'Huyện Hóc Môn' ? 'selected' : ''; ?>>Huyện Hóc Môn</option>
                             <option value="Huyện Nhà Bè" <?php echo $district == 'Huyện Nhà Bè' ? 'selected' : ''; ?>>Huyện Nhà Bè</option>
                             <option value="Huyện Củ Chi" <?php echo $district == 'Huyện Củ Chi' ? 'selected' : ''; ?>>Huyện Củ Chi</option>
                             <option value="Quận 1" <?php echo $district == 'Quận 1' ? 'selected' : ''; ?>>Quận 1</option>
