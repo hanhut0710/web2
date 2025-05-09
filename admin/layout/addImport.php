@@ -163,6 +163,18 @@ function previewImage(input, index) {
     const previewImg = document.getElementById(`preview-img-${index}`);
     if (input.files && input.files[0]) {
         const file = input.files[0];
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/pjpeg'];
+        
+        // Kiểm tra kiểu file
+        if (!allowedTypes.includes(file.type)) {
+            alert('Vui lòng chọn file ảnh hợp lệ (JPG, JPEG, PNG)!');
+            input.value = '';
+            previewImg.src = '#';
+            previewImg.style.display = 'none';
+            return;
+        }
+        
+        // Kiểm tra kích thước file (2MB)
         if (file.size > 2 * 1024 * 1024) {
             alert('File ảnh quá lớn! Vui lòng chọn file nhỏ hơn 2MB.');
             input.value = '';
@@ -170,6 +182,8 @@ function previewImage(input, index) {
             previewImg.style.display = 'none';
             return;
         }
+        
+        // Hiển thị ảnh xem trước
         const reader = new FileReader();
         reader.onload = function(e) {
             previewImg.src = e.target.result;

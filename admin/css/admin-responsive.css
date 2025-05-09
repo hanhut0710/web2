@@ -77,6 +77,41 @@
     .btn-reset-order{
         margin: 10px;
     }
+
+    /* New rules for supplier.php */
+    .section.supplier .table {
+        overflow-x: auto;
+    }
+
+    .section.supplier .admin-control-right {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .section.supplier .btn-control-large {
+        margin: 5px;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* New rules for importdetail.php */
+    .section.import-detail .form-container {
+        padding: 1rem;
+    }
+
+    .section.import-detail .info-group {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 10px;
+    }
+
+    .section.import-detail .info-group label {
+        margin-bottom: 5px;
+    }
+
+    .section.import-detail .table {
+        overflow-x: auto;
+    }
 }
 
 @media only screen and (max-width: 786px) {
@@ -97,6 +132,38 @@
         max-width: 140px;
         min-width: 140px;
         height: 110px;
+    }
+
+    /* New rules for supplier.php */
+    .section.supplier .table table {
+        font-size: 14px;
+    }
+
+    .section.supplier .btn-edit, .section.supplier .btn-delete {
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    /* New rules for importdetail.php */
+    .section.import-detail .form-container h2 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .section.import-detail .total-quantity {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 10px;
+    }
+
+    .section.import-detail .control-buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    .section.import-detail .btn-control-large {
+        width: 100%;
+        text-align: center;
     }
 
 }
@@ -148,6 +215,31 @@
 
     .add-product.open .upload-image-preview {
         width: 100%;
+    }
+
+    /* New rules for supplier.php */
+    .section.supplier .admin-control-center {
+        width: 100%;
+        margin: 0;
+    }
+
+    .section.supplier .table table {
+        font-size: 12px;
+    }
+
+    .section.supplier .control {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    /* New rules for importdetail.php */
+    .section.import-detail .table table {
+        font-size: 12px;
+    }
+
+    .section.import-detail .info-group span {
+        font-size: 14px;
     }
 }
 
@@ -280,5 +372,34 @@
 
     .card-single{
         width: 100%!important;
+    }
+
+    /* New rules for supplier.php */
+    .section.supplier .btn-control-large {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .section.supplier .control a {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /* New rules for importdetail.php */
+    .section.import-detail .form-container {
+        padding: 0.5rem;
+    }
+
+    .section.import-detail .table {
+        margin: 0;
+    }
+
+    .section.import-detail .table table {
+        width: 100%;
+        min-width: 300px;
+    }
+
+    .section.import-detail .control-buttons {
+        padding: 10px 0;
     }
 }

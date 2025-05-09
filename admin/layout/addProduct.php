@@ -100,14 +100,27 @@ $brandList = $brand->getAllBrand();
 <script>
 function previewImage(event) {
     const output = document.getElementById('img-preview');
-    if (event.target.files && event.target.files[0]) {
-        const file = event.target.files[0];
-        if (file.size > 2 * 1024 * 1024) {
-            alert('File ảnh quá lớn! Vui lòng chọn file nhỏ hơn 2MB.');
-            event.target.value = '';
+    const fileInput = event.target;
+    
+    if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/pjpeg'];
+        
+        if (!allowedTypes.includes(file.type)) {
+            alert('Vui lòng chọn file ảnh hợp lệ (JPG, JPEG, PNG)!');
+            fileInput.value = '';
             output.style.display = 'none';
             return;
         }
+        
+        if (file.size > 2 * 1024 * 1024) {
+            alert('File ảnh quá lớn! Vui lòng chọn file nhỏ hơn 2MB.');
+            fileInput.value = '';
+            output.style.display = 'none';
+            return;
+        }
+        
+        // Hiển thị ảnh xem trước
         output.src = URL.createObjectURL(file);
         output.style.display = 'block';
     } else {
