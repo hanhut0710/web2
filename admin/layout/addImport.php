@@ -229,7 +229,7 @@ document.getElementById('importForm').addEventListener('submit', function(e) {
             const productId = row.cells[1].querySelector('select').value;
             const quantity = row.cells[2].querySelector('input').value.trim();
             const importPrice = row.cells[3].querySelector('input').value.trim();
-            const color = row.cells[4].querySelector('input').value.trim().toLowerCase();
+            const color = row.cells[4].querySelector('input').value.trim();
             const size = row.cells[5].querySelector('input').value.trim();
             const imgInput = row.cells[6].querySelector('input[type="file"]');
 
