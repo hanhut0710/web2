@@ -14,12 +14,8 @@
 
 @media only screen and (max-width: 1200px) {
     .admin-control-center {
-        margin: 1rem -1rem;
+        margin: 0 10px;
         width: 25rem;
-    }
-
-    select{
-        margin-bottom: 10px;
     }
 
     #tinh-trang,.form-control-date {
@@ -43,14 +39,6 @@
     .header {
         z-index: 100;
         display: flex;
-    }
-
-    .form-search {
-        position: fixed;
-        left: 60px;
-        top: 10px;
-        width: 70%;
-        z-index: 101;
     }
 
     .sidebar{
@@ -126,6 +114,21 @@
 
     .section {
         padding: 20px 10px;
+    }
+
+
+    .admin-control{
+        flex-direction: column;
+    }
+
+    .admin-control-left{
+        flex: 1;
+        margin-bottom: 10px;
+    }
+
+    .admin-control-center{
+        flex: 1;
+        margin-bottom: 10px;
     }
     
     .list-left>img {
