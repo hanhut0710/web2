@@ -9,30 +9,30 @@
              $this->conn = $db->getConnection();
          }
 
-        //  public function getOrderByTime($startDate, $endDate, $user_id){
-        //     $startDate = mysqli_real_escape_string($this->conn, $startDate);
-        //      $endDate = mysqli_real_escape_string($this->conn, $endDate);
-        //      $user_id = mysqli_real_escape_string($this->conn, $user_id);
+         public function getOrderByTime($startDate, $endDate, $user_id){
+            $startDate = mysqli_real_escape_string($this->conn, $startDate);
+             $endDate = mysqli_real_escape_string($this->conn, $endDate);
+             $user_id = mysqli_real_escape_string($this->conn, $user_id);
 
-        //      $sql = "SELECT o.*, a.address_line, a.ward, a.district, a.city FROM orders o JOIN address a ON o.address_id = a.id WHERE o.created_at BETWEEN '$startDate' AND '$endDate' AND o.user_id = '$user_id'";
-        //      $result = mysqli_query($this->conn, $sql);
-        //      $data = [];
-        //      while($row = mysqli_fetch_assoc($result)){
-        //          $data[] = $row;
-        //      }
-        //      return $data;
-        //  }
+             $sql = "SELECT o.*, a.address_line, a.ward, a.district, a.city FROM orders o JOIN address a ON o.address_id = a.id WHERE o.created_at BETWEEN '$startDate' AND '$endDate' AND o.user_id = '$user_id'";
+             $result = mysqli_query($this->conn, $sql);
+             $data = [];
+             while($row = mysqli_fetch_assoc($result)){
+                 $data[] = $row;
+             }
+             return $data;
+         }
 
-        // public function getOrderDetail($order_id){
-        //     $order_id = mysqli_real_escape_string($this->conn, $order_id);
-        //     $sql = "SELECT * FROM order_details od, product_details pd, products p WHERE od.order_id = '$order_id' AND od.product_detail_id = pd.id AND pd.product_id = p.id";
-        //     $result = mysqli_query($this->conn, $sql);
-        //     $data = [];
-        //     while($row = mysqli_fetch_assoc($result)){
-        //         $data[] = $row;
-        //     }
-        //     return $data;
-        // }
+        public function getOrderDetail($order_id){
+            $order_id = mysqli_real_escape_string($this->conn, $order_id);
+            $sql = "SELECT * FROM order_details od, product_details pd, products p WHERE od.order_id = '$order_id' AND od.product_detail_id = pd.id AND pd.product_id = p.id";
+            $result = mysqli_query($this->conn, $sql);
+            $data = [];
+            while($row = mysqli_fetch_assoc($result)){
+                $data[] = $row;
+            }
+            return $data;
+        }
 
         public function getAllOrder($limit , $offset, $status = 'all' , $district = '' , $start_date = '' , $end_date = ''){
             $sql = "SELECT orders.id, orders.user_id, orders.pay_method, orders.total_price, orders.status, orders.created_at,
