@@ -44,6 +44,10 @@ $brandList = $brand->getAllBrand();
                 <input type="number" name="price" id="price" value="0" readonly>
             </div>
             <div class="form-group">
+                <label for="stock">Số lượng</label>
+                <input type="number" name="stock" id="stock" value="0" readonly>
+            </div>
+            <div class="form-group">
                 <label for="status">Trạng thái</label>
                 <select name="status" id="status">
                     <option value="1">Hiển thị</option>
@@ -65,37 +69,7 @@ $brandList = $brand->getAllBrand();
     </form>
 </div>
 
-<style>
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-}
-.form-group.full-width {
-    grid-column: 1 / -1;
-}
-.custom-file-upload {
-    padding: 8px 15px;
-    background-color: var(--orange);
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.custom-file-upload:hover {
-    background-color: #e5a500;
-}
-.submit-btn {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    margin-top: 20px;
-}
-@media (max-width: 768px) {
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
+
 
 <script>
 function previewImage(event) {
@@ -163,3 +137,36 @@ document.querySelector('form').addEventListener('submit', function(event) {
     }
 });
 </script>
+
+
+<style>
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+.custom-file-upload {
+    padding: 8px 15px;
+    background-color: var(--orange);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.custom-file-upload:hover {
+    background-color: #e5a500;
+}
+.submit-btn {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>

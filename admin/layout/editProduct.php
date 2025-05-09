@@ -60,6 +60,10 @@ $brandList = $brand->getAllBrand();
                 <input type="number" name="price" id="price" value="<?php echo $product_data['price']; ?>" readonly>
             </div>
             <div class="form-group">
+                <label for="stock">Số lượng</label>
+                <input type="number" name="stock" id="stock" value="<?php echo $product_data['stock']; ?>" readonly>
+            </div>
+            <div class="form-group">
                 <label for="status">Trạng thái</label>
                 <select name="status" id="status" required>
                     <option value="1" <?php echo $product_data['status'] == 1 ? 'selected' : ''; ?>>Hiển thị</option>
@@ -80,6 +84,44 @@ $brandList = $brand->getAllBrand();
         </div>
     </form>
 </div>
+
+
+
+<script>
+function previewImage(event) {
+    const output = document.getElementById('img-preview');
+    const fileInput = event.target;
+    
+    if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        // Kiểm tra định dạng file
+        if (!file.type.startsWith('image/')) {
+            alert('Vui lòng chọn file ảnh (jpg, png, gif, ...)!');
+            fileInput.value = '';
+            output.src = '<?php echo '../' .$product_data['img_src']; ?>';
+            return;
+        }
+        // Kiểm tra kích thước file (2MB)
+        if (file.size > 2 * 1024 * 1024) {
+            alert('File ảnh quá lớn! Vui lòng chọn file nhỏ hơn 2MB.');
+            fileInput.value = '';
+            output.src = '<?php echo '../' . $product_data['img_src']; ?>';
+            return;
+        }
+        // Hiển thị ảnh mới
+        output.src = URL.createObjectURL(file);
+    } else {
+        // Khôi phục ảnh hiện tại nếu không chọn file
+        output.src = '<?php echo '../' .$product_data['img_src']; ?>';
+    }
+}
+
+// Kiểm tra lỗi tải ảnh
+document.getElementById('img-preview').addEventListener('error', function() {
+    console.log('Lỗi tải ảnh: ', this.src);
+    this.src = ''; // Đặt src rỗng để hiển thị placeholder
+});
+</script>
 
 <style>
 .form-container {
@@ -135,39 +177,3 @@ img[src=""], img:not([src]) {
     }
 }
 </style>
-
-<script>
-function previewImage(event) {
-    const output = document.getElementById('img-preview');
-    const fileInput = event.target;
-    
-    if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        // Kiểm tra định dạng file
-        if (!file.type.startsWith('image/')) {
-            alert('Vui lòng chọn file ảnh (jpg, png, gif, ...)!');
-            fileInput.value = '';
-            output.src = '<?php echo '../' .$product_data['img_src']; ?>';
-            return;
-        }
-        // Kiểm tra kích thước file (2MB)
-        if (file.size > 2 * 1024 * 1024) {
-            alert('File ảnh quá lớn! Vui lòng chọn file nhỏ hơn 2MB.');
-            fileInput.value = '';
-            output.src = '<?php echo '../' . $product_data['img_src']; ?>';
-            return;
-        }
-        // Hiển thị ảnh mới
-        output.src = URL.createObjectURL(file);
-    } else {
-        // Khôi phục ảnh hiện tại nếu không chọn file
-        output.src = '<?php echo '../' .$product_data['img_src']; ?>';
-    }
-}
-
-// Kiểm tra lỗi tải ảnh
-document.getElementById('img-preview').addEventListener('error', function() {
-    console.log('Lỗi tải ảnh: ', this.src);
-    this.src = ''; // Đặt src rỗng để hiển thị placeholder
-});
-</script>
