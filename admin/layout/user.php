@@ -2,7 +2,7 @@
     require_once "./backend/user.php";
     require_once "./backend/pagination.php";
     $page_num = isset($_GET['page_num']) ? max(1,intval($_GET['page_num'])) : 1;
-    $limit = 5;
+    $limit = 15;
 
     $user = new User();
     $totalUser= $user -> getTotalUser();
