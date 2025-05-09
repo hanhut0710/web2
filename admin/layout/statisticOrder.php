@@ -24,7 +24,7 @@
             $endDate = date('Y-12-31');
             break;
         case 4:
-            $startDate = '2025-01-01';
+            $startDate = '2023-01-01';
             $endDate = date('Y-m-d');
             break;
         default:
