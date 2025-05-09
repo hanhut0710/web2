@@ -10,10 +10,8 @@ $brand_id = isset($_GET['brand_id']) ? $_GET['brand_id'] : 'all';
 
 $offset = ($page - 1) * $pageSize;
 
-// Tạo điều kiện cơ bản để lọc sản phẩm còn hoạt động và chưa bị xóa
 $baseCondition = "status = 1 AND isdeleted = 1 AND stock > 0";
 
-// Xây dựng câu truy vấn lấy sản phẩm
 if ($category_id == 'all' && $brand_id == 'all') {
     $sql = "SELECT id, name, price, img_src FROM products 
             WHERE $baseCondition AND category_id BETWEEN 1 AND 6 
@@ -41,7 +39,6 @@ if ($result) {
     }
 }
 
-// Xây dựng câu truy vấn đếm tổng sản phẩm
 if ($category_id == 'all' && $brand_id == 'all') {
     $sql2 = "SELECT COUNT(*) as total FROM products 
              WHERE $baseCondition AND category_id BETWEEN 1 AND 6";

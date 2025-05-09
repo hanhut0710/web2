@@ -2,7 +2,6 @@
 include 'connect.php';
 header('Content-Type: application/json');
 
-// Nhận dữ liệu từ frontend
 $keyword = $_GET['keyword'] ?? '';
 $brand = $_GET['brand'] ?? '';
 $category = $_GET['category'] ?? '';
@@ -12,13 +11,11 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 6;
 $offset = ($page - 1) * $limit;
 
-// Escape dữ liệu
 $keyword = mysqli_real_escape_string($con, $keyword);
 $brand = mysqli_real_escape_string($con, $brand);
 $category = mysqli_real_escape_string($con, $category);
 
-// Tạo điều kiện WHERE
-$where = "WHERE products.price >= $minPrice AND products.price <= $maxPrice";
+$where = "WHERE products.price >= $minPrice AND products.price <= $maxPrice AND status = 1 AND isdeleted = 1 AND stock > 0";
 
 if (!empty($keyword)) {
     $where .= " AND products.name LIKE '%$keyword%'";
@@ -32,22 +29,18 @@ if (!empty($brand) && $brand !== 'all') {
     $where .= " AND products.brand_id = '$brand'";
 }
 
-// Đếm tổng số sản phẩm phù hợp
 $countQuery = "
     SELECT COUNT(DISTINCT products.id) as total
     FROM products
-    LEFT JOIN product_details ON products.id = product_details.product_id
     $where
 ";
 $countResult = mysqli_query($con, $countQuery);
 $total = mysqli_fetch_assoc($countResult)['total'];
 $totalPages = ceil($total / $limit);
 
-// Lấy dữ liệu sản phẩm
 $sql = "
     SELECT products.*
     FROM products
-    LEFT JOIN product_details ON products.id = product_details.product_id
     $where
     GROUP BY products.id
     LIMIT $limit OFFSET $offset
@@ -60,7 +53,6 @@ while ($row = mysqli_fetch_assoc($result)) {
     $data[] = $row;
 }
 
-// Trả về JSON
 echo json_encode([
     "products" => $data,
     "total" => $total,
@@ -68,3 +60,7 @@ echo json_encode([
     "currentPage" => $page
 ]);
 exit;
+
+$con->close();
+?>
+

@@ -48,33 +48,28 @@
 <script src="js/toast.js"></script>
 
     <script>
-       fetch("./handle/get_bestseller.php")
-.then(response => response.json())
-.then(data => {
+    //goi ajax lay san pham gia tien giam dan
+    fetch("./handle/get_bestseller.php")
+    .then(response => response.json())
+    .then(data => {
     const swiperWrapper = document.querySelector(".swiper-wrapper");
     data.forEach(product => {
         const productItem = `
         <div class="swiper-slide">
             <div class="product__item" style="background-color: rgb(233, 233, 233);">
                     <div class="product__item__pic" style="height: 190px; margin-bottom: 30px;">
-                    <span style="color: red; font-weight: bold;"></span>
                     <img src="${product.img_src}" onclick="openProductDetails(${product.id})">
-                    <ul class="product__hover">
-                        <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                        <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                        <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                    </ul>
                 </div>
                <div class="product__item__text" style="font-family: 'Staatliches', sans-serif; font-weight: bolder; font-size: 24px; color: #333; text-transform: uppercase; letter-spacing: 1px; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); text-align: center;">
                     <h6>${product.name}</h6>
                 </div>
-
-
-
             </div>
         </div>`;
         swiperWrapper.innerHTML += productItem;
     });
+
+   
+
 
     // Khởi tạo swiper sau khi thêm xong sản phẩm
     new Swiper(".mySwiper", {

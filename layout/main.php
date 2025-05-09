@@ -10,15 +10,11 @@
 
         <!-- Swiper Carousel -->
         <div class="swiper mySwiper">
-    <div class="swiper-wrapper">
-        <!-- Các sản phẩm sẽ được JS thêm vào đây -->
-    </div>
-
-    <!-- Nút điều hướng -->
-
-
-    <!-- Thanh kéo ngang -->
-    <div class="swiper-scrollbar" style="margin-top: 15px;"></div>
-</div>
+        <div class="swiper-wrapper">
+            <!-- Các sản phẩm sẽ được JS thêm vào đây -->
+        </div>
+        <!-- Thanh kéo ngang -->
+        <div class="swiper-scrollbar"></div>
+        </div>
     </div>
 </section>

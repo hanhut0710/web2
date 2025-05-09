@@ -218,8 +218,7 @@ user_isLogin.addEventListener("click", function (event) {
 function openProductDetails(productId) {
 let selectedSize = null;
 let selectedColor = null;
-let selectedProductDetailId = null; // thêm biến này
-console.log("Product ID:", productId); // Kiểm tra giá trị
+let selectedProductDetailId = null;
 fetch(`./handle/get_product_details.php?product_id=${productId}`)
     .then(response => response.json())
     .then(data => {
@@ -230,11 +229,10 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
             document.getElementById("popup-name").innerText = data.product.name;
             document.getElementById("popup-price").innerText = data.product.price;
             document.getElementById("popup-brand").innerText = data.product.brand_name;
-            document.getElementById("popup-color").innerText = data.product.color;
             document.getElementById("popup-quantity").innerText = data.product.stock;
             
             const sizeContainer = document.getElementById("popup-sizes");
-            sizeContainer.innerHTML = ""; // Xóa danh sách cũ // Chuyển chuỗi size thành mảng
+            sizeContainer.innerHTML = "";
             data.size.forEach(size => {
                 const sizeElement = document.createElement("span");
                 sizeElement.classList.add("size-option");
@@ -242,18 +240,16 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                 sizeContainer.appendChild(sizeElement);
                 
                 sizeElement.addEventListener("click", function () {
-                    // Xóa active cũ
                     document.querySelectorAll('.size-option').forEach(e => e.classList.remove("active"));
                     sizeElement.classList.add("active");
                     selectedSize = size.size;
                     updateSelectedDetailId();
 
-                    // console.log("Size đã chọn:", size.size);
                 });
             });
-            // Xử lý màu sắc
+            //color
             const colorContainer = document.getElementById("popup-color");
-            const productImage = document.getElementById("popup-image"); // Ảnh sản phẩm
+            const productImage = document.getElementById("popup-image");
 
             colorContainer.innerHTML = "";
 
@@ -264,7 +260,7 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                 const img = document.createElement("img");
                 img.src = color.img_src;
                 img.alt = color.color;
-                img.classList.add("color-thumbnail"); // Thêm class để dễ CSS
+                img.classList.add("color-thumbnail");
                 colorElement.appendChild(img);
             
                 colorContainer.appendChild(colorElement);
@@ -273,31 +269,14 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                     document.querySelectorAll('.color-option').forEach(e => e.classList.remove("active"));
                     colorElement.classList.add("active");
                     selectedColor = color.color;
-                    console.log(selectedColor);
                     productImage.src = color.img_src;
                     updateSelectedDetailId();
                     });
 
                     
             });
-            let productDetails = [];
-            function fetchProductDetails(productId) {
-                fetch(`./handle/get_product_detail_id.php?product_id=${productId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.details) {
-                            productDetails = data.details;
-                            console.log("Chi tiết sản phẩm:", productDetails);
-                        } else {
-                            console.error(data.error || "Không thể lấy chi tiết sản phẩm");
-                        }
-                    })
-                    .catch(err => console.error("Lỗi khi fetch:", err));
-            }
-            fetchProductDetails(productId);
 
             function updateSelectedDetailId() {
-                console.log(selectedColor);
                 if (selectedSize && selectedColor && productDetails) {
                     fetch(`./handle/get_product_details.php?product_id=${productId}&size=${selectedSize}&color=${selectedColor}`)
                     .then(response => response.json())
@@ -323,6 +302,21 @@ fetch(`./handle/get_product_details.php?product_id=${productId}`)
                     }
                 }
             }
+            let productDetails = [];
+            function fetchProductDetails(productId) {
+                fetch(`./handle/get_product_detail_id.php?product_id=${productId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.details) {
+                            productDetails = data.details;
+                            console.log("Chi tiết sản phẩm:", productDetails);
+                        } else {
+                            console.error(data.error || "Không thể lấy chi tiết sản phẩm");
+                        }
+                    })
+                    .catch(err => console.error("Lỗi khi fetch:", err));
+            }
+            fetchProductDetails(productId);
             // Gán lại sự kiện nút thêm vào giỏ mỗi khi mở popup
             const btnaddCart = document.querySelector(".btn-addcart");
             const newBtn = btnaddCart.cloneNode(true);

@@ -50,16 +50,16 @@
     <script>
         let mode = "";
         document.addEventListener("DOMContentLoaded", function () {
-        loadProducts('all'); // Load tất cả sản phẩm ban đầu
+        loadProducts('all');
 
     document.querySelectorAll('#category-list a').forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault();
         currentCategory = this.getAttribute('data-category-id');
-        searchInput.value = ''; // Reset tìm kiếm nếu chọn danh mục
+        searchInput.value = '';
         searchInput2.value = '';
         currentPage = 1;
-        mode = "category"; // Đặt chế độ là danh mục
+        mode = "category";
         resetAdvancedSearchFields();
         document.querySelectorAll('#category-list a').forEach(a => a.classList.remove('active'));
         this.classList.add('active');
@@ -72,7 +72,7 @@
             e.preventDefault();
             currentBrand = this.getAttribute('data-brand');
             currentPage = 1;
-            mode = "brand"; // Đặt chế độ là theo brand
+            mode = "brand";
             searchInput.value = '';
             resetAdvancedSearchFields();
             document.querySelectorAll('#brand-list a').forEach(a => a.classList.remove('active'));
@@ -91,20 +91,17 @@ function loadProducts() {
     const keyword2 = document.getElementById('searchInput2').value.trim();
     const brand = document.getElementById('brandSelect').value;
     const category = document.getElementById('categorySelect').value;
-    const priceRange = document.getElementById('priceSelect').value;
+    const priceRange = document.getElementById('priceSelect').value;//no se co dang "num - num"
 
-    console.log("Keyword:", keyword2);
-
-    // Tách min-max từ priceSelect
     let minPrice = 0;
     let maxPrice = 999999999;
     if (priceRange !== '') {
         const prices = priceRange.split('-');
-        minPrice = parseInt(prices[0]) * 1000000;
+        minPrice = parseInt(prices[0]) * 1000000;//dang lay tu string "1tr"
         maxPrice = parseInt(prices[1]) * 1000000;
     }
 
-    // Kiểm tra nếu có input nâng cao thì dùng search2
+    //phan loai url show products
     if(mode === "search"){
         url = `./handle/search.php?keyword=${encodeURIComponent(keyword)}&page=${currentPage}&limit=${pageSize}`;
     }
@@ -117,7 +114,7 @@ function loadProducts() {
     else if(mode === "advance_search"){
             url = `./handle/search2.php?keyword=${encodeURIComponent(keyword2)}&category=${category}&brand=${brand}&minPrice=${minPrice}&maxPrice=${maxPrice}&page=${currentPage}&limit=${pageSize}`;
         }
-    console.log("URL:", url);
+    //console.log("URL:", url);
     fetch(url)
         .then(res => res.json())
         .then(data => {
@@ -154,16 +151,14 @@ function loadProducts() {
             updatePagination(total);
            
         })
-        
-        .catch(err => console.error("Lỗi load sản phẩm:", err));
 }
 
 function resetAdvancedSearchFields() {
     console.log("Resetting advanced search fields...");
-    document.getElementById("categorySelect").value = "all"; // Reset danh mục về "all"
-    document.getElementById("brandSelect").value = ""; // Reset thương hiệu về giá trị mặc định
-    document.getElementById("priceSelect").value = ""; // Reset khoảng giá về giá trị mặc định
-    document.getElementById("searchInput2").value = ""; // Reset ô tìm kiếm nâng cao
+    document.getElementById("categorySelect").value = "all";
+    document.getElementById("brandSelect").value = ""; 
+    document.getElementById("priceSelect").value = ""; 
+    document.getElementById("searchInput2").value = ""; 
 }
 
 function updatePagination(total) {
@@ -187,30 +182,11 @@ document.getElementById('prePage').addEventListener('click', () => {
     loadProducts();
 });
 
-// document.querySelectorAll('#category-list a').forEach(link => {
-//     link.addEventListener('click', function (e) {
-//         e.preventDefault();
-//         currentCategory = this.getAttribute('data-category-id');
-//         searchKeyword = '';
-//         currentPage = 1;
-
-//         document.querySelectorAll('#category-list a').forEach(a => a.classList.remove('active'));
-//         this.classList.add('active');
-
-//         loadProducts();
-//     });
-// });
-
 function search(event) {
     event.preventDefault();
     searchKeyword = document.getElementById("searchInput").value.trim();
-    currentCategory = document.getElementById("categorySelect").value;
-    selectedBrand = document.getElementById("brandSelect").value;
-    selectedPrice = document.getElementById("priceSelect").value;
     mode = "search"; // Đặt chế độ là tìm kiếm
     resetAdvancedSearchFields();
-   
-
     loadProducts();
 }
 
@@ -220,13 +196,10 @@ function advance_search(){
     currentPage = 1; // Đặt chế độ là tìm kiếm nâng cao
     loadProducts();
     document.getElementById("searchInput").value = "";
- 
 }
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
-    mode = "category"; // Đặt chế độ là tìm kiếm
+    mode = "category";
     loadProducts();
 });
     </script>
