@@ -7,16 +7,45 @@ $product = new Product();
 if (isset($_POST['btnAddProduct'])) {
     $name = $_POST['name'];
     $category_id = $_POST['category_id'];
-    $brand_id = $_POST['brand_id'];
     $status = $_POST['status'];
-    $price = 0;
+    $brand_id = $_POST['brand_id'];
+    $price = 0; // Giá bán mặc định là 0
 
-    $checkProduct = $product -> getProductByName($name);
-    if($checkProduct)
-        return false;
+    // Kiểm tra trùng lặp sản phẩm
+    $existingProduct = $product->getProductByName($name);
+    if ($existingProduct) {
+        echo '<script>alert("Sản phẩm với tên này đã tồn tại!");
+            window.location.href = "../index.php?page=addProduct";
+            </script>';
+        exit();
+    }
 
+    // Xử lý upload hình ảnh (không bắt buộc)
     $upload = new Upload();
-    $imgPath = "img/shoes/noname.png";
+    $imgPath = 'img/shoes/noname.png'; 
+    if (isset($_FILES['img_src']) && $_FILES['img_src']['error'] !== 4) {
+        $uploadResult = $upload->uploadImage($_FILES['img_src']);
+        if (!$uploadResult['status']) {
+            echo '<script>alert("Lỗi upload hình ảnh: ' . $uploadResult['message'] . '");
+                window.location.href = "../index.php?page=addProduct";
+                </script>';
+            exit();
+        }
+        $imgPath = $uploadResult['path'];
+    }
+
+    // Thêm sản phẩm
+    $product_id = $product->insert($name, $price, $imgPath, $category_id, $status, $brand_id);
+    if ($product_id) {
+        echo '<script>alert("Thêm sản phẩm thành công!");
+            window.location.href = "../index.php?page=product";
+            </script>';
+    } else {
+        $error = mysqli_error($product->conn);
+        echo '<script>alert("Thêm sản phẩm thất bại! Lỗi: ' . $error . '");
+            window.location.href = "../index.php?page=addProduct";
+            </script>';
+    }
 }
 
 if (isset($_POST['btnEditProduct'])) {
