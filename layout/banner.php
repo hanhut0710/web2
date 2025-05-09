@@ -8,7 +8,6 @@
                                 <h6>BỘ SƯU TẬP ĐỘC QUYỀN</h6 >
                                 <h2>Thu - Đông</h2>
                                 <h2> Bộ sưu tập 2025</h2>
-                                <a href="#" class="primary-btn">Mua ngay <span class="arrow_right"></span></a>
                             </div>
                         </div>
                     </div>
@@ -22,7 +21,6 @@
                             <h6>BỘ SƯU TẬP ĐỘC QUYỀN</h6 >
                             <h2>Xuân - Hạ</h2>
                             <h2> Bộ sưu tập 2025</h2>
-                                <a href="#" class="primary-btn">Mua ngay <span class="arrow_right"></span></a>
 
                             </div>
                         </div>

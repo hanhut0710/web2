@@ -6,7 +6,7 @@
                     <div class="breadcrumb__text">
                         <h4>Shop</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">Home</a>
+                            <a href="./index.php">Home</a>
                             <span>Shop</span>
                         </div>
                     </div>
@@ -88,6 +88,7 @@
                                    <button class="filter_box" onclick="openFilter()"><span>LỌC NÂNG CAO</span><i class="fa-solid fa-filter"></i></button> 
                                 <form id="advancedSearchForm" onclick="loadProducts()">
                                     <input type="text" id="searchInput2" class="search" placeholder="Từ khóa...">
+                                    
                                     <select id="categorySelect">
                                         <option value="all">Danh mục</option>
                                         <option value="1">Casualwear</option>

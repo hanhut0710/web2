@@ -56,8 +56,8 @@
         const productItem = `
         <div class="swiper-slide">
             <div class="product__item" style="background-color: rgb(233, 233, 233);">
-                    <div class="product__item__pic" style="height: 190px; margin-bottom: 60px;">
-                    <span style="color: red; font-weight: bold;">MỚI!!!</span>
+                    <div class="product__item__pic" style="height: 190px; margin-bottom: 30px;">
+                    <span style="color: red; font-weight: bold;"></span>
                     <img src="${product.img_src}" onclick="openProductDetails(${product.id})">
                     <ul class="product__hover">
                         <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>

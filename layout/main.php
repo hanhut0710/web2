@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <ul style="margin-bottom: 70px;" class="filter__controls">
-                    <li class="active" data-filter="*">CÁC SẢN PHẨM MỚI RA MẮT</li>
+                    <li class="active" data-filter="*">CÁC SẢN PHẨM NỔI BẬT</li>
                 </ul>
             </div>
         </div>

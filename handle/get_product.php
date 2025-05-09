@@ -11,7 +11,7 @@ $brand_id = isset($_GET['brand_id']) ? $_GET['brand_id'] : 'all';
 $offset = ($page - 1) * $pageSize;
 
 // Tạo điều kiện cơ bản để lọc sản phẩm còn hoạt động và chưa bị xóa
-$baseCondition = "status = 1 AND isdeleted = 1";
+$baseCondition = "status = 1 AND isdeleted = 1 AND stock > 0";
 
 // Xây dựng câu truy vấn lấy sản phẩm
 if ($category_id == 'all' && $brand_id == 'all') {

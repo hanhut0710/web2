@@ -70,7 +70,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                             <div class="product__cart__item__text">
                                 <h6>${item.product_name}</h6>
-                                <h5>Color: ${item.color}</h5>
+                                <p>Color: ${item.color}</p>
+                                <p>Size: ${item.size}</p>
                             </div>
                         </td>
                         <td class="quantity__item">
