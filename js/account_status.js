@@ -81,25 +81,40 @@ function renderOrders(orders) {
         const orderWrapper = tempDiv.querySelector('.order-wrapper');
         const card = orderWrapper.querySelector('.order-card');
 
-        card.addEventListener('click', () => {
-            localStorage.setItem('order_detail', JSON.stringify(order));
-            window.location.href = `order_detail.php`;
-        });
+        function attachCardClick(cardElement, orderData) {
+            cardElement.addEventListener('click', () => {
+                localStorage.setItem('order_detail', JSON.stringify(orderData));
+                window.location.href = `order_detail.php`;
+            });
+        }
+        attachCardClick(card, order);
+
         tabContainers.all.appendChild(orderWrapper);
 
         const status = order.status.toLowerCase();
         if (status.includes("chờ xác nhận")) {
-            tabContainers.pendingConfirm.appendChild(orderWrapper.cloneNode(true));
+            const clone = orderWrapper.cloneNode(true);
+            attachCardClick(clone.querySelector('.order-card'), order);
+            tabContainers.pendingConfirm.appendChild(clone);
         } else if (status.includes("chờ lấy")) {
-            tabContainers.pendingPick.appendChild(orderWrapper.cloneNode(true));
+            const clone = orderWrapper.cloneNode(true);
+            attachCardClick(clone.querySelector('.order-card'), order);
+            tabContainers.pendingPick.appendChild(clone);
         } else if (status.includes("đang giao")) {
-            tabContainers.process.appendChild(orderWrapper.cloneNode(true));
+            const clone = orderWrapper.cloneNode(true);
+            attachCardClick(clone.querySelector('.order-card'), order);
+            tabContainers.process.appendChild(clone);
         } else if (status.includes("đã giao")) {
-            tabContainers.done.appendChild(orderWrapper.cloneNode(true));
+            const clone = orderWrapper.cloneNode(true);
+            attachCardClick(clone.querySelector('.order-card'), order);
+            tabContainers.done.appendChild(clone);
         } else if (status.includes("hủy") || status.includes("đã hủy")) {
-            tabContainers.cancel.appendChild(orderWrapper.cloneNode(true));
+            const clone = orderWrapper.cloneNode(true);
+            attachCardClick(clone.querySelector('.order-card'), order);
+            tabContainers.cancel.appendChild(clone);
         }
     });
+
 
     for (const tab in tabContainers) {
         if (tabContainers[tab].children.length === 0) {
