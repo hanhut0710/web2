@@ -16,7 +16,6 @@ function showToast(message, type = "success") {
     text.className = 'toast-text';
     text.textContent = message;
   
-    toast.appendChild(icon);
     toast.appendChild(document.createTextNode(" "));
     toast.appendChild(text);
     container.appendChild(toast);

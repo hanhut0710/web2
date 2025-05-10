@@ -1,9 +1,11 @@
 <?php 
     include("./connect.php");
 
-    $sql = "SELECT id, name, price, img_src FROM products
-            WHERE status = 1 AND isdeleted = 1 AND stock > 0
-            ORDER BY price DESC
+    $sql = "SELECT p.id, p.name, p.price, p.img_src, COUNT(od.product_id) AS num FROM products p
+				JOIN order_details od ON p.id = od.product_id
+            WHERE status = 1 AND isdeleted = 1 AND p.stock > 0
+            GROUP BY p.id
+            ORDER BY num DESC 
             LIMIT 8";
 
     $result = $con->query($sql);
